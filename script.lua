@@ -182,6 +182,7 @@ function tick()
 		20% - 0%	30% - 0%	尻尾下げ	50%
 		
 	]]
+
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
@@ -237,11 +238,15 @@ function render(delta)
 	--直近1秒間の横方向、縦方向の移動速度の平均を求める（横方向の場合、前に動いているか、後ろに動いているかも考慮する）。
 	local velocity = player.getVelocity()
 	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
-	local velocityRot = math.atan(velocity.z / playerSpeed, velocity.x / playerSpeed)
-	local lookDir = player.getLookDir()
+	local velocityRot = math.deg(math.atan2(velocity.z, velocity.x))
+	if velocityRot < 0 then
+		velocityRot = 360 + velocityRot
+	end
+	local bodyYaw = (player.getBodyYaw() - 270) % 360
 	local playerAnimation = player.getAnimation()
 	if velocityRot == velocityRot then
-		if velocityRot * math.atan(lookDir.z, lookDir.x) > 0 then
+		local directionAbs = math.abs(velocityRot - bodyYaw)
+		if math.min(directionAbs, 360 - directionAbs) < 90 then
 			table.insert(VelocityData[1], playerSpeed)
 		else
 			table.insert(VelocityData[1], -playerSpeed)
@@ -264,21 +269,25 @@ function render(delta)
 	end
 	local horizontalAverage = getTableAverage(VelocityData[1])
 	local verticalAverage = getTableAverage(VelocityData[2])
+	local sneakOffset = 0
+	if player.isSneaking() then
+		sneakOffset = 30
+	end
 	local frontHair = model.Body.Hairs.FrontHair
 	local backHair = model.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
-		frontHair.setRot({(1 -math.max(lookDir.y, 0)) * 80 - math.min(math.max(horizontalAverage * 80 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({0, 0, 0})
 	elseif playerAnimation == "SWIMMING" then
-		frontHair.setRot({(1 -math.max(lookDir.y, 0)) * 80 - math.min(math.max(horizontalAverage * 320 - verticalAverage * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({0, 0, 0})
 	else
 		if verticalAverage < 0 then
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80 + sneakOffset, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80 + sneakOffset, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		else
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + sneakOffset, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + sneakOffset, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
 	end
 
