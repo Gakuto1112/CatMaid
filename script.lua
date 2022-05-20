@@ -50,6 +50,8 @@ animation["wag_tail"].start()
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生）。
 action_wheel.SLOT_1.setTitle("「ニャー」と鳴く§c♥")
 action_wheel.SLOT_1.setItem("minecraft:cod")
+action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
+action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_1.setFunction(function()
 	local vector = player.getPos()
 	sound.playSound("minecraft:entity.cat.ambient", player.getPos(), {1, 1.5})
@@ -63,6 +65,8 @@ else
 	action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
 end
 action_wheel.SLOT_2.setItem("minecraft:bell")
+action_wheel.SLOT_2.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_2.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_2.setFunction(function()
 	if BellSound then
 		action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
@@ -82,6 +86,8 @@ else
 	animation["wag_tail"].cease()
 end
 action_wheel.SLOT_3.setItem("minecraft:feather")
+action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_3.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
@@ -105,6 +111,8 @@ else
 	action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
 end
 action_wheel.SLOT_4.setItem("minecraft:iron_chestplate")
+action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_4.setFunction(function()
 	if HideArmor then
 		action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
