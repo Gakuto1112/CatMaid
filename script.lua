@@ -1,6 +1,7 @@
 --変数
-IsBellSound = true --ベルを鳴らすかどうか
-IsWegTail = true --尻尾のアニメーションを再生するかどうか
+BellSound = true --ベルを鳴らすかどうか
+WegTail = true --尻尾のアニメーションを再生するかどうか
+HideArmor = false --防具を非表示にするかどうか
 AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
@@ -40,26 +41,44 @@ end)
 action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
 action_wheel.SLOT_2.setItem("minecraft:bell")
 action_wheel.SLOT_2.setFunction(function()
-	if IsBellSound then
+	if BellSound then
 		action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
 	else
 		action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
 	end
-	IsBellSound = not IsBellSound
+	BellSound = not BellSound
 end)
 
 --アクション3： 尻尾のアニメーションの切り替え
 action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 action_wheel.SLOT_3.setItem("minecraft:feather")
 action_wheel.SLOT_3.setFunction(function()
-	if IsWegTail then
+	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
 		animation["wag_tail"].cease()
 	else
 		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 		animation["wag_tail"].start()
 	end
-	IsWegTail = not IsWegTail
+	WegTail = not WegTail
+end)
+
+--アクション4: 防具の表示/非表示
+action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+action_wheel.SLOT_4.setItem("minecraft:iron_chestplate")
+action_wheel.SLOT_4.setFunction(function()
+	if HideArmor then
+		action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+		for key, armorPart in pairs(armor_model) do
+			armorPart.setEnabled(true)
+		end
+	else
+		action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
+		for key, armorPart in pairs(armor_model) do
+			armorPart.setEnabled(false)
+		end
+	end
+	HideArmor = not HideArmor
 end)
 
 function tick()
@@ -73,7 +92,7 @@ function tick()
 	]]
 	local velocity = player.getVelocity()
 	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
-	if IsBellSound then
+	if BellSound then
 		local sneaking = player.isSneaking()
 		local underwater = player.isUnderwater()
 		WalkDistance = WalkDistance + playerSpeed
@@ -155,7 +174,7 @@ function render(delta)
 	--チェストプレート着用の場合は髪をずらす。
 	local frontHair = model.Body.Hairs.FrontHair
 	local backHair = model.Body.Hairs.BackHair
-	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") then
+	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
 	else

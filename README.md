@@ -35,6 +35,9 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 ### アクション3：尻尾振りの切り替え
 尻尾振りのオン/オフの切り替えをします。
 
+### アクション4：防具表示の切り替え
+防具を表示/非表示（に）します。
+
 ## テクスチャ
 
 ![テクスチャ](README_Images/テクスチャ.png)
