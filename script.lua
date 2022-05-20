@@ -227,12 +227,15 @@ function render(delta)
 	--チェストプレート着用の場合は髪をずらす。
 	local frontHair = model.Body.Hairs.FrontHair
 	local backHair = model.Body.Hairs.BackHair
+	local skirt = model.Body.Skirt
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
+		skirt.setEnabled(false)
 	else
 		frontHair.setPos({0, 0, 0})
 		backHair.setPos({0, 0, 0})
+		skirt.setEnabled(true)
 	end
 
 	--直近1秒間の横方向、縦方向の移動速度の平均を求める（横方向の場合、前に動いているか、後ろに動いているかも考慮する）。
@@ -263,9 +266,11 @@ function render(delta)
 	--求めた平均から髪の角度を決定する。
 	local hairLimit
 	if player.getEquipmentItem(5).getType() == "minecraft:elytra" then
-		hairLimit = {{0, 80}, {0, 0}}
-	else
+		hairLimit = {{13, 80}, {0, 0}}
+	elseif string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		hairLimit = {{0, 80}, {-80, 0}}
+	else
+		hairLimit = {{13, 80}, {-80, -13}}
 	end
 	local horizontalAverage = getTableAverage(VelocityData[1])
 	local verticalAverage = getTableAverage(VelocityData[2])
