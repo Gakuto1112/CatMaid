@@ -35,7 +35,6 @@ end
 BellSound = loadBoolean(BellSound, "BellSound")
 WegTail = loadBoolean(WegTail, "WegTail")
 HideArmor = loadBoolean(HideArmor, "HideArmor")
-print(BellSound)
 
 --デフォルトのプレイヤーモデルを削除
 for key, vanillaModel in pairs(vanilla_model) do
