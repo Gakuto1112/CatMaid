@@ -10,6 +10,19 @@ VelocityData = {{}, {}} --速度データ：1. 横, 2. 縦
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 
+function loadBoolean(variableToLoad, name)
+	local loadData = data.load(name)
+	if loadData ~= nil then
+		if loadData == "true" then
+			return true
+		else
+			return false
+		end
+	else
+		return variableToLoad
+	end
+end
+
 function getTableAverage(tagetTable)
 	local sum = 0
 	for index, value in ipairs(tagetTable) do
@@ -17,6 +30,12 @@ function getTableAverage(tagetTable)
 	end
 	return sum / #tagetTable
 end
+
+--設定の読み込み
+BellSound = loadBoolean(BellSound, "BellSound")
+WegTail = loadBoolean(WegTail, "WegTail")
+HideArmor = loadBoolean(HideArmor, "HideArmor")
+print(BellSound)
 
 --デフォルトのプレイヤーモデルを削除
 for key, vanillaModel in pairs(vanilla_model) do
@@ -38,33 +57,53 @@ action_wheel.SLOT_1.setFunction(function()
 end)
 
 --アクション2： 鈴の音の切り替え
-action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+if BellSound then
+	action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+else
+	action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
+end
 action_wheel.SLOT_2.setItem("minecraft:bell")
 action_wheel.SLOT_2.setFunction(function()
 	if BellSound then
 		action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
+		data.save("BellSound", false)
 	else
 		action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+		data.save("BellSound", true)
 	end
 	BellSound = not BellSound
 end)
 
 --アクション3： 尻尾のアニメーションの切り替え
-action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+if WegTail then
+	action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+else
+	action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
+	animation["wag_tail"].cease()
+end
 action_wheel.SLOT_3.setItem("minecraft:feather")
 action_wheel.SLOT_3.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
 		animation["wag_tail"].cease()
+		data.save("WegTail", false)
 	else
 		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 		animation["wag_tail"].start()
+		data.save("WegTail", true)
 	end
 	WegTail = not WegTail
 end)
 
 --アクション4: 防具の表示/非表示
-action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+if HideArmor then
+	action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
+	for key, armorPart in pairs(armor_model) do
+		armorPart.setEnabled(false)
+	end
+else
+	action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+end
 action_wheel.SLOT_4.setItem("minecraft:iron_chestplate")
 action_wheel.SLOT_4.setFunction(function()
 	if HideArmor then
@@ -72,11 +111,13 @@ action_wheel.SLOT_4.setFunction(function()
 		for key, armorPart in pairs(armor_model) do
 			armorPart.setEnabled(true)
 		end
+		data.save("HideArmor", false)
 	else
 		action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
 		for key, armorPart in pairs(armor_model) do
 			armorPart.setEnabled(false)
 		end
+		data.save("HideArmor", true)
 	end
 	HideArmor = not HideArmor
 end)
