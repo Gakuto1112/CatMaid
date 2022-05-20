@@ -9,6 +9,7 @@ HealthPercentagePrev = 0 --前チックのHPの割合
 VelocityData = {{}, {}} --速度データ：1. 横, 2. 縦
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
+JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -158,12 +159,13 @@ function tick()
 			end
 			WalkDistance = 0
 		end
-		if VelocityYPrev <= 0 and velocity.y > 0 then
+		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
 			if sneaking or underwater then
 				sound.playCustomSound("Bell", player.getPos(), {0.1, 1})
 			else
 				sound.playCustomSound("Bell", player.getPos(), {0.5, 1})
 			end
+			JumpBellCooldown = 10
 		end
 		VelocityYPrev = velocity.y
 	end
@@ -214,6 +216,9 @@ function tick()
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
 	FpsCountData[1] = FpsCountData[1] + 1
+	if JumpBellCooldown > 0 then
+		JumpBellCooldown = JumpBellCooldown - 1
+	end
 end
 
 function render(delta)
