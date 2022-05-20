@@ -6,6 +6,7 @@ AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
+MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}} --速度データ：1. 横, 2. 縦
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
@@ -204,8 +205,9 @@ function tick()
 		animation["wag_tail"].setSpeed(0.5)
 	end
 
-	--猫のサウンド再生
-	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 then
+	local maxHealth = player.getMaxHealth()
+	--被ダメージ時、猫のサウンド再生
+	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
 		sound.playSound("minecraft:entity.cat.hurt", player.getPos(), {1, 1.5})
 	end
 	if player.getDeathTime() == 1 then
@@ -215,6 +217,7 @@ function tick()
 	--チック終了処理
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
+	MaxHealthPrev = maxHealth
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
