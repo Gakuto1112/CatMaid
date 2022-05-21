@@ -301,10 +301,10 @@ function render(delta)
 	local backHair = model.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
 		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-		backHair.setRot({0, 0, 0})
+		backHair.setRot({hairLimit[2][2], 0, 0})
 	elseif playerAnimation == "SWIMMING" then
 		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-		backHair.setRot({0, 0, 0})
+		backHair.setRot({hairLimit[2][2], 0, 0})
 	else
 		if verticalAverage < 0 then
 			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
