@@ -268,10 +268,14 @@ function render(delta)
 	local playerAnimation = player.getAnimation()
 	if velocityRot == velocityRot then
 		local directionAbs = math.abs(velocityRot - bodyYaw)
+		local sneakOffset = 0
+		if player.isSneaking() then
+			sneakOffset = -0.19
+		end	
 		if math.min(directionAbs, 360 - directionAbs) < 90 then
-			table.insert(VelocityData[1], playerSpeed)
+			table.insert(VelocityData[1], playerSpeed + sneakOffset)
 		else
-			table.insert(VelocityData[1], -playerSpeed)
+			table.insert(VelocityData[1], -playerSpeed + sneakOffset)
 		end
 	else
 		table.insert(VelocityData[1], 0)
@@ -293,10 +297,6 @@ function render(delta)
 	end
 	local horizontalAverage = getTableAverage(VelocityData[1])
 	local verticalAverage = getTableAverage(VelocityData[2])
-	local sneakOffset = 0
-	if player.isSneaking() then
-		sneakOffset = 30
-	end
 	local frontHair = model.Body.Hairs.FrontHair
 	local backHair = model.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
@@ -307,11 +307,11 @@ function render(delta)
 		backHair.setRot({0, 0, 0})
 	else
 		if verticalAverage < 0 then
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80 + sneakOffset, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80 + sneakOffset, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		else
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + sneakOffset, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + sneakOffset, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
 	end
 
