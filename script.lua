@@ -186,6 +186,7 @@ function tick()
 		
 	]]
 
+	local wet = player.isWet()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
@@ -193,15 +194,23 @@ function tick()
 	local leftEar = model.Head.Ears.LeftEar
 	local tail1 = model.Body.Tail
 	local tail2 = model.Body.Tail.Tail1.Tail2
+	if wet then
+		rightEar.setRot({-30, 0, 0})
+		leftEar.setRot({-30, 0, 0})
+	end
 	if (healthPercentage > 0.5 and foodPercentage > 0.5) or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
-		rightEar.setRot({0, 0, 0})
-		leftEar.setRot({0, 0, 0})
+		if not wet then
+			rightEar.setRot({0, 0, 0})
+			leftEar.setRot({0, 0, 0})
+		end
 		tail1.setRot({0, 0, 0})
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(1)
 	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
-		rightEar.setRot({-15, 0, 0})
-		leftEar.setRot({-15, 0, 0})
+		if not wet then
+			rightEar.setRot({-15, 0, 0})
+			leftEar.setRot({-15, 0, 0})
+		end
 		tail1.setRot({40, 0, 0})
 		tail2.setRot({-15, 0, 0})
 		animation["wag_tail"].setSpeed(0.75)
