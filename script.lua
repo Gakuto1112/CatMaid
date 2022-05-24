@@ -37,9 +37,9 @@ end
 
 function setEmotion(emotionId, count)
 	--表情ID：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時）, 4. 笑顔
-	model.Head.FaceParts.RightEye.setUV{(emotionId * 4) / 96, 0 / 112} 
-	model.Head.FaceParts.LeftEye.setUV{(emotionId * 4) / 96, 0 / 112} 
-	model.Head.FaceParts.Mouth.setUV{(emotionId * 4) / 96, 0 / 112} 
+	model.Head.FaceParts.RightEye.setUV{(emotionId * 16) / 96, 0 / 112} 
+	model.Head.FaceParts.LeftEye.setUV{(emotionId * 16) / 96, 0 / 112} 
+	model.Head.FaceParts.Mouth.setUV{(emotionId * 16) / 96, 0 / 112} 
 	EmotionCount = count
 end
 
@@ -52,6 +52,11 @@ HideArmor = loadBoolean(HideArmor, "HideArmor")
 for key, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
+
+--テクスチャサイズの変更
+model.Head.FaceParts.RightEye.setTextureSize({49, 56})
+model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
+model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 
 --望遠鏡の調整
 spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
