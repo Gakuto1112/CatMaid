@@ -11,6 +11,8 @@ VelocityData = {{}, {}} --速度データ：1. 横, 2. 縦
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
+EmotionCount = 0; --エモートカウント
+WinkCount = 0 --瞬きのカウント
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -33,6 +35,14 @@ function getTableAverage(tagetTable)
 	return sum / #tagetTable
 end
 
+function setEmotion(emotionId, count)
+	--表情ID：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時）, 4. 笑顔
+	model.Head.FaceParts.RightEye.setUV{(emotionId * 4) / 96, 0 / 112} 
+	model.Head.FaceParts.LeftEye.setUV{(emotionId * 4) / 96, 0 / 112} 
+	model.Head.FaceParts.Mouth.setUV{(emotionId * 4) / 96, 0 / 112} 
+	EmotionCount = count
+end
+
 --設定の読み込み
 BellSound = loadBoolean(BellSound, "BellSound")
 WegTail = loadBoolean(WegTail, "WegTail")
@@ -53,7 +63,7 @@ animation["wag_tail"].start()
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生）。
-action_wheel.SLOT_1.setTitle("「ニャー」と鳴く§c♥")
+action_wheel.SLOT_1.setTitle("「ニャー」と鳴く")
 action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
@@ -61,6 +71,8 @@ action_wheel.SLOT_1.setFunction(function()
 	local vector = player.getPos()
 	sound.playSound("minecraft:entity.cat.ambient", player.getPos(), {1, 1.5})
 	particle.addParticle("minecraft:heart", {vector.x, vector.y + 2, vector.z, 0, 0, 0})
+	animation["meow"].start()
+	setEmotion(4, 20)
 end)
 
 --アクション2： 鈴の音の切り替え
@@ -206,6 +218,9 @@ function tick()
 		tail1.setRot({0, 0, 0})
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(1)
+		if EmotionCount <= 0 then
+			setEmotion(0, 0)
+		end
 	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
 		if not wet then
 			rightEar.setRot({-15, 0, 0})
@@ -214,21 +229,34 @@ function tick()
 		tail1.setRot({40, 0, 0})
 		tail2.setRot({-15, 0, 0})
 		animation["wag_tail"].setSpeed(0.75)
+		if EmotionCount <= 0 then
+			setEmotion(0, 0)
+		end
 	else
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
 		tail1.setRot({90, 0, 0})
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(0.5)
+		if EmotionCount <= 0 then
+			setEmotion(2, 0)
+		end
 	end
 
-	local maxHealth = player.getMaxHealth()
 	--被ダメージ時、猫のサウンド再生
+	local maxHealth = player.getMaxHealth()
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
 		sound.playSound("minecraft:entity.cat.hurt", player.getPos(), {1, 1.5})
+		setEmotion(1, 8)
 	end
 	if player.getDeathTime() == 1 then
 		sound.playSound("minecraft:entity.cat.death", player.getPos(), {1, 1.5})
+		setEmotion(1, 8)
+	end
+
+	--寝ている時に目と閉じる
+	if player.getAnimation() == "SLEEPING" then
+		setEmotion(3, 0)
 	end
 
 	--チック終了処理
@@ -238,6 +266,17 @@ function tick()
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
+	end
+	if EmotionCount > 0 then
+		EmotionCount = EmotionCount - 1
+	end
+	if WinkCount <= 0 then
+		if EmotionCount <= 0 then
+			setEmotion(3, 1)
+		end
+		WinkCount = 200
+	else
+		WinkCount = WinkCount - 1
 	end
 end
 
