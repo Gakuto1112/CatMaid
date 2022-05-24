@@ -190,7 +190,11 @@ function tick()
 
 	--耳のアニメーション
 	if AnimationCount >= 300 then
-		animation["right_ear_bend"].start()
+		if player.isLeftHanded() then
+			animation["left_ear_bend"].start()
+		else
+			animation["right_ear_bend"].start()
+		end
 		AnimationCount = 0
 	end
 
