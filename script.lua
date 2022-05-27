@@ -12,6 +12,9 @@ LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
+FavoriteFood = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "minecraft:cooked_salmon"} --食べる時にニッコリさせる食べ物
+EatingFavoriteFood = false --お気に入りの食べ物を食べているかどうか
+FoodPrev = 0 --前チックでの満腹度
 EmotionCount = 0; --エモートカウント
 WinkCount = 200 --瞬きのカウント
 
@@ -74,9 +77,9 @@ action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_1.setFunction(function()
-	local vector = player.getPos()
-	sound.playSound("minecraft:entity.cat.ambient", player.getPos(), {1, 1.5})
-	particle.addParticle("minecraft:heart", {vector.x, vector.y + 2, vector.z, 0, 0, 0})
+	local playerPos = player.getPos()
+	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].start()
 	setEmotion(4, 20)
 end)
@@ -264,6 +267,29 @@ function tick()
 		setEmotion(1, 8)
 	end
 
+	--特定の食べ物を食べる時にニッコリさせる。
+	local activeItem = player.getActiveItem()
+	if activeItem ~= nil then
+		if activeItem.getUseAction() == "EAT" then
+			for index, food in ipairs(FavoriteFood) do
+				if food == activeItem.getType() and EmotionCount <= 0 then
+					setEmotion(3, 0)
+					EatingFavoriteFood = true
+				end
+			end
+		end
+	end
+	if foodPercentage > FoodPrev and EatingFavoriteFood then
+		local playerPos = player.getPos()
+		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+		setEmotion(4, 20)
+		EatingFavoriteFood = false
+	end
+	if activeItem == nil then
+		EatingFavoriteFood = false
+	end
+
 	--寝ている時に目と閉じる
 	if player.getAnimation() == "SLEEPING" then
 		setEmotion(3, 0)
@@ -273,6 +299,7 @@ function tick()
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
+	FoodPrev = foodPercentage
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
