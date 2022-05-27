@@ -345,7 +345,12 @@ function render(delta)
 	if lookRotDelta >= 180 then
 		lookRotDelta = 360 - lookRotDelta
 	end
-	table.insert(VelocityData[3], lookRotDelta * Fps)
+	local guiName = client.getOpenScreen()
+	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" then
+		table.insert(VelocityData[3], lookRotDelta * Fps)
+	else
+		table.insert(VelocityData[3], 0)
+	end
 	for index, velocityTable in ipairs(VelocityData) do
 		while #velocityTable > Fps * 0.25 do
 			table.remove(velocityTable, 1)
