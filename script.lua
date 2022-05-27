@@ -5,10 +5,10 @@ HideArmor = false --防具を非表示にするかどうか
 AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
-LookRotPrev = 0 --前チックの向いている方向
 HealthPercentagePrev = 0 --前チックのHPの割合
 MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}, {}} --速度データ：1. 横, 2. 縦, 3. 角速度
+LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
@@ -345,7 +345,7 @@ function render(delta)
 	if lookRotDelta >= 180 then
 		lookRotDelta = 360 - lookRotDelta
 	end
-	table.insert(VelocityData[3], lookRotDelta)
+	table.insert(VelocityData[3], lookRotDelta * Fps)
 	for index, velocityTable in ipairs(VelocityData) do
 		while #velocityTable > Fps * 0.25 do
 			table.remove(velocityTable, 1)
@@ -376,8 +376,8 @@ function render(delta)
 			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		else
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 20, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 20, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
 	end
 
