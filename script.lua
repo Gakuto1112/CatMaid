@@ -13,8 +13,7 @@ Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
 FavoriteFood = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "minecraft:cooked_salmon"} --食べる時にニッコリさせる食べ物
-EatingFavoriteFood = false --お気に入りの食べ物を食べているかどうか
-FoodPrev = 0 --前チックでの満腹度
+EatCount = 0 --食べ物を食べるカウント
 EmotionCount = 0; --エモートカウント
 WinkCount = 200 --瞬きのカウント
 
@@ -271,23 +270,31 @@ function tick()
 	local activeItem = player.getActiveItem()
 	if activeItem ~= nil then
 		if activeItem.getUseAction() == "EAT" then
+			local foodFound = false
 			for index, food in ipairs(FavoriteFood) do
-				if food == activeItem.getType() and EmotionCount <= 0 then
-					setEmotion(3, 0)
-					EatingFavoriteFood = true
+				if food == activeItem.getType() then
+					foodFound = true
+					EatCount = EatCount + 1
+					if EmotionCount <= 0 then
+						setEmotion(3, 0)
+					end
 				end
 			end
+			if not foodFound then
+				EatCount = 0
+			end
+		else
+			EatCount = 0
 		end
+	else
+		EatCount = 0
 	end
-	if foodPercentage > FoodPrev and EatingFavoriteFood then
+	if EatCount >= 32 then
 		local playerPos = player.getPos()
 		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 		setEmotion(4, 20)
-		EatingFavoriteFood = false
-	end
-	if activeItem == nil then
-		EatingFavoriteFood = false
+		EatCount = 0
 	end
 
 	--寝ている時に目と閉じる
@@ -299,7 +306,6 @@ function tick()
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
-	FoodPrev = foodPercentage
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
