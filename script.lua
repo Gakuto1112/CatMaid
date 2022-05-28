@@ -1,7 +1,11 @@
+--設定値
+SkinName = "Vinny"
+
 --変数
 BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
+UseSkinName = false --スキン名を使用するかどうか
 AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
@@ -52,6 +56,7 @@ end
 BellSound = loadBoolean(BellSound, "BellSound")
 WegTail = loadBoolean(WegTail, "WegTail")
 HideArmor = loadBoolean(HideArmor, "HideArmor")
+UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
 
 --デフォルトのプレイヤーモデルを削除
 for name, vanillaModel in pairs(vanilla_model) do
@@ -98,12 +103,11 @@ action_wheel.SLOT_2.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_2.setFunction(function()
 	if BellSound then
 		action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
-		data.save("BellSound", false)
 	else
 		action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
-		data.save("BellSound", true)
 	end
 	BellSound = not BellSound
+	data.save("BellSound", BellSound)
 end)
 
 --アクション3： 尻尾のアニメーションの切り替え
@@ -120,13 +124,12 @@ action_wheel.SLOT_3.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
 		animation["wag_tail"].stop()
-		data.save("WegTail", false)
 	else
 		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 		animation["wag_tail"].stop()
-		data.save("WegTail", true)
 	end
 	WegTail = not WegTail
+	data.save("WegTail", WegTail)
 end)
 
 --アクション4: 防具の表示/非表示
@@ -147,18 +150,53 @@ action_wheel.SLOT_4.setFunction(function()
 		for key, armorPart in pairs(armor_model) do
 			armorPart.setEnabled(true)
 		end
-		data.save("HideArmor", false)
 	else
 		action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
 		for key, armorPart in pairs(armor_model) do
 			armorPart.setEnabled(false)
 		end
-		data.save("HideArmor", true)
 	end
 	HideArmor = not HideArmor
+	data.save("HideArmor", HideArmor)
 end)
 
+--アクションバー5: 名前の変更（スキン名を使用するかどうか）
+if SkinName ~= "" then
+	if UseSkinName then
+		action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+	else
+		action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+	end
+	action_wheel.SLOT_5.setItem("minecraft:name_tag")
+	action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
+	action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
+	action_wheel.SLOT_5.setFunction(function()
+		local playerName = player.getName()
+		if UseSkinName then
+			action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+			print("あなたは §a"..playerName.."§r と表示されます。")
+		else
+			action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+			print("あなたは §a"..SkinName.."§r と表示されます。")
+			print("[§c注意§r] この名前はFiguraを導入しているかつ、あなたの信用度を\"Trusted\"以上に設定しているプレイヤーのみに表示されます。")
+		end
+		UseSkinName = not UseSkinName
+		data.save("UseSkinName", UseSkinName)
+	end)
+else
+	UseSkinName = false
+end
+
 function tick()
+	--プレイヤー名の設定
+	for name, namePlate in pairs(nameplate) do
+		if UseSkinName then
+			namePlate.setText(SkinName)
+		else
+			namePlate.setText(player.getName())
+		end
+	end	
+
 	--[[鈴の音
 
 		- xz平面上を1.8m移動する毎に再生する。
