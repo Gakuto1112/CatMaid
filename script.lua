@@ -16,6 +16,8 @@ FavoriteFood = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "mi
 EatCount = 0 --食べ物を食べるカウント
 EmotionCount = 0; --エモートカウント
 WinkCount = 200 --瞬きのカウント
+AnimationPrev = "" --前チックのアニメーション
+MeowCount = 0 --にゃーのカウント
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -52,7 +54,7 @@ WegTail = loadBoolean(WegTail, "WegTail")
 HideArmor = loadBoolean(HideArmor, "HideArmor")
 
 --デフォルトのプレイヤーモデルを削除
-for key, vanillaModel in pairs(vanilla_model) do
+for name, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
@@ -66,8 +68,7 @@ spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --尻尾のアニメーション
-animation["wag_tail"].setLoopMode("LOOP")
-animation["wag_tail"].start()
+animation["wag_tail"].play()
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生）。
@@ -79,8 +80,10 @@ action_wheel.SLOT_1.setFunction(function()
 	local playerPos = player.getPos()
 	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-	animation["meow"].start()
+	animation["meow"].play()
 	setEmotion(4, 20)
+	armor_model.HELMET.setRot({0, 0, math.rad(5)})
+	MeowCount = 1
 end)
 
 --アクション2： 鈴の音の切り替え
@@ -108,7 +111,7 @@ if WegTail then
 	action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 else
 	action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
-	animation["wag_tail"].cease()
+	animation["wag_tail"].stop()
 end
 action_wheel.SLOT_3.setItem("minecraft:feather")
 action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
@@ -116,11 +119,11 @@ action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_3.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
-		animation["wag_tail"].cease()
+		animation["wag_tail"].stop()
 		data.save("WegTail", false)
 	else
 		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
-		animation["wag_tail"].start()
+		animation["wag_tail"].stop()
 		data.save("WegTail", true)
 	end
 	WegTail = not WegTail
@@ -192,11 +195,12 @@ function tick()
 	end
 
 	--耳のアニメーション
+	local leftHanded = player.isLeftHanded()
 	if AnimationCount >= 300 then
-		if player.isLeftHanded() then
-			animation["left_ear_bend"].start()
+		if leftHanded then
+			animation["left_ear_bend"].play()
 		else
-			animation["right_ear_bend"].start()
+			animation["right_ear_bend"].play()
 		end
 		AnimationCount = 0
 	end
@@ -214,6 +218,7 @@ function tick()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
+	local playerAnimation = player.getAnimation()
 	local rightEar = model.Head.Ears.RightEar
 	local leftEar = model.Head.Ears.LeftEar
 	local tail1 = model.Body.Tail
@@ -238,8 +243,10 @@ function tick()
 			rightEar.setRot({-15, 0, 0})
 			leftEar.setRot({-15, 0, 0})
 		end
-		tail1.setRot({40, 0, 0})
-		tail2.setRot({-15, 0, 0})
+		if playerAnimation ~= "SLEEPING" then
+			tail1.setRot({40, 0, 0})
+			tail2.setRot({-15, 0, 0})
+		end
 		animation["wag_tail"].setSpeed(0.75)
 		if EmotionCount <= 0 then
 			setEmotion(0, 0)
@@ -247,8 +254,10 @@ function tick()
 	else
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
-		tail1.setRot({90, 0, 0})
-		tail2.setRot({0, 0, 0})
+		if playerAnimation ~= "SLEEPING" then
+			tail1.setRot({90, 0, 0})
+			tail2.setRot({0, 0, 0})
+		end
 		animation["wag_tail"].setSpeed(0.5)
 		if EmotionCount <= 0 then
 			setEmotion(2, 0)
@@ -298,14 +307,59 @@ function tick()
 	end
 
 	--寝ている時に目と閉じる
-	if player.getAnimation() == "SLEEPING" then
+	local mainHeldItem = player.getHeldItem(1)
+	local offHeldItem = player.getHeldItem(2)
+	local rightArm = model.RightArm
+	local leftArm = model.LeftArm
+	if playerAnimation == "SLEEPING" then
+		if AnimationPrev ~= "SLEEPING" then
+			if (mainHeldItem ~= nil and not leftHanded) or (offHeldItem ~= nil and leftHanded) then
+				rightArm.setRot({20, 0, 0})
+			end
+			if (offHeldItem ~= nil and not leftHanded) or (mainHeldItem ~= nil and leftHanded) then
+				leftArm.setRot({20, 0, 0})
+			end
+			tail1.setRot({0, 0, 0})
+			tail2.setRot({0, 0, 0})
+			camera.FIRST_PERSON.setPos({0, 0.05, -0.2})
+			camera.FIRST_PERSON.setRot({0, 180, 0})
+			armor_model.HELMET.setPos({0, 0, -2})
+			armor_model.HELMET.setRot({math.rad(-80), math.rad(180), 0})
+			armor_model.CHESTPLATE.setRot({0, math.rad(180), 0})
+			armor_model.LEGGINGS.setRot({0, math.rad(180), 0})
+			armor_model.BOOTS.setRot({0, math.rad(180), 0})
+			elytra_model.RIGHT_WING.setPos({8, 0, -2})
+			elytra_model.LEFT_WING.setPos({-8, 0, -2})
+			elytra_model.RIGHT_WING.setRot({0, math.rad(180), 0})
+			elytra_model.LEFT_WING.setRot({0, math.rad(180), 0})
+			animation["wag_tail"].cease()
+			animation["sleep"].play()
+		end
 		setEmotion(3, 0)
+	elseif AnimationPrev == "SLEEPING" then
+		rightArm.setRot({0, 0, 0})
+		leftArm.setRot({0, 0, 0})
+		camera.FIRST_PERSON.setPos({0, 0, 0})
+		camera.FIRST_PERSON.setRot({0, 0, 0})
+		armor_model.HELMET.setPos({0, 0, 0})
+		for name, armorModel in pairs(armor_model) do
+			armorModel.setRot({0, 0, 0})
+		end
+		for name, elytraModel in pairs(elytra_model) do
+			elytraModel.setPos({0, 0, 0})
+			elytraModel.setRot({0, 0, 0})
+		end
+		if WegTail then
+			animation["wag_tail"].start()
+		end
+		animation["sleep"].stop()
 	end
 
 	--チック終了処理
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
+	AnimationPrev = playerAnimation
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
@@ -320,6 +374,13 @@ function tick()
 		WinkCount = 200
 	else
 		WinkCount = WinkCount - 1
+	end
+	if MeowCount >= 1 then
+		if MeowCount >= 21 then
+			armor_model.HELMET.setRot({0, 0, 0})
+			MeowCount = 0
+		end
+		MeowCount = MeowCount + 1
 	end
 end
 
@@ -374,12 +435,12 @@ function render(delta)
 	table.insert(VelocityData[2], velocity.y)
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
-	local lookRotDelta = math.abs(lookRot - LookRotPrev)
-	if lookRotDelta >= 180 then
-		lookRotDelta = 360 - lookRotDelta
-	end
 	local guiName = client.getOpenScreen()
 	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" then
+		local lookRotDelta = math.abs(lookRot - LookRotPrev)
+		if lookRotDelta >= 180 then
+			lookRotDelta = 360 - lookRotDelta
+		end	
 		table.insert(VelocityData[3], lookRotDelta * Fps)
 	else
 		table.insert(VelocityData[3], 0)
