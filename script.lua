@@ -6,6 +6,7 @@ BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
 UseSkinName = false --スキン名を使用するかどうか
+ShowNameWarning = true --名前表示関する注意を表示するかどうか
 AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
@@ -57,6 +58,7 @@ BellSound = loadBoolean(BellSound, "BellSound")
 WegTail = loadBoolean(WegTail, "WegTail")
 HideArmor = loadBoolean(HideArmor, "HideArmor")
 UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
+ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
 
 --デフォルトのプレイヤーモデルを削除
 for name, vanillaModel in pairs(vanilla_model) do
@@ -174,11 +176,15 @@ if SkinName ~= "" then
 		local playerName = player.getName()
 		if UseSkinName then
 			action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
-			print("あなたは §a"..playerName.."§r と表示されます。")
+			print("あなたは§a"..playerName.."§rと表示されます。")
 		else
 			action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
-			print("あなたは §a"..SkinName.."§r と表示されます。")
-			print("[§c注意§r] この名前はFiguraを導入しているかつ、あなたの信用度を\"Trusted\"以上に設定しているプレイヤーのみに表示されます。")
+			print("あなたは§a"..SkinName.."§rと表示されます。")
+			if ShowNameWarning then
+				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
+				ShowNameWarning = false
+				data.save("ShowNameWarning", ShowNameWarning)
+			end
 		end
 		UseSkinName = not UseSkinName
 		data.save("UseSkinName", UseSkinName)
