@@ -355,12 +355,25 @@ function tick()
 	local offHeldItem = player.getHeldItem(2)
 	local rightArm = model.RightArm
 	local leftArm = model.LeftArm
+
+	function hasItem(heldItem)
+		if heldItem ~= nil then
+			if heldItem.getType() == "minecraft:air" then
+				return false
+			else
+				return true
+			end
+		else
+			return false
+		end
+	end
+
 	if playerAnimation == "SLEEPING" then
 		if AnimationPrev ~= "SLEEPING" then
-			if (mainHeldItem ~= nil and not leftHanded) or (offHeldItem ~= nil and leftHanded) then
+			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 				rightArm.setRot({20, 0, 0})
 			end
-			if (offHeldItem ~= nil and not leftHanded) or (mainHeldItem ~= nil and leftHanded) then
+			if (hasItem(offHeldItem) and not leftHanded) or (hasItem(mainHeldItem) and leftHanded) then
 				leftArm.setRot({20, 0, 0})
 			end
 			tail1.setRot({0, 0, 0})
