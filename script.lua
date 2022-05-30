@@ -102,12 +102,26 @@ function ping.setUseSkinName(bool)
 	UseSkinName = bool
 end
 
-function ping.action1()
+function ping.meow()
 	local playerPos = player.getPos()
 	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
 	setEmotion(3, 3, 1, 20)
+	armor_model.HELMET.setRot({0, 0, math.rad(5)})
+	MeowCount = 1
+end
+
+function ping.wink()
+	local playerPos = player.getPos()
+	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+	animation["meow"].play()
+	if player.isLeftHanded() then
+		setEmotion(3, -1, 1, 20)
+	else
+		setEmotion(-1, 3, 1, 20)
+	end
 	armor_model.HELMET.setRot({0, 0, math.rad(5)})
 	MeowCount = 1
 end
@@ -138,92 +152,101 @@ spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
---アクション1： 「ニャー」と鳴く（ネコのサウンド再生）。
-action_wheel.SLOT_1.setTitle("「ニャー」と鳴く")
+--アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
+action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
 action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_1.setFunction(function()
-	ping.action1()
+	ping.meow()
 end)
 
---アクション2： 鈴の音の切り替え
-if BellSound then
-	action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
-else
-	action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
-end
-action_wheel.SLOT_2.setItem("minecraft:bell")
-action_wheel.SLOT_2.setColor({200/255, 200/255, 200/255})
+--アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
+action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+action_wheel.SLOT_2.setItem("minecraft:cod")
+action_wheel.SLOT_2.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_2.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_2.setFunction(function()
+	ping.wink()
+end)
+
+--アクション3： 鈴の音の切り替え
+if BellSound then
+	action_wheel.SLOT_3.setTitle("鈴の音：§cオフ§rにする")
+else
+	action_wheel.SLOT_3.setTitle("鈴の音：§aオン§rにする")
+end
+action_wheel.SLOT_3.setItem("minecraft:bell")
+action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_3.setFunction(function()
 	if BellSound then
-		action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
+		action_wheel.SLOT_3.setTitle("鈴の音：§aオン§rにする")
 	else
-		action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+		action_wheel.SLOT_3.setTitle("鈴の音：§cオフ§rにする")
 	end
 	BellSound = not BellSound
 	ping.setBellSound(BellSound)
 	data.save("BellSound", BellSound)
 end)
 
---アクション3： 尻尾のアニメーションの切り替え
+--アクション4： 尻尾のアニメーションの切り替え
 if WegTail then
-	action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+	action_wheel.SLOT_4.setTitle("尻尾振り：§cオフ§rにする")
 else
-	action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
+	action_wheel.SLOT_4.setTitle("尻尾振り：§aオン§rにする")
 end
-action_wheel.SLOT_3.setItem("minecraft:feather")
-action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
-action_wheel.SLOT_3.setFunction(function()
+action_wheel.SLOT_4.setItem("minecraft:feather")
+action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_4.setFunction(function()
 	if WegTail then
-		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
+		action_wheel.SLOT_4.setTitle("尻尾振り：§aオン§rにする")
 	else
-		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+		action_wheel.SLOT_4.setTitle("尻尾振り：§cオフ§rにする")
 	end
 	WegTail = not WegTail
 	ping.setWegTail(WegTail)
 	data.save("WegTail", WegTail)
 end)
 
---アクション4: 防具の表示/非表示
+--アクション5: 防具の表示/非表示
 if HideArmor then
-	action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
+	action_wheel.SLOT_5.setTitle("防具：§a表示§rする")
 else
-	action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+	action_wheel.SLOT_5.setTitle("防具：§c非表示§rにする")
 end
-action_wheel.SLOT_4.setItem("minecraft:iron_chestplate")
-action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
-action_wheel.SLOT_4.setFunction(function()
+action_wheel.SLOT_5.setItem("minecraft:iron_chestplate")
+action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_5.setFunction(function()
 	if HideArmor then
-		action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+		action_wheel.SLOT_5.setTitle("防具：§c非表示§rにする")
 	else
-		action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
+		action_wheel.SLOT_5.setTitle("防具：§a表示§rする")
 	end
 	HideArmor = not HideArmor
 	ping.setHideArmor(HideArmor)
 	data.save("HideArmor", HideArmor)
 end)
 
---アクションバー5: 名前の変更（スキン名を使用するかどうか）
+--アクションバー6: 名前の変更（スキン名を使用するかどうか）
 if SkinName ~= "" then
 	if UseSkinName then
-		action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+		action_wheel.SLOT_6.setTitle("名前：§aプレイヤー名§rにする")
 	else
-		action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+		action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
 	end
-	action_wheel.SLOT_5.setItem("minecraft:name_tag")
-	action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
-	action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
-	action_wheel.SLOT_5.setFunction(function()
+	action_wheel.SLOT_6.setItem("minecraft:name_tag")
+	action_wheel.SLOT_6.setColor({200/255, 200/255, 200/255})
+	action_wheel.SLOT_6.setHoverColor({255/255, 255/255, 255/255})
+	action_wheel.SLOT_6.setFunction(function()
 		local playerName = player.getName()
 		if UseSkinName then
-			action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+			action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
 			print("あなたは§a"..playerName.."§rと表示されます。")
 		else
-			action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+			action_wheel.SLOT_6.setTitle("名前：§aプレイヤー名§rにする")
 			print("あなたは§a"..SkinName.."§rと表示されます。")
 			if ShowNameWarning then
 				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
