@@ -23,6 +23,7 @@ EmotionCount = 0; --エモートカウント
 WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
 MeowCount = 0 --にゃーのカウント
+SleepSoundCount = 0 --寝る時の音声カウント
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -282,6 +283,7 @@ function tick()
 	]]
 	local velocity = player.getVelocity()
 	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
+	local playerPos = player.getPos()
 	if BellSound then
 		local sneaking = player.isSneaking()
 		local underwater = player.isUnderwater()
@@ -289,18 +291,18 @@ function tick()
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
 				if sneaking or underwater then
-					sound.playCustomSound("Bell", player.getPos(), {0.1, 1})
+					sound.playCustomSound("Bell", playerPos, {0.1, 1})
 				else
-					sound.playCustomSound("Bell", player.getPos(), {0.5, 1})
+					sound.playCustomSound("Bell", playerPos, {0.5, 1})
 				end
 			end
 			WalkDistance = 0
 		end
 		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
 			if sneaking or underwater then
-				sound.playCustomSound("Bell", player.getPos(), {0.1, 1})
+				sound.playCustomSound("Bell", playerPos, {0.1, 1})
 			else
-				sound.playCustomSound("Bell", player.getPos(), {0.5, 1})
+				sound.playCustomSound("Bell", playerPos, {0.5, 1})
 			end
 			JumpBellCooldown = 10
 		end
@@ -380,11 +382,11 @@ function tick()
 	--被ダメージ時、猫のサウンド再生
 	local maxHealth = player.getMaxHealth()
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
-		sound.playSound("minecraft:entity.cat.hurt", player.getPos(), {1, 1.5})
+		sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
 		setEmotion(1, 1, 0, 8)
 	end
 	if player.getDeathTime() == 1 then
-		sound.playSound("minecraft:entity.cat.death", player.getPos(), {1, 1.5})
+		sound.playSound("minecraft:entity.cat.death", playerPos, {1, 1.5})
 		setEmotion(1, 1, 0, 20)
 	end
 
@@ -437,7 +439,6 @@ function tick()
 		EatCount = 0
 	end
 	if EatCount >= 32 then
-		local playerPos = player.getPos()
 		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 		setEmotion(3, 3, 1, 20)
@@ -461,6 +462,17 @@ function tick()
 	end
 
 	if playerAnimation == "SLEEPING" then
+		if SleepSoundCount <= 0 then
+			if math.random() >= 0.95 then
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1})
+				SleepSoundCount = 20
+			else
+				sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
+				SleepSoundCount = 65
+			end
+		else
+			SleepSoundCount = SleepSoundCount - 1
+		end
 		if AnimationPrev ~= "SLEEPING" then
 			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 				rightArm.setRot({20, 0, 0})
@@ -502,6 +514,8 @@ function tick()
 			animation["wag_tail"].start()
 		end
 		animation["sleep"].stop()
+	else
+		SleepSoundCount = 0
 	end
 
 	--チック終了処理
