@@ -53,11 +53,56 @@ function setEmotion(emotionId, count)
 	EmotionCount = count
 end
 
+--ping関数
+function ping.setBellSound(bool)
+	BellSound = bool
+end
+
+function ping.setWegTail(bool)
+	WegTail = bool
+	if WegTail then
+		animation["wag_tail"].play()
+	else
+		animation["wag_tail"].stop()
+	end
+end
+
+function ping.setHideArmor(bool)
+	HideArmor = bool
+	if HideArmor then
+		for key, armorPart in pairs(armor_model) do
+			armorPart.setEnabled(false)
+		end
+	else
+		for key, armorPart in pairs(armor_model) do
+			armorPart.setEnabled(true)
+		end
+	end
+end
+
+function ping.setUseSkinName(bool)
+	UseSkinName = bool
+end
+
+function ping.action1()
+	local playerPos = player.getPos()
+	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+	animation["meow"].play()
+	setEmotion(4, 20)
+	armor_model.HELMET.setRot({0, 0, math.rad(5)})
+	MeowCount = 1
+end
+
 --設定の読み込み
 BellSound = loadBoolean(BellSound, "BellSound")
+ping.setBellSound(BellSound)
 WegTail = loadBoolean(WegTail, "WegTail")
+ping.setWegTail(WegTail)
 HideArmor = loadBoolean(HideArmor, "HideArmor")
+ping.setHideArmor(HideArmor)
 UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
+ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
 
 --デフォルトのプレイヤーモデルを削除
@@ -74,9 +119,6 @@ model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
---尻尾のアニメーション
-animation["wag_tail"].play()
-
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生）。
 action_wheel.SLOT_1.setTitle("「ニャー」と鳴く")
@@ -84,13 +126,7 @@ action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_1.setFunction(function()
-	local playerPos = player.getPos()
-	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
-	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-	animation["meow"].play()
-	setEmotion(4, 20)
-	armor_model.HELMET.setRot({0, 0, math.rad(5)})
-	MeowCount = 1
+	ping.action1()
 end)
 
 --アクション2： 鈴の音の切り替え
@@ -109,6 +145,7 @@ action_wheel.SLOT_2.setFunction(function()
 		action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
 	end
 	BellSound = not BellSound
+	ping.setBellSound(BellSound)
 	data.save("BellSound", BellSound)
 end)
 
@@ -117,7 +154,6 @@ if WegTail then
 	action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
 else
 	action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
-	animation["wag_tail"].stop()
 end
 action_wheel.SLOT_3.setItem("minecraft:feather")
 action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
@@ -125,21 +161,17 @@ action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_3.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
-		animation["wag_tail"].stop()
 	else
 		action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
-		animation["wag_tail"].stop()
 	end
 	WegTail = not WegTail
+	ping.setWegTail(WegTail)
 	data.save("WegTail", WegTail)
 end)
 
 --アクション4: 防具の表示/非表示
 if HideArmor then
 	action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
-	for key, armorPart in pairs(armor_model) do
-		armorPart.setEnabled(false)
-	end
 else
 	action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
 end
@@ -149,16 +181,11 @@ action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_4.setFunction(function()
 	if HideArmor then
 		action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
-		for key, armorPart in pairs(armor_model) do
-			armorPart.setEnabled(true)
-		end
 	else
 		action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
-		for key, armorPart in pairs(armor_model) do
-			armorPart.setEnabled(false)
-		end
 	end
 	HideArmor = not HideArmor
+	ping.setHideArmor(HideArmor)
 	data.save("HideArmor", HideArmor)
 end)
 
@@ -187,6 +214,7 @@ if SkinName ~= "" then
 			end
 		end
 		UseSkinName = not UseSkinName
+		ping.setUseSkinName(UseSkinName)
 		data.save("UseSkinName", UseSkinName)
 	end)
 else
