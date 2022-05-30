@@ -45,11 +45,29 @@ function getTableAverage(tagetTable)
 	return sum / #tagetTable
 end
 
-function setEmotion(emotionId, count)
+function setEmotion(rightEye, leftEye, mouth, count)
 	--表情ID：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時）, 4. 笑顔
-	model.Head.FaceParts.RightEye.setUV{(emotionId * 16) / 96, 0 / 112} 
-	model.Head.FaceParts.LeftEye.setUV{(emotionId * 16) / 96, 0 / 112} 
-	model.Head.FaceParts.Mouth.setUV{(emotionId * 16) / 96, 0 / 112} 
+	local healthPercentage = player.getHealthPercentage()
+	local foodPercentage = player.getFood() / 20
+	if rightEye < 0 then
+		if healthPercentage <= 0.2 or foodPercentage <= 0.3 then
+			model.Head.FaceParts.RightEye.setUV({32 / 96, 0 / 112})
+		else
+			model.Head.FaceParts.RightEye.setUV({0 / 96, 0 / 112})
+		end
+	else
+		model.Head.FaceParts.RightEye.setUV{(rightEye * 16) / 96, 0 / 112} 
+	end
+	if leftEye < 0 then
+		if healthPercentage <= 0.2 or foodPercentage <= 0.3 then
+			model.Head.FaceParts.LeftEye.setUV{32 / 96, 0 / 112} 
+		else
+			model.Head.FaceParts.LeftEye.setUV{0 / 96, 0 / 112} 
+		end
+	else
+		model.Head.FaceParts.LeftEye.setUV{(leftEye * 16) / 96, 0 / 112} 
+	end
+	model.Head.FaceParts.Mouth.setUV{(mouth * 16) / 96, 0 / 112} 
 	EmotionCount = count
 end
 
@@ -89,7 +107,7 @@ function ping.action1()
 	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
-	setEmotion(4, 20)
+	setEmotion(3, 3, 1, 20)
 	armor_model.HELMET.setRot({0, 0, math.rad(5)})
 	MeowCount = 1
 end
@@ -308,7 +326,7 @@ function tick()
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(1)
 		if EmotionCount <= 0 then
-			setEmotion(0, 0)
+			setEmotion(0, 0, 0, 0)
 		end
 	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
 		if not wet then
@@ -321,7 +339,7 @@ function tick()
 		end
 		animation["wag_tail"].setSpeed(0.75)
 		if EmotionCount <= 0 then
-			setEmotion(0, 0)
+			setEmotion(0, 0, 0, 0)
 		end
 	else
 		rightEar.setRot({-30, 0, 0})
@@ -332,7 +350,7 @@ function tick()
 		end
 		animation["wag_tail"].setSpeed(0.5)
 		if EmotionCount <= 0 then
-			setEmotion(2, 0)
+			setEmotion(2, 2, 0, 0)
 		end
 	end
 
@@ -340,11 +358,36 @@ function tick()
 	local maxHealth = player.getMaxHealth()
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
 		sound.playSound("minecraft:entity.cat.hurt", player.getPos(), {1, 1.5})
-		setEmotion(1, 8)
+		setEmotion(1, 1, 0, 8)
 	end
 	if player.getDeathTime() == 1 then
 		sound.playSound("minecraft:entity.cat.death", player.getPos(), {1, 1.5})
-		setEmotion(1, 8)
+		setEmotion(1, 1, 0, 20)
+	end
+
+	--特定のアイテム使用時に片眼を瞑る。
+	local closeEyeItems = {"minecraft:bow", "minecraft:trident", "minecraft:spyglass"}
+	local mainHeldItem = player.getHeldItem(1)
+	local offHeldItem = player.getHeldItem(2)
+	local usingItem = player.isUsingItem()
+	local activeHand = player.getActiveHand()
+
+	local function hasCloseEyeItems(heldItem)
+		if heldItem ~= nil then
+			for index, item in ipairs(closeEyeItems) do
+				if item == heldItem.getType() then
+					return true
+				end
+			end
+			return false
+		end
+		return false
+	end
+
+	if ((hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and not leftHanded) or (hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and leftHanded)) and usingItem then
+		setEmotion(-1, 3, 0, 0)
+	elseif ((hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and not leftHanded) or (hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and leftHanded)) and usingItem then
+		setEmotion(3, -1, 0, 0)
 	end
 
 	--特定の食べ物を食べる時にニッコリさせる。
@@ -357,7 +400,7 @@ function tick()
 					foodFound = true
 					EatCount = EatCount + 1
 					if EmotionCount <= 0 then
-						setEmotion(3, 0)
+						setEmotion(3, 3, 0, 0)
 					end
 				end
 			end
@@ -374,17 +417,15 @@ function tick()
 		local playerPos = player.getPos()
 		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-		setEmotion(4, 20)
+		setEmotion(3, 3, 1, 20)
 		EatCount = 0
 	end
 
 	--寝ている時に目と閉じる
-	local mainHeldItem = player.getHeldItem(1)
-	local offHeldItem = player.getHeldItem(2)
 	local rightArm = model.RightArm
 	local leftArm = model.LeftArm
 
-	function hasItem(heldItem)
+	local function hasItem(heldItem)
 		if heldItem ~= nil then
 			if heldItem.getType() == "minecraft:air" then
 				return false
@@ -420,7 +461,7 @@ function tick()
 			animation["wag_tail"].cease()
 			animation["sleep"].play()
 		end
-		setEmotion(3, 0)
+		setEmotion(3, 3, 0, 0)
 	elseif AnimationPrev == "SLEEPING" then
 		rightArm.setRot({0, 0, 0})
 		leftArm.setRot({0, 0, 0})
@@ -454,7 +495,7 @@ function tick()
 	end
 	if WinkCount <= 0 then
 		if EmotionCount <= 0 then
-			setEmotion(3, 1)
+			setEmotion(3, 3, 0, 1)
 		end
 		WinkCount = 200
 	else
