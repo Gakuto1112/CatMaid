@@ -559,7 +559,7 @@ function render(delta)
 	local frontHair = model.Body.Hairs.FrontHair
 	local backHair = model.Body.Hairs.BackHair
 	local skirt = model.Body.Skirt
-	local ribbon = model.Body.Ribbon
+	local ribbon = model.Body.BackRibbon
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
