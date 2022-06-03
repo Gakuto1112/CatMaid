@@ -291,18 +291,18 @@ function tick()
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
 				if sneaking or underwater then
-					sound.playCustomSound("Bell", playerPos, {0.1, 1})
+					sound.playCustomSound("Bell", playerPos, {0.2, math.random(1, 3)})
 				else
-					sound.playCustomSound("Bell", playerPos, {0.5, 1})
+					sound.playCustomSound("Bell", playerPos, {1, math.random(1, 3)})
 				end
 			end
 			WalkDistance = 0
 		end
 		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
 			if sneaking or underwater then
-				sound.playCustomSound("Bell", playerPos, {0.1, 1})
+				sound.playCustomSound("Bell", playerPos, {0.2, math.random(1, 3)})
 			else
-				sound.playCustomSound("Bell", playerPos, {0.5, 1})
+				sound.playCustomSound("Bell", playerPos, {1, math.random(1, 3)})
 			end
 			JumpBellCooldown = 10
 		end
