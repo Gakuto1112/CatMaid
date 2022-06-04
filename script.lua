@@ -47,11 +47,15 @@ function getTableAverage(tagetTable)
 end
 
 function setEmotion(rightEye, leftEye, mouth, count)
-	--表情ID：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時）, 4. 笑顔
-	local healthPercentage = player.getHealthPercentage()
-	local foodPercentage = player.getFood() / 20
+	--[[表情ID
+
+		目：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時やスマイル等）
+		口：0. 通常（閉じている）, 1. 開いている（スマイル
+
+	]]
+	local tired = player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3
 	if rightEye < 0 then
-		if healthPercentage <= 0.2 or foodPercentage <= 0.3 then
+		if tired then
 			model.Head.FaceParts.RightEye.setUV({32 / 96, 0 / 112})
 		else
 			model.Head.FaceParts.RightEye.setUV({0 / 96, 0 / 112})
@@ -60,7 +64,7 @@ function setEmotion(rightEye, leftEye, mouth, count)
 		model.Head.FaceParts.RightEye.setUV{(rightEye * 16) / 96, 0 / 112} 
 	end
 	if leftEye < 0 then
-		if healthPercentage <= 0.2 or foodPercentage <= 0.3 then
+		if tired then
 			model.Head.FaceParts.LeftEye.setUV{32 / 96, 0 / 112} 
 		else
 			model.Head.FaceParts.LeftEye.setUV{0 / 96, 0 / 112} 
@@ -328,7 +332,6 @@ function tick()
 		20% - 0%	30% - 0%	尻尾下げ	50%
 		
 	]]
-
 	local wet = player.isWet()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
@@ -464,7 +467,7 @@ function tick()
 	if playerAnimation == "SLEEPING" then
 		if SleepSoundCount <= 0 then
 			if math.random() >= 0.95 then
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1})
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
 				SleepSoundCount = 20
 			else
 				sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
