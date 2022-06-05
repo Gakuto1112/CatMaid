@@ -80,6 +80,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
    - 目と口だけは他の部位と比べて2倍の解像度になっています。
    - 目は左から、通常の目、ダメージを受けた時の目、低HP時、低満腹度時の目、閉じている目です。
    - 口は左から閉じている口、開いている口です。
+9. 背中のリボン
 
 ## クレジット
 - 鈴の音：音人「鈴の音06」（ https://on-jin.com/sound/sei.php?bunr=%E3%83%99%E3%83%AB%E3%83%BB%E9%90%98%E3%83%BB%E9%88%B4&kate=%E9%81%93%E5%85%B7 ）
