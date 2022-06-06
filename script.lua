@@ -2,12 +2,12 @@
 SkinName = "Vinny"
 
 --変数
+MeowSound = true --鳴き声を発するかどうか
 BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
 UseSkinName = false --スキン名を使用するかどうか
 ShowNameWarning = true --名前表示関する注意を表示するかどうか
-AnimationCount = 0 --耳のアニメーションのタイミング変数
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
@@ -18,11 +18,14 @@ Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
 JumpBellCooldown = 0 --ジャンプした時の鈴の音のクールダウン
 FavoriteFood = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "minecraft:cooked_salmon"} --食べる時にニッコリさせる食べ物
+AnimationCount = 0 --耳のアニメーションのタイミング変数
+MeowCount = 300 --鳴き声のカウント
 EatCount = 0 --食べ物を食べるカウント
 EmotionCount = 0; --エモートカウント
+EmotionState = {0, 0, 0} --エモートの内部状態：0. 右目, 1. 左目, 2. 口
 WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
-MeowCount = 0 --にゃーのカウント
+MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
 
 function loadBoolean(variableToLoad, name)
@@ -50,39 +53,37 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	--[[表情ID
 
 		目：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時やスマイル等）
-		口：0. 通常（閉じている）, 1. 開いている（スマイル
+		口：0. 通常（閉じている）, 1. 開いている（スマイル）
+		
+		それぞれ負の数で、前の状態を維持する。
 
 	]]
-	local tired = player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3
-	if rightEye < 0 then
-		if tired then
-			model.Head.FaceParts.RightEye.setUV({32 / 96, 0 / 112})
-		else
-			model.Head.FaceParts.RightEye.setUV({0 / 96, 0 / 112})
-		end
-	else
-		model.Head.FaceParts.RightEye.setUV{(rightEye * 16) / 96, 0 / 112} 
+	if rightEye >= 0 then
+		EmotionState[1] = rightEye
 	end
-	if leftEye < 0 then
-		if tired then
-			model.Head.FaceParts.LeftEye.setUV{32 / 96, 0 / 112} 
-		else
-			model.Head.FaceParts.LeftEye.setUV{0 / 96, 0 / 112} 
-		end
-	else
-		model.Head.FaceParts.LeftEye.setUV{(leftEye * 16) / 96, 0 / 112} 
+	model.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
+	if leftEye >= 0 then
+		EmotionState[2] = leftEye
 	end
-	model.Head.FaceParts.Mouth.setUV{(mouth * 16) / 96, 0 / 112} 
+	model.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
+	if mouth >= 0 then
+		EmotionState[3] = mouth
+	end
+	model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112} 
 	EmotionCount = count
 end
 
 --ping関数
-function ping.setBellSound(bool)
-	BellSound = bool
+function ping.setMeowSound(boolToSet)
+	MeowSound = boolToSet
 end
 
-function ping.setWegTail(bool)
-	WegTail = bool
+function ping.setBellSound(boolToSet)
+	BellSound = boolToSet
+end
+
+function ping.setWegTail(boolToSet)
+	WegTail = boolToSet
 	if WegTail then
 		animation["wag_tail"].play()
 	else
@@ -90,8 +91,8 @@ function ping.setWegTail(bool)
 	end
 end
 
-function ping.setHideArmor(bool)
-	HideArmor = bool
+function ping.setHideArmor(boolToSet)
+	HideArmor = boolToSet
 	if HideArmor then
 		for key, armorPart in pairs(armor_model) do
 			armorPart.setEnabled(false)
@@ -103,23 +104,33 @@ function ping.setHideArmor(bool)
 	end
 end
 
-function ping.setUseSkinName(bool)
-	UseSkinName = bool
+function ping.setUseSkinName(boolToSet)
+	UseSkinName = boolToSet
 end
 
 function ping.meow()
+	local gamemode = player.getGamemode()
 	local playerPos = player.getPos()
-	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+		sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+	else
+		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	end
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
 	setEmotion(3, 3, 1, 20)
 	armor_model.HELMET.setRot({0, 0, math.rad(5)})
-	MeowCount = 1
+	MeowActionCount = 1
 end
 
 function ping.wink()
+	local gamemode = player.getGamemode()
 	local playerPos = player.getPos()
-	sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+		sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+	else
+		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	end
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
 	if player.isLeftHanded() then
@@ -128,10 +139,12 @@ function ping.wink()
 		setEmotion(-1, 3, 1, 20)
 	end
 	armor_model.HELMET.setRot({0, 0, math.rad(5)})
-	MeowCount = 1
+	MeowActionCount = 1
 end
 
 --設定の読み込み
+MeowSound = loadBoolean(MeowSound, "MeowSound")
+ping.setMeowSound(MeowSound)
 BellSound = loadBoolean(BellSound, "BellSound")
 ping.setBellSound(BellSound)
 WegTail = loadBoolean(WegTail, "WegTail")
@@ -175,83 +188,103 @@ action_wheel.SLOT_2.setFunction(function()
 	ping.wink()
 end)
 
---アクション3： 鈴の音の切り替え
-if BellSound then
-	action_wheel.SLOT_3.setTitle("鈴の音：§cオフ§rにする")
+--アクション3: 鳴き声の切り替え
+if MeowSound then
+	action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
 else
-	action_wheel.SLOT_3.setTitle("鈴の音：§aオン§rにする")
+	action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
 end
-action_wheel.SLOT_3.setItem("minecraft:bell")
+action_wheel.SLOT_3.setItem("minecraft:player_head{\"SkullOwner\":\"MHF_Ocelot\"}")
 action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_3.setFunction(function()
-	if BellSound then
-		action_wheel.SLOT_3.setTitle("鈴の音：§aオン§rにする")
+	if MeowSound then
+		action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
 	else
-		action_wheel.SLOT_3.setTitle("鈴の音：§cオフ§rにする")
+		action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
+	end
+	MeowSound = not MeowSound
+	ping.setMeowSound(MeowSound)
+	data.save("MeowSound", MeowSound)
+end)
+
+--アクション4： 鈴の音の切り替え
+if BellSound then
+	action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
+else
+	action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
+end
+action_wheel.SLOT_4.setItem("minecraft:bell")
+action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_4.setFunction(function()
+	if BellSound then
+		action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
+	else
+		action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
 	end
 	BellSound = not BellSound
 	ping.setBellSound(BellSound)
 	data.save("BellSound", BellSound)
 end)
 
---アクション4： 尻尾のアニメーションの切り替え
+--アクション5： 尻尾のアニメーションの切り替え
 if WegTail then
-	action_wheel.SLOT_4.setTitle("尻尾振り：§cオフ§rにする")
+	action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
 else
-	action_wheel.SLOT_4.setTitle("尻尾振り：§aオン§rにする")
+	action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
 end
-action_wheel.SLOT_4.setItem("minecraft:feather")
-action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
-action_wheel.SLOT_4.setFunction(function()
+action_wheel.SLOT_5.setItem("minecraft:feather")
+action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_5.setFunction(function()
 	if WegTail then
-		action_wheel.SLOT_4.setTitle("尻尾振り：§aオン§rにする")
+		action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
 	else
-		action_wheel.SLOT_4.setTitle("尻尾振り：§cオフ§rにする")
+		action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
 	end
 	WegTail = not WegTail
 	ping.setWegTail(WegTail)
 	data.save("WegTail", WegTail)
 end)
 
---アクション5: 防具の表示/非表示
+--アクション6: 防具の表示/非表示
 if HideArmor then
-	action_wheel.SLOT_5.setTitle("防具：§a表示§rする")
+	action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
 else
-	action_wheel.SLOT_5.setTitle("防具：§c非表示§rにする")
+	action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
 end
-action_wheel.SLOT_5.setItem("minecraft:iron_chestplate")
-action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
-action_wheel.SLOT_5.setFunction(function()
+action_wheel.SLOT_6.setItem("minecraft:iron_chestplate")
+action_wheel.SLOT_6.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_6.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_6.setFunction(function()
 	if HideArmor then
-		action_wheel.SLOT_5.setTitle("防具：§c非表示§rにする")
+		action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
 	else
-		action_wheel.SLOT_5.setTitle("防具：§a表示§rする")
+		action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
 	end
 	HideArmor = not HideArmor
 	ping.setHideArmor(HideArmor)
 	data.save("HideArmor", HideArmor)
 end)
 
---アクションバー6: 名前の変更（スキン名を使用するかどうか）
+--アクションバー7: 名前の変更（スキン名を使用するかどうか）
 if SkinName ~= "" then
 	if UseSkinName then
-		action_wheel.SLOT_6.setTitle("名前：§aプレイヤー名§rにする")
+		action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
 	else
-		action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
+		action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
 	end
-	action_wheel.SLOT_6.setItem("minecraft:name_tag")
-	action_wheel.SLOT_6.setColor({200/255, 200/255, 200/255})
-	action_wheel.SLOT_6.setHoverColor({255/255, 255/255, 255/255})
-	action_wheel.SLOT_6.setFunction(function()
+	action_wheel.SLOT_7.setItem("minecraft:name_tag")
+	action_wheel.SLOT_7.setColor({200/255, 200/255, 200/255})
+	action_wheel.SLOT_7.setHoverColor({255/255, 255/255, 255/255})
+	action_wheel.SLOT_7.setFunction(function()
 		local playerName = player.getName()
 		if UseSkinName then
-			action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
+			action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
 			print("あなたは§a"..playerName.."§rと表示されます。")
 		else
-			action_wheel.SLOT_6.setTitle("名前：§aプレイヤー名§rにする")
+			action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
 			print("あなたは§a"..SkinName.."§rと表示されます。")
 			if ShowNameWarning then
 				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
@@ -336,6 +369,7 @@ function tick()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
+	local tired = false
 	local playerAnimation = player.getAnimation()
 	local rightEar = model.Head.Ears.RightEar
 	local leftEar = model.Head.Ears.LeftEar
@@ -380,6 +414,7 @@ function tick()
 		if EmotionCount <= 0 then
 			setEmotion(2, 2, 0, 0)
 		end
+		tired = true
 	end
 
 	--被ダメージ時、猫のサウンド再生
@@ -468,6 +503,7 @@ function tick()
 		if SleepSoundCount <= 0 then
 			if math.random() >= 0.95 then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
+				setEmotion(3, 3, 1, 20)
 				SleepSoundCount = 20
 			else
 				sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
@@ -499,7 +535,9 @@ function tick()
 			animation["wag_tail"].cease()
 			animation["sleep"].play()
 		end
-		setEmotion(3, 3, 0, 0)
+		if EmotionCount <= 0 then
+			setEmotion(3, 3, 0, 0)
+		end
 	elseif AnimationPrev == "SLEEPING" then
 		rightArm.setRot({0, 0, 0})
 		leftArm.setRot({0, 0, 0})
@@ -533,6 +571,25 @@ function tick()
 	if EmotionCount > 0 then
 		EmotionCount = EmotionCount - 1
 	end
+	if MeowCount <= 0 then
+		if MeowSound and playerAnimation ~= "SLEEPING" then
+			if tired then
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+			else
+				if math.random() >= 0.7 then
+					sound.playSound("minecraft:entity.cat.purreow", playerPos, {1, 1.5})
+				else
+					sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.5, 1.5})
+				end
+			end
+			if EmotionCount <= 0 then
+				setEmotion(-1, -1, 1, 20)
+			end	
+		end
+		MeowCount = 300
+	else
+		MeowCount = MeowCount - 1
+	end
 	if WinkCount <= 0 then
 		if EmotionCount <= 0 then
 			setEmotion(3, 3, 0, 1)
@@ -541,12 +598,12 @@ function tick()
 	else
 		WinkCount = WinkCount - 1
 	end
-	if MeowCount >= 1 then
-		if MeowCount >= 21 then
+	if MeowActionCount >= 1 then
+		if MeowActionCount >= 21 then
 			armor_model.HELMET.setRot({0, 0, 0})
-			MeowCount = 0
+			MeowActionCount = 0
 		end
-		MeowCount = MeowCount + 1
+		MeowActionCount = MeowActionCount + 1
 	end
 end
 
