@@ -1,5 +1,6 @@
 --設定値
 SkinName = "Vinny"
+ModelScale = 0.75
 
 --変数
 MeowSound = true --鳴き声を発するかどうか
@@ -61,15 +62,15 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
+	model.Model.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
+	model.Model.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112} 
+	model.Model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112} 
 	EmotionCount = count
 end
 
@@ -199,10 +200,14 @@ for name, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
+--モデルサイズの変更
+model.Model.setScale({ModelScale, ModelScale, ModelScale})
+model.Model.setPos({0, (1 - ModelScale) * 24, 0})
+
 --テクスチャサイズの変更
-model.Head.FaceParts.RightEye.setTextureSize({49, 56})
-model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
-model.Head.FaceParts.Mouth.setTextureSize({49, 56})
+model.Model.Head.FaceParts.RightEye.setTextureSize({49, 56})
+model.Model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
+model.Model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 
 --望遠鏡の調整
 spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
@@ -410,10 +415,10 @@ function tick()
 	local foodPercentage = player.getFood() / 20
 	local tired = false
 	local playerAnimation = player.getAnimation()
-	local rightEar = model.Head.Ears.RightEar
-	local leftEar = model.Head.Ears.LeftEar
-	local tail1 = model.Body.Tail
-	local tail2 = model.Body.Tail.Tail1.Tail2
+	local rightEar = model.Model.Head.Ears.RightEar
+	local leftEar = model.Model.Head.Ears.LeftEar
+	local tail1 = model.Model.Body.Tail
+	local tail2 = model.Model.Body.Tail.Tail1.Tail2
 	if wet then
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
@@ -544,8 +549,8 @@ function tick()
 	end
 
 	--寝ている時に目と閉じる
-	local rightArm = model.RightArm
-	local leftArm = model.LeftArm
+	local rightArm = model.Model.RightArm
+	local leftArm = model.Model.LeftArm
 
 	local function hasItem(heldItem)
 		if heldItem ~= nil then
@@ -677,10 +682,10 @@ function render()
 
 	--髪のアニメーション
 	--チェストプレート着用の場合は髪をずらす。
-	local frontHair = model.Body.Hairs.FrontHair
-	local backHair = model.Body.Hairs.BackHair
-	local skirt = model.Body.Skirt
-	local ribbon = model.Body.BackRibbon
+	local frontHair = model.Model.Body.Hairs.FrontHair
+	local backHair = model.Model.Body.Hairs.BackHair
+	local skirt = model.Model.Body.Skirt
+	local ribbon = model.Model.Body.BackRibbon
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
@@ -746,8 +751,8 @@ function render()
 	local horizontalAverage = getTableAverage(VelocityData[1])
 	local verticalAverage = getTableAverage(VelocityData[2])
 	local angularVelocityAverage = getTableAverage(VelocityData[3])
-	local frontHair = model.Body.Hairs.FrontHair
-	local backHair = model.Body.Hairs.BackHair
+	local frontHair = model.Model.Body.Hairs.FrontHair
+	local backHair = model.Model.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
 		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
