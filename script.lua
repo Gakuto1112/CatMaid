@@ -602,7 +602,7 @@ function render(delta)
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
 	local guiName = client.getOpenScreen()
-	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" then
+	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figurメニュー" then
 		local lookRotDelta = math.abs(lookRot - LookRotPrev)
 		if lookRotDelta >= 180 then
 			lookRotDelta = 360 - lookRotDelta
