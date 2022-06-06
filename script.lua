@@ -572,7 +572,7 @@ function tick()
 		EmotionCount = EmotionCount - 1
 	end
 	if MeowCount <= 0 then
-		if MeowSound and playerAnimation ~= "SLEEPING" then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
@@ -602,12 +602,13 @@ function tick()
 		if MeowActionCount >= 21 then
 			armor_model.HELMET.setRot({0, 0, 0})
 			MeowActionCount = 0
+		else
+			MeowActionCount = MeowActionCount + 1
 		end
-		MeowActionCount = MeowActionCount + 1
 	end
 end
 
-function render(delta)
+function render()
 	--FPS計測
 	if FpsCountData[1] >= 1 then
 		Fps = FpsCountData[2] * 20
