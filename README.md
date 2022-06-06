@@ -89,4 +89,5 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 9. 背中のリボン
 
 ## クレジット
-- 鈴の音：音人「鈴の音06」（ https://on-jin.com/sound/sei.php?bunr=%E3%83%99%E3%83%AB%E3%83%BB%E9%90%98%E3%83%BB%E9%88%B4&kate=%E9%81%93%E5%85%B7 ）
+- 鈴の音：音人「鈴の音04」（ https://on-jin.com/sound/sei.php?bunr=%E3%83%99%E3%83%AB%E3%83%BB%E9%90%98%E3%83%BB%E9%88%B4&kate=%E9%81%93%E5%85%B7 ）
+- 泡の音：効果音ラボ「水ぶくぶく2」（ https://soundeffect-lab.info/sound/various/ ）

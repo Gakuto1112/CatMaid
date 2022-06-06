@@ -110,11 +110,31 @@ end
 
 function ping.meow()
 	local gamemode = player.getGamemode()
+	local underwater = player.isUnderwater()
 	local playerPos = player.getPos()
-	if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
-		sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-	else
-		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+			if underwater then
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+
+			else
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+			end
+		else
+			if underwater then
+				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+			else
+				sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+			end
+		end
 	end
 	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
@@ -125,13 +145,32 @@ end
 
 function ping.wink()
 	local gamemode = player.getGamemode()
+	local underwater = player.isUnderwater()
 	local playerPos = player.getPos()
-	if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
-		sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-	else
-		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+	if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+			if underwater then
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+			else
+				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+			end
+		else
+			if underwater then
+				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+			else
+				sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+			end
+		end
 	end
-	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
 	if player.isLeftHanded() then
 		setEmotion(3, -1, 1, 20)
@@ -321,9 +360,9 @@ function tick()
 	local velocity = player.getVelocity()
 	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
 	local playerPos = player.getPos()
+	local underwater = player.isUnderwater()
 	if BellSound then
 		local sneaking = player.isSneaking()
-		local underwater = player.isUnderwater()
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
@@ -419,12 +458,33 @@ function tick()
 
 	--被ダメージ時、猫のサウンド再生
 	local maxHealth = player.getMaxHealth()
+	local air = player.getAir()
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
-		sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
+		if air > 0 then
+			if underwater then
+				sound.playSound("minecraft:entity.cat.hurt", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+			else
+				sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
+			end
+		end
 		setEmotion(1, 1, 0, 8)
 	end
-	if player.getDeathTime() == 1 then
-		sound.playSound("minecraft:entity.ocelot.death", playerPos, {1, 1.5})
+	if player.getDeathTime() == 1 and air > 0 then
+		if air > 0 then
+			if underwater then
+				sound.playSound("minecraft:entity.ocelot.death", playerPos, {0.2, 1.5})
+				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				for i = 0, 4 do
+					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				end
+			else
+				sound.playSound("minecraft:entity.ocelot.death", playerPos, {1, 1.5})
+			end
+		end
 		setEmotion(1, 1, 0, 20)
 	end
 
@@ -572,7 +632,7 @@ function tick()
 		EmotionCount = EmotionCount - 1
 	end
 	if MeowCount <= 0 then
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
