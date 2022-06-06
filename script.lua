@@ -389,7 +389,7 @@ function tick()
 		setEmotion(1, 1, 0, 8)
 	end
 	if player.getDeathTime() == 1 then
-		sound.playSound("minecraft:entity.cat.death", playerPos, {1, 1.5})
+		sound.playSound("minecraft:entity.ocelot.death", playerPos, {1, 1.5})
 		setEmotion(1, 1, 0, 20)
 	end
 
