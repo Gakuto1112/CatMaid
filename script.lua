@@ -116,7 +116,7 @@ function ping.meow()
 		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
 			if underwater then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
@@ -127,7 +127,7 @@ function ping.meow()
 		else
 			if underwater then
 				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
@@ -151,7 +151,7 @@ function ping.wink()
 		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
 			if underwater then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
@@ -161,7 +161,7 @@ function ping.wink()
 		else
 			if underwater then
 				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
@@ -463,7 +463,7 @@ function tick()
 		if air > 0 then
 			if underwater then
 				sound.playSound("minecraft:entity.cat.hurt", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
@@ -477,7 +477,7 @@ function tick()
 		if air > 0 then
 			if underwater then
 				sound.playSound("minecraft:entity.ocelot.death", playerPos, {0.2, 1.5})
-				sound.playCustomSound("Bubble", playerPos, {0.5, 1})
+				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
 				for i = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
