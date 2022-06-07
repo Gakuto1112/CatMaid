@@ -236,7 +236,7 @@ chat.setFiguraCommandPrefix("?")
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
-action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+action_wheel.SLOT_1.setTitle("Meow (smile)")
 action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
@@ -245,7 +245,7 @@ action_wheel.SLOT_1.setFunction(function()
 end)
 
 --アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
-action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+action_wheel.SLOT_2.setTitle("Meow (wink)")
 action_wheel.SLOT_2.setItem("minecraft:cod")
 action_wheel.SLOT_2.setColor({255/255, 85/255, 255/255})
 action_wheel.SLOT_2.setHoverColor({255/255, 255/255, 255/255})
@@ -255,18 +255,18 @@ end)
 
 --アクション3: 鳴き声の切り替え
 if MeowSound then
-	action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
+	action_wheel.SLOT_3.setTitle("Meow: Turn §coff")
 else
-	action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
+	action_wheel.SLOT_3.setTitle("Meow: Turn §aon")
 end
 action_wheel.SLOT_3.setItem("minecraft:player_head{\"SkullOwner\":\"MHF_Ocelot\"}")
 action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_3.setFunction(function()
 	if MeowSound then
-		action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
+		action_wheel.SLOT_3.setTitle("Meow: Turn §aon")
 	else
-		action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
+		action_wheel.SLOT_3.setTitle("Meow: Turn §coff")
 	end
 	MeowSound = not MeowSound
 	ping.setMeowSound(MeowSound)
@@ -275,18 +275,18 @@ end)
 
 --アクション4： 鈴の音の切り替え
 if BellSound then
-	action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
+	action_wheel.SLOT_4.setTitle("Bell sound: Turn §coff")
 else
-	action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
+	action_wheel.SLOT_4.setTitle("Bell sound: Turn §aon")
 end
 action_wheel.SLOT_4.setItem("minecraft:bell")
 action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_4.setFunction(function()
 	if BellSound then
-		action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
+		action_wheel.SLOT_4.setTitle("Bell sound: Turn §aon")
 	else
-		action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
+		action_wheel.SLOT_4.setTitle("Bell sound: Turn §coff")
 	end
 	BellSound = not BellSound
 	ping.setBellSound(BellSound)
@@ -295,18 +295,18 @@ end)
 
 --アクション5： 尻尾のアニメーションの切り替え
 if WegTail then
-	action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
+	action_wheel.SLOT_5.setTitle("Tail wagging: Turn §coff")
 else
-	action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
+	action_wheel.SLOT_5.setTitle("Tail wagging: Turn §aon")
 end
 action_wheel.SLOT_5.setItem("minecraft:feather")
 action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_5.setFunction(function()
 	if WegTail then
-		action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
+		action_wheel.SLOT_5.setTitle("Tail wagging: Turn §aon")
 	else
-		action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
+		action_wheel.SLOT_5.setTitle("Tail wagging: Turn §coff")
 	end
 	WegTail = not WegTail
 	ping.setWegTail(WegTail)
@@ -315,18 +315,18 @@ end)
 
 --アクション6: 防具の表示/非表示
 if HideArmor then
-	action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
+	action_wheel.SLOT_6.setTitle("Armor: §ashow")
 else
-	action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
+	action_wheel.SLOT_6.setTitle("Armor: §chide")
 end
 action_wheel.SLOT_6.setItem("minecraft:iron_chestplate")
 action_wheel.SLOT_6.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_6.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_6.setFunction(function()
 	if HideArmor then
-		action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
+		action_wheel.SLOT_6.setTitle("Armor: §chide")
 	else
-		action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
+		action_wheel.SLOT_6.setTitle("Armor: §ashow")
 	end
 	HideArmor = not HideArmor
 	ping.setHideArmor(HideArmor)
@@ -335,19 +335,19 @@ end)
 
 --アクション7: カメラの位置切り替え（モデルのサイズを考慮するかどうか）
 if ConsiderModelSize then
-	action_wheel.SLOT_7.setTitle("カメラの位置：§aデフォルトの位置§rにする")
+	action_wheel.SLOT_7.setTitle("Camera position: §adefault§r")
 else
-	action_wheel.SLOT_7.setTitle("カメラの位置：§aモデルの位置§rにする")
+	action_wheel.SLOT_7.setTitle("Camera position: §amodel position§r")
 end
 action_wheel.SLOT_7.setItem("minecraft:spyglass")
 action_wheel.SLOT_7.setColor({200/255, 200/255, 200/255})
 action_wheel.SLOT_7.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_7.setFunction(function()
 	if ConsiderModelSize then
-		action_wheel.SLOT_7.setTitle("カメラの位置：§aモデルの位置§rにする")
+		action_wheel.SLOT_7.setTitle("Camera position: §amodel position§r")
 	else
-		action_wheel.SLOT_7.setTitle("カメラの位置：§aデフォルトの位置§rにする")
-		print("[§c注意§r] 標準の実際の位置は変更されません。")
+		action_wheel.SLOT_7.setTitle("Camera position: §adefault§r")
+		print("[§cNote§r] The actual crosshair position will not be changed.")
 	end
 	ConsiderModelSize = not ConsiderModelSize
 	data.save("ConsiderModelSize", ConsiderModelSize)
@@ -356,9 +356,9 @@ end)
 --アクション8: 名前の変更（スキン名を使用するかどうか）
 if SkinName ~= "" then
 	if UseSkinName then
-		action_wheel.SLOT_8.setTitle("名前：§aプレイヤー名§rにする")
+		action_wheel.SLOT_8.setTitle("Your name: Set to §aplayer name§r")
 	else
-		action_wheel.SLOT_8.setTitle("名前：§aスキン名§rにする")
+		action_wheel.SLOT_8.setTitle("Your name: Set to §askin name§r")
 	end
 	action_wheel.SLOT_8.setItem("minecraft:name_tag")
 	action_wheel.SLOT_8.setColor({200/255, 200/255, 200/255})
@@ -366,13 +366,13 @@ if SkinName ~= "" then
 	action_wheel.SLOT_8.setFunction(function()
 		local playerName = player.getName()
 		if UseSkinName then
-			action_wheel.SLOT_8.setTitle("名前：§aスキン名§rにする")
-			print("あなたは§a"..playerName.."§rと表示されます。")
+			action_wheel.SLOT_8.setTitle("Your name: Set to §aplayer name§r")
+			print("You will be shown as §a"..playerName.."§r.")
 		else
-			action_wheel.SLOT_8.setTitle("名前：§aプレイヤー名§rにする")
-			print("あなたは§a"..SkinName.."§rと表示されます。")
+			action_wheel.SLOT_8.setTitle("Your name: Set to §askin name§r")
+			print("You will be shown as §a"..SkinName.."§r.")
 			if ShowNameWarning then
-				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
+				print("[§cWarning§r] This name (§a"..SkinName.."§r) will appear only to players who have installed Figura and have set your trust to §eTrusted§r or higher. All other players will appear §a"..playerName.."§r as usual. This name (§a"..SkinName.."§r) will not reflected to the server. §7This message will not be displayer again.")
 				ShowNameWarning = false
 				data.save("ShowNameWarning", ShowNameWarning)
 			end
@@ -856,12 +856,12 @@ function onCommand(input)
 			if scaleValue > 0 then
 				ping.setModelScale(scaleValue)
 				data.save("ModelScale", scaleValue)
-				print("プレイヤーモデルの大きさを"..scaleValue.."に設定しました。")
+				print("Set the scale of the player model to "..scaleValue..".")
 			else
-				print("§cプレイヤーモデルの大きさを0以下に設定する事は出来ません。")
+				print("§cYou cannot set the scale of the player model to less then 0.")
 			end
 		else
-			print("§c不正な引数です。")
+			print("§cInvalid argument.")
 		end
 	end
 end
