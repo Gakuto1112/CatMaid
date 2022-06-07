@@ -391,9 +391,10 @@ end
 
 function tick()
 	--モデルのサイズの変更
+	local playerAnimation = player.getAnimation()
 	model.Model.setScale({ModelScale, ModelScale, ModelScale})
 	model.Model.setPos({0, (ModelScale - 1) * -24, 0})
-	if ConsiderModelSize then
+	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
 		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
 		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
 	else
@@ -427,7 +428,7 @@ function tick()
 		local sneaking = player.isSneaking()
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
-			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
+			if not player.getVehicle() and playerAnimation ~= "FALL_FLYING" and player.isOnGround() then
 				if sneaking or underwater then
 					sound.playCustomSound("Bell", playerPos, {0.1, 1})
 				else
@@ -471,7 +472,6 @@ function tick()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
 	local tired = false
-	local playerAnimation = player.getAnimation()
 	local rightEar = model.Model.Head.Ears.RightEar
 	local leftEar = model.Model.Head.Ears.LeftEar
 	local tail1 = model.Model.Body.Tail
