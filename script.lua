@@ -399,6 +399,10 @@ function tick()
 		armorPart.setScale({ModelScale, ModelScale, ModelScale})
 		armorPart.setPos({0, 23 / ModelScale - 23, 0})
 	end
+	for name, elytraPart in pairs(elytra_model) do
+		elytraPart.setScale({ModelScale, ModelScale, ModelScale})
+		elytraPart.setPos({0, 23 / ModelScale - 23, 0})
+	end
 	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
 		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
 		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
