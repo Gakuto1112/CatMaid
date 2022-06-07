@@ -231,10 +231,6 @@ model.Model.Head.FaceParts.RightEye.setTextureSize({49, 56})
 model.Model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
 model.Model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 
---望遠鏡の調整
-spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
-spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
-
 --コマンド接頭字を設定
 chat.setFiguraCommandPrefix("?")
 
@@ -394,7 +390,6 @@ function tick()
 	local playerAnimation = player.getAnimation()
 	model.Model.setScale({ModelScale, ModelScale, ModelScale})
 	model.Model.setPos({0, (ModelScale - 1) * -24, 0})
-	print(23 / ModelScale - 23)
 	for name, armorPart in pairs(armor_model) do
 		armorPart.setScale({ModelScale, ModelScale, ModelScale})
 		armorPart.setPos({0, 23 / ModelScale - 23, 0})
@@ -403,6 +398,11 @@ function tick()
 		elytraPart.setScale({ModelScale, ModelScale, ModelScale})
 		elytraPart.setPos({0, 23 / ModelScale - 23, 0})
 	end
+	for name, spyglassPart in pairs(spyglass_model) do
+		spyglassPart.setScale({ModelScale, ModelScale, ModelScale})
+	end
+	spyglass_model.RIGHT_SPYGLASS.setPos({ModelScale * -0.5, (ModelScale - 1) * -24 + ModelScale, 0})
+	spyglass_model.LEFT_SPYGLASS.setPos({ModelScale * 0.5, (ModelScale - 1) * -24 + ModelScale, 0})
 	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
 		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
 		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
