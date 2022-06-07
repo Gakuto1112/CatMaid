@@ -214,7 +214,7 @@ model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
 model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 
 --望遠鏡の調整
-spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
+spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1.5, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
