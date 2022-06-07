@@ -394,6 +394,11 @@ function tick()
 	local playerAnimation = player.getAnimation()
 	model.Model.setScale({ModelScale, ModelScale, ModelScale})
 	model.Model.setPos({0, (ModelScale - 1) * -24, 0})
+	print(23 / ModelScale - 23)
+	for name, armorPart in pairs(armor_model) do
+		armorPart.setScale({ModelScale, ModelScale, ModelScale})
+		armorPart.setPos({0, 23 / ModelScale - 23, 0})
+	end
 	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
 		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
 		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
