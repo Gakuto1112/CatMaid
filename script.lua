@@ -6,6 +6,7 @@ MeowSound = true --鳴き声を発するかどうか
 BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
+ConsiderModelSize = false --カメラの位置の決定にモデルのサイズを考慮するかどうか
 UseSkinName = false --スキン名を使用するかどうか
 ShowNameWarning = true --名前表示関する注意を表示するかどうか
 ModelScale = 1 --モデルの大きさ
@@ -215,6 +216,7 @@ WegTail = loadBoolean(WegTail, "WegTail")
 ping.setWegTail(WegTail)
 HideArmor = loadBoolean(HideArmor, "HideArmor")
 ping.setHideArmor(HideArmor)
+ConsiderModelSize = loadBoolean(ConsiderModelSize, "ConsiderModelSize")
 UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
 ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
@@ -335,23 +337,43 @@ action_wheel.SLOT_6.setFunction(function()
 	data.save("HideArmor", HideArmor)
 end)
 
---アクションバー7: 名前の変更（スキン名を使用するかどうか）
+--アクション7: カメラの位置切り替え（モデルのサイズを考慮するかどうか）
+if ConsiderModelSize then
+	action_wheel.SLOT_7.setTitle("カメラの位置：§aデフォルトの位置§rにする")
+else
+	action_wheel.SLOT_7.setTitle("カメラの位置：§aモデルの位置§rにする")
+end
+action_wheel.SLOT_7.setItem("minecraft:spyglass")
+action_wheel.SLOT_7.setColor({200/255, 200/255, 200/255})
+action_wheel.SLOT_7.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_7.setFunction(function()
+	if ConsiderModelSize then
+		action_wheel.SLOT_7.setTitle("カメラの位置：§aモデルの位置§rにする")
+	else
+		action_wheel.SLOT_7.setTitle("カメラの位置：§aデフォルトの位置§rにする")
+		print("[§c注意§r] 標準の実際の位置は変更されません。")
+	end
+	ConsiderModelSize = not ConsiderModelSize
+	data.save("ConsiderModelSize", ConsiderModelSize)
+end)
+
+--アクション8: 名前の変更（スキン名を使用するかどうか）
 if SkinName ~= "" then
 	if UseSkinName then
-		action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
+		action_wheel.SLOT_8.setTitle("名前：§aプレイヤー名§rにする")
 	else
-		action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
+		action_wheel.SLOT_8.setTitle("名前：§aスキン名§rにする")
 	end
-	action_wheel.SLOT_7.setItem("minecraft:name_tag")
-	action_wheel.SLOT_7.setColor({200/255, 200/255, 200/255})
-	action_wheel.SLOT_7.setHoverColor({255/255, 255/255, 255/255})
-	action_wheel.SLOT_7.setFunction(function()
+	action_wheel.SLOT_8.setItem("minecraft:name_tag")
+	action_wheel.SLOT_8.setColor({200/255, 200/255, 200/255})
+	action_wheel.SLOT_8.setHoverColor({255/255, 255/255, 255/255})
+	action_wheel.SLOT_8.setFunction(function()
 		local playerName = player.getName()
 		if UseSkinName then
-			action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
+			action_wheel.SLOT_8.setTitle("名前：§aスキン名§rにする")
 			print("あなたは§a"..playerName.."§rと表示されます。")
 		else
-			action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
+			action_wheel.SLOT_8.setTitle("名前：§aプレイヤー名§rにする")
 			print("あなたは§a"..SkinName.."§rと表示されます。")
 			if ShowNameWarning then
 				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
@@ -370,7 +392,15 @@ end
 function tick()
 	--モデルのサイズの変更
 	model.Model.setScale({ModelScale, ModelScale, ModelScale})
-	model.Model.setPos({0, (1 - ModelScale) * 24, 0})
+	model.Model.setPos({0, (ModelScale - 1) * -24, 0})
+	if ConsiderModelSize then
+		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
+		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
+	else
+		for name, cameraData in pairs(camera) do
+			cameraData.setPos({0, 0, 0})
+		end
+	end
 
 	--プレイヤー名の設定
 	for name, namePlate in pairs(nameplate) do
