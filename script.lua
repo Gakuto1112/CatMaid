@@ -401,13 +401,13 @@ function tick()
 	for name, spyglassPart in pairs(spyglass_model) do
 		spyglassPart.setScale({ModelScale, ModelScale, ModelScale})
 	end
-	spyglass_model.RIGHT_SPYGLASS.setPos({ModelScale * -0.5, (ModelScale - 1) * -24 + ModelScale, 0})
-	spyglass_model.LEFT_SPYGLASS.setPos({ModelScale * 0.5, (ModelScale - 1) * -24 + ModelScale, 0})
+	spyglass_model.RIGHT_SPYGLASS.setPos({ModelScale * -0.5, (ModelScale - 1) * -24 + ModelScale * 1.5, 0})
+	spyglass_model.LEFT_SPYGLASS.setPos({ModelScale * 0.5, (ModelScale - 1) * -24 + ModelScale * 1.5, 0})
 	for name, parrotPart in pairs(parrot_model) do
 		parrotPart.setScale({ModelScale, ModelScale, ModelScale})
 	end
-	parrot_model.RIGHT_PARROT.setPos({ModelScale * -0.5, (ModelScale - 1) * -24 + ModelScale, 0})
-	parrot_model.LEFT_PARROT.setPos({ModelScale * 0.5, (ModelScale - 1) * -24 + ModelScale, 0})
+	parrot_model.RIGHT_PARROT.setPos({ModelScale * -0.5, (ModelScale - 1) * -24, 0})
+	parrot_model.LEFT_PARROT.setPos({ModelScale * 0.5, (ModelScale - 1) * -24, 0})
 	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
 		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
 		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
