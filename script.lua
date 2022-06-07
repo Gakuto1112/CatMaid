@@ -147,6 +147,7 @@ function ping.wink()
 	local gamemode = player.getGamemode()
 	local underwater = player.isUnderwater()
 	local playerPos = player.getPos()
+	local tired = player.getHealthPercentage() <= 0.2 or player.getFood() <= 6
 	if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
 		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
 			if underwater then
@@ -170,12 +171,20 @@ function ping.wink()
 			end
 		end
 	end
-particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 	animation["meow"].play()
 	if player.isLeftHanded() then
-		setEmotion(3, -1, 1, 20)
+		if tired then
+			setEmotion(3, 2, 1, 20)
+		else
+			setEmotion(3, 0, 1, 20)
+		end
 	else
-		setEmotion(-1, 3, 1, 20)
+		if tired then
+			setEmotion(2, 3, 1, 20)
+		else
+			setEmotion(0, 3, 1, 20)
+		end
 	end
 	armor_model.HELMET.setRot({0, 0, math.rad(5)})
 	MeowActionCount = 1
