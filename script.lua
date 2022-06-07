@@ -409,8 +409,8 @@ function tick()
 	parrot_model.RIGHT_PARROT.setPos({ModelScale * -0.5, (ModelScale - 1) * -24, 0})
 	parrot_model.LEFT_PARROT.setPos({ModelScale * 0.5, (ModelScale - 1) * -24, 0})
 	if ConsiderModelSize and playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~="FALL_FLYING" then
-		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.5, 0})
-		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.5, (ModelScale - 1) * 4})
+		camera.FIRST_PERSON.setPos({0, (ModelScale - 1) * 1.6, 0})
+		camera.THIRD_PERSON.setPos({0, (ModelScale - 1) * 1.6, (ModelScale - 1) * 4})
 	else
 		for name, cameraData in pairs(camera) do
 			cameraData.setPos({0, 0, 0})
