@@ -416,6 +416,7 @@ function tick()
 			cameraData.setPos({0, 0, 0})
 		end
 	end
+	renderer.setShadowSize(ModelScale * 0.5)
 
 	--プレイヤー名の設定
 	for name, namePlate in pairs(nameplate) do
