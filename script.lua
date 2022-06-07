@@ -1,6 +1,5 @@
 --設定値
 SkinName = "Vinny"
-ModelScale = 0.75
 
 --変数
 MeowSound = true --鳴き声を発するかどうか
@@ -9,6 +8,7 @@ WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
 UseSkinName = false --スキン名を使用するかどうか
 ShowNameWarning = true --名前表示関する注意を表示するかどうか
+ModelScale = 1 --モデルの大きさ
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
 VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
@@ -28,6 +28,25 @@ WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
 MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
+
+function split(stringToSplit, delimiter)
+	local splitTable = {}
+	if delimiter ~= "" then
+		for stringPart in string.gmatch(stringToSplit, "[^"..delimiter.."]+") do
+			table.insert(splitTable, stringPart)
+		end
+	end
+	return splitTable
+end
+
+function loadString(variableToLoad, name)
+	local loadData = data.load(name)
+	if loadData ~= nil then
+		return loadData
+	else
+		return variableToLoad
+	end
+end
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -75,6 +94,9 @@ function setEmotion(rightEye, leftEye, mouth, count)
 end
 
 --ping関数
+function ping.setModelScale(numberToSet)
+	ModelScale = numberToSet
+end
 function ping.setMeowSound(boolToSet)
 	MeowSound = boolToSet
 end
@@ -183,6 +205,8 @@ particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos
 end
 
 --設定の読み込み
+ModelScale = tonumber(loadString(ModelScale, "ModelScale"))
+ping.setModelScale(ModelScale)
 MeowSound = loadBoolean(MeowSound, "MeowSound")
 ping.setMeowSound(MeowSound)
 BellSound = loadBoolean(BellSound, "BellSound")
@@ -200,10 +224,6 @@ for name, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
---モデルサイズの変更
-model.Model.setScale({ModelScale, ModelScale, ModelScale})
-model.Model.setPos({0, (1 - ModelScale) * 24, 0})
-
 --テクスチャサイズの変更
 model.Model.Head.FaceParts.RightEye.setTextureSize({49, 56})
 model.Model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
@@ -212,6 +232,9 @@ model.Model.Head.FaceParts.Mouth.setTextureSize({49, 56})
 --望遠鏡の調整
 spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
+
+--コマンド接頭字を設定
+chat.setFiguraCommandPrefix("?")
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
@@ -345,6 +368,10 @@ else
 end
 
 function tick()
+	--モデルのサイズの変更
+	model.Model.setScale({ModelScale, ModelScale, ModelScale})
+	model.Model.setPos({0, (1 - ModelScale) * 24, 0})
+
 	--プレイヤー名の設定
 	for name, namePlate in pairs(nameplate) do
 		if UseSkinName then
@@ -772,4 +799,22 @@ function render()
 	--レンダー終了処理
 	FpsCountData[2] = FpsCountData[2] + 1
 	LookRotPrev = lookRot
+end
+
+function onCommand(input)
+	local commandParts = split(input, " ")
+	if commandParts[1] == "?scale" then
+		local scaleValue = tonumber(commandParts[2])
+		if scaleValue then
+			if scaleValue > 0 then
+				ping.setModelScale(scaleValue)
+				data.save("ModelScale", scaleValue)
+				print("プレイヤーモデルの大きさを"..scaleValue.."に設定しました。")
+			else
+				print("§cプレイヤーモデルの大きさを0以下に設定する事は出来ません。")
+			end
+		else
+			print("§c不正な引数です。")
+		end
+	end
 end
