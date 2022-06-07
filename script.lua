@@ -417,6 +417,8 @@ function tick()
 		end
 	end
 	renderer.setShadowSize(ModelScale * 0.5)
+	nameplate.ENTITY.setPos({0, (ModelScale - 1) * 2.3, 0})
+	nameplate.ENTITY.setScale({ModelScale, ModelScale, ModelScale})
 
 	--プレイヤー名の設定
 	for name, namePlate in pairs(nameplate) do
