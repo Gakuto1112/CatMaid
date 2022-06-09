@@ -28,6 +28,12 @@ AnimationPrev = "" --前チックのアニメーション
 MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
 
+--防具パーツ
+Helmet = model.Head.Helmet.Helmet
+HelmetOverlay = model.Head.Helmet.HelmetOverlay
+Chestplate = {model.Body.Chestplate.Chestplate, model.RightArm.RightChestplate.RightChestplate, model.LeftArm.LeftChestplate.LeftChestplate}
+ChestplateOverlay = {model.Body.Chestplate.ChestplateOverlay, model.RightArm.RightChestplate.RightChestplateOverlay, model.LeftArm.LeftChestplate.LeftChestplateOverlay}
+
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
 	if loadData ~= nil then
@@ -86,13 +92,11 @@ end
 function ping.setHideArmor(boolToSet)
 	HideArmor = boolToSet
 	if HideArmor then
-		for key, armorPart in pairs(armor_model) do
-			armorPart.setEnabled(false)
-		end
+		armor_model.LEGGINGS.setEnabled(false)
+		armor_model.BOOTS.setEnabled(false)
 	else
-		for key, armorPart in pairs(armor_model) do
-			armorPart.setEnabled(true)
-		end
+		armor_model.LEGGINGS.setEnabled(true)
+		armor_model.BOOTS.setEnabled(true)
 	end
 end
 
@@ -135,8 +139,7 @@ function ping.meow()
 		animation["right_meow"].play()
 	end
 	setEmotion(3, 3, 1, 20)
-	armor_model.HELMET.setRot({0, 0, math.rad(5)})
-	MeowActionCount = 1
+	MeowActionCount = 20
 end
 
 function ping.wink()
@@ -187,8 +190,7 @@ function ping.wink()
 			setEmotion(0, 3, 1, 20)
 		end
 	end
-	armor_model.HELMET.setRot({0, 0, math.rad(5)})
-	MeowActionCount = 1
+	MeowActionCount = 20
 end
 
 --設定の読み込み
@@ -204,15 +206,27 @@ UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
 ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
 
---デフォルトのプレイヤーモデルを削除
+--デフォルトのプレイヤーモデルの非表示
 for name, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
---テクスチャサイズの変更
+--バニラ防具の非表示
+armor_model.HELMET.setEnabled(false)
+armor_model.CHESTPLATE.setEnabled(false)
+
+--テクスチャサイズの変更と防具のテクスチャ設定
 model.Head.FaceParts.RightEye.setTextureSize({49, 56})
 model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
 model.Head.FaceParts.Mouth.setTextureSize({49, 56})
+Helmet.setTextureSize({64, 32})
+HelmetOverlay.setTextureSize({64, 32})
+HelmetOverlay.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+for index, chestplatePart in ipairs(Chestplate) do
+	chestplatePart.setTextureSize({64, 32})
+	ChestplateOverlay[index].setTextureSize({64, 32})
+	ChestplateOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+end
 
 --望遠鏡の調整
 spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1.5, 0})
@@ -602,9 +616,6 @@ function tick()
 			tail2.setRot({0, 0, 0})
 			camera.FIRST_PERSON.setPos({0, 0.05, -0.2})
 			camera.FIRST_PERSON.setRot({0, 180, 0})
-			armor_model.HELMET.setPos({0, 0, -2})
-			armor_model.HELMET.setRot({math.rad(-80), math.rad(180), 0})
-			armor_model.CHESTPLATE.setRot({0, math.rad(180), 0})
 			armor_model.LEGGINGS.setRot({0, math.rad(180), 0})
 			armor_model.BOOTS.setRot({0, math.rad(180), 0})
 			elytra_model.RIGHT_WING.setPos({8, 0, -2})
@@ -622,10 +633,8 @@ function tick()
 		leftArm.setRot({0, 0, 0})
 		camera.FIRST_PERSON.setPos({0, 0, 0})
 		camera.FIRST_PERSON.setRot({0, 0, 0})
-		armor_model.HELMET.setPos({0, 0, 0})
-		for name, armorModel in pairs(armor_model) do
-			armorModel.setRot({0, 0, 0})
-		end
+		armor_model.LEGGINGS.setRot({0, 0, 0})
+		armor_model.BOOTS.setRot({0, 0, 0})
 		for name, elytraModel in pairs(elytra_model) do
 			elytraModel.setPos({0, 0, 0})
 			elytraModel.setRot({0, 0, 0})
@@ -636,6 +645,54 @@ function tick()
 		animation["sleep"].stop()
 	else
 		SleepSoundCount = 0
+	end
+
+	--防具の設定
+	local helmetItem = player.getEquipmentItem(6)
+	if helmetItem ~= nil and not HideArmor then
+		local helmetItemType = helmetItem.getType()
+		Helmet.setEnabled(true)
+		if helmetItemType == "minecraft:leather_helmet" then
+			local tag = helmetItem.getTag()
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1.png")
+			if tag.display ~= nil then
+				Helmet.setColor(vectors.intToRGB(tag.display.color))
+			else
+				Helmet.setColor({160 / 255, 101 / 255, 64 / 255})
+			end
+			HelmetOverlay.setEnabled(true)
+		elseif helmetItemType == "minecraft:chainmail_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		elseif helmetItemType == "minecraft:iron_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		elseif helmetItemType == "minecraft:golden_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		elseif helmetItemType == "minecraft:diamond_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		elseif helmetItemType == "minecraft:netherite_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		elseif helmetItemType == "minecraft:turtle_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/turtle_layer_1.png")
+			HelmetOverlay.setEnabled(false)
+		else
+			Helmet.setEnabled(false)
+			HelmetOverlay.setEnabled(false)
+		end
+		if helmetItem.hasGlint() then
+			Helmet.setShader("Glint")
+			HelmetOverlay.setShader("Glint")
+		else
+			Helmet.setShader("None")
+			HelmetOverlay.setShader("None")
+		end
+	else
+		Helmet.setEnabled(false)
+		HelmetOverlay.setEnabled(false)
 	end
 
 	--チェストプレート着用の場合は髪をずらす。
@@ -695,13 +752,8 @@ function tick()
 	else
 		WinkCount = WinkCount - 1
 	end
-	if MeowActionCount >= 1 then
-		if MeowActionCount >= 21 then
-			armor_model.HELMET.setRot({0, 0, 0})
-			MeowActionCount = 0
-		else
-			MeowActionCount = MeowActionCount + 1
-		end
+	if MeowActionCount > 0 then
+		MeowActionCount = MeowActionCount - 1
 	end
 end
 
