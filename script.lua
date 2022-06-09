@@ -41,20 +41,12 @@ function loadBoolean(variableToLoad, name)
 	end
 end
 
-function getTableAverage(tagetTable)
-	local sum = 0
-	for index, value in ipairs(tagetTable) do
-		sum = sum + value
-	end
-	return sum / #tagetTable
-end
-
 function setEmotion(rightEye, leftEye, mouth, count)
 	--[[表情ID
 
 		目：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時やスマイル等）
 		口：0. 通常（閉じている）, 1. 開いている（スマイル）
-		
+
 		それぞれ負の数で、前の状態を維持する。
 
 	]]
@@ -69,7 +61,7 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112} 
+	model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112}
 	EmotionCount = count
 end
 
@@ -356,7 +348,7 @@ function tick()
 		else
 			namePlate.setText(player.getName())
 		end
-	end	
+	end
 
 	--[[鈴の音
 
@@ -411,7 +403,7 @@ function tick()
 		100% - 51%	100% - 51%	尻尾立ち	100%
 		50% - 21%	50% - 31%	尻尾ちょい下げ	75%
 		20% - 0%	30% - 0%	尻尾下げ	50%
-		
+
 	]]
 	local wet = player.isWet()
 	local gamemode = player.getGamemode()
@@ -670,7 +662,7 @@ function tick()
 			end
 			if EmotionCount <= 0 then
 				setEmotion(-1, -1, 1, 20)
-			end	
+			end
 		end
 		MeowCount = 300
 	else
@@ -716,7 +708,7 @@ function render()
 		local sneakOffset = 0
 		if player.isSneaking() then
 			sneakOffset = -0.19
-		end	
+		end
 		if math.min(directionAbs, 360 - directionAbs) < 90 then
 			table.insert(VelocityData[1], playerSpeed + sneakOffset)
 		else
@@ -733,7 +725,7 @@ function render()
 		local lookRotDelta = math.abs(lookRot - LookRotPrev)
 		if lookRotDelta >= 180 then
 			lookRotDelta = 360 - lookRotDelta
-		end	
+		end
 		table.insert(VelocityData[3], lookRotDelta * Fps)
 	else
 		table.insert(VelocityData[3], 0)
@@ -744,6 +736,14 @@ function render()
 		end
 	end
 	--求めた平均から髪の角度を決定する。
+	function getTableAverage(tagetTable)
+		local sum = 0
+		for index, value in ipairs(tagetTable) do
+			sum = sum + value
+		end
+		return sum / #tagetTable
+	end
+
 	local hairLimit
 	local chestItemType = player.getEquipmentItem(5).getType()
 	if chestItemType == "minecraft:elytra" then
