@@ -44,7 +44,7 @@ end
 function setEmotion(rightEye, leftEye, mouth, count)
 	--[[表情ID
 
-		目：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時やスマイル等）
+		目：0. 通常, 1. ビックリ（ダメージを受けた時）, 2. 疲労（低HPの時）, 3. 目を閉じる（寝ている時やスマイル等）, 4. 不等号の目（><、笛吹く時用）
 		口：0. 通常（閉じている）, 1. 開いている（スマイル）
 
 		それぞれ負の数で、前の状態を維持する。
@@ -523,10 +523,12 @@ function tick()
 		setEmotion(3, -1, 0, 0)
 	end
 
-	--特定の食べ物を食べる時にニッコリさせる。
+	local horn
 	local activeItem = player.getActiveItem()
 	if activeItem ~= nil then
-		if activeItem.getUseAction() == "EAT" then
+		local activeItemAction = activeItem.getUseAction()
+		if activeItemAction == "EAT" then
+			--特定の食べ物を食べる時にニッコリさせる。
 			local foodFound = false
 			for index, food in ipairs(FavoriteFood) do
 				if food == activeItem.getType() then
@@ -543,8 +545,15 @@ function tick()
 		else
 			EatCount = 0
 		end
+		if activeItemAction == "TOOT_HORN" then
+			setEmotion(4, 4, 0, 2)
+			horn = true
+		else
+			horn = false
+		end
 	else
 		EatCount = 0
+		horn = false
 	end
 	if EatCount >= 32 then
 		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
@@ -659,7 +668,8 @@ function tick()
 		EmotionCount = EmotionCount - 1
 	end
 	if MeowCount <= 0 then
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater then
+		--時々ニャーニャー鳴く。
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
@@ -745,7 +755,7 @@ function render()
 		end
 	end
 	--求めた平均から髪の角度を決定する。
-	function getTableAverage(tagetTable)
+	local function getTableAverage(tagetTable)
 		local sum = 0
 		for index, value in ipairs(tagetTable) do
 			sum = sum + value
