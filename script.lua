@@ -653,34 +653,32 @@ function tick()
 		local helmetItemType = helmetItem.getType()
 		Helmet.setEnabled(true)
 		if helmetItemType == "minecraft:leather_helmet" then
-			local tag = helmetItem.getTag()
 			Helmet.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1.png")
+		elseif helmetItemType == "minecraft:chainmail_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
+		elseif helmetItemType == "minecraft:iron_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
+		elseif helmetItemType == "minecraft:golden_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
+		elseif helmetItemType == "minecraft:diamond_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
+		elseif helmetItemType == "minecraft:netherite_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
+		elseif helmetItemType == "minecraft:turtle_helmet" then
+			Helmet.setTexture("Resource", "minecraft:textures/models/armor/turtle_layer_1.png")
+		else
+			Helmet.setEnabled(false)
+		end
+		if helmetItemType == "minecraft:leather_helmet" then
+			local tag = helmetItem.getTag()
 			if tag.display ~= nil then
 				Helmet.setColor(vectors.intToRGB(tag.display.color))
 			else
 				Helmet.setColor({160 / 255, 101 / 255, 64 / 255})
 			end
 			HelmetOverlay.setEnabled(true)
-		elseif helmetItemType == "minecraft:chainmail_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
-			HelmetOverlay.setEnabled(false)
-		elseif helmetItemType == "minecraft:iron_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
-			HelmetOverlay.setEnabled(false)
-		elseif helmetItemType == "minecraft:golden_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
-			HelmetOverlay.setEnabled(false)
-		elseif helmetItemType == "minecraft:diamond_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
-			HelmetOverlay.setEnabled(false)
-		elseif helmetItemType == "minecraft:netherite_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
-			HelmetOverlay.setEnabled(false)
-		elseif helmetItemType == "minecraft:turtle_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/turtle_layer_1.png")
-			HelmetOverlay.setEnabled(false)
 		else
-			Helmet.setEnabled(false)
+			Helmet.setColor({1, 1, 1})
 			HelmetOverlay.setEnabled(false)
 		end
 		if helmetItem.hasGlint() then
@@ -693,6 +691,77 @@ function tick()
 	else
 		Helmet.setEnabled(false)
 		HelmetOverlay.setEnabled(false)
+	end
+
+	local chestItem = player.getEquipmentItem(5)
+	if chestItem ~= nil and not HideArmor then
+		local chestItemType = chestItem.getType()
+		for index, chestplatePart in ipairs(Chestplate) do
+			chestplatePart.setEnabled(true)
+		end
+		if chestItemType == "minecraft:leather_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1.png")
+			end
+		elseif chestItemType == "minecraft:chainmail_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
+			end
+		elseif chestItemType == "minecraft:iron_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
+			end
+		elseif chestItemType == "minecraft:golden_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
+			end
+		elseif chestItemType == "minecraft:diamond_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
+			end
+		elseif chestItemType == "minecraft:netherite_chestplate" then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
+			end
+		else
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setEnabled(false)
+			end
+		end
+		if chestItemType == "minecraft:leather_chestplate" then
+			local tag = chestItem.getTag()
+			local armorColor
+			if tag.display ~= nil then
+				armorColor = vectors.intToRGB(tag.display.color)
+			else
+				armorColor = {160 / 255, 101 / 255, 64 / 255}
+			end
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setColor(armorColor)
+				ChestplateOverlay[index].setEnabled(true)
+			end
+		else
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setColor({1, 1, 1})
+				ChestplateOverlay[index].setEnabled(false)
+			end
+		end
+		if chestItem.hasGlint() then
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setShader("Glint")
+				ChestplateOverlay[index].setShader("Glint")
+			end
+		else
+			for index, chestplatePart in ipairs(Chestplate) do
+				chestplatePart.setShader("None")
+				ChestplateOverlay[index].setShader("None")
+			end
+		end
+	else
+		for index, chestplatePart in ipairs(Chestplate) do
+			chestplatePart.setEnabled(false)
+			ChestplateOverlay[index].setEnabled(false)
+		end
 	end
 
 	--チェストプレート着用の場合は髪をずらす。
