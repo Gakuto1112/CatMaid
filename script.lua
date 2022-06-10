@@ -962,10 +962,10 @@ function tick()
 		end
 		if AnimationPrev ~= "SLEEPING" then
 			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
-				rightArm.setRot({20, 0, 0})
+				rightArm.setRot({-15, 0, 0})
 			end
 			if (hasItem(offHeldItem) and not leftHanded) or (hasItem(mainHeldItem) and leftHanded) then
-				leftArm.setRot({20, 0, 0})
+				leftArm.setRot({-15, 0, 0})
 			end
 			tail1.setRot({0, 0, 0})
 			tail2.setRot({0, 0, 0})
