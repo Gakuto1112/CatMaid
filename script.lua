@@ -33,6 +33,10 @@ Helmet = model.Avatar.Head.Helmet.Helmet
 HelmetOverlay = model.Avatar.Head.Helmet.HelmetOverlay
 Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate}
 ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay}
+Leggings = {model.Avatar.Body.Pants.Pants, model.Avatar.RightLeg.RightPants.RightPants, model.Avatar.LeftLeg.LeftPants.LeftPants}
+LeggingsOverlay = {model.Avatar.Body.Pants.PantsOverlay, model.Avatar.RightLeg.RightPants.RightPantsOverlay, model.Avatar.LeftLeg.LeftPants.LeftPantsOverlay}
+Boots = {model.Avatar.RightLeg.RightBoots.RightBoots, model.Avatar.LeftLeg.LeftBoots.LeftBoots}
+BootsOverlay = {model.Avatar.RightLeg.RightBoots.RightBootsOverlay, model.Avatar.LeftLeg.LeftBoots.LeftBootsOverlay}
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -91,13 +95,6 @@ end
 
 function ping.setHideArmor(boolToSet)
 	HideArmor = boolToSet
-	if HideArmor then
-		armor_model.LEGGINGS.setEnabled(false)
-		armor_model.BOOTS.setEnabled(false)
-	else
-		armor_model.LEGGINGS.setEnabled(true)
-		armor_model.BOOTS.setEnabled(true)
-	end
 end
 
 function ping.setUseSkinName(boolToSet)
@@ -214,6 +211,8 @@ end
 --バニラ防具の非表示
 armor_model.HELMET.setEnabled(false)
 armor_model.CHESTPLATE.setEnabled(false)
+armor_model.LEGGINGS.setEnabled(false)
+armor_model.BOOTS.setEnabled(false)
 
 --テクスチャサイズの変更と防具のテクスチャ設定
 model.Avatar.Head.FaceParts.RightEye.setTextureSize({49, 56})
@@ -226,6 +225,16 @@ for index, chestplatePart in ipairs(Chestplate) do
 	chestplatePart.setTextureSize({64, 32})
 	ChestplateOverlay[index].setTextureSize({64, 32})
 	ChestplateOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+end
+for index, legginsPart in ipairs(Leggings) do
+	legginsPart.setTextureSize({64, 32})
+	LeggingsOverlay[index].setTextureSize({64, 32})
+	LeggingsOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_2_overlay.png")
+end
+for index, bootsPart in ipairs(Boots) do
+	bootsPart.setTextureSize({64, 32})
+	BootsOverlay[index].setTextureSize({64, 32})
+	BootsOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
 end
 
 --望遠鏡の調整
@@ -616,8 +625,6 @@ function tick()
 			tail2.setRot({0, 0, 0})
 			camera.FIRST_PERSON.setPos({0, 0.1, 0.2})
 			camera.FIRST_PERSON.setRot({30, 180, 0})
-			armor_model.LEGGINGS.setRot({0, math.rad(180), 0})
-			armor_model.BOOTS.setRot({0, math.rad(180), 0})
 			elytra_model.RIGHT_WING.setPos({8, 0, -2})
 			elytra_model.LEFT_WING.setPos({-8, 0, -2})
 			elytra_model.RIGHT_WING.setRot({0, math.rad(180), 0})
@@ -633,8 +640,6 @@ function tick()
 		leftArm.setRot({0, 0, 0})
 		camera.FIRST_PERSON.setPos({0, 0, 0})
 		camera.FIRST_PERSON.setRot({0, 0, 0})
-		armor_model.LEGGINGS.setRot({0, 0, 0})
-		armor_model.BOOTS.setRot({0, 0, 0})
 		for name, elytraModel in pairs(elytra_model) do
 			elytraModel.setPos({0, 0, 0})
 			elytraModel.setRot({0, 0, 0})
@@ -648,121 +653,77 @@ function tick()
 	end
 
 	--防具の設定
-	local helmetItem = player.getEquipmentItem(6)
-	if helmetItem ~= nil and not HideArmor then
-		local helmetItemType = helmetItem.getType()
-		Helmet.setEnabled(true)
-		if helmetItemType == "minecraft:leather_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1.png")
-		elseif helmetItemType == "minecraft:chainmail_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
-		elseif helmetItemType == "minecraft:iron_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
-		elseif helmetItemType == "minecraft:golden_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
-		elseif helmetItemType == "minecraft:diamond_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
-		elseif helmetItemType == "minecraft:netherite_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
-		elseif helmetItemType == "minecraft:turtle_helmet" then
-			Helmet.setTexture("Resource", "minecraft:textures/models/armor/turtle_layer_1.png")
-		else
-			Helmet.setEnabled(false)
-		end
-		if helmetItemType == "minecraft:leather_helmet" then
-			local tag = helmetItem.getTag()
-			if tag.display ~= nil then
-				Helmet.setColor(vectors.intToRGB(tag.display.color))
-			else
-				Helmet.setColor({160 / 255, 101 / 255, 64 / 255})
+	local function setArmor(armorItem, partName, armorParts, armorOverlayParts)
+		if armorItem ~= nil and not HideArmor then
+			local armorItemType = armorItem.getType()
+			local textureNumber = "1"
+			if partName == "leggings" then
+				textureNumber = "2"
 			end
-			HelmetOverlay.setEnabled(true)
+			local materialName = string.match(armorItemType, ":.+_")
+			if materialName ~= nil then
+				materialName = string.sub(materialName, 2, string.len(materialName) - 1)
+				if armorItemType == "minecraft:"..materialName.."_"..partName then
+					if materialName == "golden" then
+						materialName = "gold"
+					end
+					for index, armorPart in ipairs(armorParts) do
+						armorPart.setEnabled(true)
+						armorPart.setTexture("Resource", "minecraft:textures/models/armor/"..materialName.."_layer_"..textureNumber..".png")
+					end
+					if materialName == "leather" then
+						local tag = armorItem.getTag()
+						local armorColor
+						if tag.display ~= nil then
+							armorColor = vectors.intToRGB(tag.display.color)
+						else
+							armorColor = {160 / 255, 101 / 255, 64 / 255}
+						end
+						for index, armorPart in ipairs(armorParts) do
+							armorPart.setColor(armorColor)
+							armorOverlayParts[index].setEnabled(true)
+						end
+					else
+						for index, armorPart in ipairs(armorParts) do
+							armorPart.setColor({1, 1, 1})
+							armorOverlayParts[index].setEnabled(false)
+						end
+					end
+					if armorItem.hasGlint() then
+						for index, armorPart in ipairs(armorParts) do
+							armorPart.setShader("Glint")
+							armorOverlayParts[index].setShader("Glint")
+						end
+					else
+						for index, armorPart in ipairs(armorParts) do
+							armorPart.setShader("None")
+							armorOverlayParts[index].setShader("None")
+						end
+					end
+				else
+					for index, armorPart in ipairs(armorParts) do
+						armorPart.setEnabled(false)
+						armorOverlayParts[index].setEnabled(false)
+					end
+				end
+			else
+				for index, armorPart in ipairs(armorParts) do
+					armorPart.setEnabled(false)
+					armorOverlayParts[index].setEnabled(false)
+				end
+			end
 		else
-			Helmet.setColor({1, 1, 1})
-			HelmetOverlay.setEnabled(false)
+			for index, armorPart in ipairs(armorParts) do
+				armorPart.setEnabled(false)
+				armorOverlayParts[index].setEnabled(false)
+			end
 		end
-		if helmetItem.hasGlint() then
-			Helmet.setShader("Glint")
-			HelmetOverlay.setShader("Glint")
-		else
-			Helmet.setShader("None")
-			HelmetOverlay.setShader("None")
-		end
-	else
-		Helmet.setEnabled(false)
-		HelmetOverlay.setEnabled(false)
 	end
 
-	local chestItem = player.getEquipmentItem(5)
-	if chestItem ~= nil and not HideArmor then
-		local chestItemType = chestItem.getType()
-		for index, chestplatePart in ipairs(Chestplate) do
-			chestplatePart.setEnabled(true)
-		end
-		if chestItemType == "minecraft:leather_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1.png")
-			end
-		elseif chestItemType == "minecraft:chainmail_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/chainmail_layer_1.png")
-			end
-		elseif chestItemType == "minecraft:iron_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/iron_layer_1.png")
-			end
-		elseif chestItemType == "minecraft:golden_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/gold_layer_1.png")
-			end
-		elseif chestItemType == "minecraft:diamond_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/diamond_layer_1.png")
-			end
-		elseif chestItemType == "minecraft:netherite_chestplate" then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setTexture("Resource", "minecraft:textures/models/armor/netherite_layer_1.png")
-			end
-		else
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setEnabled(false)
-			end
-		end
-		if chestItemType == "minecraft:leather_chestplate" then
-			local tag = chestItem.getTag()
-			local armorColor
-			if tag.display ~= nil then
-				armorColor = vectors.intToRGB(tag.display.color)
-			else
-				armorColor = {160 / 255, 101 / 255, 64 / 255}
-			end
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setColor(armorColor)
-				ChestplateOverlay[index].setEnabled(true)
-			end
-		else
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setColor({1, 1, 1})
-				ChestplateOverlay[index].setEnabled(false)
-			end
-		end
-		if chestItem.hasGlint() then
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setShader("Glint")
-				ChestplateOverlay[index].setShader("Glint")
-			end
-		else
-			for index, chestplatePart in ipairs(Chestplate) do
-				chestplatePart.setShader("None")
-				ChestplateOverlay[index].setShader("None")
-			end
-		end
-	else
-		for index, chestplatePart in ipairs(Chestplate) do
-			chestplatePart.setEnabled(false)
-			ChestplateOverlay[index].setEnabled(false)
-		end
-	end
+	setArmor(player.getEquipmentItem(6), "helmet", {Helmet}, {HelmetOverlay})
+	setArmor(player.getEquipmentItem(5), "chestplate", Chestplate, ChestplateOverlay)
+	setArmor(player.getEquipmentItem(4), "leggings", Leggings, LeggingsOverlay)
+	setArmor(player.getEquipmentItem(3), "boots", Boots, BootsOverlay)
 
 	--チェストプレート着用の場合は髪をずらす。
 	local frontHair = model.Avatar.Body.Hairs.FrontHair
