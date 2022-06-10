@@ -32,6 +32,7 @@ WardenNearbyPrev = false --前チックにワーデンが近くにいるかど�
 AttackKey = keybind.getRegisteredKeybind("key.attack") --攻撃ボタン
 AttackKeyPressedPrev = false --前チックに攻撃ボタンを押していたかどうか
 AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーションのカウンター
+HeldItemPrev = {} --前チックに手に持っているアイテム：1. メインハンド, 2. オフハンド
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -587,6 +588,7 @@ function tick()
 			setEmotion(1, 1, 0, 0)
 		end
 		if mainHeldItem ~= nil or AttackAnimationCount > 0 then
+			local mainHeldItemType = mainHeldItem.getType()
 			if AttackAnimationCount > 0 then
 				if leftHanded then
 					leftArm.setEnabled(true)
@@ -595,7 +597,13 @@ function tick()
 					rightArm.setEnabled(true)
 					AlternativeRightArm.setEnabled(false)
 				end
-			elseif mainHeldItem.getType() ~= "minecraft:air" then
+			elseif mainHeldItemType == "minecraft:cake" then
+				if leftHanded then
+					animation["left_hide_bell"].stop()
+				else
+					animation["right_hide_bell"].stop()
+				end
+			elseif mainHeldItemType ~= "minecraft:air" then
 				if leftHanded then
 					leftArm.setEnabled(true)
 					AlternativeLeftArm.setEnabled(false)
@@ -623,10 +631,18 @@ function tick()
 		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
 			animation["afraid"].start()
-			animation["hide_bell"].start()
+			animation["right_hide_bell"].start()
+			animation["left_hide_bell"].start()
 		end
 		if offHeldItem ~= nil then
-			if offHeldItem.getType() ~= "minecraft:air" then
+			local offHeldItemType = offHeldItem.getType()
+			if offHeldItem.getType() == "minecraft:cake" then
+				if leftHanded then
+					animation["right_hide_bell"].stop()
+				else
+					animation["left_hide_bell"].stop()
+				end
+			elseif offHeldItem.getType() ~= "minecraft:air" then
 				if leftHanded then
 					rightArm.setEnabled(true)
 					AlternativeRightArm.setEnabled(false)
@@ -658,7 +674,8 @@ function tick()
 		AlternativeRightArm.setEnabled(false)
 		AlternativeLeftArm.setEnabled(false)
 		animation["afraid"].stop()
-		animation["hide_bell"].stop()
+		animation["right_hide_bell"].stop()
+		animation["left_hide_bell"].stop()
 	end
 
 	--エモートのタイトル設定
@@ -676,7 +693,70 @@ function tick()
 		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
 		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+	end
 
+	--ケーキの持ち方
+	local function hasCake(heldItem)
+		if heldItem ~= nil then
+			if heldItem.getType() == "minecraft:cake" then
+				return true
+			else
+				return false
+			end
+		else
+			return false
+		end
+	end
+
+	if (hasCake(mainHeldItem) and not leftHanded) or (hasCake(offHeldItem) and leftHanded) then
+		rightArm.setEnabled(false)
+		AlternativeRightArm.setEnabled(true)
+		RightCake.setEnabled(true)
+		if (not hasCake(HeldItemPrev[1]) and not leftHanded) or (not hasCake(HeldItemPrev[2]) and leftHanded) then
+			held_item_model.RIGHT_HAND.setEnabled(false)
+			animation["right_cake"].start()
+		end
+	else
+		RightCake.setEnabled(false)
+		if wardenNearby then
+			if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
+				held_item_model.RIGHT_HAND.setEnabled(true)
+				animation["right_cake"].stop()
+				animation["right_hide_bell"].play()
+			end
+		else
+			rightArm.setEnabled(true)
+			AlternativeRightArm.setEnabled(false)
+			if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
+				held_item_model.RIGHT_HAND.setEnabled(true)
+				animation["right_cake"].stop()
+			end
+		end
+	end
+	if (hasCake(offHeldItem) and not leftHanded) or (hasCake(mainHeldItem) and leftHanded) then
+		leftArm.setEnabled(false)
+		AlternativeLeftArm.setEnabled(true)
+		LeftCake.setEnabled(true)
+		if (not hasCake(HeldItemPrev[2]) and not leftHanded) or (not hasCake(HeldItemPrev[1]) and leftHanded) then
+			held_item_model.LEFT_HAND.setEnabled(false)
+			animation["left_cake"].start()
+		end
+	else
+		LeftCake.setEnabled(false)
+		if wardenNearby then
+			if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
+				held_item_model.LEFT_HAND.setEnabled(true)
+				animation["left_cake"].stop()
+				animation["left_hide_bell"].play()
+			end
+		else
+			leftArm.setEnabled(true)
+			AlternativeLeftArm.setEnabled(false)
+			if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
+				held_item_model.LEFT_HAND.setEnabled(true)
+				animation["left_cake"].stop()
+			end
+		end
 	end
 
 	--特定のアイテム使用時に片眼を瞑る。
@@ -807,7 +887,7 @@ function tick()
 
 	--防具の設定
 	local function setArmor(armorItem, partName, armorParts, armorOverlayParts)
-		if armorItem ~= nil and not HideArmor then
+		if not HideArmor then
 			local armorItemType = armorItem.getType()
 			local textureNumber = "1"
 			if partName == "leggings" then
@@ -901,6 +981,8 @@ function tick()
 	MaxHealthPrev = maxHealth
 	AnimationPrev = playerAnimation
 	WardenNearbyPrev = wardenNearby
+	HeldItemPrev[1] = mainHeldItem
+	HeldItemPrev[2] = offHeldItem
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
