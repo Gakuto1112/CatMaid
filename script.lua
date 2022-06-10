@@ -753,9 +753,25 @@ function tick()
 						if not wardenNearby then
 							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
 								if tired then
-									sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+									if underwater then
+										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+										for i = 0, 4 do
+											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+										end
+									else
+										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+									end
 								else
-									sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+									if underwater then
+										sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+										for i = 0, 4 do
+											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+										end
+									else
+										sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+									end
 								end
 								MeowActionCount = 20
 							end
@@ -829,9 +845,25 @@ function tick()
 						if not wardenNearby then
 							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
 								if tired then
-									sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+									if underwater then
+										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+										for i = 0, 4 do
+											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+										end
+									else
+										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+									end
 								else
-									sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+									if underwater then
+										sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+										for i = 0, 4 do
+											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+										end
+									else
+										sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+									end
 								end
 								MeowActionCount = 20
 							end
