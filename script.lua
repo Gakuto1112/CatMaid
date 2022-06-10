@@ -588,7 +588,6 @@ function tick()
 			setEmotion(1, 1, 0, 0)
 		end
 		if mainHeldItem ~= nil or AttackAnimationCount > 0 then
-			local mainHeldItemType = mainHeldItem.getType()
 			if AttackAnimationCount > 0 then
 				if leftHanded then
 					leftArm.setEnabled(true)
@@ -597,27 +596,30 @@ function tick()
 					rightArm.setEnabled(true)
 					AlternativeRightArm.setEnabled(false)
 				end
-			elseif mainHeldItemType == "minecraft:cake" then
-				if leftHanded then
-					animation["left_hide_bell"].stop()
-				else
-					animation["right_hide_bell"].stop()
-				end
-			elseif mainHeldItemType ~= "minecraft:air" then
-				if leftHanded then
-					leftArm.setEnabled(true)
-					AlternativeLeftArm.setEnabled(false)
-				else
-					rightArm.setEnabled(true)
-					AlternativeRightArm.setEnabled(false)
-				end
 			else
-				if leftHanded then
-					leftArm.setEnabled(false)
-					AlternativeLeftArm.setEnabled(true)
+				local mainHeldItemType = mainHeldItem.getType()
+				if mainHeldItemType == "minecraft:cake" then
+					if leftHanded then
+						animation["left_hide_bell"].stop()
+					else
+						animation["right_hide_bell"].stop()
+					end
+				elseif mainHeldItemType ~= "minecraft:air" then
+					if leftHanded then
+						leftArm.setEnabled(true)
+						AlternativeLeftArm.setEnabled(false)
+					else
+						rightArm.setEnabled(true)
+						AlternativeRightArm.setEnabled(false)
+					end
 				else
-					rightArm.setEnabled(false)
-					AlternativeRightArm.setEnabled(true)
+					if leftHanded then
+						leftArm.setEnabled(false)
+						AlternativeLeftArm.setEnabled(true)
+					else
+						rightArm.setEnabled(false)
+						AlternativeRightArm.setEnabled(true)
+					end
 				end
 			end
 		else
@@ -1175,7 +1177,7 @@ function tick()
 		SweatCount = SweatCount - 1
 	end
 	local attackKeyPressed = AttackKey.isPressed()
-	if attackKeyPressed and not AttackKeyPressedPrev then
+	if attackKeyPressed and not AttackKeyPressedPrev and mainHeldItem == nil and wardenNearby then
 		ping.punch()
 	end
 	if AttackAnimationCount > 0 then
