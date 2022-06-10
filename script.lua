@@ -683,14 +683,14 @@ function tick()
 	--エモートのタイトル設定
 	if wardenNearby then
 		action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
 		action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
 		action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 		action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
 		action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 	else
 		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
 		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
 		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
