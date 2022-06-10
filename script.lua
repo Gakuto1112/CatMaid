@@ -27,6 +27,7 @@ WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
 MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
+SweatCount = 0 --汗のカウント
 WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
 
 --防具パーツ
@@ -106,38 +107,44 @@ function ping.meow()
 	local gamemode = player.getGamemode()
 	local underwater = player.isUnderwater()
 	local playerPos = player.getPos()
-	if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
-			if underwater then
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
-				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
-					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
-				end
-
-			else
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-			end
-		else
-			if underwater then
-				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
-				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
-					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+	if player.getStatusEffect("minecraft:darkness") then
+		animation["refuse_emote"].play()
+		setEmotion(4, 4, 0, 30)
+		MeowActionCount = 30
+		SweatCount = 30
+	else
+		if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+			if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+				if underwater then
+					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+					for i = 0, 4 do
+						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+					end
+				else
+					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 				end
 			else
-				sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+				if underwater then
+					sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+					for i = 0, 4 do
+						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+					end
+				else
+					sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+				end
 			end
 		end
+		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+		if player.isLeftHanded() then
+			animation["left_meow"].play()
+		else
+			animation["right_meow"].play()
+		end
+		setEmotion(3, 3, 1, 20)
+		MeowActionCount = 20
 	end
-	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-	if player.isLeftHanded() then
-		animation["left_meow"].play()
-	else
-		animation["right_meow"].play()
-	end
-	setEmotion(3, 3, 1, 20)
-	MeowActionCount = 20
 end
 
 function ping.wink()
@@ -146,49 +153,56 @@ function ping.wink()
 	local playerPos = player.getPos()
 	local leftHanded = player.isLeftHanded()
 	local tired = player.getHealthPercentage() <= 0.2 or player.getFood() <= 6
-	if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
-			if underwater then
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
-				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
-					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+	if player.getStatusEffect("minecraft:darkness") then
+		animation["refuse_emote"].play()
+		setEmotion(4, 4, 0, 30)
+		MeowActionCount = 30
+		SweatCount = 30
+	else
+		if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+			if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
+				if underwater then
+					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
+					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+					for i = 0, 4 do
+						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+					end
+				else
+					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 				end
 			else
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-			end
-		else
-			if underwater then
-				sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
-				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
-					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+				if underwater then
+					sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
+					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
+					for i = 0, 4 do
+						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
+					end
+				else
+					sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 				end
-			else
-				sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 			end
 		end
-	end
-	particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-	if leftHanded then
-		animation["left_meow"].play()
-	else
-		animation["right_meow"].play()
-	end
-	if leftHanded then
-		if tired then
-			setEmotion(3, 2, 1, 20)
+		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+		if leftHanded then
+			animation["left_meow"].play()
 		else
-			setEmotion(3, 0, 1, 20)
+			animation["right_meow"].play()
 		end
-	else
-		if tired then
-			setEmotion(2, 3, 1, 20)
+		if leftHanded then
+			if tired then
+				setEmotion(3, 2, 1, 20)
+			else
+				setEmotion(3, 0, 1, 20)
+			end
 		else
-			setEmotion(0, 3, 1, 20)
+			if tired then
+				setEmotion(2, 3, 1, 20)
+			else
+				setEmotion(0, 3, 1, 20)
+			end
 		end
+		MeowActionCount = 20
 	end
-	MeowActionCount = 20
 end
 
 --設定の読み込み
@@ -244,19 +258,13 @@ spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
-action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
 action_wheel.SLOT_1.setItem("minecraft:cod")
-action_wheel.SLOT_1.setColor({255/255, 85/255, 255/255})
-action_wheel.SLOT_1.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_1.setFunction(function()
 	ping.meow()
 end)
 
 --アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
-action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
 action_wheel.SLOT_2.setItem("minecraft:cod")
-action_wheel.SLOT_2.setColor({255/255, 85/255, 255/255})
-action_wheel.SLOT_2.setHoverColor({255/255, 255/255, 255/255})
 action_wheel.SLOT_2.setFunction(function()
 	ping.wink()
 end)
@@ -268,8 +276,8 @@ else
 	action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
 end
 action_wheel.SLOT_3.setItem("minecraft:player_head{\"SkullOwner\":\"MHF_Ocelot\"}")
-action_wheel.SLOT_3.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_3.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_3.setColor({200 / 255, 200 / 255, 200 / 255})
+action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_3.setFunction(function()
 	if MeowSound then
 		action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
@@ -288,8 +296,8 @@ else
 	action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
 end
 action_wheel.SLOT_4.setItem("minecraft:bell")
-action_wheel.SLOT_4.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_4.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_4.setColor({200 / 255, 200 / 255, 200 / 255})
+action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_4.setFunction(function()
 	if BellSound then
 		action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
@@ -308,8 +316,8 @@ else
 	action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
 end
 action_wheel.SLOT_5.setItem("minecraft:feather")
-action_wheel.SLOT_5.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_5.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_5.setColor({200 / 255, 200 / 255, 200 / 255})
+action_wheel.SLOT_5.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_5.setFunction(function()
 	if WegTail then
 		action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
@@ -328,8 +336,8 @@ else
 	action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
 end
 action_wheel.SLOT_6.setItem("minecraft:iron_chestplate")
-action_wheel.SLOT_6.setColor({200/255, 200/255, 200/255})
-action_wheel.SLOT_6.setHoverColor({255/255, 255/255, 255/255})
+action_wheel.SLOT_6.setColor({200 / 255, 200 / 255, 200 / 255})
+action_wheel.SLOT_6.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_6.setFunction(function()
 	if HideArmor then
 		action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
@@ -349,9 +357,9 @@ if SkinName ~= "" then
 		action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
 	end
 	action_wheel.SLOT_7.setItem("minecraft:name_tag")
-	action_wheel.SLOT_7.setColor({200/255, 200/255, 200/255})
-	action_wheel.SLOT_7.setHoverColor({255/255, 255/255, 255/255})
-	action_wheel.SLOT_7.setFunction(function()
+	action_wheel.SLOT_7.setColor({200 / 255, 200 / 255, 200 / 255})
+	action_wheel.SLOT_7.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_7.setFunction(function()
 		local playerName = player.getName()
 		if UseSkinName then
 			action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
@@ -525,12 +533,32 @@ function tick()
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
 	if wardenNearby and playerAnimation ~= "SLEEPING" then
-		setEmotion(1, 1, 0, 0)
+		if EmotionCount <= 0 then
+			setEmotion(1, 1, 0, 0)
+		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
 			animation["afraid"].start()
 		end
 	else
 		animation["afraid"].stop()
+	end
+
+	--エモートのタイトル設定
+	if wardenNearby then
+		action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
+		action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
+		action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+	else
+		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+
 	end
 
 	--特定のアイテム使用時に片眼を瞑る。
@@ -562,7 +590,7 @@ function tick()
 	local activeItem = player.getActiveItem()
 	if activeItem ~= nil then
 		local activeItemAction = activeItem.getUseAction()
-		if activeItemAction == "EAT" then
+		if activeItemAction == "EAT" and not wardenNearby then
 			--特定の食べ物を食べる時にニッコリさせる。
 			local foodFound = false
 			for index, food in ipairs(FavoriteFood) do
@@ -581,7 +609,7 @@ function tick()
 			EatCount = 0
 		end
 		if activeItemAction == "TOOT_HORN" then
-			setEmotion(4, 4, 0, 2)
+			setEmotion(4, 4, 0, 0)
 			horn = true
 		else
 			horn = false
@@ -797,6 +825,14 @@ function tick()
 	end
 	if MeowActionCount > 0 then
 		MeowActionCount = MeowActionCount - 1
+	end
+	if SweatCount > 0 then
+		if SweatCount % 6 == 0 then
+			for i = 0, 4 do
+				particle.addParticle("minecraft:splash", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+			end
+		end
+		SweatCount = SweatCount - 1
 	end
 end
 
