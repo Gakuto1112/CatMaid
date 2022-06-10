@@ -614,8 +614,8 @@ function tick()
 			end
 			tail1.setRot({0, 0, 0})
 			tail2.setRot({0, 0, 0})
-			camera.FIRST_PERSON.setPos({0, 0.05, -0.2})
-			camera.FIRST_PERSON.setRot({0, 180, 0})
+			camera.FIRST_PERSON.setPos({0, 0.1, 0.2})
+			camera.FIRST_PERSON.setRot({30, 180, 0})
 			armor_model.LEGGINGS.setRot({0, math.rad(180), 0})
 			armor_model.BOOTS.setRot({0, math.rad(180), 0})
 			elytra_model.RIGHT_WING.setPos({8, 0, -2})
@@ -912,6 +912,14 @@ function render()
 			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
+	end
+
+	--寝ている時かつ一人称視点の時、頭を非表示
+	local head = model.Avatar.Head
+	if playerAnimation == "SLEEPING" and renderer.isFirstPerson() then
+		head.setEnabled(false)
+	else
+		head.setEnabled(true)
 	end
 
 	--レンダー終了処理
