@@ -734,8 +734,35 @@ function tick()
 			end
 		end
 		if (not hasCake(HeldItemPrev[1]) and not leftHanded) or (not hasCake(HeldItemPrev[2]) and leftHanded) then
+			local cakeRandom = math.random()
+			if cakeRandom >= 0.99 then
+				local cakePos = RightCake.Cake.partToWorldPos({-6, -6, 4})
+				RightCake.Cake.setUV({0 / 49, 78 / 92})
+				for i = 0, 29 do
+					particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
+				end
+				sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
+				if not wardenNearby then
+					setEmotion(1, 1, 0, 20)
+				end
+			elseif cakeRandom >= 0.95 then
+				RightCake.Cake.setUV({0 / 49, 67 / 92})
+				if not wardenNearby then
+					if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+						if tired then
+							sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+						else
+							sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+						end
+						MeowActionCount = 20
+					end
+					setEmotion(3, 3, 1, 20)
+				end
+			else
+				RightCake.Cake.setUV({0 / 49, 56 / 92})
+			end
 			held_item_model.RIGHT_HAND.setEnabled(false)
-			animation["right_cake"].start()
+			animation["right_cake"].play()
 		end
 	else
 		RightCake.setEnabled(false)
@@ -780,6 +807,33 @@ function tick()
 			end
 		end
 		if (not hasCake(HeldItemPrev[2]) and not leftHanded) or (not hasCake(HeldItemPrev[1]) and leftHanded) then
+			local cakeRandom = math.random()
+			if cakeRandom >= 0.99 then
+				local cakePos = LeftCake.Cake.partToWorldPos({6, -6, 4})
+				LeftCake.Cake.setUV({0 / 49, 78 / 92})
+				for i = 0, 29 do
+					particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
+				end
+				sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
+				if not wardenNearby then
+					setEmotion(1, 1, 0, 20)
+				end
+			elseif cakeRandom >= 0.95 then
+				LeftCake.Cake.setUV({0 / 49, 67 / 92})
+				if not wardenNearby then
+					if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+						if tired then
+							sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+						else
+							sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+						end
+						MeowActionCount = 20
+					end
+					setEmotion(3, 3, 1, 20)
+				end
+			else
+				LeftCake.Cake.setUV({0 / 49, 56 / 92})
+			end
 			held_item_model.LEFT_HAND.setEnabled(false)
 			animation["left_cake"].start()
 		end
