@@ -30,11 +30,15 @@ SleepSoundCount = 0 --寝る時の音声カウント
 SweatCount = 0 --汗のカウント
 WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
 
+--腕
+AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
+AlternativeLeftArm = model.Avatar.Body.AlternativeArm.LeftAlternativeArm
+
 --防具パーツ
 Helmet = model.Avatar.Head.Helmet.Helmet
 HelmetOverlay = model.Avatar.Head.Helmet.HelmetOverlay
-Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate}
-ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay}
+Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeChestplate.RightAlternativeChestplate, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateBottom, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeChestplate.LeftAlternativeChestplate, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateBottom}
+ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeChestplate.RightAlternativeChestplateOverlay, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateOverlayBottom, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeChestplate.LeftAlternativeChestplateOverlay, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateOverlayBottom}
 Leggings = {model.Avatar.Body.Pants.Pants, model.Avatar.RightLeg.RightPants.RightPants, model.Avatar.LeftLeg.LeftPants.LeftPants}
 LeggingsOverlay = {model.Avatar.Body.Pants.PantsOverlay, model.Avatar.RightLeg.RightPants.RightPantsOverlay, model.Avatar.LeftLeg.LeftPants.LeftPantsOverlay}
 Boots = {model.Avatar.RightLeg.RightBoots.RightBoots, model.Avatar.LeftLeg.LeftBoots.LeftBoots}
@@ -223,6 +227,10 @@ for name, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
+--代替の腕の非表示
+AlternativeRightArm.setEnabled(false)
+AlternativeLeftArm.setEnabled(false)
+
 --バニラ防具の非表示
 armor_model.HELMET.setEnabled(false)
 armor_model.CHESTPLATE.setEnabled(false)
@@ -250,6 +258,18 @@ for index, bootsPart in ipairs(Boots) do
 	bootsPart.setTextureSize({64, 32})
 	BootsOverlay[index].setTextureSize({64, 32})
 	BootsOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+end
+
+--パーツのUVの再設定
+for index, part in ipairs({AlternativeRightArm.RightAlternativeArm, AlternativeRightArm.RightAlternativeArmLayer, AlternativeLeftArm.LeftAlternativeArm, AlternativeLeftArm.LeftAlternativeArmLayer, Chestplate[4], ChestplateOverlay[4], Chestplate[6], ChestplateOverlay[6]}) do
+	local downUVData = part.getUVData("DOWN")
+	part.setUVData("DOWN", {downUVData.x - downUVData.z - 4, 0, downUVData.z, 4})
+end
+for index, part in ipairs({AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmBottom, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmLayerBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmLayerBottom, Chestplate[5], ChestplateOverlay[5], Chestplate[7], ChestplateOverlay[7]}) do
+	local upUVData = part.getUVData("UP")
+	local downUVData = part.getUVData("DOWN")
+	part.setUVData("UP", {upUVData.x - upUVData.z, upUVData.y - 6, downUVData.z, 4})
+	part.setUVData("DOWN", {downUVData.x - downUVData.z - 4, downUVData.y - 6, downUVData.z, 4})
 end
 
 --望遠鏡の調整
@@ -816,7 +836,7 @@ function tick()
 		MeowCount = MeowCount - 1
 	end
 	if WinkCount <= 0 then
-		if EmotionCount <= 0 then
+		if EmotionCount <= 0 and not horn then
 			setEmotion(3, 3, 0, 1)
 		end
 		WinkCount = 200
