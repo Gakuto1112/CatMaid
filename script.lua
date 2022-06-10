@@ -29,6 +29,9 @@ MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
 SweatCount = 0 --汗のカウント
 WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
+AttackKey = keybind.getRegisteredKeybind("key.attack") --攻撃ボタン
+AttackKeyPressedPrev = false --前チックに攻撃ボタンを押していたかどうか
+AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーションのカウンター
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -105,6 +108,10 @@ end
 
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
+end
+
+function ping.punch()
+	AttackAnimationCount = 6
 end
 
 function ping.meow()
@@ -415,7 +422,8 @@ function tick()
 
 		- xz平面上を1.8m移動する毎に再生する。
 		- ジャンプした時など（前チックのy方向の移動方向が0以下かつ、現在のy方向の移動方向が0より大きい）も再生する。
-		- スニーキング時、水中にいる時は音量5分の1。
+		- スニーキング時、水中にいる時は音量5分の1（スニークでジャンプした時は通常の音量）。
+		- ウォーデンが近くにいる時は、音量10分の1（鈴を押さえて音が出ないようにしている）。
 		- 乗り物に乗っている時、滑空時、非接地時は再生しない。
 
 	]]
@@ -423,12 +431,15 @@ function tick()
 	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
 	local playerPos = player.getPos()
 	local underwater = player.isUnderwater()
+	local wardenNearby = player.getStatusEffect("minecraft:darkness")
 	if BellSound then
 		local sneaking = player.isSneaking()
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
-				if sneaking or underwater then
+				if wardenNearby then
+					sound.playCustomSound("Bell", playerPos, {0.05, 1})
+				elseif sneaking or underwater then
 					sound.playCustomSound("Bell", playerPos, {0.1, 1})
 				else
 					sound.playCustomSound("Bell", playerPos, {0.5, 1})
@@ -437,7 +448,9 @@ function tick()
 			WalkDistance = 0
 		end
 		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
-			if sneaking or underwater then
+			if wardenNearby then
+				sound.playCustomSound("Bell", playerPos, {0.05, 1})
+			elseif underwater then
 				sound.playCustomSound("Bell", playerPos, {0.1, 1})
 			else
 				sound.playCustomSound("Bell", playerPos, {0.5, 1})
@@ -522,7 +535,7 @@ function tick()
 	local maxHealth = player.getMaxHealth()
 	local air = player.getAir()
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
-		if air > 0 then
+		if air > 0 and not wardenNearby then
 			if underwater then
 				sound.playSound("minecraft:entity.cat.hurt", playerPos, {0.2, 1.5})
 				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
@@ -551,16 +564,87 @@ function tick()
 	end
 
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
-	local wardenNearby = player.getStatusEffect("minecraft:darkness")
+	local mainHeldItem = player.getHeldItem(1)
+	local offHeldItem = player.getHeldItem(2)
+	local rightArm = model.Avatar.RightArm
+	local leftArm = model.Avatar.LeftArm
 	if wardenNearby and playerAnimation ~= "SLEEPING" then
 		if EmotionCount <= 0 then
 			setEmotion(1, 1, 0, 0)
 		end
+		if mainHeldItem ~= nil or AttackAnimationCount > 0 then
+			if AttackAnimationCount > 0 then
+				if leftHanded then
+					leftArm.setEnabled(true)
+					AlternativeLeftArm.setEnabled(false)
+				else
+					rightArm.setEnabled(true)
+					AlternativeRightArm.setEnabled(false)
+				end
+			elseif mainHeldItem.getType() ~= "minecraft:air" then
+				if leftHanded then
+					leftArm.setEnabled(true)
+					AlternativeLeftArm.setEnabled(false)
+				else
+					rightArm.setEnabled(true)
+					AlternativeRightArm.setEnabled(false)
+				end
+			else
+				if leftHanded then
+					leftArm.setEnabled(false)
+					AlternativeLeftArm.setEnabled(true)
+				else
+					rightArm.setEnabled(false)
+					AlternativeRightArm.setEnabled(true)
+				end
+			end
+		else
+			if leftHanded then
+				leftArm.setEnabled(false)
+				AlternativeLeftArm.setEnabled(true)
+			else
+				rightArm.setEnabled(false)
+				AlternativeRightArm.setEnabled(true)
+			end
+		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
 			animation["afraid"].start()
+			animation["hide_bell"].start()
 		end
-	else
+		if offHeldItem ~= nil then
+			if offHeldItem.getType() ~= "minecraft:air" then
+				if leftHanded then
+					rightArm.setEnabled(true)
+					AlternativeRightArm.setEnabled(false)
+				else
+					leftArm.setEnabled(true)
+					AlternativeLeftArm.setEnabled(false)
+				end
+			else
+				if leftHanded then
+					rightArm.setEnabled(false)
+					AlternativeRightArm.setEnabled(true)
+				else
+					leftArm.setEnabled(false)
+					AlternativeLeftArm.setEnabled(true)
+				end
+			end
+		else
+			if leftHanded then
+				rightArm.setEnabled(false)
+				AlternativeRightArm.setEnabled(true)
+			else
+				leftArm.setEnabled(false)
+				AlternativeLeftArm.setEnabled(true)
+			end
+		end
+	elseif WardenNearbyPrev then
+		rightArm.setEnabled(true)
+		leftArm.setEnabled(true)
+		AlternativeRightArm.setEnabled(false)
+		AlternativeLeftArm.setEnabled(false)
 		animation["afraid"].stop()
+		animation["hide_bell"].stop()
 	end
 
 	--エモートのタイトル設定
@@ -583,8 +667,6 @@ function tick()
 
 	--特定のアイテム使用時に片眼を瞑る。
 	local closeEyeItems = {"minecraft:bow", "minecraft:trident", "minecraft:spyglass"}
-	local mainHeldItem = player.getHeldItem(1)
-	local offHeldItem = player.getHeldItem(2)
 	local usingItem = player.isUsingItem()
 	local activeHand = player.getActiveHand()
 
@@ -646,9 +728,6 @@ function tick()
 	end
 
 	--寝ている時に目と閉じる
-	local rightArm = model.Avatar.RightArm
-	local leftArm = model.Avatar.LeftArm
-
 	local function hasItem(heldItem)
 		if heldItem ~= nil then
 			if heldItem.getType() == "minecraft:air" then
@@ -854,6 +933,14 @@ function tick()
 		end
 		SweatCount = SweatCount - 1
 	end
+	local attackKeyPressed = AttackKey.isPressed()
+	if attackKeyPressed and not AttackKeyPressedPrev then
+		ping.punch()
+	end
+	if AttackAnimationCount > 0 then
+		AttackAnimationCount = AttackAnimationCount - 1
+	end
+	AttackKeyPressedPrev = attackKeyPressed
 end
 
 function render()
@@ -944,9 +1031,18 @@ function render()
 		end
 	end
 
+	--一人称視点の時はバニラ腕の強制表示
+	local firstPerson = renderer.isFirstPerson()
+	if firstPerson then
+		model.Avatar.RightArm.setEnabled(true)
+		model.Avatar.LeftArm.setEnabled(true)
+		AlternativeRightArm.setEnabled(false)
+		AlternativeLeftArm.setEnabled(false)
+	end
+
 	--寝ている時かつ一人称視点の時、頭を非表示
 	local head = model.Avatar.Head
-	if playerAnimation == "SLEEPING" and renderer.isFirstPerson() then
+	if playerAnimation == "SLEEPING" and firstPerson then
 		head.setEnabled(false)
 	else
 		head.setEnabled(true)
