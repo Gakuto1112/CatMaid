@@ -708,151 +708,168 @@ function tick()
 		end
 	end
 
-	if (hasCake(mainHeldItem) and not leftHanded) or (hasCake(offHeldItem) and leftHanded) then
-		rightArm.setEnabled(false)
-		AlternativeRightArm.setEnabled(true)
-		RightCake.setEnabled(true)
-		if leftHanded then
-			if offHeldItem ~= nil then
-				if offHeldItem.hasGlint() then
-					RightCake.Cake.setShader("Glint")
+	if playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~= "FALL_FLYING" then
+		if (hasCake(mainHeldItem) and not leftHanded) or (hasCake(offHeldItem) and leftHanded) then
+			rightArm.setEnabled(false)
+			AlternativeRightArm.setEnabled(true)
+			RightCake.setEnabled(true)
+			if leftHanded then
+				if offHeldItem ~= nil then
+					if offHeldItem.hasGlint() then
+						RightCake.Cake.setShader("Glint")
+					else
+						RightCake.Cake.setShader("None")
+					end
 				else
 					RightCake.Cake.setShader("None")
 				end
 			else
-				RightCake.Cake.setShader("None")
-			end
-		else
-			if mainHeldItem ~= nil then
-				if mainHeldItem.hasGlint() then
-					RightCake.Cake.setShader("Glint")
+				if mainHeldItem ~= nil then
+					if mainHeldItem.hasGlint() then
+						RightCake.Cake.setShader("Glint")
+					else
+						RightCake.Cake.setShader("None")
+					end
 				else
 					RightCake.Cake.setShader("None")
 				end
-			else
-				RightCake.Cake.setShader("None")
 			end
-		end
-		if (not hasCake(HeldItemPrev[1]) and not leftHanded) or (not hasCake(HeldItemPrev[2]) and leftHanded) then
-			local cakeRandom = math.random()
-			if cakeRandom >= 0.99 then
-				local cakePos = RightCake.Cake.partToWorldPos({-6, -6, 4})
-				RightCake.Cake.setUV({0 / 49, 78 / 92})
-				for i = 0, 29 do
-					particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
-				end
-				sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
-				if not wardenNearby then
-					setEmotion(1, 1, 0, 20)
-				end
-			elseif cakeRandom >= 0.95 then
-				RightCake.Cake.setUV({0 / 49, 67 / 92})
-				if not wardenNearby then
-					if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-						if tired then
-							sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-						else
-							sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+			local initialHold = (not hasCake(HeldItemPrev[1]) and not leftHanded) or (not hasCake(HeldItemPrev[2]) and leftHanded)
+			if initialHold or AnimationPrev == "SLEEPING" or AnimationPrev == "SWIMMING" or AnimationPrev == "FALL_FLYING" then
+				if initialHold then
+					local cakeRandom = math.random()
+					if cakeRandom >= 0.99 then
+						local cakePos = RightCake.Cake.partToWorldPos({-6, -6, 4})
+						RightCake.Cake.setUV({0 / 49, 78 / 92})
+						for i = 0, 29 do
+							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
-						MeowActionCount = 20
+						sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
+						if not wardenNearby then
+							setEmotion(1, 1, 0, 20)
+						end
+					elseif cakeRandom >= 0.95 then
+						RightCake.Cake.setUV({0 / 49, 67 / 92})
+						if not wardenNearby then
+							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+								if tired then
+									sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+								else
+									sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+								end
+								MeowActionCount = 20
+							end
+							setEmotion(3, 3, 1, 20)
+						end
+					else
+						RightCake.Cake.setUV({0 / 49, 56 / 92})
 					end
-					setEmotion(3, 3, 1, 20)
 				end
-			else
-				RightCake.Cake.setUV({0 / 49, 56 / 92})
-			end
-			held_item_model.RIGHT_HAND.setEnabled(false)
-			animation["right_cake"].play()
-		end
-	else
-		RightCake.setEnabled(false)
-		if wardenNearby then
-			if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
-				held_item_model.RIGHT_HAND.setEnabled(true)
-				animation["right_cake"].stop()
-				animation["right_hide_bell"].play()
+				held_item_model.RIGHT_HAND.setEnabled(false)
+				animation["right_cake"].play()
 			end
 		else
-			rightArm.setEnabled(true)
-			AlternativeRightArm.setEnabled(false)
-			if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
-				held_item_model.RIGHT_HAND.setEnabled(true)
-				animation["right_cake"].stop()
+			RightCake.setEnabled(false)
+			if wardenNearby then
+				if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
+					held_item_model.RIGHT_HAND.setEnabled(true)
+					animation["right_cake"].stop()
+					animation["right_hide_bell"].play()
+				end
+			else
+				rightArm.setEnabled(true)
+				AlternativeRightArm.setEnabled(false)
+				if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
+					held_item_model.RIGHT_HAND.setEnabled(true)
+					animation["right_cake"].stop()
+				end
 			end
 		end
-	end
-	if (hasCake(offHeldItem) and not leftHanded) or (hasCake(mainHeldItem) and leftHanded) then
-		leftArm.setEnabled(false)
-		AlternativeLeftArm.setEnabled(true)
-		LeftCake.setEnabled(true)
-		if leftHanded then
-			if mainHeldItem ~= nil then
-				if mainHeldItem.hasGlint() then
-					LeftCake.Cake.setShader("Glint")
+		if (hasCake(offHeldItem) and not leftHanded) or (hasCake(mainHeldItem) and leftHanded) then
+			leftArm.setEnabled(false)
+			AlternativeLeftArm.setEnabled(true)
+			LeftCake.setEnabled(true)
+			if leftHanded then
+				if mainHeldItem ~= nil then
+					if mainHeldItem.hasGlint() then
+						LeftCake.Cake.setShader("Glint")
+					else
+						LeftCake.Cake.setShader("None")
+					end
 				else
 					LeftCake.Cake.setShader("None")
 				end
 			else
-				LeftCake.Cake.setShader("None")
-			end
-		else
-			if offHeldItem ~= nil then
-				if offHeldItem.hasGlint() then
-					LeftCake.Cake.setShader("Glint")
+				if offHeldItem ~= nil then
+					if offHeldItem.hasGlint() then
+						LeftCake.Cake.setShader("Glint")
+					else
+						LeftCake.Cake.setShader("None")
+					end
 				else
 					LeftCake.Cake.setShader("None")
 				end
-			else
-				LeftCake.Cake.setShader("None")
 			end
-		end
-		if (not hasCake(HeldItemPrev[2]) and not leftHanded) or (not hasCake(HeldItemPrev[1]) and leftHanded) then
-			local cakeRandom = math.random()
-			if cakeRandom >= 0.99 then
-				local cakePos = LeftCake.Cake.partToWorldPos({6, -6, 4})
-				LeftCake.Cake.setUV({0 / 49, 78 / 92})
-				for i = 0, 29 do
-					particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
-				end
-				sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
-				if not wardenNearby then
-					setEmotion(1, 1, 0, 20)
-				end
-			elseif cakeRandom >= 0.95 then
-				LeftCake.Cake.setUV({0 / 49, 67 / 92})
-				if not wardenNearby then
-					if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-						if tired then
-							sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
-						else
-							sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+			local initialHold = (not hasCake(HeldItemPrev[2]) and not leftHanded) or (not hasCake(HeldItemPrev[1]) and leftHanded)
+			if initialHold or AnimationPrev == "SLEEPING" or AnimationPrev == "SWIMMING" or AnimationPrev == "FALL_FLYING" then
+				if initialHold then
+					local cakeRandom = math.random()
+					if cakeRandom >= 0.99 then
+						local cakePos = LeftCake.Cake.partToWorldPos({6, -6, 4})
+						LeftCake.Cake.setUV({0 / 49, 78 / 92})
+						for i = 0, 29 do
+							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
-						MeowActionCount = 20
+						sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
+						if not wardenNearby then
+							setEmotion(1, 1, 0, 20)
+						end
+					elseif cakeRandom >= 0.95 then
+						LeftCake.Cake.setUV({0 / 49, 67 / 92})
+						if not wardenNearby then
+							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
+								if tired then
+									sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
+								else
+									sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
+								end
+								MeowActionCount = 20
+							end
+							setEmotion(3, 3, 1, 20)
+						end
+					else
+						LeftCake.Cake.setUV({0 / 49, 56 / 92})
 					end
-					setEmotion(3, 3, 1, 20)
 				end
-			else
-				LeftCake.Cake.setUV({0 / 49, 56 / 92})
-			end
-			held_item_model.LEFT_HAND.setEnabled(false)
-			animation["left_cake"].start()
-		end
-	else
-		LeftCake.setEnabled(false)
-		if wardenNearby then
-			if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
-				held_item_model.LEFT_HAND.setEnabled(true)
-				animation["left_cake"].stop()
-				animation["left_hide_bell"].play()
+				held_item_model.LEFT_HAND.setEnabled(false)
+				animation["left_cake"].start()
 			end
 		else
-			leftArm.setEnabled(true)
-			AlternativeLeftArm.setEnabled(false)
-			if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
-				held_item_model.LEFT_HAND.setEnabled(true)
-				animation["left_cake"].stop()
+			LeftCake.setEnabled(false)
+			if wardenNearby then
+				if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
+					held_item_model.LEFT_HAND.setEnabled(true)
+					animation["left_cake"].stop()
+					animation["left_hide_bell"].play()
+				end
+			else
+				leftArm.setEnabled(true)
+				AlternativeLeftArm.setEnabled(false)
+				if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
+					held_item_model.LEFT_HAND.setEnabled(true)
+					animation["left_cake"].stop()
+				end
 			end
 		end
+	else
+		rightArm.setEnabled(true)
+		AlternativeRightArm.setEnabled(false)
+		leftArm.setEnabled(true)
+		AlternativeLeftArm.setEnabled(false)
+		held_item_model.RIGHT_HAND.setEnabled(true)
+		held_item_model.LEFT_HAND.setEnabled(true)
+		animation["right_cake"].stop()
+		animation["left_cake"].stop()
 	end
 
 	--特定のアイテム使用時に片眼を瞑る。
