@@ -27,6 +27,7 @@ WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
 MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
+WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
 
 --防具パーツ
 Helmet = model.Avatar.Head.Helmet.Helmet
@@ -521,6 +522,17 @@ function tick()
 		setEmotion(1, 1, 0, 20)
 	end
 
+	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
+	local wardenNearby = player.getStatusEffect("minecraft:darkness")
+	if wardenNearby and playerAnimation ~= "SLEEPING" then
+		setEmotion(1, 1, 0, 0)
+		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
+			animation["afraid"].start()
+		end
+	else
+		animation["afraid"].stop()
+	end
+
 	--特定のアイテム使用時に片眼を瞑る。
 	local closeEyeItems = {"minecraft:bow", "minecraft:trident", "minecraft:spyglass"}
 	local mainHeldItem = player.getHeldItem(1)
@@ -747,6 +759,7 @@ function tick()
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
 	AnimationPrev = playerAnimation
+	WardenNearbyPrev = wardenNearby
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
@@ -756,7 +769,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
