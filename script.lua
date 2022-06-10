@@ -712,6 +712,27 @@ function tick()
 		rightArm.setEnabled(false)
 		AlternativeRightArm.setEnabled(true)
 		RightCake.setEnabled(true)
+		if leftHanded then
+			if offHeldItem ~= nil then
+				if offHeldItem.hasGlint() then
+					RightCake.Cake.setShader("Glint")
+				else
+					RightCake.Cake.setShader("None")
+				end
+			else
+				RightCake.Cake.setShader("None")
+			end
+		else
+			if mainHeldItem ~= nil then
+				if mainHeldItem.hasGlint() then
+					RightCake.Cake.setShader("Glint")
+				else
+					RightCake.Cake.setShader("None")
+				end
+			else
+				RightCake.Cake.setShader("None")
+			end
+		end
 		if (not hasCake(HeldItemPrev[1]) and not leftHanded) or (not hasCake(HeldItemPrev[2]) and leftHanded) then
 			held_item_model.RIGHT_HAND.setEnabled(false)
 			animation["right_cake"].start()
@@ -737,6 +758,27 @@ function tick()
 		leftArm.setEnabled(false)
 		AlternativeLeftArm.setEnabled(true)
 		LeftCake.setEnabled(true)
+		if leftHanded then
+			if mainHeldItem ~= nil then
+				if mainHeldItem.hasGlint() then
+					LeftCake.Cake.setShader("Glint")
+				else
+					LeftCake.Cake.setShader("None")
+				end
+			else
+				LeftCake.Cake.setShader("None")
+			end
+		else
+			if offHeldItem ~= nil then
+				if offHeldItem.hasGlint() then
+					LeftCake.Cake.setShader("Glint")
+				else
+					LeftCake.Cake.setShader("None")
+				end
+			else
+				LeftCake.Cake.setShader("None")
+			end
+		end
 		if (not hasCake(HeldItemPrev[2]) and not leftHanded) or (not hasCake(HeldItemPrev[1]) and leftHanded) then
 			held_item_model.LEFT_HAND.setEnabled(false)
 			animation["left_cake"].start()
