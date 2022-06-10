@@ -29,10 +29,10 @@ MeowActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
 
 --防具パーツ
-Helmet = model.Head.Helmet.Helmet
-HelmetOverlay = model.Head.Helmet.HelmetOverlay
-Chestplate = {model.Body.Chestplate.Chestplate, model.RightArm.RightChestplate.RightChestplate, model.LeftArm.LeftChestplate.LeftChestplate}
-ChestplateOverlay = {model.Body.Chestplate.ChestplateOverlay, model.RightArm.RightChestplate.RightChestplateOverlay, model.LeftArm.LeftChestplate.LeftChestplateOverlay}
+Helmet = model.Avatar.Head.Helmet.Helmet
+HelmetOverlay = model.Avatar.Head.Helmet.HelmetOverlay
+Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate}
+ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay}
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
@@ -59,15 +59,15 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112}
 	EmotionCount = count
 end
 
@@ -216,9 +216,9 @@ armor_model.HELMET.setEnabled(false)
 armor_model.CHESTPLATE.setEnabled(false)
 
 --テクスチャサイズの変更と防具のテクスチャ設定
-model.Head.FaceParts.RightEye.setTextureSize({49, 56})
-model.Head.FaceParts.LeftEye.setTextureSize({49, 56})
-model.Head.FaceParts.Mouth.setTextureSize({49, 56})
+model.Avatar.Head.FaceParts.RightEye.setTextureSize({49, 56})
+model.Avatar.Head.FaceParts.LeftEye.setTextureSize({49, 56})
+model.Avatar.Head.FaceParts.Mouth.setTextureSize({49, 56})
 Helmet.setTextureSize({64, 32})
 HelmetOverlay.setTextureSize({64, 32})
 HelmetOverlay.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
@@ -434,10 +434,10 @@ function tick()
 	local foodPercentage = player.getFood() / 20
 	local tired = false
 	local playerAnimation = player.getAnimation()
-	local rightEar = model.Head.Ears.RightEar
-	local leftEar = model.Head.Ears.LeftEar
-	local tail1 = model.Body.Tail
-	local tail2 = model.Body.Tail.Tail1.Tail2
+	local rightEar = model.Avatar.Head.Ears.RightEar
+	local leftEar = model.Avatar.Head.Ears.LeftEar
+	local tail1 = model.Avatar.Body.Tail
+	local tail2 = model.Avatar.Body.Tail.Tail1.Tail2
 	if wet then
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
@@ -577,8 +577,8 @@ function tick()
 	end
 
 	--寝ている時に目と閉じる
-	local rightArm = model.RightArm
-	local leftArm = model.LeftArm
+	local rightArm = model.Avatar.RightArm
+	local leftArm = model.Avatar.LeftArm
 
 	local function hasItem(heldItem)
 		if heldItem ~= nil then
@@ -765,10 +765,10 @@ function tick()
 	end
 
 	--チェストプレート着用の場合は髪をずらす。
-	local frontHair = model.Body.Hairs.FrontHair
-	local backHair = model.Body.Hairs.BackHair
-	local skirt = model.Body.Skirt
-	local backRibbon = model.Body.BackRibbon
+	local frontHair = model.Avatar.Body.Hairs.FrontHair
+	local backHair = model.Avatar.Body.Hairs.BackHair
+	local skirt = model.Avatar.Body.Skirt
+	local backRibbon = model.Avatar.Body.BackRibbon
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
@@ -896,8 +896,8 @@ function render()
 	local horizontalAverage = getTableAverage(VelocityData[1])
 	local verticalAverage = getTableAverage(VelocityData[2])
 	local angularVelocityAverage = getTableAverage(VelocityData[3])
-	local frontHair = model.Body.Hairs.FrontHair
-	local backHair = model.Body.Hairs.BackHair
+	local frontHair = model.Avatar.Body.Hairs.FrontHair
+	local backHair = model.Avatar.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
 		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
