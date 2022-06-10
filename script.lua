@@ -37,11 +37,15 @@ AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーシ�
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
 AlternativeLeftArm = model.Avatar.Body.AlternativeArm.LeftAlternativeArm
 
+--ケーキ
+RightCake = AlternativeRightArm.RightAlternativeArmBottom.RightCake
+LeftCake = AlternativeLeftArm.LeftAlternativeArmBottom.LeftCake
+
 --防具パーツ
 Helmet = model.Avatar.Head.Helmet.Helmet
 HelmetOverlay = model.Avatar.Head.Helmet.HelmetOverlay
-Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeChestplate.RightAlternativeChestplate, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateBottom, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeChestplate.LeftAlternativeChestplate, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateBottom}
-ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeChestplate.RightAlternativeChestplateOverlay, model.Avatar.Body.AlternativeArm.RightAlternativeArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateOverlayBottom, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeChestplate.LeftAlternativeChestplateOverlay, model.Avatar.Body.AlternativeArm.LeftAlternativeArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateOverlayBottom}
+Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplate, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplate, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateBottom}
+ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplateOverlay, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateOverlayBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplateOverlay, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateOverlayBottom}
 Leggings = {model.Avatar.Body.Pants.Pants, model.Avatar.RightLeg.RightPants.RightPants, model.Avatar.LeftLeg.LeftPants.LeftPants}
 LeggingsOverlay = {model.Avatar.Body.Pants.PantsOverlay, model.Avatar.RightLeg.RightPants.RightPantsOverlay, model.Avatar.LeftLeg.LeftPants.LeftPantsOverlay}
 Boots = {model.Avatar.RightLeg.RightBoots.RightBoots, model.Avatar.LeftLeg.LeftBoots.LeftBoots}
@@ -72,15 +76,15 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 184}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 184}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 112}
+	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 184}
 	EmotionCount = count
 end
 
@@ -244,10 +248,10 @@ armor_model.CHESTPLATE.setEnabled(false)
 armor_model.LEGGINGS.setEnabled(false)
 armor_model.BOOTS.setEnabled(false)
 
---テクスチャサイズの変更と防具のテクスチャ設定
-model.Avatar.Head.FaceParts.RightEye.setTextureSize({49, 56})
-model.Avatar.Head.FaceParts.LeftEye.setTextureSize({49, 56})
-model.Avatar.Head.FaceParts.Mouth.setTextureSize({49, 56})
+--テクスチャサイズの変更とテクスチャの設定
+model.Avatar.Head.FaceParts.RightEye.setTextureSize({49, 92})
+model.Avatar.Head.FaceParts.LeftEye.setTextureSize({49, 92})
+model.Avatar.Head.FaceParts.Mouth.setTextureSize({49, 92})
 Helmet.setTextureSize({64, 32})
 HelmetOverlay.setTextureSize({64, 32})
 HelmetOverlay.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
@@ -265,6 +269,16 @@ for index, bootsPart in ipairs(Boots) do
 	bootsPart.setTextureSize({64, 32})
 	BootsOverlay[index].setTextureSize({64, 32})
 	BootsOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+end
+for index, cakePlatePart in ipairs({RightCake.RightCakePlate, LeftCake.LeftCakePlate}) do
+	cakePlatePart.setTextureSize({16, 16})
+	cakePlatePart.setTexture("Resource", "minecraft:textures/block/spruce_planks.png")
+end
+for index, cakePart in ipairs({RightCake, LeftCake}) do
+	cakePart.Cake.setTextureSize({49, 92})
+	cakePart.Cake.setUV({0 / 49, 56 / 92})
+	cakePart.setEnabled(false)
+	cakePart.setEnabled(false)
 end
 
 --パーツのUVの再設定
