@@ -48,6 +48,8 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![ウォーデンに怯える](README_Images/ウォーデンに怯える.jpg)
 
+  ![エモートを拒否する](README_Images/エモート拒否.gif)
+
 - プレイヤーが動くと髪がたなびきます。
 
   ![髪がたなびく](README_Images/髪がたなびく.gif)
