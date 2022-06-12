@@ -792,6 +792,7 @@ function tick()
 					end
 				end
 				held_item_model.RIGHT_HAND.setEnabled(false)
+				animation["afk_right_bell"].stop()
 				animation["right_cake"].play()
 			end
 		else
@@ -803,9 +804,9 @@ function tick()
 					animation["right_hide_bell"].play()
 				end
 			else
-				rightArm.setEnabled(true)
-				AlternativeRightArm.setEnabled(false)
 				if (hasCake(HeldItemPrev[1]) and not leftHanded) or (hasCake(HeldItemPrev[2]) and leftHanded) then
+					rightArm.setEnabled(true)
+					AlternativeRightArm.setEnabled(false)
 					held_item_model.RIGHT_HAND.setEnabled(true)
 					animation["right_cake"].stop()
 				end
@@ -884,6 +885,7 @@ function tick()
 					end
 				end
 				held_item_model.LEFT_HAND.setEnabled(false)
+				animation["afk_left_bell"].stop()
 				animation["left_cake"].start()
 			end
 		else
@@ -895,9 +897,9 @@ function tick()
 					animation["left_hide_bell"].play()
 				end
 			else
-				leftArm.setEnabled(true)
-				AlternativeLeftArm.setEnabled(false)
 				if (hasCake(HeldItemPrev[2]) and not leftHanded) or (hasCake(HeldItemPrev[1]) and leftHanded) then
+					leftArm.setEnabled(true)
+					AlternativeLeftArm.setEnabled(false)
 					held_item_model.LEFT_HAND.setEnabled(true)
 					animation["left_cake"].stop()
 				end
@@ -1142,7 +1144,61 @@ function tick()
 
 	if VelocityDataAverage[3] == 0 and not getKeyPressed() and not wardenNearby then
 		AFKCount = AFKCount + 1
+		if AFKCount % 600 == 0 then
+			if hasItem(mainHeldItem) ~= hasItem(offHeldItem) then
+				if (hasCake(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
+					leftArm.setEnabled(false)
+					AlternativeLeftArm.setEnabled(true)
+					animation["afk_left_bell"].start()
+				else
+					rightArm.setEnabled(false)
+					AlternativeRightArm.setEnabled(true)
+					animation["afk_right_bell"].start()
+				end
+			else
+				if not leftHanded and not hasCake(mainHeldItem) then
+					rightArm.setEnabled(false)
+					AlternativeRightArm.setEnabled(true)
+					animation["afk_right_bell"].start()
+				elseif leftHanded and not hasCake(mainHeldItem) then
+					leftArm.setEnabled(false)
+					AlternativeLeftArm.setEnabled(true)
+					animation["afk_left_bell"].start()
+				end
+			end
+		elseif ((AFKCount - 27) % 600 == 0 or (AFKCount - 43) % 600 == 0) and (animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying()) then
+			if BellSound then
+				if underwater then
+					sound.playCustomSound("Bell", playerPos, {0.1, 1})
+				else
+					sound.playCustomSound("Bell", playerPos, {0.5, 1})
+				end
+			end
+		elseif (AFKCount - 67) % 600 == 0 then
+			if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
+				rightArm.setEnabled(true)
+				AlternativeRightArm.setEnabled(false)
+			end
+			if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
+				leftArm.setEnabled(true)
+				AlternativeLeftArm.setEnabled(false)
+			end
+		end
 	else
+		if AFKCount > 0 then
+			if not wardenNearby then
+				if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
+					rightArm.setEnabled(true)
+					AlternativeRightArm.setEnabled(false)
+				end
+				if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
+					leftArm.setEnabled(true)
+					AlternativeLeftArm.setEnabled(false)
+				end
+			end
+			animation["afk_right_bell"].stop()
+			animation["afk_left_bell"].stop()
+		end
 		AFKCount = 0
 	end
 
