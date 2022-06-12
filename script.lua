@@ -994,7 +994,7 @@ function tick()
 		end
 	end
 
-	if playerAnimation == "SLEEPING" or AFKCount >= 600 then
+	if playerAnimation == "SLEEPING" or AFKCount >= 6000 then
 		if SleepSoundCount <= 0 then
 			if math.random() >= 0.95 then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
@@ -1007,7 +1007,7 @@ function tick()
 		else
 			SleepSoundCount = SleepSoundCount - 1
 		end
-		if AnimationPrev ~= "SLEEPING" and AFKCount < 600 then
+		if AnimationPrev ~= "SLEEPING" and AFKCount < 6000 then
 			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 				rightArm.setRot({-15, 0, 0})
 			end
@@ -1146,16 +1146,16 @@ function tick()
 	end
 
 	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
-		if AFKCount >= 0 then
+		if AFKCount >= 0 and AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
-		if AFKCount >= 600 then
-			if AFKCount == 600 then
+		if AFKCount >= 6000 then
+			if AFKCount == 6000 then
 				animation["afk_sleepy"].stop()
 				animation["afk_sleep"].play()
 			end
-		elseif AFKCount >= 300 then
-			if AFKCount == 300 then
+		elseif AFKCount >= 5400 then
+			if AFKCount == 5400 then
 				animation["afk_sleepy"].play()
 			end
 			setEmotion(3, 3, 0, 0)
@@ -1212,7 +1212,7 @@ function tick()
 			animation["afk_sleepy"].stop()
 			animation["afk_sleep"].stop()
 		end
-		if AFKCount >= 300 then
+		if AFKCount >= 5400 then
 			AFKCount = -30
 		elseif AFKCount > 0 then
 			AFKCount = 0
@@ -1223,7 +1223,7 @@ function tick()
 		if damageTaken == 2 then
 			AFKCount = 0
 		elseif AFKCount == -30 then
-			if not damageTaken then
+			if damageTaken == 0 then
 				sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
 			end
 			setEmotion(1, 1, 0, 10)
@@ -1234,8 +1234,6 @@ function tick()
 		end
 		AFKCount = AFKCount + 1
 	end
-
-	print(AFKCount)
 
 	--チック終了処理
 	AnimationCount = AnimationCount + 1
@@ -1254,7 +1252,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and AFKCount < 300 then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and AFKCount < 5400 then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
