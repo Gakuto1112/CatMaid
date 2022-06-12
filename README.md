@@ -52,6 +52,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 - 放置すると特殊なアクションを起こします。
   - 30秒おきに鈴をいじります。
+
   ![鈴をいじる](README_Images/鈴をいじる.gif)
 
   - 5分放置すると居眠りします。
