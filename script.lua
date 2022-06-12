@@ -34,6 +34,7 @@ AttackKey = keybind.getRegisteredKeybind("key.attack") --攻撃ボタン
 AttackKeyPressedPrev = false --前チックに攻撃ボタンを押していたかどうか
 AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーションのカウンター
 HeldItemPrev = {} --前チックに手に持っているアイテム：1. メインハンド, 2. オフハンド
+KeyBinds = {} --キーバインドのリスト
 AFKCount = 0 --放置時間のカウント
 
 --腕
@@ -235,6 +236,11 @@ ping.setHideArmor(HideArmor)
 UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
 ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
+
+--全てのキーのキーバインドの取得
+for index, keyName in ipairs(keybind.getRegisteredKeyList()) do
+	table.insert(KeyBinds, keybind.getRegisteredKeybind(keyName))
+end
 
 --デフォルトのプレイヤーモデルの非表示
 for name, vanillaModel in pairs(vanilla_model) do
@@ -1126,8 +1132,8 @@ function tick()
 
 	--放置中の処理
 	local function getKeyPressed()
-		for index, keyName in ipairs(keybind.getRegisteredKeyList()) do
-			if keybind.getRegisteredKeybind(keyName).isPressed() then
+		for index, keyBind in ipairs(KeyBinds) do
+			if keyBind.isPressed() then
 				return true
 			end
 		end
