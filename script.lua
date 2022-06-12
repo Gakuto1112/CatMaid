@@ -36,6 +36,8 @@ AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーシ�
 HeldItemPrev = {} --前チックに手に持っているアイテム：1. メインハンド, 2. オフハンド
 KeyBinds = {} --キーバインドのリスト
 AFKCount = 0 --放置時間のカウント
+KeyPressed = false --キーを押しているかどうかの状態（ping用）
+KeyPressedPrev = false --前チックにキーを押していたかどうか
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -116,6 +118,10 @@ end
 
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
+end
+
+function ping.setKeyPressed(boolToSet)
+	KeyPressed = boolToSet
 end
 
 function ping.punch()
@@ -1136,16 +1142,19 @@ function tick()
 	end
 
 	--放置中の処理
-	local function getKeyPressed()
-		for index, keyBind in ipairs(KeyBinds) do
-			if keyBind.isPressed() then
-				return true
-			end
+	local keypressed = false
+	for index, keyBind in ipairs(KeyBinds) do
+		if keyBind.isPressed() then
+			keypressed = true
+			break
 		end
-		return false
 	end
 
-	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
+	if keypressed ~= KeyPressedPrev then
+		ping.setKeyPressed(keypressed)
+	end
+
+	if VelocityDataAverage[3] == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
 		if AFKCount >= 0 and AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
@@ -1243,6 +1252,7 @@ function tick()
 	WardenNearbyPrev = wardenNearby
 	HeldItemPrev[1] = mainHeldItem
 	HeldItemPrev[2] = offHeldItem
+	KeyPressedPrev = keypressed
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
