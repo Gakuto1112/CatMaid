@@ -128,7 +128,7 @@ function ping.meow()
 	local playerPos = player.getPos()
 	if player.getStatusEffect("minecraft:darkness") then
 		animation["refuse_emote"].play()
-		setEmotion(4, 4, 0, 30)
+		setEmotion(5, 5, 0, 30)
 		MeowActionCount = 30
 		SweatCount = 30
 	else
@@ -161,7 +161,7 @@ function ping.meow()
 		else
 			animation["right_meow"].play()
 		end
-		setEmotion(3, 3, 1, 20)
+		setEmotion(4, 4, 1, 20)
 		MeowActionCount = 20
 	end
 end
@@ -174,7 +174,7 @@ function ping.wink()
 	local tired = player.getHealthPercentage() <= 0.2 or player.getFood() <= 6
 	if player.getStatusEffect("minecraft:darkness") then
 		animation["refuse_emote"].play()
-		setEmotion(4, 4, 0, 30)
+		setEmotion(5, 5, 0, 30)
 		MeowActionCount = 30
 		SweatCount = 30
 	else
@@ -209,15 +209,15 @@ function ping.wink()
 		end
 		if leftHanded then
 			if tired then
-				setEmotion(3, 2, 1, 20)
+				setEmotion(4, 2, 1, 20)
 			else
-				setEmotion(3, 0, 1, 20)
+				setEmotion(4, 0, 1, 20)
 			end
 		else
 			if tired then
-				setEmotion(2, 3, 1, 20)
+				setEmotion(2, 4, 1, 20)
 			else
-				setEmotion(0, 3, 1, 20)
+				setEmotion(0, 4, 1, 20)
 			end
 		end
 		MeowActionCount = 20
@@ -640,9 +640,9 @@ function tick()
 			end
 		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
-			animation["afraid"].start()
-			animation["right_hide_bell"].start()
-			animation["left_hide_bell"].start()
+			animation["afraid"].play()
+			animation["right_hide_bell"].play()
+			animation["left_hide_bell"].play()
 		end
 		if offHeldItem ~= nil then
 			local offHeldItemType = offHeldItem.getType()
@@ -785,7 +785,7 @@ function tick()
 								end
 								MeowActionCount = 20
 							end
-							setEmotion(3, 3, 1, 20)
+							setEmotion(4, 4, 1, 20)
 						end
 					else
 						RightCake.Cake.setUV({0 / 49, 56 / 92})
@@ -878,7 +878,7 @@ function tick()
 								end
 								MeowActionCount = 20
 							end
-							setEmotion(3, 3, 1, 20)
+							setEmotion(4, 4, 1, 20)
 						end
 					else
 						LeftCake.Cake.setUV({0 / 49, 56 / 92})
@@ -886,7 +886,7 @@ function tick()
 				end
 				held_item_model.LEFT_HAND.setEnabled(false)
 				animation["afk_left_bell"].stop()
-				animation["left_cake"].start()
+				animation["left_cake"].play()
 			end
 		else
 			LeftCake.setEnabled(false)
@@ -934,9 +934,9 @@ function tick()
 	end
 
 	if ((hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and not leftHanded) or (hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and leftHanded)) and usingItem and EmotionCount <= 0 then
-		setEmotion(-1, 3, 0, 0)
+		setEmotion(-1, 4, 0, 0)
 	elseif ((hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and not leftHanded) or (hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and leftHanded)) and usingItem and EmotionCount <= 0 then
-		setEmotion(3, -1, 0, 0)
+		setEmotion(4, -1, 0, 0)
 	end
 
 	local horn
@@ -951,7 +951,7 @@ function tick()
 					foodFound = true
 					EatCount = EatCount + 1
 					if EmotionCount <= 0 then
-						setEmotion(3, 3, 0, 0)
+						setEmotion(4, 4, 0, 0)
 					end
 				end
 			end
@@ -962,7 +962,7 @@ function tick()
 			EatCount = 0
 		end
 		if activeItemAction == "TOOT_HORN" then
-			setEmotion(4, 4, 0, 0)
+			setEmotion(5, 5, 0, 0)
 			horn = true
 		else
 			horn = false
@@ -974,7 +974,7 @@ function tick()
 	if EatCount >= 32 then
 		sound.playSound("minecraft:entity.cat.ambient", playerPos, {1, 1.5})
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-		setEmotion(3, 3, 1, 20)
+		setEmotion(4, 4, 1, 20)
 		EatCount = 0
 	end
 
@@ -991,11 +991,11 @@ function tick()
 		end
 	end
 
-	if playerAnimation == "SLEEPING" then
+	if playerAnimation == "SLEEPING" or AFKCount >= 600 then
 		if SleepSoundCount <= 0 then
 			if math.random() >= 0.95 then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
-				setEmotion(3, 3, 1, 20)
+				setEmotion(4, 4, 1, 20)
 				SleepSoundCount = 20
 			else
 				sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
@@ -1004,7 +1004,7 @@ function tick()
 		else
 			SleepSoundCount = SleepSoundCount - 1
 		end
-		if AnimationPrev ~= "SLEEPING" then
+		if AnimationPrev ~= "SLEEPING" and AFKCount < 600 then
 			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 				rightArm.setRot({-15, 0, 0})
 			end
@@ -1023,7 +1023,7 @@ function tick()
 			animation["sleep"].play()
 		end
 		if EmotionCount <= 0 then
-			setEmotion(3, 3, 0, 0)
+			setEmotion(4, 4, 0, 0)
 		end
 	elseif AnimationPrev == "SLEEPING" then
 		rightArm.setRot({0, 0, 0})
@@ -1035,7 +1035,7 @@ function tick()
 			elytraModel.setRot({0, 0, 0})
 		end
 		if WegTail then
-			animation["wag_tail"].start()
+			animation["wag_tail"].play()
 		end
 		animation["sleep"].stop()
 	else
@@ -1142,28 +1142,38 @@ function tick()
 		return false
 	end
 
-	if VelocityDataAverage[3] == 0 and not getKeyPressed() and not wardenNearby then
+	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby then
 		AFKCount = AFKCount + 1
-		if AFKCount % 600 == 0 then
+		if AFKCount >= 600 then
+			if AFKCount == 600 then
+				animation["afk_sleepy"].stop()
+				animation["afk_sleep"].play()
+			end
+		elseif AFKCount >= 300 then
+			if AFKCount == 300 then
+				animation["afk_sleepy"].play()
+			end
+			setEmotion(3, 3, 0, 0)
+		elseif AFKCount % 600 == 0 then
 			if hasItem(mainHeldItem) ~= hasItem(offHeldItem) then
 				if (hasCake(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 					leftArm.setEnabled(false)
 					AlternativeLeftArm.setEnabled(true)
-					animation["afk_left_bell"].start()
+					animation["afk_left_bell"].play()
 				else
 					rightArm.setEnabled(false)
 					AlternativeRightArm.setEnabled(true)
-					animation["afk_right_bell"].start()
+					animation["afk_right_bell"].play()
 				end
 			else
 				if not leftHanded and not hasCake(mainHeldItem) then
 					rightArm.setEnabled(false)
 					AlternativeRightArm.setEnabled(true)
-					animation["afk_right_bell"].start()
+					animation["afk_right_bell"].play()
 				elseif leftHanded and not hasCake(mainHeldItem) then
 					leftArm.setEnabled(false)
 					AlternativeLeftArm.setEnabled(true)
-					animation["afk_left_bell"].start()
+					animation["afk_left_bell"].play()
 				end
 			end
 		elseif ((AFKCount - 27) % 600 == 0 or (AFKCount - 43) % 600 == 0) and (animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying()) then
@@ -1198,9 +1208,13 @@ function tick()
 			end
 			animation["afk_right_bell"].stop()
 			animation["afk_left_bell"].stop()
+			animation["afk_sleepy"].stop()
+			animation["afk_sleep"].stop()
 		end
 		AFKCount = 0
 	end
+
+	print(AFKCount)
 
 	--チック終了処理
 	AnimationCount = AnimationCount + 1
@@ -1219,7 +1233,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount < 300 then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
@@ -1239,7 +1253,7 @@ function tick()
 	end
 	if WinkCount <= 0 then
 		if EmotionCount <= 0 and not horn then
-			setEmotion(3, 3, 0, 1)
+			setEmotion(4, 4, 0, 1)
 		end
 		WinkCount = 200
 	else
