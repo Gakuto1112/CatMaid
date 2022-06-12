@@ -557,6 +557,7 @@ function tick()
 	--被ダメージ時、猫のサウンド再生
 	local maxHealth = player.getMaxHealth()
 	local air = player.getAir()
+	local damageTaken = 0
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
 		if air > 0 and not wardenNearby then
 			if underwater then
@@ -570,6 +571,7 @@ function tick()
 			end
 		end
 		setEmotion(1, 1, 0, 8)
+		damageTaken = 1
 	end
 	if player.getDeathTime() == 1 and air > 0 then
 		if air > 0 then
@@ -584,6 +586,7 @@ function tick()
 			end
 		end
 		setEmotion(1, 1, 0, 20)
+		damageTaken = 2
 	end
 
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
@@ -1142,7 +1145,7 @@ function tick()
 		return false
 	end
 
-	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby and not wet then
+	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
 		if AFKCount >= 0 then
 			AFKCount = AFKCount + 1
 		end
@@ -1217,8 +1220,12 @@ function tick()
 	end
 
 	if AFKCount < 0 then
-		if AFKCount == -30 then
-			sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
+		if damageTaken == 2 then
+			AFKCount = 0
+		elseif AFKCount == -30 then
+			if not damageTaken then
+				sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
+			end
 			setEmotion(1, 1, 0, 10)
 		elseif AFKCount == -20 then
 			sound.playSound("minecraft:entity.wolf.shake", playerPos, {1, 1.5})
@@ -1247,7 +1254,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount < 300 then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and AFKCount < 300 then
 			if tired then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {1, 1.5})
 			else
