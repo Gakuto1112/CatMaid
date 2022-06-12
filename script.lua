@@ -1170,7 +1170,6 @@ function tick()
 		end
 		if AFKCount >= 6000 then
 			if AFKCount == 6000 then
-				animation["afk_sleepy"].stop()
 				animation["afk_sleep"].play()
 			end
 		elseif AFKCount >= 5400 then
