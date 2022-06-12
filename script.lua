@@ -1142,8 +1142,10 @@ function tick()
 		return false
 	end
 
-	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby then
-		AFKCount = AFKCount + 1
+	if VelocityDataAverage[3] == 0 and not getKeyPressed() and playerAnimation == "STANDING" and not wardenNearby and not wet then
+		if AFKCount >= 0 then
+			AFKCount = AFKCount + 1
+		end
 		if AFKCount >= 600 then
 			if AFKCount == 600 then
 				animation["afk_sleepy"].stop()
@@ -1178,11 +1180,7 @@ function tick()
 			end
 		elseif ((AFKCount - 27) % 600 == 0 or (AFKCount - 43) % 600 == 0) and (animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying()) then
 			if BellSound then
-				if underwater then
-					sound.playCustomSound("Bell", playerPos, {0.1, 1})
-				else
-					sound.playCustomSound("Bell", playerPos, {0.5, 1})
-				end
+				sound.playCustomSound("Bell", playerPos, {0.5, 1})
 			end
 		elseif (AFKCount - 67) % 600 == 0 then
 			if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
@@ -1211,7 +1209,23 @@ function tick()
 			animation["afk_sleepy"].stop()
 			animation["afk_sleep"].stop()
 		end
-		AFKCount = 0
+		if AFKCount >= 300 then
+			AFKCount = -30
+		elseif AFKCount > 0 then
+			AFKCount = 0
+		end
+	end
+
+	if AFKCount < 0 then
+		if AFKCount == -30 then
+			sound.playSound("minecraft:entity.cat.hurt", playerPos, {1, 1.5})
+			setEmotion(1, 1, 0, 10)
+		elseif AFKCount == -20 then
+			sound.playSound("minecraft:entity.wolf.shake", playerPos, {1, 1.5})
+			animation["afk_awake"].play()
+			setEmotion(5, 5, 0, 20)
+		end
+		AFKCount = AFKCount + 1
 	end
 
 	print(AFKCount)
