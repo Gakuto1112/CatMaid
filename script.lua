@@ -13,6 +13,7 @@ VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
 MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}, {}} --速度データ：1. 横, 2. 縦, 3. 角速度
+VelocityDataAverage = {0, 0, 0} --速度データの平均：1. 横, 2. 縦, 3. 角速度
 LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
@@ -33,6 +34,7 @@ AttackKey = keybind.getRegisteredKeybind("key.attack") --攻撃ボタン
 AttackKeyPressedPrev = false --前チックに攻撃ボタンを押していたかどうか
 AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーションのカウンター
 HeldItemPrev = {} --前チックに手に持っているアイテム：1. メインハンド, 2. オフハンド
+AFKCount = 0 --放置時間のカウント
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -1122,6 +1124,22 @@ function tick()
 		backRibbon.setEnabled(true)
 	end
 
+	--放置中の処理
+	local function getKeyPressed()
+		for index, keyName in ipairs(keybind.getRegisteredKeyList()) do
+			if keybind.getRegisteredKeybind(keyName).isPressed() then
+				return true
+			end
+		end
+		return false
+	end
+
+	if VelocityDataAverage[3] == 0 and not getKeyPressed() and not wardenNearby then
+		AFKCount = AFKCount + 1
+	else
+		AFKCount = 0
+	end
+
 	--チック終了処理
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
@@ -1253,24 +1271,24 @@ function render()
 	else
 		hairLimit = {{13, 80}, {-80, -13}}
 	end
-	local horizontalAverage = getTableAverage(VelocityData[1])
-	local verticalAverage = getTableAverage(VelocityData[2])
-	local angularVelocityAverage = getTableAverage(VelocityData[3])
+	VelocityDataAverage[1] = getTableAverage(VelocityData[1])
+	VelocityDataAverage[2] = getTableAverage(VelocityData[2])
+	VelocityDataAverage[3] = getTableAverage(VelocityData[3])
 	local frontHair = model.Avatar.Body.Hairs.FrontHair
 	local backHair = model.Avatar.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityDataAverage[1] ^ 2 + VelocityDataAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
 	elseif playerAnimation == "SWIMMING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityDataAverage[1] ^ 2 + VelocityDataAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
 	else
-		if verticalAverage < 0 then
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+		if VelocityDataAverage[2] < 0 then
+			frontHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 - VelocityDataAverage[2] * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 + VelocityDataAverage[2] * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		else
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 + VelocityDataAverage[3] * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 - VelocityDataAverage[3] * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
 	end
 
