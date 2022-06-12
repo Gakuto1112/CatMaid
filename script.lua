@@ -13,7 +13,7 @@ VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
 MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}, {}} --速度データ：1. 横, 2. 縦, 3. 角速度
-VelocityDataAverage = {0, 0, 0} --速度データの平均：1. 横, 2. 縦, 3. 角速度
+TickLookRotPrev = 0 --前チックの向いている方向（tick()用）
 LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
 FpsCountData = {0, 0} --FPSを計測するためのデータ：1. tick, 2. render
@@ -1154,7 +1154,17 @@ function tick()
 		ping.setKeyPressed(keypressed)
 	end
 
-	if VelocityDataAverage[3] == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
+	local lookDir = player.getLookDir()
+	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
+	local guiName = client.getOpenScreen()
+	local lookRotDelta = 0
+	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" then
+		lookRotDelta = lookRot - TickLookRotPrev
+	else
+		lookRotDelta = 0
+	end
+
+	if lookRotDelta == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
 		if AFKCount >= 0 and AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
@@ -1253,6 +1263,7 @@ function tick()
 	HeldItemPrev[1] = mainHeldItem
 	HeldItemPrev[2] = offHeldItem
 	KeyPressedPrev = keypressed
+	TickLookRotPrev = lookRot
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
@@ -1376,24 +1387,24 @@ function render()
 	else
 		hairLimit = {{13, 80}, {-80, -13}}
 	end
-	VelocityDataAverage[1] = getTableAverage(VelocityData[1])
-	VelocityDataAverage[2] = getTableAverage(VelocityData[2])
-	VelocityDataAverage[3] = getTableAverage(VelocityData[3])
+	local horizontalAverage = getTableAverage(VelocityData[1])
+	local verticalAverage = getTableAverage(VelocityData[2])
+	local angularVelocityAverage = getTableAverage(VelocityData[3])
 	local frontHair = model.Avatar.Body.Hairs.FrontHair
 	local backHair = model.Avatar.Body.Hairs.BackHair
 	if playerAnimation == "FALL_FLYING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityDataAverage[1] ^ 2 + VelocityDataAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
 	elseif playerAnimation == "SWIMMING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityDataAverage[1] ^ 2 + VelocityDataAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 		backHair.setRot({hairLimit[2][2], 0, 0})
 	else
-		if VelocityDataAverage[2] < 0 then
-			frontHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 - VelocityDataAverage[2] * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 + VelocityDataAverage[2] * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+		if verticalAverage < 0 then
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		else
-			frontHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 + VelocityDataAverage[3] * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-VelocityDataAverage[1] * 160 - VelocityDataAverage[3] * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 		end
 	end
 
