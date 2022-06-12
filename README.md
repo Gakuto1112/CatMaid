@@ -50,6 +50,16 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![エモートを拒否する](README_Images/エモート拒否.gif)
 
+- 放置すると特殊なアクションを起こします。
+  - 30秒おきに鈴をいじります。
+  ![鈴をいじる](README_Images/鈴をいじる.gif)
+
+  - 5分放置すると居眠りします。
+
+  ![うとうと](README_Images/うとうと.gif)
+  ![居眠り](README_Images/居眠り.gif)
+  ![AFK復帰](README_Images/AFK復帰.gif)
+
 - プレイヤーが動くと髪がたなびきます。
 
   ![髪がたなびく](README_Images/髪がたなびく.gif)
@@ -104,7 +114,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 8. 目と口
    - 上から右目、左目、口です。
    - 目と口だけは他の部位と比べて2倍の解像度になっています。
-   - 目は左から、通常の目、ダメージを受けた時の目、低HP時、低満腹度時の目、閉じている目です。
+   - 目は左から、通常の目、ダメージを受けた時の目、低HP時、低満腹度時の目、眠い時の目、閉じている目です。
    - 口は左から閉じている口、開いている口です。
 9. 背中のリボン
 10. ケーキ
