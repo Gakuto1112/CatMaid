@@ -38,6 +38,8 @@ KeyBinds = {} --キーバインドのリスト
 AFKCount = 0 --放置時間のカウント
 KeyPressed = false --キーを押しているかどうかの状態（ping用）
 KeyPressedPrev = false --前チックにキーを押していたかどうか
+HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
+HairRenderCount = 0 --髪の描画カウント
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -1328,83 +1330,86 @@ function render()
 
 	--髪のアニメーション
 	--直近1秒間の横方向、縦方向の移動速度の平均を求める（横方向の場合、前に動いているか、後ろに動いているかも考慮する）。
-	local velocity = player.getVelocity()
-	local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
-	local velocityRot = math.deg(math.atan2(velocity.z, velocity.x))
-	if velocityRot < 0 then
-		velocityRot = 360 + velocityRot
-	end
-	local bodyYaw = (player.getBodyYaw() - 270) % 360
-	local playerAnimation = player.getAnimation()
-	if velocityRot == velocityRot then
-		local directionAbs = math.abs(velocityRot - bodyYaw)
-		local sneakOffset = 0
-		if player.isSneaking() then
-			sneakOffset = -0.19
-		end
-		if math.min(directionAbs, 360 - directionAbs) < 90 then
-			table.insert(VelocityData[1], playerSpeed + sneakOffset)
-		else
-			table.insert(VelocityData[1], -playerSpeed + sneakOffset)
-		end
-	else
-		table.insert(VelocityData[1], 0)
-	end
-	table.insert(VelocityData[2], velocity.y)
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
-	local guiName = client.getOpenScreen()
-	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" then
-		local lookRotDelta = math.abs(lookRot - LookRotPrev)
-		if lookRotDelta >= 180 then
-			lookRotDelta = 360 - lookRotDelta
+	if HairRenderCount >= HairRenderLimit - 1 then
+		local velocity = player.getVelocity()
+		local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
+		local velocityRot = math.deg(math.atan2(velocity.z, velocity.x))
+		if velocityRot < 0 then
+			velocityRot = 360 + velocityRot
 		end
-		table.insert(VelocityData[3], lookRotDelta * Fps)
-	else
-		table.insert(VelocityData[3], 0)
-	end
-	for index, velocityTable in ipairs(VelocityData) do
-		while #velocityTable > Fps * 0.25 do
-			table.remove(velocityTable, 1)
-		end
-	end
-	--求めた平均から髪の角度を決定する。
-	local function getTableAverage(tagetTable)
-		local sum = 0
-		for index, value in ipairs(tagetTable) do
-			sum = sum + value
-		end
-		return sum / #tagetTable
-	end
-
-	local hairLimit
-	local chestItemType = player.getEquipmentItem(5).getType()
-	if chestItemType == "minecraft:elytra" then
-		hairLimit = {{13, 80}, {0, 0}}
-	elseif string.find(chestItemType, "chestplate$") and not HideArmor then
-		hairLimit = {{0, 80}, {-80, 0}}
-	else
-		hairLimit = {{13, 80}, {-80, -13}}
-	end
-	local horizontalAverage = getTableAverage(VelocityData[1])
-	local verticalAverage = getTableAverage(VelocityData[2])
-	local angularVelocityAverage = getTableAverage(VelocityData[3])
-	local frontHair = model.Avatar.Body.Hairs.FrontHair
-	local backHair = model.Avatar.Body.Hairs.BackHair
-	if playerAnimation == "FALL_FLYING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-		backHair.setRot({hairLimit[2][2], 0, 0})
-	elseif playerAnimation == "SWIMMING" then
-		frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-		backHair.setRot({hairLimit[2][2], 0, 0})
-	else
-		if verticalAverage < 0 then
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+		local bodyYaw = (player.getBodyYaw() - 270) % 360
+		local playerAnimation = player.getAnimation()
+		if velocityRot == velocityRot then
+			local directionAbs = math.abs(velocityRot - bodyYaw)
+			local sneakOffset = 0
+			if player.isSneaking() then
+				sneakOffset = -0.19
+			end
+			if math.min(directionAbs, 360 - directionAbs) < 90 then
+				table.insert(VelocityData[1], playerSpeed + sneakOffset)
+			else
+				table.insert(VelocityData[1], -playerSpeed + sneakOffset)
+			end
 		else
-			frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-			backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			table.insert(VelocityData[1], 0)
 		end
+		table.insert(VelocityData[2], velocity.y)
+		local guiName = client.getOpenScreen()
+		if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" then
+			local lookRotDelta = math.abs(lookRot - LookRotPrev)
+			if lookRotDelta >= 180 then
+				lookRotDelta = 360 - lookRotDelta
+			end
+			table.insert(VelocityData[3], lookRotDelta * Fps)
+		else
+			table.insert(VelocityData[3], 0)
+		end
+		for index, velocityTable in ipairs(VelocityData) do
+			while #velocityTable > Fps * 0.25 / HairRenderLimit do
+				table.remove(velocityTable, 1)
+			end
+		end
+		--求めた平均から髪の角度を決定する。
+		local function getTableAverage(tagetTable)
+			local sum = 0
+			for index, value in ipairs(tagetTable) do
+				sum = sum + value
+			end
+			return sum / #tagetTable
+		end
+
+		local hairLimit
+		local chestItemType = player.getEquipmentItem(5).getType()
+		if chestItemType == "minecraft:elytra" then
+			hairLimit = {{13, 80}, {0, 0}}
+		elseif string.find(chestItemType, "chestplate$") and not HideArmor then
+			hairLimit = {{0, 80}, {-80, 0}}
+		else
+			hairLimit = {{13, 80}, {-80, -13}}
+		end
+		local horizontalAverage = getTableAverage(VelocityData[1])
+		local verticalAverage = getTableAverage(VelocityData[2])
+		local angularVelocityAverage = getTableAverage(VelocityData[3])
+		local frontHair = model.Avatar.Body.Hairs.FrontHair
+		local backHair = model.Avatar.Body.Hairs.BackHair
+		if playerAnimation == "FALL_FLYING" then
+			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({hairLimit[2][2], 0, 0})
+		elseif playerAnimation == "SWIMMING" then
+			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			backHair.setRot({hairLimit[2][2], 0, 0})
+		else
+			if verticalAverage < 0 then
+				frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+				backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			else
+				frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+				backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			end
+		end
+		HairRenderCount = 0
 	end
 
 	--一人称視点の時はバニラ腕の強制表示
@@ -1427,4 +1432,5 @@ function render()
 	--レンダー終了処理
 	FpsCountData[2] = FpsCountData[2] + 1
 	LookRotPrev = lookRot
+	HairRenderCount = HairRenderCount + 1
 end

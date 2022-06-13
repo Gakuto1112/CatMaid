@@ -1,7 +1,7 @@
 # CatMaid（猫メイド）
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
-（2022/6/10追記）**度重なる機能追加によりアバターが複雑化しています。Figuraの信用度設定のUntrustedやTrustedでは制限を超過してしまい、正常に動作しません（その可能性が高いです）。**
+**このアバターは上位の権限を必要とします。Figuraの信用度設定のUntrustedでは正常に表示されません。また、同信用度ではリソース超過によるエラーが発生する可能性があります。**
 
 ![メイン画像](README_Images/メイン.jpg)
 
