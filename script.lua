@@ -118,6 +118,15 @@ end
 
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
+	if UseSkinName then
+		for name, namePlate in pairs(nameplate) do
+			namePlate.setText(SkinName)
+		end
+	else
+		for name, namePlate in pairs(nameplate) do
+			namePlate.setText(player.getName())
+		end
+	end
 end
 
 function ping.setKeyPressed(boolToSet)
@@ -438,15 +447,6 @@ else
 end
 
 function tick()
-	--プレイヤー名の設定
-	for name, namePlate in pairs(nameplate) do
-		if UseSkinName then
-			namePlate.setText(SkinName)
-		else
-			namePlate.setText(player.getName())
-		end
-	end
-
 	--[[鈴の音
 
 		- xz平面上を1.8m移動する毎に再生する。
