@@ -327,13 +327,19 @@ spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
 --アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
+action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_1.setItem("minecraft:cod")
 action_wheel.SLOT_1.setFunction(function()
 	ping.meow()
 end)
 
 --アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
+action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
 action_wheel.SLOT_2.setItem("minecraft:cod")
+action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_2.setFunction(function()
 	ping.wink()
 end)
@@ -668,6 +674,12 @@ function tick()
 			end
 		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
+			action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
+			action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
+			action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+			action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 			animation["afraid"].play()
 			animation["right_hide_bell"].play()
 			animation["left_hide_bell"].play()
@@ -707,6 +719,12 @@ function tick()
 			end
 		end
 	elseif WardenNearbyPrev then
+		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		rightArm.setEnabled(true)
 		leftArm.setEnabled(true)
 		AlternativeRightArm.setEnabled(false)
@@ -714,23 +732,6 @@ function tick()
 		animation["afraid"].stop()
 		animation["right_hide_bell"].stop()
 		animation["left_hide_bell"].stop()
-	end
-
-	--エモートのタイトル設定
-	if wardenNearby then
-		action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
-		action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
-		action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-		action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
-		action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-	else
-		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
-		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 	end
 
 	--ケーキの持ち方
