@@ -1166,7 +1166,28 @@ function tick()
 		lookRotDelta = 0
 	end
 
-	if lookRotDelta == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 then
+	local function hasSameItemType(heldItemId)
+		--0. メインハンド, 1. オフハンド
+		local heldItem
+		if heldItemId == 0 then
+			heldItem = mainHeldItem
+		elseif heldItemId == 1 then
+			heldItem = offHeldItem
+		end
+		if heldItem == nil and HeldItemPrev[heldItemId + 1] == nil then
+			return true
+		elseif heldItem == nil or HeldItemPrev[heldItemId + 1] == nil then
+			return false
+		else
+			if heldItem.getType() == HeldItemPrev[heldItemId + 1].getType() then
+				return true
+			else
+				return false
+			end
+		end
+	end
+
+	if lookRotDelta == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
 		if AFKCount >= 0 and AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
