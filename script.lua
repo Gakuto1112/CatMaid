@@ -41,6 +41,7 @@ KeyPressedPrev = false --前チックにキーを押していたかどうか
 HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
 HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
+CanPlayCustomSound = meta.getCanHaveCustomSounds() --カスタムサウンドが再生できるかどうか
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -359,6 +360,9 @@ end)
 
 --アクション4： 鈴の音の切り替え
 if BellSound then
+	if not CanPlayCustomSound then
+		print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
+	end
 	action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
 else
 	action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
@@ -370,6 +374,9 @@ action_wheel.SLOT_4.setFunction(function()
 	if BellSound then
 		action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
 	else
+		if not CanPlayCustomSound then
+			print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
+		end
 		action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
 	end
 	BellSound = not BellSound
@@ -464,28 +471,37 @@ function tick()
 	local playerPos = player.getPos()
 	local underwater = player.isUnderwater()
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
+
+	local function playBellSound(volume)
+		if CanPlayCustomSound then
+			sound.playCustomSound("Bell", playerPos, {volume, 1})
+		else
+			sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
+		end
+	end
+
 	if BellSound then
 		local sneaking = player.isSneaking()
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
 				if wardenNearby then
-					sound.playCustomSound("Bell", playerPos, {0.05, 1})
+					playBellSound(0.05)
 				elseif sneaking or underwater then
-					sound.playCustomSound("Bell", playerPos, {0.1, 1})
+					playBellSound(0.1)
 				else
-					sound.playCustomSound("Bell", playerPos, {0.5, 1})
+					playBellSound(0.5)
 				end
 			end
 			WalkDistance = 0
 		end
 		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
 			if wardenNearby then
-				sound.playCustomSound("Bell", playerPos, {0.05, 1})
+				playBellSound(0.05)
 			elseif underwater then
-				sound.playCustomSound("Bell", playerPos, {0.1, 1})
+				playBellSound(0.1)
 			else
-				sound.playCustomSound("Bell", playerPos, {0.5, 1})
+				playBellSound(0.5)
 			end
 			JumpBellCooldown = 10
 		end
@@ -1225,7 +1241,7 @@ function tick()
 			end
 		elseif ((AFKCount - 27) % 600 == 0 or (AFKCount - 43) % 600 == 0) and (animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying()) then
 			if BellSound then
-				sound.playCustomSound("Bell", playerPos, {0.5, 1})
+				playBellSound(0.5)
 			end
 		elseif (AFKCount - 67) % 600 == 0 then
 			if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
