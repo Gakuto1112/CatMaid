@@ -40,6 +40,7 @@ KeyPressed = false --キーを押しているかどうかの状態（ping用）
 KeyPressedPrev = false --前チックにキーを押していたかどうか
 HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
 HairRenderCount = 0 --髪の描画カウント
+ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -1325,8 +1326,8 @@ function tick()
 		MeowActionCount = MeowActionCount - 1
 	end
 	if SweatCount > 0 then
-		if SweatCount % 6 == 0 then
-			for i = 0, 4 do
+		if SweatCount % 5 == 0 then
+			for i = 1, math.min(ParticleLimit / 4, 4) do
 				particle.addParticle("minecraft:splash", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 			end
 		end
