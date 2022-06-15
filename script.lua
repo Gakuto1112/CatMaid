@@ -87,11 +87,13 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 8) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.RightEye.RightEyeBase.setUV{(EmotionState[1] * 8) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.RightEye.RightEyeLight.setUV{(EmotionState[1] * 8) / 48, 3 / 96}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 8) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.LeftEye.LeftEyeBase.setUV{(EmotionState[2] * 8) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.LeftEye.LeftEyeLight.setUV{(EmotionState[2] * 8) / 48, 3 / 96}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
@@ -1069,6 +1071,33 @@ function tick()
 		animation["sleep"].stop()
 	else
 		SleepSoundCount = 0
+	end
+
+	--暗視が付与されている時は夜目にする（目を光らせる）。
+	local nightVision = player.getStatusEffect("minecraft:night_vision")
+	local function setLightEye(lightLevel)
+		if lightLevel == 0 then
+			model.Avatar.Head.FaceParts.RightEye.RightEyeLight.setLight()
+			model.Avatar.Head.FaceParts.LeftEye.LeftEyeLight.setLight()
+		else
+			local blockLightLevel = world.getLightLevel(playerPos)
+			model.Avatar.Head.FaceParts.RightEye.RightEyeLight.setLight({math.max(lightLevel, blockLightLevel)})
+			model.Avatar.Head.FaceParts.LeftEye.LeftEyeLight.setLight({math.max(lightLevel, blockLightLevel)})
+		end
+	end
+
+	if nightVision ~= nil then
+		if nightVision.duration <= 200 then
+			local tmp = math.floor(nightVision.duration % 10 - 4.5)
+			if tmp < 0 then
+				tmp = tmp + 1
+			end
+			setLightEye(math.abs(math.floor(tmp)) * 2 + 7)
+		else
+			setLightEye(15)
+		end
+	else
+		setLightEye(0)
 	end
 
 	--防具の設定
