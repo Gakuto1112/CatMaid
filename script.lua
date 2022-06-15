@@ -13,6 +13,7 @@ VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
 MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}, {}} --速度データ：1. 横, 2. 縦, 3. 角速度
+VelocityAverage = {0, 0, 0}; --速度の平均値：1. 横, 2. 縦, 3. 角速度
 TickLookRotPrev = 0 --前チックの向いている方向（tick()用）
 LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
@@ -1373,27 +1374,30 @@ function render()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
 	if HairRenderCount >= HairRenderLimit - 1 then
 		local velocity = player.getVelocity()
-		local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
 		local velocityRot = math.deg(math.atan2(velocity.z, velocity.x))
+		local playerSpeed = math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
+		local bodyYaw = (player.getBodyYaw() - 270) % 360
+		local directionAbs = math.abs(velocityRot - bodyYaw)
+		if math.min(directionAbs, 360 - directionAbs) >= 90 then
+			playerSpeed = -playerSpeed
+		end
 		if velocityRot < 0 then
 			velocityRot = 360 + velocityRot
 		end
-		local bodyYaw = (player.getBodyYaw() - 270) % 360
 		local playerAnimation = player.getAnimation()
 		if velocityRot == velocityRot then
-			local directionAbs = math.abs(velocityRot - bodyYaw)
 			local sneakOffset = 0
 			if player.isSneaking() then
 				sneakOffset = -0.19
 			end
-			if math.min(directionAbs, 360 - directionAbs) < 90 then
-				table.insert(VelocityData[1], playerSpeed + sneakOffset)
-			else
-				table.insert(VelocityData[1], -playerSpeed + sneakOffset)
-			end
+			local data = playerSpeed + sneakOffset
+			VelocityAverage[1] = (#VelocityData[1] * VelocityAverage[1] + data) / (#VelocityData[1] + 1)
+			table.insert(VelocityData[1], data)
 		else
+			VelocityAverage[1] = (#VelocityData[1] * VelocityAverage[1]) / (#VelocityData[1] + 1)
 			table.insert(VelocityData[1], 0)
 		end
+		VelocityAverage[2] = (#VelocityData[2] * VelocityAverage[2] + velocity.y) / (#VelocityData[2] + 1)
 		table.insert(VelocityData[2], velocity.y)
 		local guiName = client.getOpenScreen()
 		if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" then
@@ -1401,24 +1405,22 @@ function render()
 			if lookRotDelta >= 180 then
 				lookRotDelta = 360 - lookRotDelta
 			end
-			table.insert(VelocityData[3], lookRotDelta * Fps)
+			local data = lookRotDelta * Fps
+			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3] + data) / (#VelocityData[3] + 1)
+			table.insert(VelocityData[3], data)
 		else
+			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3]) / (#VelocityData[3] + 1)
 			table.insert(VelocityData[3], 0)
 		end
 		for index, velocityTable in ipairs(VelocityData) do
 			while #velocityTable > Fps * 0.25 / HairRenderLimit do
+				if #velocityTable >= 2 then
+					VelocityAverage[index] = (#velocityTable * VelocityAverage[index] - velocityTable[1]) / (#velocityTable - 1)
+				end
 				table.remove(velocityTable, 1)
 			end
 		end
 		--求めた平均から髪の角度を決定する。
-		local function getTableAverage(tagetTable)
-			local sum = 0
-			for index, value in ipairs(tagetTable) do
-				sum = sum + value
-			end
-			return sum / #tagetTable
-		end
-
 		local hairLimit
 		local chestItemType = player.getEquipmentItem(5).getType()
 		if chestItemType == "minecraft:elytra" then
@@ -1428,24 +1430,21 @@ function render()
 		else
 			hairLimit = {{13, 80}, {-80, -13}}
 		end
-		local horizontalAverage = getTableAverage(VelocityData[1])
-		local verticalAverage = getTableAverage(VelocityData[2])
-		local angularVelocityAverage = getTableAverage(VelocityData[3])
 		local frontHair = model.Avatar.Body.Hairs.FrontHair
 		local backHair = model.Avatar.Body.Hairs.BackHair
 		if playerAnimation == "FALL_FLYING" then
-			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 			backHair.setRot({hairLimit[2][2], 0, 0})
 		elseif playerAnimation == "SWIMMING" then
-			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(horizontalAverage ^ 2 + verticalAverage ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+			frontHair.setRot({math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
 			backHair.setRot({hairLimit[2][2], 0, 0})
 		else
-			if verticalAverage < 0 then
-				frontHair.setRot({math.min(math.max(-horizontalAverage * 160 - verticalAverage * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-				backHair.setRot({math.min(math.max(-horizontalAverage * 160 + verticalAverage * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+			if math.floor(VelocityAverage[2] * 100 + 0.5) / 100 < 0 then
+				frontHair.setRot({math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[2] * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+				backHair.setRot({math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 			else
-				frontHair.setRot({math.min(math.max(-horizontalAverage * 160 + angularVelocityAverage * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
-				backHair.setRot({math.min(math.max(-horizontalAverage * 160 - angularVelocityAverage * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
+				frontHair.setRot({math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[3] * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0})
+				backHair.setRot({math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[3] * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0})
 			end
 		end
 		HairRenderCount = 0
