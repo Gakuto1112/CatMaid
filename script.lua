@@ -87,15 +87,15 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 16) / 96, 0 / 184}
+	model.Avatar.Head.FaceParts.RightEye.setUV{(EmotionState[1] * 8) / 48, 0 / 96}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 16) / 96, 0 / 184}
+	model.Avatar.Head.FaceParts.LeftEye.setUV{(EmotionState[2] * 8) / 48, 0 / 96}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 16) / 96, 0 / 184}
+	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 8) / 48, 0 / 96}
 	EmotionCount = count
 end
 
@@ -278,9 +278,9 @@ armor_model.LEGGINGS.setEnabled(false)
 armor_model.BOOTS.setEnabled(false)
 
 --テクスチャサイズの変更とテクスチャの設定
-model.Avatar.Head.FaceParts.RightEye.setTextureSize({49, 92})
-model.Avatar.Head.FaceParts.LeftEye.setTextureSize({49, 92})
-model.Avatar.Head.FaceParts.Mouth.setTextureSize({49, 92})
+model.Avatar.Head.FaceParts.RightEye.setTextureSize({48, 96})
+model.Avatar.Head.FaceParts.LeftEye.setTextureSize({48, 96})
+model.Avatar.Head.FaceParts.Mouth.setTextureSize({48, 96})
 Helmet.setTextureSize({64, 32})
 HelmetOverlay.setTextureSize({64, 32})
 HelmetOverlay.setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
@@ -304,8 +304,7 @@ for index, cakePlatePart in ipairs({RightCake.RightCakePlate, LeftCake.LeftCakeP
 	cakePlatePart.setTexture("Resource", "minecraft:textures/block/spruce_planks.png")
 end
 for index, cakePart in ipairs({RightCake, LeftCake}) do
-	cakePart.Cake.setTextureSize({49, 92})
-	cakePart.Cake.setUV({0 / 49, 56 / 92})
+	cakePart.Cake.setTextureSize({48, 96})
 	cakePart.setEnabled(false)
 	cakePart.setEnabled(false)
 end
@@ -780,7 +779,7 @@ function tick()
 					local cakeRandom = math.random()
 					if cakeRandom >= 0.99 then
 						local cakePos = RightCake.Cake.partToWorldPos({-6, -6, 4})
-						RightCake.Cake.setUV({0 / 49, 78 / 92})
+						RightCake.Cake.setUV({0 / 48, 22 / 96})
 						for i = 0, 29 do
 							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
@@ -789,7 +788,7 @@ function tick()
 							setEmotion(1, 1, 0, 20)
 						end
 					elseif cakeRandom >= 0.95 then
-						RightCake.Cake.setUV({0 / 49, 67 / 92})
+						RightCake.Cake.setUV({0 / 48, 11 / 96})
 						if not wardenNearby then
 							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
 								if tired then
@@ -818,7 +817,7 @@ function tick()
 							setEmotion(4, 4, 1, 20)
 						end
 					else
-						RightCake.Cake.setUV({0 / 49, 56 / 92})
+						RightCake.Cake.setUV({0 / 48, 0 / 96})
 					end
 				end
 				held_item_model.RIGHT_HAND.setEnabled(false)
@@ -873,7 +872,7 @@ function tick()
 					local cakeRandom = math.random()
 					if cakeRandom >= 0.99 then
 						local cakePos = LeftCake.Cake.partToWorldPos({6, -6, 4})
-						LeftCake.Cake.setUV({0 / 49, 78 / 92})
+						LeftCake.Cake.setUV({0 / 48, 22 / 96})
 						for i = 0, 29 do
 							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
@@ -882,7 +881,7 @@ function tick()
 							setEmotion(1, 1, 0, 20)
 						end
 					elseif cakeRandom >= 0.95 then
-						LeftCake.Cake.setUV({0 / 49, 67 / 92})
+						LeftCake.Cake.setUV({0 / 48, 11 / 96})
 						if not wardenNearby then
 							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
 								if tired then
@@ -911,7 +910,7 @@ function tick()
 							setEmotion(4, 4, 1, 20)
 						end
 					else
-						LeftCake.Cake.setUV({0 / 49, 56 / 92})
+						LeftCake.Cake.setUV({0 / 48, 0 / 96})
 					end
 				end
 				held_item_model.LEFT_HAND.setEnabled(false)
