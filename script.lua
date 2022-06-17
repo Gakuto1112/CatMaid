@@ -43,6 +43,7 @@ HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミ�
 HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
 CanPlayCustomSound = meta.getCanHaveCustomSounds() --カスタムサウンドが再生できるかどうか
+ActionWheelCount = 0 --アクションホイールでアニメーションするためのカウンター
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -332,14 +333,16 @@ spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
 action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
 action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_1.setItem("minecraft:cod")
+action_wheel.SLOT_1.setTexture("Custom")
+action_wheel.SLOT_1.setTextureScale({0.1, 0.06875})
 action_wheel.SLOT_1.setFunction(function()
 	ping.meow()
 end)
 
 --アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
 action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
-action_wheel.SLOT_2.setItem("minecraft:cod")
+action_wheel.SLOT_2.setTexture("Custom")
+action_wheel.SLOT_2.setTextureScale({0.1, 0.06875})
 action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
 action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 action_wheel.SLOT_2.setFunction(function()
@@ -734,6 +737,25 @@ function tick()
 		animation["afraid"].stop()
 		animation["right_hide_bell"].stop()
 		animation["left_hide_bell"].stop()
+	end
+
+	--アクションホイールのテクスチャ設定
+	local function setActionWheelTexture(id)
+		action_wheel.SLOT_1.setUV({56, id * 22 + 124}, {16, 22}, {96, 192})
+		action_wheel.SLOT_2.setUV({72, id * 22 + 124}, {16, 22}, {96, 192})
+end
+
+
+	if wardenNearby then
+		if not WardenNearbyPrev then
+			setActionWheelTexture(2)
+		end
+	else
+		if ActionWheelCount < 20 then
+			setActionWheelTexture(0)
+		else
+			setActionWheelTexture(1)
+		end
 	end
 
 	--ケーキの持ち方
@@ -1336,6 +1358,15 @@ function tick()
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
+	end
+	if action_wheel.isOpen() and not wardenNearby then
+		if ActionWheelCount >= 40 then
+			ActionWheelCount = 0
+		else
+			ActionWheelCount = ActionWheelCount + 1
+		end
+	else
+		ActionWheelCount = 0
 	end
 	if EmotionCount > 0 then
 		EmotionCount = EmotionCount - 1
