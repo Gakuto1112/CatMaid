@@ -1400,6 +1400,7 @@ function render()
 	--直近1秒間の横方向、縦方向の移動速度の平均を求める（横方向の場合、前に動いているか、後ろに動いているかも考慮する）。
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
+	local playerAnimation = player.getAnimation()
 	if HairRenderCount >= HairRenderLimit - 1 then
 		local velocity = player.getVelocity()
 		local velocityRot = math.deg(math.atan2(velocity.z, velocity.x))
@@ -1412,7 +1413,6 @@ function render()
 		if velocityRot < 0 then
 			velocityRot = 360 + velocityRot
 		end
-		local playerAnimation = player.getAnimation()
 		if velocityRot == velocityRot then
 			local sneakOffset = 0
 			if player.isSneaking() then
