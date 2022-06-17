@@ -85,6 +85,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![「ニャー」と鳴く（ウィンク）](README_Images/「ニャー」と鳴く（ウィンク）.gif)
 
+### アクション3：ビックリする
+ビックリして汗をかきます。
+
+![ビックリする](README_Images/ビックリする.gif)
+
 ### アクション8：設定画面を開く
 クリックして[設定画面](#設定画面)を開きます。
 
