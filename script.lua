@@ -44,6 +44,7 @@ HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
 CanPlayCustomSound = meta.getCanHaveCustomSounds() --カスタムサウンドが再生できるかどうか
 ActionWheelCount = 0 --アクションホイールでアニメーションするためのカウンター
+IsInSettings = false --設定画面にいるかどうか
 
 --腕
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
@@ -100,6 +101,188 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	end
 	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 8) / 48, 0 / 96}
 	EmotionCount = count
+end
+
+function setActionWheel(openSettings)
+	IsInSettings = openSettings
+	if IsInSettings then
+		--アクションホイール（設定画面）
+		--アクション1: 鳴き声の切り替え
+		if MeowSound then
+			action_wheel.SLOT_1.setTitle("鳴き声：§cオフ§rにする")
+		else
+			action_wheel.SLOT_1.setTitle("鳴き声：§aオン§rにする")
+		end
+		action_wheel.SLOT_1.setItem("minecraft:player_head{\"SkullOwner\":\"MHF_Ocelot\"}")
+		action_wheel.SLOT_1.setColor({200 / 255, 200 / 255, 200 / 255})
+		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_1.setFunction(function()
+			if MeowSound then
+				action_wheel.SLOT_1.setTitle("鳴き声：§aオン§rにする")
+			else
+				action_wheel.SLOT_1.setTitle("鳴き声：§cオフ§rにする")
+			end
+			MeowSound = not MeowSound
+			ping.setMeowSound(MeowSound)
+			data.save("MeowSound", MeowSound)
+		end)
+
+		--アクション2： 鈴の音の切り替え
+		if BellSound then
+			if not CanPlayCustomSound then
+				print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
+			end
+			action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+		else
+			action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
+		end
+		action_wheel.SLOT_2.setItem("minecraft:bell")
+		action_wheel.SLOT_2.setColor({200 / 255, 200 / 255, 200 / 255})
+		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_2.setFunction(function()
+			if BellSound then
+				action_wheel.SLOT_2.setTitle("鈴の音：§aオン§rにする")
+			else
+				if not CanPlayCustomSound then
+					print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
+				end
+				action_wheel.SLOT_2.setTitle("鈴の音：§cオフ§rにする")
+			end
+			BellSound = not BellSound
+			ping.setBellSound(BellSound)
+			data.save("BellSound", BellSound)
+		end)
+
+		--アクション3： 尻尾のアニメーションの切り替え
+		if WegTail then
+			action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+		else
+			action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
+		end
+		action_wheel.SLOT_3.setItem("minecraft:feather")
+		action_wheel.SLOT_3.setColor({200 / 255, 200 / 255, 200 / 255})
+		action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_3.setFunction(function()
+			if WegTail then
+				action_wheel.SLOT_3.setTitle("尻尾振り：§aオン§rにする")
+			else
+				action_wheel.SLOT_3.setTitle("尻尾振り：§cオフ§rにする")
+			end
+			WegTail = not WegTail
+			ping.setWegTail(WegTail)
+			data.save("WegTail", WegTail)
+		end)
+
+		--アクション4: 防具の表示/非表示
+		if HideArmor then
+			action_wheel.SLOT_4.setTitle("防具：§a表示§rする")
+		else
+			action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+		end
+		action_wheel.SLOT_4.setItem("minecraft:iron_chestplate")
+		action_wheel.SLOT_4.setColor({200 / 255, 200 / 255, 200 / 255})
+		action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_4.setFunction(function()
+			if HideArmor then
+				action_wheel.SLOT_4.setTitle("防具：§c非表示§rにする")
+			else
+				action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
+			end
+			HideArmor = not HideArmor
+			ping.setHideArmor(HideArmor)
+			data.save("HideArmor", HideArmor)
+		end)
+
+		--アクションバー5: 名前の変更（スキン名を使用するかどうか）
+		if SkinName ~= "" then
+			if UseSkinName then
+				action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+			else
+				action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+			end
+			action_wheel.SLOT_5.setItem("minecraft:name_tag")
+			action_wheel.SLOT_5.setColor({200 / 255, 200 / 255, 200 / 255})
+			action_wheel.SLOT_5.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+			action_wheel.SLOT_5.setFunction(function()
+			local playerName = player.getName()
+			if UseSkinName then
+				action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
+				print("あなたは§a"..playerName.."§rと表示されます。")
+			else
+				action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
+				print("あなたは§a"..SkinName.."§rと表示されます。")
+				if ShowNameWarning then
+					print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
+					ShowNameWarning = false
+					data.save("ShowNameWarning", ShowNameWarning)
+				end
+			end
+			UseSkinName = not UseSkinName
+			ping.setUseSkinName(UseSkinName)
+			data.save("UseSkinName", UseSkinName)
+			end)
+		else
+			action_wheel.SLOT_5.setFunction()
+			UseSkinName = false
+		end
+
+		--アクション8：設定を閉じる
+		action_wheel.SLOT_8.setTitle("閉じる（クリック）")
+		action_wheel.SLOT_8.setItem("minecraft:barrier")
+		action_wheel.SLOT_8.setColor({170 / 255, 0 / 255, 0 / 255})
+		action_wheel.SLOT_8.setHoverColor({255 / 255, 85 / 255, 85 / 255})
+		action_wheel.SLOT_8.setFunction(function()
+			setActionWheel(false)
+		end)
+
+		--未使用のアクション
+		for _, unusedAction in ipairs({action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+			unusedAction.setTitle()
+			unusedAction.setItem()
+			unusedAction.setColor()
+			unusedAction.setHoverColor()
+			unusedAction.setFunction()
+		end
+	else
+		--アクションホイール（一般）
+		--アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
+		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_1.setTexture("Custom")
+		action_wheel.SLOT_1.setTextureScale({0.1, 0.06875})
+		action_wheel.SLOT_1.setFunction(function()
+			ping.meow()
+		end)
+
+		--アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
+		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+		action_wheel.SLOT_2.setTexture("Custom")
+		action_wheel.SLOT_2.setTextureScale({0.1, 0.06875})
+		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_2.setFunction(function()
+			ping.wink()
+		end)
+
+		--アクション8：設定を開く
+		action_wheel.SLOT_8.setTitle("設定（クリック）")
+		action_wheel.SLOT_8.setItem("minecraft:comparator")
+		action_wheel.SLOT_8.setColor({200 / 255, 200 / 255, 200 / 255})
+		action_wheel.SLOT_8.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		action_wheel.SLOT_8.setFunction(function()
+			setActionWheel(true)
+		end)
+
+		--未使用のアクション
+		for _, unusedAction in ipairs({action_wheel.SLOT_3, action_wheel.SLOT_4, action_wheel.SLOT_5, action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+			unusedAction.setTitle()
+			unusedAction.setItem()
+			unusedAction.setColor()
+			unusedAction.setHoverColor()
+			unusedAction.setFunction()
+		end
+	end
 end
 
 --ping関数
@@ -329,143 +512,7 @@ spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1.5, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
---アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
-action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
-action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_1.setTexture("Custom")
-action_wheel.SLOT_1.setTextureScale({0.1, 0.06875})
-action_wheel.SLOT_1.setFunction(function()
-	ping.meow()
-end)
-
---アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
-action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
-action_wheel.SLOT_2.setTexture("Custom")
-action_wheel.SLOT_2.setTextureScale({0.1, 0.06875})
-action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
-action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_2.setFunction(function()
-	ping.wink()
-end)
-
---アクション3: 鳴き声の切り替え
-if MeowSound then
-	action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
-else
-	action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
-end
-action_wheel.SLOT_3.setItem("minecraft:player_head{\"SkullOwner\":\"MHF_Ocelot\"}")
-action_wheel.SLOT_3.setColor({200 / 255, 200 / 255, 200 / 255})
-action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_3.setFunction(function()
-	if MeowSound then
-		action_wheel.SLOT_3.setTitle("鳴き声：§aオン§rにする")
-	else
-		action_wheel.SLOT_3.setTitle("鳴き声：§cオフ§rにする")
-	end
-	MeowSound = not MeowSound
-	ping.setMeowSound(MeowSound)
-	data.save("MeowSound", MeowSound)
-end)
-
---アクション4： 鈴の音の切り替え
-if BellSound then
-	if not CanPlayCustomSound then
-		print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
-	end
-	action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
-else
-	action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
-end
-action_wheel.SLOT_4.setItem("minecraft:bell")
-action_wheel.SLOT_4.setColor({200 / 255, 200 / 255, 200 / 255})
-action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_4.setFunction(function()
-	if BellSound then
-		action_wheel.SLOT_4.setTitle("鈴の音：§aオン§rにする")
-	else
-		if not CanPlayCustomSound then
-			print("カスタムサウンドを再生する権限がありません。鈴の音は代替の音が使用されます。")
-		end
-		action_wheel.SLOT_4.setTitle("鈴の音：§cオフ§rにする")
-	end
-	BellSound = not BellSound
-	ping.setBellSound(BellSound)
-	data.save("BellSound", BellSound)
-end)
-
---アクション5： 尻尾のアニメーションの切り替え
-if WegTail then
-	action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
-else
-	action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
-end
-action_wheel.SLOT_5.setItem("minecraft:feather")
-action_wheel.SLOT_5.setColor({200 / 255, 200 / 255, 200 / 255})
-action_wheel.SLOT_5.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_5.setFunction(function()
-	if WegTail then
-		action_wheel.SLOT_5.setTitle("尻尾振り：§aオン§rにする")
-	else
-		action_wheel.SLOT_5.setTitle("尻尾振り：§cオフ§rにする")
-	end
-	WegTail = not WegTail
-	ping.setWegTail(WegTail)
-	data.save("WegTail", WegTail)
-end)
-
---アクション6: 防具の表示/非表示
-if HideArmor then
-	action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
-else
-	action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
-end
-action_wheel.SLOT_6.setItem("minecraft:iron_chestplate")
-action_wheel.SLOT_6.setColor({200 / 255, 200 / 255, 200 / 255})
-action_wheel.SLOT_6.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-action_wheel.SLOT_6.setFunction(function()
-	if HideArmor then
-		action_wheel.SLOT_6.setTitle("防具：§c非表示§rにする")
-	else
-		action_wheel.SLOT_6.setTitle("防具：§a表示§rする")
-	end
-	HideArmor = not HideArmor
-	ping.setHideArmor(HideArmor)
-	data.save("HideArmor", HideArmor)
-end)
-
---アクションバー7: 名前の変更（スキン名を使用するかどうか）
-if SkinName ~= "" then
-	if UseSkinName then
-		action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
-	else
-		action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
-	end
-	action_wheel.SLOT_7.setItem("minecraft:name_tag")
-	action_wheel.SLOT_7.setColor({200 / 255, 200 / 255, 200 / 255})
-	action_wheel.SLOT_7.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-		action_wheel.SLOT_7.setFunction(function()
-		local playerName = player.getName()
-		if UseSkinName then
-			action_wheel.SLOT_7.setTitle("名前：§aスキン名§rにする")
-			print("あなたは§a"..playerName.."§rと表示されます。")
-		else
-			action_wheel.SLOT_7.setTitle("名前：§aプレイヤー名§rにする")
-			print("あなたは§a"..SkinName.."§rと表示されます。")
-			if ShowNameWarning then
-				print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
-				ShowNameWarning = false
-				data.save("ShowNameWarning", ShowNameWarning)
-			end
-		end
-		UseSkinName = not UseSkinName
-		ping.setUseSkinName(UseSkinName)
-		data.save("UseSkinName", UseSkinName)
-	end)
-else
-	UseSkinName = false
-end
+setActionWheel(false)
 
 function tick()
 	--[[鈴の音
@@ -677,12 +724,14 @@ function tick()
 			end
 		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
-			action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
-			action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
-			action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
-			action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-			action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
-			action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+			if not IsInSettings then
+				action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
+				action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
+				action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
+				action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+				action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
+				action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+			end
 			animation["afraid"].play()
 			animation["right_hide_bell"].play()
 			animation["left_hide_bell"].play()
@@ -722,12 +771,14 @@ function tick()
 			end
 		end
 	elseif WardenNearbyPrev then
-		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
-		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		if not IsInSettings then
+			action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+			action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+			action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+			action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
 		rightArm.setEnabled(true)
 		leftArm.setEnabled(true)
 		AlternativeRightArm.setEnabled(false)
@@ -741,19 +792,22 @@ function tick()
 	local function setActionWheelTexture(id)
 		action_wheel.SLOT_1.setUV({56, id * 22 + 124}, {16, 22}, {96, 192})
 		action_wheel.SLOT_2.setUV({72, id * 22 + 124}, {16, 22}, {96, 192})
-end
-
-
-	if wardenNearby then
-		if not WardenNearbyPrev then
-			setActionWheelTexture(2)
+	end
+	if not IsInSettings then
+		if wardenNearby then
+			if not WardenNearbyPrev then
+				setActionWheelTexture(2)
+			end
+		else
+			if ActionWheelCount < 20 then
+				setActionWheelTexture(0)
+			else
+				setActionWheelTexture(1)
+			end
 		end
 	else
-		if ActionWheelCount < 20 then
-			setActionWheelTexture(0)
-		else
-			setActionWheelTexture(1)
-		end
+		action_wheel.SLOT_1.setTexture()
+		action_wheel.SLOT_2.setTexture()
 	end
 
 	--ケーキの持ち方
@@ -1357,7 +1411,8 @@ end
 	if JumpBellCooldown > 0 then
 		JumpBellCooldown = JumpBellCooldown - 1
 	end
-	if action_wheel.isOpen() and not wardenNearby then
+	local actionWheelOpen = action_wheel.isOpen()
+	if actionWheelOpen and not wardenNearby and not IsInSettings then
 		if ActionWheelCount >= 40 then
 			ActionWheelCount = 0
 		else
@@ -1365,6 +1420,9 @@ end
 		end
 	else
 		ActionWheelCount = 0
+	end
+	if not actionWheelOpen and IsInSettings then
+		setActionWheel(false)
 	end
 	if EmotionCount > 0 then
 		EmotionCount = EmotionCount - 1
