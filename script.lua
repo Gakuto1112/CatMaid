@@ -127,11 +127,11 @@ end
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
 	if UseSkinName then
-		for name, namePlate in pairs(nameplate) do
+		for _, namePlate in pairs(nameplate) do
 			namePlate.setText(SkinName)
 		end
 	else
-		for name, namePlate in pairs(nameplate) do
+		for _, namePlate in pairs(nameplate) do
 			namePlate.setText(player.getName())
 		end
 	end
@@ -160,7 +160,7 @@ function ping.meow()
 				if underwater then
 					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
 					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-					for i = 0, 4 do
+					for _ = 0, 4 do
 						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 					end
 				else
@@ -170,7 +170,7 @@ function ping.meow()
 				if underwater then
 					sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
 					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-					for i = 0, 4 do
+					for _ = 0, 4 do
 						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 					end
 				else
@@ -206,7 +206,7 @@ function ping.wink()
 				if underwater then
 					sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
 					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-					for i = 0, 4 do
+					for _ = 0, 4 do
 						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 					end
 				else
@@ -216,7 +216,7 @@ function ping.wink()
 				if underwater then
 					sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
 					sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-					for i = 0, 4 do
+					for _ = 0, 4 do
 						particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 					end
 				else
@@ -261,12 +261,12 @@ ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
 
 --全てのキーのキーバインドの取得
-for index, keyName in ipairs(keybind.getRegisteredKeyList()) do
+for _, keyName in ipairs(keybind.getRegisteredKeyList()) do
 	table.insert(KeyBinds, keybind.getRegisteredKeybind(keyName))
 end
 
 --デフォルトのプレイヤーモデルの非表示
-for name, vanillaModel in pairs(vanilla_model) do
+for _, vanillaModel in pairs(vanilla_model) do
 	vanillaModel.setEnabled(false)
 end
 
@@ -302,22 +302,22 @@ for index, bootsPart in ipairs(Boots) do
 	BootsOverlay[index].setTextureSize({64, 32})
 	BootsOverlay[index].setTexture("Resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
 end
-for index, cakePlatePart in ipairs({RightCake.RightCakePlate, LeftCake.LeftCakePlate}) do
+for _, cakePlatePart in ipairs({RightCake.RightCakePlate, LeftCake.LeftCakePlate}) do
 	cakePlatePart.setTextureSize({16, 16})
 	cakePlatePart.setTexture("Resource", "minecraft:textures/block/spruce_planks.png")
 end
-for index, cakePart in ipairs({RightCake, LeftCake}) do
+for _, cakePart in ipairs({RightCake, LeftCake}) do
 	cakePart.Cake.setTextureSize({48, 96})
 	cakePart.setEnabled(false)
 	cakePart.setEnabled(false)
 end
 
 --パーツのUVの再設定
-for index, part in ipairs({AlternativeRightArm.RightAlternativeArm, AlternativeRightArm.RightAlternativeArmLayer, AlternativeLeftArm.LeftAlternativeArm, AlternativeLeftArm.LeftAlternativeArmLayer, Chestplate[4], ChestplateOverlay[4], Chestplate[6], ChestplateOverlay[6]}) do
+for _, part in ipairs({AlternativeRightArm.RightAlternativeArm, AlternativeRightArm.RightAlternativeArmLayer, AlternativeLeftArm.LeftAlternativeArm, AlternativeLeftArm.LeftAlternativeArmLayer, Chestplate[4], ChestplateOverlay[4], Chestplate[6], ChestplateOverlay[6]}) do
 	local downUVData = part.getUVData("DOWN")
 	part.setUVData("DOWN", {downUVData.x - downUVData.z - 4, 0, downUVData.z, 4})
 end
-for index, part in ipairs({AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmBottom, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmLayerBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmLayerBottom, Chestplate[5], ChestplateOverlay[5], Chestplate[7], ChestplateOverlay[7]}) do
+for _, part in ipairs({AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmBottom, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeArmLayerBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmBottom, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeArmLayerBottom, Chestplate[5], ChestplateOverlay[5], Chestplate[7], ChestplateOverlay[7]}) do
 	local upUVData = part.getUVData("UP")
 	local downUVData = part.getUVData("DOWN")
 	part.setUVData("UP", {upUVData.x - upUVData.z, upUVData.y - 6, downUVData.z, 4})
@@ -599,7 +599,7 @@ function tick()
 			if underwater then
 				sound.playSound("minecraft:entity.cat.hurt", playerPos, {0.2, 1.5})
 				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
+				for _ = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
 			else
@@ -614,7 +614,7 @@ function tick()
 			if underwater then
 				sound.playSound("minecraft:entity.ocelot.death", playerPos, {0.2, 1.5})
 				sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-				for i = 0, 4 do
+				for _ = 0, 4 do
 					particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 				end
 			else
@@ -634,8 +634,23 @@ function tick()
 		if EmotionCount <= 0 then
 			setEmotion(1, 1, 0, 0)
 		end
-		if mainHeldItem ~= nil or AttackAnimationCount > 0 then
-			if AttackAnimationCount > 0 then
+		if AttackAnimationCount > 0 then
+			if leftHanded then
+				leftArm.setEnabled(true)
+				AlternativeLeftArm.setEnabled(false)
+			else
+				rightArm.setEnabled(true)
+				AlternativeRightArm.setEnabled(false)
+			end
+		elseif mainHeldItem ~= nil then
+			local mainHeldItemType = mainHeldItem.getType()
+			if mainHeldItemType == "minecraft:cake" then
+				if leftHanded then
+					animation["left_hide_bell"].stop()
+				else
+					animation["right_hide_bell"].stop()
+				end
+			elseif mainHeldItemType ~= "minecraft:air" then
 				if leftHanded then
 					leftArm.setEnabled(true)
 					AlternativeLeftArm.setEnabled(false)
@@ -644,29 +659,12 @@ function tick()
 					AlternativeRightArm.setEnabled(false)
 				end
 			else
-				local mainHeldItemType = mainHeldItem.getType()
-				if mainHeldItemType == "minecraft:cake" then
-					if leftHanded then
-						animation["left_hide_bell"].stop()
-					else
-						animation["right_hide_bell"].stop()
-					end
-				elseif mainHeldItemType ~= "minecraft:air" then
-					if leftHanded then
-						leftArm.setEnabled(true)
-						AlternativeLeftArm.setEnabled(false)
-					else
-						rightArm.setEnabled(true)
-						AlternativeRightArm.setEnabled(false)
-					end
+				if leftHanded then
+					leftArm.setEnabled(false)
+					AlternativeLeftArm.setEnabled(true)
 				else
-					if leftHanded then
-						leftArm.setEnabled(false)
-						AlternativeLeftArm.setEnabled(true)
-					else
-						rightArm.setEnabled(false)
-						AlternativeRightArm.setEnabled(true)
-					end
+					rightArm.setEnabled(false)
+					AlternativeRightArm.setEnabled(true)
 				end
 			end
 		else
@@ -691,13 +689,13 @@ function tick()
 		end
 		if offHeldItem ~= nil then
 			local offHeldItemType = offHeldItem.getType()
-			if offHeldItem.getType() == "minecraft:cake" then
+			if offHeldItemType == "minecraft:cake" then
 				if leftHanded then
 					animation["right_hide_bell"].stop()
 				else
 					animation["left_hide_bell"].stop()
 				end
-			elseif offHeldItem.getType() ~= "minecraft:air" then
+			elseif offHeldItemType ~= "minecraft:air" then
 				if leftHanded then
 					rightArm.setEnabled(true)
 					AlternativeRightArm.setEnabled(false)
@@ -804,7 +802,7 @@ end
 					if cakeRandom >= 0.99 then
 						local cakePos = RightCake.Cake.partToWorldPos({-6, -6, 4})
 						RightCake.Cake.setUV({0 / 48, 22 / 96})
-						for i = 0, 29 do
+						for _ = 0, 29 do
 							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
 						sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
@@ -819,7 +817,7 @@ end
 									if underwater then
 										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
 										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-										for i = 0, 4 do
+										for _ = 0, 4 do
 											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 										end
 									else
@@ -829,7 +827,7 @@ end
 									if underwater then
 										sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
 										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-										for i = 0, 4 do
+										for _ = 0, 4 do
 											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 										end
 									else
@@ -897,7 +895,7 @@ end
 					if cakeRandom >= 0.99 then
 						local cakePos = LeftCake.Cake.partToWorldPos({6, -6, 4})
 						LeftCake.Cake.setUV({0 / 48, 22 / 96})
-						for i = 0, 29 do
+						for _ = 0, 29 do
 							particle.addParticle("minecraft:smoke", {cakePos.x + math.random() * 0.5 - 0.25, cakePos.y, cakePos.z + math.random() * 0.5 - 0.25, 0, 0, 0})
 						end
 						sound.playSound("minecraft:block.lava.extinguish", playerPos, {1, 1})
@@ -912,7 +910,7 @@ end
 									if underwater then
 										sound.playSound("minecraft:entity.cat.stray_ambient", playerPos, {0.2, 1.5})
 										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-										for i = 0, 4 do
+										for _ = 0, 4 do
 											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 										end
 									else
@@ -922,7 +920,7 @@ end
 									if underwater then
 										sound.playSound("minecraft:entity.cat.ambient", playerPos, {0.2, 1.5})
 										sound.playSound("block.bubble_column.upwards_ambient", playerPos, {1, 1})
-										for i = 0, 4 do
+										for _ = 0, 4 do
 											particle.addParticle("minecraft:bubble_column_up", {playerPos.x, playerPos.y + 1.5, playerPos.z, 0, 0, 0})
 										end
 									else
@@ -976,7 +974,7 @@ end
 
 	local function hasCloseEyeItems(heldItem)
 		if heldItem ~= nil then
-			for index, item in ipairs(closeEyeItems) do
+			for _, item in ipairs(closeEyeItems) do
 				if item == heldItem.getType() then
 					return true
 				end
@@ -999,7 +997,7 @@ end
 		if activeItemAction == "EAT" and not wardenNearby then
 			--特定の食べ物を食べる時にニッコリさせる。
 			local foodFound = false
-			for index, food in ipairs(FavoriteFood) do
+			for _, food in ipairs(FavoriteFood) do
 				if food == activeItem.getType() then
 					foodFound = true
 					EatCount = EatCount + 1
@@ -1083,7 +1081,7 @@ end
 		leftArm.setRot({0, 0, 0})
 		camera.FIRST_PERSON.setPos({0, 0, 0})
 		camera.FIRST_PERSON.setRot({0, 0, 0})
-		for name, elytraModel in pairs(elytra_model) do
+		for _, elytraModel in pairs(elytra_model) do
 			elytraModel.setPos({0, 0, 0})
 			elytraModel.setRot({0, 0, 0})
 		end
@@ -1137,7 +1135,7 @@ end
 					if materialName == "golden" then
 						materialName = "gold"
 					end
-					for index, armorPart in ipairs(armorParts) do
+					for _, armorPart in ipairs(armorParts) do
 						armorPart.setEnabled(true)
 						armorPart.setTexture("Resource", "minecraft:textures/models/armor/"..materialName.."_layer_"..textureNumber..".png")
 					end
@@ -1214,7 +1212,7 @@ end
 
 	--放置中の処理
 	local keypressed = false
-	for index, keyBind in ipairs(KeyBinds) do
+	for _, keyBind in ipairs(KeyBinds) do
 		if keyBind.isPressed() then
 			keypressed = true
 			break
@@ -1404,7 +1402,7 @@ end
 	end
 	if SweatCount > 0 then
 		if SweatCount % 5 == 0 then
-			for i = 1, math.min(ParticleLimit / 4, 4) do
+			for _ = 1, math.min(ParticleLimit / 4, 4) do
 				particle.addParticle("minecraft:splash", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 			end
 		end
