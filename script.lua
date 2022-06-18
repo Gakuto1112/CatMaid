@@ -299,7 +299,7 @@ function setActionWheel(openSettings)
 		action_wheel.SLOT_1.setTexture("Custom")
 		action_wheel.SLOT_1.setTextureScale({0.1, 0.06875})
 		action_wheel.SLOT_1.setFunction(function()
-			ping.meow()
+			ping.meow(0)
 		end)
 
 		--アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
@@ -309,7 +309,7 @@ function setActionWheel(openSettings)
 		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
 		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_2.setFunction(function()
-			ping.wink()
+			ping.meow(1)
 		end)
 
 		--アクション3：ビックリする
@@ -385,32 +385,7 @@ function ping.punch()
 	AttackAnimationCount = 6
 end
 
-function ping.meow()
-	local gamemode = player.getGamemode()
-	local playerPos = player.getPos()
-	if player.getStatusEffect("minecraft:darkness") then
-		animation["refuse_emote"].play()
-		setEmotion(5, 5, 0, 30)
-		MeowActionCount = 30
-		SweatCount = 30
-	else
-		if (player.getHealthPercentage() <= 0.2 or player.getFood() / 20 <= 0.3) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE") then
-			playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
-		else
-			playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-		end
-		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-		if player.isLeftHanded() then
-			animation["left_meow"].play()
-		else
-			animation["right_meow"].play()
-		end
-		setEmotion(4, 4, 1, 20)
-		MeowActionCount = 20
-	end
-end
-
-function ping.wink()
+function ping.meow(emotionType)
 	local gamemode = player.getGamemode()
 	local playerPos = player.getPos()
 	local tired = (player.getHealthPercentage() <= 0.2 or player.getFood() <= 6) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
@@ -428,18 +403,25 @@ function ping.wink()
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 		if player.isLeftHanded() then
 			animation["left_meow"].play()
-			if tired then
-				setEmotion(4, 2, 1, 20)
-			else
-				setEmotion(4, 0, 1, 20)
+			if emotionType == 1 then
+				if tired then
+					setEmotion(4, 2, 1, 20)
+				else
+					setEmotion(4, 0, 1, 20)
+				end
 			end
 		else
 			animation["right_meow"].play()
-			if tired then
-				setEmotion(2, 4, 1, 20)
-			else
-				setEmotion(0, 4, 1, 20)
+			if emotionType == 1 then
+				if tired then
+					setEmotion(2, 4, 1, 20)
+				else
+					setEmotion(0, 4, 1, 20)
+				end
 			end
+		end
+		if emotionType == 0 then
+			setEmotion(4, 4, 1, 20)
 		end
 		MeowActionCount = 20
 	end
