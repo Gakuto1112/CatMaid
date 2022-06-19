@@ -120,7 +120,7 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	EmotionCount = count
 end
 
-function setActionWheel(openSettings)
+function setActionWheel(openSettings, wardenNeardy)
 	IsInSettings = openSettings
 	if IsInSettings then
 		--アクションホイール（設定画面）
@@ -279,7 +279,7 @@ function setActionWheel(openSettings)
 		action_wheel.SLOT_8.setColor({200 / 255, 200 / 255, 200 / 255})
 		action_wheel.SLOT_8.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_8.setFunction(function()
-			setActionWheel(false)
+			setActionWheel(false, player.getStatusEffect("minecraft:darkness"))
 		end)
 
 		--未使用のアクション
@@ -293,9 +293,15 @@ function setActionWheel(openSettings)
 	else
 		--アクションホイール（一般）
 		--アクション1： 「ニャー」と鳴く（ネコのサウンド再生、スマイル）。
-		action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-		action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		if wardenNeardy then
+			action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
+			action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
+			action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
 		action_wheel.SLOT_1.setTexture("Custom")
 		action_wheel.SLOT_1.setTextureScale({0.1, 0.06875})
 		action_wheel.SLOT_1.setFunction(function()
@@ -303,21 +309,33 @@ function setActionWheel(openSettings)
 		end)
 
 		--アクション2： 「ニャー」と鳴く（ネコのサウンド再生、ウィンク）。
-		action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+		if wardenNeardy then
+			action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
+			action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
+			action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
 		action_wheel.SLOT_2.setTexture("Custom")
 		action_wheel.SLOT_2.setTextureScale({0.1, 0.06875})
-		action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_2.setFunction(function()
 			ping.meow(1)
 		end)
 
 		--アクション3：ビックリする
-		action_wheel.SLOT_3.setTitle("ビックリする")
+		if wardenNeardy then
+			action_wheel.SLOT_3.setTitle("§7ビックリする")
+			action_wheel.SLOT_3.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_3.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_3.setTitle("ビックリする")
+			action_wheel.SLOT_3.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
 		action_wheel.SLOT_3.setTexture("Custom")
 		action_wheel.SLOT_3.setTextureScale({0.1, 0.06875})
-		action_wheel.SLOT_3.setColor({255 / 255, 85 / 255, 255 / 255})
-		action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_3.setFunction(function()
 			ping.surprise()
 		end)
@@ -328,7 +346,7 @@ function setActionWheel(openSettings)
 		action_wheel.SLOT_8.setColor({200 / 255, 200 / 255, 200 / 255})
 		action_wheel.SLOT_8.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		action_wheel.SLOT_8.setFunction(function()
-			setActionWheel(true)
+			setActionWheel(true, player.getStatusEffect("minecraft:darkness"))
 		end)
 
 		--未使用のアクション
@@ -523,7 +541,7 @@ spyglass_model.RIGHT_SPYGLASS.setPos({-0.5, 1.5, 0})
 spyglass_model.LEFT_SPYGLASS.setPos({0.5, 1.5, 0})
 
 --アクションホイール
-setActionWheel(false)
+setActionWheel(false, false)
 
 function tick()
 	--[[鈴の音
@@ -719,17 +737,7 @@ function tick()
 			end
 		end
 		if not WardenNearbyPrev or AnimationPrev == "SLEEPING" then
-			if not IsInSettings then
-				action_wheel.SLOT_1.setTitle("§7「ニャー」と鳴く（スマイル）")
-				action_wheel.SLOT_2.setTitle("§7「ニャー」と鳴く（ウィンク）")
-				action_wheel.SLOT_3.setTitle("§7ビックリする")
-				action_wheel.SLOT_1.setColor({21 / 255, 21 / 255, 21 / 255})
-				action_wheel.SLOT_1.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-				action_wheel.SLOT_2.setColor({21 / 255, 21 / 255, 21 / 255})
-				action_wheel.SLOT_2.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-				action_wheel.SLOT_3.setColor({21 / 255, 21 / 255, 21 / 255})
-				action_wheel.SLOT_3.setHoverColor({0 / 255, 0 / 255, 0 / 255})
-			end
+			setActionWheel(IsInSettings, wardenNearby)
 			animation["afraid"].play()
 			animation["right_hide_bell"].play()
 			animation["left_hide_bell"].play()
@@ -769,17 +777,7 @@ function tick()
 			end
 		end
 	elseif WardenNearbyPrev then
-		if not IsInSettings then
-			action_wheel.SLOT_1.setTitle("「ニャー」と鳴く（スマイル）")
-			action_wheel.SLOT_2.setTitle("「ニャー」と鳴く（ウィンク）")
-			action_wheel.SLOT_3.setTitle("ビックリする")
-			action_wheel.SLOT_1.setColor({255 / 255, 85 / 255, 255 / 255})
-			action_wheel.SLOT_1.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-			action_wheel.SLOT_2.setColor({255 / 255, 85 / 255, 255 / 255})
-			action_wheel.SLOT_2.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-			action_wheel.SLOT_3.setColor({255 / 255, 85 / 255, 255 / 255})
-			action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
-		end
+		setActionWheel(IsInSettings, wardenNearby)
 		rightArm.setEnabled(true)
 		leftArm.setEnabled(true)
 		AlternativeRightArm.setEnabled(false)
@@ -1401,7 +1399,7 @@ function tick()
 		ActionWheelCount = 0
 	end
 	if not actionWheelOpen and IsInSettings then
-		setActionWheel(false)
+		setActionWheel(false, wardenNearby)
 	end
 	if EmotionCount > 0 then
 		EmotionCount = EmotionCount - 1
