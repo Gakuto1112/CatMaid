@@ -149,7 +149,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 マルチプレイでの動作も考慮して作成はしていますが、実際に動作を検証出来る環境が無いため、マルチプレイでの動作検証は出来ていません。もし、マルチプレイでの不具合（一般的な不具合も歓迎です）がありましたら、[Issues](https://github.com/Gakuto1112/CatMaid/issues)での不具合報告をして頂ければ幸いです。
 
 ## Figura Rewrite版について
-現在、[公式Discordサーバー](https://discord.com/invite/ekHGHcH8Af)にて、Figuraの時期アップデート版（v0.1.0）となるRewrite版のプレリリースが公開されています。Rewrite版では、[モデル](/player_model.bbmodel)や[Luaスクリプト](/script.lua)仕様が抜本的に異なるため、このアバターがそのままでは使用出来ず、Luaスクリプト](/script.lua)を大幅に書き換える必要があります。
+現在、[公式Discordサーバー](https://discord.com/invite/ekHGHcH8Af)にて、Figuraの時期アップデート版（v0.1.0）となるRewrite版のプレリリースが公開されています。Rewrite版では、[モデル](/player_model.bbmodel)や[Luaスクリプト](/script.lua)仕様が抜本的に異なるため、このアバターがそのままでは使用出来ず、[Luaスクリプト](/script.lua)を大幅に書き換える必要があります。
 
 しかし、現在のRewrite版ではこのアバターを満足に再現出来るだけの機能が備わっていないため、Rewrite版への対応を見送っています。Rewrite版が正式リリースに近づき、機能やドキュメントが充実してきた頃に対応させたいと思います。また、Rewrite版では各リソースファイル（[モデル](/player_model.bbmodel)、[テクスチャ](/texture.png)、[Luaスクリプト](/script.lua)）の分割が可能なようなので、Rewrite版への対応時にこのアバターのリソースを整理しようと思っています。
 
