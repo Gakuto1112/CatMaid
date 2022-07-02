@@ -41,6 +41,9 @@ TouchBellCount = -1 --鈴を弄る時に、鈴の音を同期させるための�
 SleepStage = 0 --睡眠のステージ：0. 起きている, 1. うとうと, 2. 立ち寝
 SleepStagePrev = 0 --前チックの睡眠のステージ
 AwakeAnimationCount = -1 --寝起きアニメーションのカウント
+WetCount = 0 --濡れているカウント
+WetDropCount = 0 --濡れている時の水滴のパーティクルのカウント
+WetBodyShakeCount = 0 --濡れている時に体を震わせた時の水しぶきのパーティクルのカウント
 HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
 HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
@@ -508,6 +511,10 @@ end
 function ping.bodyShake()
 	if not animation["shake"].isPlaying() then
 		bodyShake()
+		if WetCount > 0 and not player.isWet() then
+			WetBodyShakeCount = 20
+			WetCount = 0
+		end
 	end
 end
 
@@ -730,7 +737,6 @@ function tick()
 		20% - 0%	30% - 0%	尻尾下げ	50%
 
 	]]
-	local wet = player.isWet()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
@@ -740,12 +746,12 @@ function tick()
 	local leftEar = model.Avatar.Head.Ears.LeftEar
 	local tail1 = model.Avatar.Body.Tail
 	local tail2 = model.Avatar.Body.Tail.Tail1.Tail2
-	if wet then
+	if WetCount > 0 then
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
 	end
 	if (healthPercentage > 0.5 and foodPercentage > 0.5) or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
-		if not wet then
+		if WetCount == 0 then
 			rightEar.setRot({0, 0, 0})
 			leftEar.setRot({0, 0, 0})
 		end
@@ -756,7 +762,7 @@ function tick()
 			setEmotion(0, 0, 0, 0)
 		end
 	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
-		if not wet then
+		if WetCount == 0 then
 			rightEar.setRot({-15, 0, 0})
 			leftEar.setRot({-15, 0, 0})
 		end
@@ -1331,6 +1337,35 @@ function tick()
 		backRibbon.setEnabled(true)
 	end
 
+	--濡れる処理
+	if player.isTouchingWater() then
+		WetCount = 1200
+	elseif player.isInRain() then
+		WetCount = math.min(WetCount + 4, 1200)
+	else
+		WetCount = math.max(WetCount - 1, 0)
+	end
+	if WetCount > 0 then
+		if WetDropCount >= 5 then
+			if not player.isWet() then
+				for _ = 1, math.min(ParticleLimit / 4, 4) do
+					particle.addParticle("minecraft:falling_water", {playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5, 0, 0, 0})
+				end
+			end
+			WetDropCount = 0
+		else
+			WetDropCount = WetDropCount + 1
+		end
+	end
+	if WetBodyShakeCount > 0 then
+		if WetBodyShakeCount % 5 == 0 then
+			for _ = 1, math.min(ParticleLimit / 4, 8) do
+				particle.addParticle("minecraft:splash", {playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5, 0, 0, 0})
+			end
+		end
+	WetBodyShakeCount = WetBodyShakeCount - 1
+	end
+
 	--放置中の処理
 	local keypressed = false
 	for _, keyBind in ipairs(KeyBinds) do
@@ -1496,7 +1531,7 @@ function tick()
 			end
 			setEmotion(1, 1, 0, 10)
 		elseif AwakeAnimationCount == 20 then
-			bodyShake();
+			bodyShake()
 			SweatCount = 20
 		end
 		AwakeAnimationCount = AwakeAnimationCount - 1
