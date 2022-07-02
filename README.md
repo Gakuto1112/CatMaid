@@ -92,6 +92,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![ビックリする](README_Images/ビックリする.gif)
 
+### アクション4：ブルブル
+体をブルブル震わせます。
+
+![ブルブル](README_Images/ブルブル.gif)
+
 ### アクション8：設定画面を開く
 クリックして[設定画面](#設定画面)を開きます。
 

@@ -124,6 +124,13 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	EmotionCount = count
 end
 
+function bodyShake()
+	--体をブルブル震えさせる
+	sound.playSound("minecraft:entity.wolf.shake", player.getPos(), {1, 1.5})
+	animation["shake"].play()
+	setEmotion(5, 5, 0, 20)
+end
+
 function hasItem(heldItem)
 	if heldItem ~= nil then
 		if heldItem.getType() == "minecraft:air" then
@@ -368,6 +375,21 @@ function setActionWheel(openSettings, wardenNeardy)
 			ping.surprise()
 		end)
 
+		--アクション4：体をブルブル振る
+		if wardenNeardy then
+			action_wheel.SLOT_4.setTitle("§7ブルブル")
+			action_wheel.SLOT_4.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_4.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_4.setTitle("ブルブル")
+			action_wheel.SLOT_4.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
+		action_wheel.SLOT_4.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_4.setFunction(function()
+			ping.bodyShake()
+		end)
+
 		--アクション8：設定を開く
 		action_wheel.SLOT_8.setTitle("設定（クリック）")
 		action_wheel.SLOT_8.setItem("minecraft:comparator")
@@ -378,7 +400,7 @@ function setActionWheel(openSettings, wardenNeardy)
 		end)
 
 		--未使用のアクション
-		for _, unusedAction in ipairs({action_wheel.SLOT_4, action_wheel.SLOT_5, action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+		for _, unusedAction in ipairs({action_wheel.SLOT_5, action_wheel.SLOT_6, action_wheel.SLOT_7}) do
 			unusedAction.setTitle()
 			unusedAction.setItem()
 			unusedAction.setColor()
@@ -480,6 +502,12 @@ function ping.surprise()
 		setEmotion(1, 1, 0, 20)
 		MeowActionCount = 20
 		SweatCount = 20
+	end
+end
+
+function ping.bodyShake()
+	if not animation["shake"].isPlaying() then
+		bodyShake()
 	end
 end
 
@@ -1392,7 +1420,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 and not animation["shake"].isPlaying() then
 			if tired then
 				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
 			else
@@ -1468,9 +1496,7 @@ function tick()
 			end
 			setEmotion(1, 1, 0, 10)
 		elseif AwakeAnimationCount == 20 then
-			sound.playSound("minecraft:entity.wolf.shake", playerPos, {1, 1.5})
-			animation["afk_awake"].play()
-			setEmotion(5, 5, 0, 20)
+			bodyShake();
 			SweatCount = 20
 		end
 		AwakeAnimationCount = AwakeAnimationCount - 1
