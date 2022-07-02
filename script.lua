@@ -49,8 +49,8 @@ ActionWheelCount = 0 --アクションホイールでアニメーションする
 IsInSettings = false --設定画面にいるかどうか
 
 --腕
-rightArm = model.Avatar.RightArm
-leftArm = model.Avatar.LeftArm
+rightArm = model.Avatar.Body.RightArm
+leftArm = model.Avatar.Body.LeftArm
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
 AlternativeLeftArm = model.Avatar.Body.AlternativeArm.LeftAlternativeArm
 
@@ -61,8 +61,8 @@ LeftCake = AlternativeLeftArm.LeftAlternativeArmBottom.LeftCake
 --防具パーツ
 Helmet = model.Avatar.Head.Helmet.Helmet
 HelmetOverlay = model.Avatar.Head.Helmet.HelmetOverlay
-Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.RightArm.RightChestplate.RightChestplate, model.Avatar.LeftArm.LeftChestplate.LeftChestplate, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplate, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplate, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateBottom}
-ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplateOverlay, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateOverlayBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplateOverlay, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateOverlayBottom}
+Chestplate = {model.Avatar.Body.Chestplate.Chestplate, model.Avatar.Body.RightArm.RightChestplate.RightChestplate, model.Avatar.Body.LeftArm.LeftChestplate.LeftChestplate, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplate, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplate, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateBottom}
+ChestplateOverlay = {model.Avatar.Body.Chestplate.ChestplateOverlay, model.Avatar.Body.RightArm.RightChestplate.RightChestplateOverlay, model.Avatar.Body.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeRightArm.RightAlternativeChestplate.RightAlternativeChestplateOverlay, AlternativeRightArm.RightAlternativeArmBottom.RightAlternativeChestplateBottom.RightAlternativeChestplateOverlayBottom, AlternativeLeftArm.LeftAlternativeChestplate.LeftAlternativeChestplateOverlay, AlternativeLeftArm.LeftAlternativeArmBottom.LeftAlternativeChestplateButtom.LeftAlternativeChestplateOverlayBottom}
 Leggings = {model.Avatar.Body.Pants.Pants, model.Avatar.RightLeg.RightPants.RightPants, model.Avatar.LeftLeg.LeftPants.LeftPants}
 LeggingsOverlay = {model.Avatar.Body.Pants.PantsOverlay, model.Avatar.RightLeg.RightPants.RightPantsOverlay, model.Avatar.LeftLeg.LeftPants.LeftPantsOverlay}
 Boots = {model.Avatar.RightLeg.RightBoots.RightBoots, model.Avatar.LeftLeg.LeftBoots.LeftBoots}
@@ -1569,8 +1569,8 @@ function render()
 	--一人称視点の時はバニラ腕の強制表示
 	local firstPerson = renderer.isFirstPerson()
 	if firstPerson then
-		model.Avatar.RightArm.setEnabled(true)
-		model.Avatar.LeftArm.setEnabled(true)
+		model.Avatar.Body.RightArm.setEnabled(true)
+		model.Avatar.Body.LeftArm.setEnabled(true)
 		AlternativeRightArm.setEnabled(false)
 		AlternativeLeftArm.setEnabled(false)
 	end
