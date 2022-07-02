@@ -13,7 +13,7 @@ VelocityYPrev = 0 --前チックのy方向の速度
 HealthPercentagePrev = 0 --前チックのHPの割合
 MaxHealthPrev = 0 --前チックの最大HP
 VelocityData = {{}, {}, {}} --速度データ：1. 横, 2. 縦, 3. 角速度
-VelocityAverage = {0, 0, 0}; --速度の平均値：1. 横, 2. 縦, 3. 角速度
+VelocityAverage = {0, 0, 0} --速度の平均値：1. 横, 2. 縦, 3. 角速度
 TickLookRotPrev = 0 --前チックの向いている方向（tick()用）
 LookRotPrev = 0 --前チックの向いている方向
 Fps = 60 --FPS、初期値60、20刻み
@@ -23,7 +23,7 @@ FavoriteFood = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "mi
 AnimationCount = 0 --耳のアニメーションのタイミング変数
 MeowCount = 300 --鳴き声のカウント
 EatCount = 0 --食べ物を食べるカウント
-EmotionCount = 0; --エモートカウント
+EmotionCount = 0 --エモートカウント
 EmotionState = {0, 0, 0} --エモートの内部状態：0. 右目, 1. 左目, 2. 口
 WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
@@ -37,8 +37,10 @@ AttackAnimationCount = 0 --飛行時の攻撃モーションのアニメーシ�
 HeldItemPrev = {} --前チックに手に持っているアイテム：1. メインハンド, 2. オフハンド
 KeyBinds = {} --キーバインドのリスト
 AFKCount = 0 --放置時間のカウント
-KeyPressed = false --キーを押しているかどうかの状態（ping用）
-KeyPressedPrev = false --前チックにキーを押していたかどうか
+TouchBellCount = -1 --鈴を弄る時に、鈴の音を同期させるためのカウンター
+SleepStage = 0 --睡眠のステージ：0. 起きている, 1. うとうと, 2. 立ち寝
+SleepStagePrev = 0 --前チックの睡眠のステージ
+AwakeAnimationCount = -1 --寝起きアニメーションのカウント
 HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
 HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
@@ -47,6 +49,8 @@ ActionWheelCount = 0 --アクションホイールでアニメーションする
 IsInSettings = false --設定画面にいるかどうか
 
 --腕
+rightArm = model.Avatar.RightArm
+leftArm = model.Avatar.LeftArm
 AlternativeRightArm = model.Avatar.Body.AlternativeArm.RightAlternativeArm
 AlternativeLeftArm = model.Avatar.Body.AlternativeArm.LeftAlternativeArm
 
@@ -118,6 +122,30 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	end
 	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 8) / 48, 0 / 96}
 	EmotionCount = count
+end
+
+function hasItem(heldItem)
+	if heldItem ~= nil then
+		if heldItem.getType() == "minecraft:air" then
+			return false
+		else
+			return true
+		end
+	else
+		return false
+	end
+end
+
+function hasCake(heldItem)
+	if heldItem ~= nil then
+		if heldItem.getType() == "minecraft:cake" then
+			return true
+		else
+			return false
+		end
+	else
+		return false
+	end
 end
 
 function setActionWheel(openSettings, wardenNeardy)
@@ -395,10 +423,6 @@ function ping.setUseSkinName(boolToSet)
 	end
 end
 
-function ping.setKeyPressed(boolToSet)
-	KeyPressed = boolToSet
-end
-
 function ping.punch()
 	AttackAnimationCount = 6
 end
@@ -456,6 +480,70 @@ function ping.surprise()
 		setEmotion(1, 1, 0, 20)
 		MeowActionCount = 20
 		SweatCount = 20
+	end
+end
+
+function ping.touchBell()
+	local mainHeldItem = player.getHeldItem(1)
+	local offHeldItem = player.getHeldItem(2)
+	local leftHanded = player.isLeftHanded()
+	if hasItem(mainHeldItem) ~= hasItem(offHeldItem) then
+		if (hasCake(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
+			leftArm.setEnabled(false)
+			AlternativeLeftArm.setEnabled(true)
+			animation["afk_left_bell"].play()
+		else
+			rightArm.setEnabled(false)
+			AlternativeRightArm.setEnabled(true)
+			animation["afk_right_bell"].play()
+		end
+		TouchBellCount = 0
+	else
+		if not leftHanded and not hasCake(mainHeldItem) then
+			rightArm.setEnabled(false)
+			AlternativeRightArm.setEnabled(true)
+			animation["afk_right_bell"].play()
+			TouchBellCount = 0
+		elseif leftHanded and not hasCake(mainHeldItem) then
+			leftArm.setEnabled(false)
+			AlternativeLeftArm.setEnabled(true)
+			animation["afk_left_bell"].play()
+			TouchBellCount = 0
+		end
+	end
+end
+
+function ping.sleepy()
+	animation["afk_sleepy"].play()
+	SleepStage = 1
+end
+
+function ping.sleep()
+	animation["afk_sleep"].play()
+	SleepStage = 2
+end
+
+function ping.backFromAFK()
+	local mainHeldItem = player.getHeldItem(1)
+	local offHeldItem = player.getHeldItem(2)
+	local leftHanded = player.isLeftHanded()
+	if not player.getStatusEffect("minecraft:darkness") then
+		if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
+			rightArm.setEnabled(true)
+			AlternativeRightArm.setEnabled(false)
+		end
+		if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
+			leftArm.setEnabled(true)
+			AlternativeLeftArm.setEnabled(false)
+		end
+	end
+	animation["afk_right_bell"].stop()
+	animation["afk_left_bell"].stop()
+	animation["afk_sleepy"].stop()
+	animation["afk_sleep"].stop()
+	if SleepStage ~= 0 then
+		AwakeAnimationCount = 30
+		SleepStage = 0
 	end
 end
 
@@ -688,8 +776,6 @@ function tick()
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
 	local mainHeldItem = player.getHeldItem(1)
 	local offHeldItem = player.getHeldItem(2)
-	local rightArm = model.Avatar.RightArm
-	local leftArm = model.Avatar.LeftArm
 	if wardenNearby and playerAnimation ~= "SLEEPING" then
 		if EmotionCount <= 0 then
 			setEmotion(1, 1, 0, 0)
@@ -816,18 +902,6 @@ function tick()
 	end
 
 	--ケーキの持ち方
-	local function hasCake(heldItem)
-		if heldItem ~= nil then
-			if heldItem.getType() == "minecraft:cake" then
-				return true
-			else
-				return false
-			end
-		else
-			return false
-		end
-	end
-
 	if playerAnimation ~= "SLEEPING" and playerAnimation ~= "SWIMMING" and playerAnimation ~= "FALL_FLYING" then
 		if (hasCake(mainHeldItem) and not leftHanded) or (hasCake(offHeldItem) and leftHanded) then
 			rightArm.setEnabled(false)
@@ -1061,19 +1135,7 @@ function tick()
 	end
 
 	--寝ている時に目と閉じる
-	local function hasItem(heldItem)
-		if heldItem ~= nil then
-			if heldItem.getType() == "minecraft:air" then
-				return false
-			else
-				return true
-			end
-		else
-			return false
-		end
-	end
-
-	if playerAnimation == "SLEEPING" or AFKCount >= 6000 then
+	if playerAnimation == "SLEEPING" or SleepStage == 2 then
 		if SleepSoundCount <= 0 then
 			if math.random() >= 0.95 then
 				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
@@ -1086,7 +1148,7 @@ function tick()
 		else
 			SleepSoundCount = SleepSoundCount - 1
 		end
-		if AnimationPrev ~= "SLEEPING" and AFKCount < 6000 then
+		if AnimationPrev ~= "SLEEPING" and SleepStage ~= 2 then
 			if (hasItem(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
 				rightArm.setRot({-15, 0, 0})
 			end
@@ -1250,10 +1312,6 @@ function tick()
 		end
 	end
 
-	if keypressed ~= KeyPressedPrev then
-		ping.setKeyPressed(keypressed)
-	end
-
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
 	local guiName = client.getOpenScreen()
@@ -1285,93 +1343,22 @@ function tick()
 		end
 	end
 
-	if lookRotDelta == 0 and not KeyPressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
-		if AFKCount >= 0 and AFKCount <= 6000 then
+	if lookRotDelta == 0 and not keypressed and playerAnimation == "STANDING" and not wardenNearby and not wet and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
+		if AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
-		if AFKCount >= 6000 then
-			if AFKCount == 6000 then
-				animation["afk_sleep"].play()
-			end
-		elseif AFKCount >= 5400 then
-			if AFKCount == 5400 then
-				animation["afk_sleepy"].play()
-			end
-			setEmotion(3, 3, 0, 0)
+		if AFKCount == 6000 then
+			ping.sleep()
+		elseif AFKCount == 5400 then
+			ping.sleepy()
 		elseif AFKCount % 600 == 0 then
-			if hasItem(mainHeldItem) ~= hasItem(offHeldItem) then
-				if (hasCake(mainHeldItem) and not leftHanded) or (hasItem(offHeldItem) and leftHanded) then
-					leftArm.setEnabled(false)
-					AlternativeLeftArm.setEnabled(true)
-					animation["afk_left_bell"].play()
-				else
-					rightArm.setEnabled(false)
-					AlternativeRightArm.setEnabled(true)
-					animation["afk_right_bell"].play()
-				end
-			else
-				if not leftHanded and not hasCake(mainHeldItem) then
-					rightArm.setEnabled(false)
-					AlternativeRightArm.setEnabled(true)
-					animation["afk_right_bell"].play()
-				elseif leftHanded and not hasCake(mainHeldItem) then
-					leftArm.setEnabled(false)
-					AlternativeLeftArm.setEnabled(true)
-					animation["afk_left_bell"].play()
-				end
-			end
-		elseif ((AFKCount - 27) % 600 == 0 or (AFKCount - 43) % 600 == 0) and (animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying()) then
-			if BellSound then
-				playBellSound(0.5)
-			end
-		elseif (AFKCount - 67) % 600 == 0 then
-			if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
-				rightArm.setEnabled(true)
-				AlternativeRightArm.setEnabled(false)
-			end
-			if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
-				leftArm.setEnabled(true)
-				AlternativeLeftArm.setEnabled(false)
-			end
+			ping.touchBell()
 		end
 	else
-		if AFKCount > 0 then
-			if not wardenNearby then
-				if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
-					rightArm.setEnabled(true)
-					AlternativeRightArm.setEnabled(false)
-				end
-				if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
-					leftArm.setEnabled(true)
-					AlternativeLeftArm.setEnabled(false)
-				end
-			end
-			animation["afk_right_bell"].stop()
-			animation["afk_left_bell"].stop()
-			animation["afk_sleepy"].stop()
-			animation["afk_sleep"].stop()
+		if AFKCount >= 600 or SleepStage ~= 0 then
+			ping.backFromAFK()
 		end
-		if AFKCount >= 5400 then
-			AFKCount = -30
-		elseif AFKCount > 0 then
-			AFKCount = 0
-		end
-	end
-
-	if AFKCount < 0 then
-		if damageTaken == 2 then
-			AFKCount = 0
-		elseif AFKCount == -30 then
-			if damageTaken == 0 then
-				playMeow("minecraft:entity.cat.hurt", 1, 1.5)
-			end
-			setEmotion(1, 1, 0, 10)
-		elseif AFKCount == -20 then
-			sound.playSound("minecraft:entity.wolf.shake", playerPos, {1, 1.5})
-			animation["afk_awake"].play()
-			setEmotion(5, 5, 0, 20)
-		end
-		AFKCount = AFKCount + 1
+		AFKCount = 0
 	end
 
 	--チック終了処理
@@ -1382,7 +1369,6 @@ function tick()
 	WardenNearbyPrev = wardenNearby
 	HeldItemPrev[1] = mainHeldItem
 	HeldItemPrev[2] = offHeldItem
-	KeyPressedPrev = keypressed
 	TickLookRotPrev = lookRot
 	FpsCountData[1] = FpsCountData[1] + 1
 	if JumpBellCooldown > 0 then
@@ -1406,7 +1392,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and AFKCount < 5400 then
+		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 then
 			if tired then
 				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
 			else
@@ -1451,6 +1437,44 @@ function tick()
 		AttackAnimationCount = AttackAnimationCount - 1
 	end
 	AttackKeyPressedPrev = attackKeyPressed
+	if TouchBellCount >= 0 then
+		if TouchBellCount == 27 or TouchBellCount == 43 then
+			playBellSound(0.5)
+		end
+		if TouchBellCount == 67 then
+			if (not hasCake(mainHeldItem) and not leftHanded) or (not hasCake(offHeldItem) and leftHanded) then
+				rightArm.setEnabled(true)
+				AlternativeRightArm.setEnabled(false)
+			end
+			if (not hasCake(offHeldItem) and not leftHanded) or (not hasCake(mainHeldItem) and leftHanded) then
+				leftArm.setEnabled(true)
+				AlternativeLeftArm.setEnabled(false)
+			end
+			TouchBellCount = -1
+		else
+			TouchBellCount = TouchBellCount + 1
+		end
+	end
+	if SleepStage == 1 then
+		setEmotion(3, 3, 0, 0)
+	end
+	SleepStagePrev = SleepStage
+	if AwakeAnimationCount >= 0 then
+		if damageTaken == 2 then
+			AwakeAnimationCount = -1
+		elseif AwakeAnimationCount == 30 then
+			if damageTaken == 0 then
+				playMeow("minecraft:entity.cat.hurt", 1, 1.5)
+			end
+			setEmotion(1, 1, 0, 10)
+		elseif AwakeAnimationCount == 20 then
+			sound.playSound("minecraft:entity.wolf.shake", playerPos, {1, 1.5})
+			animation["afk_awake"].play()
+			setEmotion(5, 5, 0, 20)
+			SweatCount = 20
+		end
+		AwakeAnimationCount = AwakeAnimationCount - 1
+	end
 end
 
 function render()
