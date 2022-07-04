@@ -27,7 +27,7 @@ EmotionCount = 0 --エモートカウント
 EmotionState = {0, 0, 0} --エモートの内部状態：0. 右目, 1. 左目, 2. 口
 WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
-MeowActionCount = 0 --ニャーと鳴くアクションのカウント
+EmoteActionCount = 0 --ニャーと鳴くアクションのカウント
 SleepSoundCount = 0 --寝る時の音声カウント
 SweatCount = 0 --汗のカウント
 WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
@@ -125,6 +125,10 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	end
 	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 8) / 48, 0 / 96}
 	EmotionCount = count
+end
+
+function isPlayingEmoteAnimation()
+	return animation["right_meow"].isPlaying() or animation["left_meow"].isPlaying() or SweatCount > 0 or animation["shake"].isPlaying() or animation["refuse_emote"].isPlaying()
 end
 
 function bodyShake()
@@ -453,67 +457,79 @@ function ping.punch()
 end
 
 function ping.meow(emotionType)
-	local gamemode = player.getGamemode()
-	local playerPos = player.getPos()
-	local tired = (player.getHealthPercentage() <= 0.2 or player.getFood() <= 6) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
-	if player.getStatusEffect("minecraft:darkness") then
-		animation["refuse_emote"].play()
-		setEmotion(5, 5, 0, 30)
-		MeowActionCount = 30
-		SweatCount = 30
-	else
-		if tired then
-			playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
+	if not isPlayingEmoteAnimation() then
+		local gamemode = player.getGamemode()
+		local playerPos = player.getPos()
+		local tired = (player.getHealthPercentage() <= 0.2 or player.getFood() <= 6) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
+		if player.getStatusEffect("minecraft:darkness") then
+			animation["refuse_emote"].play()
+			setEmotion(5, 5, 0, 30)
+			EmoteActionCount = 30
+			SweatCount = 30
 		else
-			playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-		end
-		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-		if player.isLeftHanded() then
-			animation["left_meow"].play()
-			if emotionType == 1 then
-				if tired then
-					setEmotion(4, 2, 1, 20)
-				else
-					setEmotion(4, 0, 1, 20)
+			if tired then
+				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
+			else
+				playMeow("minecraft:entity.cat.ambient", 1, 1.5)
+			end
+			particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
+			if player.isLeftHanded() then
+				animation["left_meow"].play()
+				if emotionType == 1 then
+					if tired then
+						setEmotion(4, 2, 1, 20)
+					else
+						setEmotion(4, 0, 1, 20)
+					end
+				end
+			else
+				animation["right_meow"].play()
+				if emotionType == 1 then
+					if tired then
+						setEmotion(2, 4, 1, 20)
+					else
+						setEmotion(0, 4, 1, 20)
+					end
 				end
 			end
-		else
-			animation["right_meow"].play()
-			if emotionType == 1 then
-				if tired then
-					setEmotion(2, 4, 1, 20)
-				else
-					setEmotion(0, 4, 1, 20)
-				end
+			if emotionType == 0 then
+				setEmotion(4, 4, 1, 20)
 			end
+			EmoteActionCount = 20
 		end
-		if emotionType == 0 then
-			setEmotion(4, 4, 1, 20)
-		end
-		MeowActionCount = 20
 	end
 end
 
 function ping.surprise()
-	if player.getStatusEffect("minecraft:darkness") then
-		animation["refuse_emote"].play()
-		setEmotion(5, 5, 0, 30)
-		MeowActionCount = 30
-		SweatCount = 30
-	else
-		playMeow("minecraft:entity.cat.hurt", 1, 1.5)
-		setEmotion(1, 1, 0, 20)
-		MeowActionCount = 20
-		SweatCount = 20
+	if not isPlayingEmoteAnimation() then
+		if player.getStatusEffect("minecraft:darkness") then
+			animation["refuse_emote"].play()
+			setEmotion(5, 5, 0, 30)
+			EmoteActionCount = 30
+			SweatCount = 30
+		else
+			playMeow("minecraft:entity.cat.hurt", 1, 1.5)
+			setEmotion(1, 1, 0, 20)
+			EmoteActionCount = 20
+			SweatCount = 20
+		end
 	end
 end
 
 function ping.bodyShake()
-	if not animation["shake"].isPlaying() then
-		bodyShake()
-		if WetCount > 0 and not player.isWet() then
-			WetBodyShakeCount = 20
-			WetCount = 20
+	if not isPlayingEmoteAnimation() then
+		if player.getStatusEffect("minecraft:darkness") then
+			animation["refuse_emote"].play()
+			setEmotion(5, 5, 0, 30)
+			EmoteActionCount = 30
+			SweatCount = 30
+		else
+			bodyShake()
+			if WetCount > 0 and not player.isWet() then
+				WetBodyShakeCount = 20
+				WetCount = 20
+			end
+			EmoteActionCount = 20;
 		end
 	end
 end
@@ -994,7 +1010,7 @@ function tick()
 								else
 									playMeow("minecraft:entity.cat.ambient", 1, 1.5)
 								end
-								MeowActionCount = 20
+								EmoteActionCount = 20
 							end
 							setEmotion(4, 4, 1, 20)
 						end
@@ -1071,7 +1087,7 @@ function tick()
 								else
 									playMeow("minecraft:entity.cat.ambient", 1, 1.5)
 								end
-								MeowActionCount = 20
+								EmoteActionCount = 20
 							end
 							setEmotion(4, 4, 1, 20)
 						end
@@ -1464,7 +1480,7 @@ function tick()
 	end
 	if MeowCount <= 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and MeowActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 and not animation["shake"].isPlaying() then
+		if MeowSound and playerAnimation ~= "SLEEPING" and EmoteActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 and not animation["shake"].isPlaying() then
 			if tired then
 				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
 			else
@@ -1490,8 +1506,8 @@ function tick()
 	else
 		WinkCount = WinkCount - 1
 	end
-	if MeowActionCount > 0 then
-		MeowActionCount = MeowActionCount - 1
+	if EmoteActionCount > 0 then
+		EmoteActionCount = EmoteActionCount - 1
 	end
 	if SweatCount > 0 then
 		if SweatCount % 5 == 0 then
