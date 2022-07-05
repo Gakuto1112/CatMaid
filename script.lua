@@ -825,11 +825,11 @@ function tick()
 
 	--腕の基準点の調整
 	if animation["shake"].isPlaying() then
-		rightArm.setPivot({0, 0, 0})
-		leftArm.setPivot({0, 0, 0})
+		rightArm.setPivot({-5.5, 0, 0})
+		leftArm.setPivot({5.5, 0, 0})
 	else
-		rightArm.setPivot({5.5, 0, 0})
-		leftArm.setPivot({-5.5, 0, 0})
+		rightArm.setPivot({0.5, 0, 0})
+		leftArm.setPivot({-0.5, 0, 0})
 	end
 
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
