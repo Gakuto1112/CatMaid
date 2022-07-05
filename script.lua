@@ -1196,14 +1196,8 @@ function tick()
 	--寝ている時に目と閉じる
 	if playerAnimation == "SLEEPING" or SleepStage == 2 then
 		if SleepSoundCount <= 0 then
-			if math.random() >= 0.95 then
-				sound.playSound("minecraft:entity.cat.stray_ambient", playerPos , {0.5, 1.5})
-				setEmotion(4, 4, 1, 20)
-				SleepSoundCount = 20
-			else
-				sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
-				SleepSoundCount = 65
-			end
+			sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
+			SleepSoundCount = 65
 		else
 			SleepSoundCount = SleepSoundCount - 1
 		end
