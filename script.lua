@@ -1505,7 +1505,7 @@ function tick()
 			ping.touchBell()
 		end
 	else
-		if AFKCount >= 600 or SleepStage ~= 0 then
+		if SleepStage ~= 0 then
 			if not SitDownWhenSleepy then
 				ping.sitDown()
 			end
