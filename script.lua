@@ -860,9 +860,18 @@ function tick()
 
 	--腕の基準点の調整
 	if animation["shake"].isPlaying() then
+		if SitDown then
+			rightArm.setPos({-0.2, -1.1, 1})
+			leftArm.setPos({0.2, -1.1, 1})
+		else
+			rightArm.setPos({0, 0, 0})
+			leftArm.setPos({0, 0, 0})
+		end
 		rightArm.setPivot({-5.5, 0, 0})
 		leftArm.setPivot({5.5, 0, 0})
 	else
+		rightArm.setPos({0, 0, 0})
+		leftArm.setPos({0, 0, 0})
 		rightArm.setPivot({0.5, 0, 0})
 		leftArm.setPivot({-0.5, 0, 0})
 	end
