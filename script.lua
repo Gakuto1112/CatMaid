@@ -43,6 +43,7 @@ SleepStage = 0 --睡眠のステージ：0. 起きている, 1. うとうと, 2.
 SleepStagePrev = 0 --前チックの睡眠のステージ
 AwakeAnimationCount = -1 --寝起きアニメーションのカウント
 SitDown = false --座っているアニメーションかどうか
+SitDownWhenSleepy = false --眠い時に座っていたかどうか
 WetCount = 0 --濡れているカウント
 WetDropCount = 0 --濡れている時の水滴のパーティクルのカウント
 WetBodyShakeCount = 0 --濡れている時に体を震わせた時の水しぶきのパーティクルのカウント
@@ -744,10 +745,11 @@ function tick()
 	local underwater = player.isUnderwater()
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
 	local sneaking = player.isSneaking()
+	local onGround = player.isOnGround()
 	if BellSound then
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
-			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
+			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and onGround then
 				if wardenNearby then
 					playBellSound(0.05)
 				elseif sneaking or underwater then
@@ -1492,12 +1494,21 @@ function tick()
 		if AFKCount == 6000 then
 			ping.sleep()
 		elseif AFKCount == 5400 then
+			if onGround then
+				SitDownWhenSleepy = SitDown
+				if not SitDown then
+					ping.sitDown()
+				end
+			end
 			ping.sleepy()
 		elseif AFKCount % 600 == 0 then
 			ping.touchBell()
 		end
 	else
 		if AFKCount >= 600 or SleepStage ~= 0 then
+			if not SitDownWhenSleepy then
+				ping.sitDown()
+			end
 			ping.backFromAFK()
 		end
 		AFKCount = 0
