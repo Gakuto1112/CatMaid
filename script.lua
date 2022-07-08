@@ -52,6 +52,7 @@ ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
 CanPlayCustomSound = meta.getCanHaveCustomSounds() --カスタムサウンドが再生できるかどうか
 ActionWheelCount = 0 --アクションホイールでアニメーションするためのカウンター
 IsInSettings = false --設定画面にいるかどうか
+CameraOffset = 0 --座る時のカメラの位置オフセット
 
 --腕
 rightArm = model.Avatar.RightArm
@@ -1704,6 +1705,19 @@ function render()
 			end
 		end
 		HairRenderCount = 0
+	end
+
+	--座る時のカメラの位置調整
+	if SitDown and CameraOffset > -0.5 then
+		CameraOffset = math.max(CameraOffset - 0.5 / Fps * 6, -0.5)
+		for _, cameraPart in pairs(camera) do
+			cameraPart.setPos({0, CameraOffset, 0})
+		end
+	elseif not SitDown and CameraOffset < 0 then
+		CameraOffset = math.min(CameraOffset + 0.5 / Fps * 6, 0)
+		for _, cameraPart in pairs(camera) do
+			cameraPart.setPos({0, CameraOffset, 0})
+		end
 	end
 
 	--一人称視点の時はバニラ腕の強制表示
