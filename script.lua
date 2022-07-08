@@ -28,6 +28,7 @@ EmotionState = {0, 0, 0} --エモートの内部状態：0. 右目, 1. 左目, 2
 WinkCount = 200 --瞬きのカウント
 AnimationPrev = "" --前チックのアニメーション
 EmoteActionCount = 0 --ニャーと鳴くアクションのカウント
+SneakPrev = false --前チックのスニークの状態
 SleepSoundCount = 0 --寝る時の音声カウント
 SweatCount = 0 --汗のカウント
 WardenNearbyPrev = false --前チックにワーデンが近くにいるかどうか
@@ -741,8 +742,8 @@ function tick()
 	local playerPos = player.getPos()
 	local underwater = player.isUnderwater()
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
+	local sneaking = player.isSneaking()
 	if BellSound then
-		local sneaking = player.isSneaking()
 		WalkDistance = WalkDistance + playerSpeed
 		if WalkDistance >= 1.8 then
 			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and player.isOnGround() then
@@ -856,6 +857,14 @@ function tick()
 		end
 		setEmotion(1, 1, 0, 20)
 		damageTaken = 2
+	end
+
+	--スニーク時にスカートをずらす
+	local skirt = model.Avatar.Body.Skirt
+	if SneakPrev and not player.isFlying() then
+		skirt.setRot({15, 0, 0})
+	else
+		skirt.setRot({0, 0, 0})
 	end
 
 	--腕の基準点の調整
@@ -1393,7 +1402,6 @@ function tick()
 	--チェストプレート着用の場合は髪をずらす。
 	local frontHair = model.Avatar.Body.Hairs.FrontHair
 	local backHair = model.Avatar.Body.Hairs.BackHair
-	local skirt = model.Avatar.Body.Skirt
 	local backRibbon = model.Avatar.Body.Skirt.BackRibbon
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
@@ -1499,6 +1507,7 @@ function tick()
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
 	AnimationPrev = playerAnimation
+	SneakPrev = sneaking
 	WardenNearbyPrev = wardenNearby
 	HeldItemPrev[1] = mainHeldItem
 	HeldItemPrev[2] = offHeldItem
