@@ -41,6 +41,7 @@ TouchBellCount = -1 --鈴を弄る時に、鈴の音を同期させるための�
 SleepStage = 0 --睡眠のステージ：0. 起きている, 1. うとうと, 2. 立ち寝
 SleepStagePrev = 0 --前チックの睡眠のステージ
 AwakeAnimationCount = -1 --寝起きアニメーションのカウント
+SitDown = false --座っているアニメーションかどうか
 WetCount = 0 --濡れているカウント
 WetDropCount = 0 --濡れている時の水滴のパーティクルのカウント
 WetBodyShakeCount = 0 --濡れている時に体を震わせた時の水しぶきのパーティクルのカウント
@@ -127,8 +128,29 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	EmotionCount = count
 end
 
+function refuseEmotion()
+	animation["refuse_emote"].play()
+	setEmotion(5, 5, 0, 30)
+	EmoteActionCount = 30
+	SweatCount = 30
+end
+
 function isPlayingEmoteAnimation()
 	return animation["right_meow"].isPlaying() or animation["left_meow"].isPlaying() or SweatCount > 0 or animation["shake"].isPlaying() or animation["refuse_emote"].isPlaying()
+end
+
+function playBellSound(volume)
+	local playerPos = player.getPos();
+	if CanPlayCustomSound then
+		sound.playCustomSound("Bell", playerPos, {volume, 1})
+	else
+		sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
+	end
+end
+
+function canSitDown()
+	local velocity = player.getVelocity()
+	return player.getAnimation() == "STANDING" and player.isOnGround() and not player.getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0
 end
 
 function bodyShake()
@@ -382,18 +404,33 @@ function setActionWheel(openSettings, wardenNeardy)
 			ping.surprise()
 		end)
 
-		--アクション4：体をブルブル振る
+		--アクション4：座る
 		if wardenNeardy then
-			action_wheel.SLOT_4.setTitle("§7ブルブル")
+			action_wheel.SLOT_4.setTitle("§7おすわり")
 			action_wheel.SLOT_4.setColor({21 / 255, 21 / 255, 21 / 255})
 			action_wheel.SLOT_4.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 		else
-			action_wheel.SLOT_4.setTitle("ブルブル")
+			action_wheel.SLOT_4.setTitle("おすわり")
 			action_wheel.SLOT_4.setColor({255 / 255, 85 / 255, 255 / 255})
 			action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		end
-		action_wheel.SLOT_4.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_4.setItem("minecraft:oak_stairs")
 		action_wheel.SLOT_4.setFunction(function()
+			ping.sitDown()
+		end)
+
+		--アクション5：体をブルブル振る
+		if wardenNeardy then
+			action_wheel.SLOT_5.setTitle("§7ブルブル")
+			action_wheel.SLOT_5.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_5.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_5.setTitle("ブルブル")
+			action_wheel.SLOT_5.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_5.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
+		action_wheel.SLOT_5.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_5.setFunction(function()
 			ping.bodyShake()
 		end)
 
@@ -407,7 +444,7 @@ function setActionWheel(openSettings, wardenNeardy)
 		end)
 
 		--未使用のアクション
-		for _, unusedAction in ipairs({action_wheel.SLOT_5, action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+		for _, unusedAction in ipairs({action_wheel.SLOT_6, action_wheel.SLOT_7}) do
 			unusedAction.setTitle()
 			unusedAction.setItem()
 			unusedAction.setColor()
@@ -462,10 +499,7 @@ function ping.meow(emotionType)
 		local playerPos = player.getPos()
 		local tired = (player.getHealthPercentage() <= 0.2 or player.getFood() <= 6) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
 		if player.getStatusEffect("minecraft:darkness") then
-			animation["refuse_emote"].play()
-			setEmotion(5, 5, 0, 30)
-			EmoteActionCount = 30
-			SweatCount = 30
+			refuseEmotion()
 		else
 			if tired then
 				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
@@ -503,10 +537,7 @@ end
 function ping.surprise()
 	if not isPlayingEmoteAnimation() then
 		if player.getStatusEffect("minecraft:darkness") then
-			animation["refuse_emote"].play()
-			setEmotion(5, 5, 0, 30)
-			EmoteActionCount = 30
-			SweatCount = 30
+			refuseEmotion()
 		else
 			playMeow("minecraft:entity.cat.hurt", 1, 1.5)
 			setEmotion(1, 1, 0, 20)
@@ -516,13 +547,26 @@ function ping.surprise()
 	end
 end
 
+function ping.sitDown()
+	if player.getStatusEffect("minecraft:darkness") then
+		refuseEmotion()
+	elseif canSitDown() then
+		if SitDown then
+			animation["stand_up"].play()
+			animation["sit_down"].stop()
+		else
+			animation["sit_down"].play()
+			animation["stand_up"].stop()
+		end
+		playBellSound(0.5)
+		SitDown = not SitDown
+	end
+end
+
 function ping.bodyShake()
 	if not isPlayingEmoteAnimation() then
 		if player.getStatusEffect("minecraft:darkness") then
-			animation["refuse_emote"].play()
-			setEmotion(5, 5, 0, 30)
-			EmoteActionCount = 30
-			SweatCount = 30
+			refuseEmotion()
 		else
 			bodyShake()
 			if WetCount > 0 and not player.isWet() then
@@ -697,15 +741,6 @@ function tick()
 	local playerPos = player.getPos()
 	local underwater = player.isUnderwater()
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
-
-	local function playBellSound(volume)
-		if CanPlayCustomSound then
-			sound.playCustomSound("Bell", playerPos, {volume, 1})
-		else
-			sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
-		end
-	end
-
 	if BellSound then
 		local sneaking = player.isSneaking()
 		WalkDistance = WalkDistance + playerSpeed
@@ -830,6 +865,13 @@ function tick()
 	else
 		rightArm.setPivot({0.5, 0, 0})
 		leftArm.setPivot({-0.5, 0, 0})
+	end
+
+	--お座りアニメーションの自動解除
+	if not canSitDown() and SitDown then
+		animation["stand_up"].play()
+		animation["sit_down"].stop()
+		SitDown = false
 	end
 
 	--ウォーデンが近くにいる時（≒暗闇デバフを受けている時）、怯える。
@@ -1343,7 +1385,7 @@ function tick()
 	local frontHair = model.Avatar.Body.Hairs.FrontHair
 	local backHair = model.Avatar.Body.Hairs.BackHair
 	local skirt = model.Avatar.Body.Skirt
-	local backRibbon = model.Avatar.Body.BackRibbon
+	local backRibbon = model.Avatar.Body.Skirt.BackRibbon
 	if string.find(player.getEquipmentItem(5).getType(), "chestplate$") and not HideArmor then
 		frontHair.setPos({0, 0, -1.1})
 		backHair.setPos({0, 0, 1.1})
