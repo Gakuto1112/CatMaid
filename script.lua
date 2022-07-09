@@ -1718,19 +1718,6 @@ function render()
 		HairRenderCount = 0
 	end
 
-	--座る時のカメラの位置調整
-	if SitDown and CameraOffset > -0.5 then
-		CameraOffset = math.max(CameraOffset - 0.5 / Fps * 6, -0.5)
-		for _, cameraPart in pairs(camera) do
-			cameraPart.setPos({0, CameraOffset, 0})
-		end
-	elseif not SitDown and CameraOffset < 0 then
-		CameraOffset = math.min(CameraOffset + 0.5 / Fps * 6, 0)
-		for _, cameraPart in pairs(camera) do
-			cameraPart.setPos({0, CameraOffset, 0})
-		end
-	end
-
 	--一人称視点の時はバニラ腕の強制表示
 	local firstPerson = renderer.isFirstPerson()
 	if firstPerson then
@@ -1752,4 +1739,19 @@ function render()
 	FpsCountData[2] = FpsCountData[2] + 1
 	LookRotPrev = lookRot
 	HairRenderCount = HairRenderCount + 1
+end
+
+function world_render()
+	--座る時のカメラの位置調整
+	if SitDown and CameraOffset > -0.5 then
+		CameraOffset = math.max(CameraOffset - 0.5 / Fps * 6, -0.5)
+		for _, cameraPart in pairs(camera) do
+			cameraPart.setPos({0, CameraOffset, 0})
+		end
+	elseif not SitDown and CameraOffset < 0 then
+		CameraOffset = math.min(CameraOffset + 0.5 / Fps * 6, 0)
+		for _, cameraPart in pairs(camera) do
+			cameraPart.setPos({0, CameraOffset, 0})
+		end
+	end
 end
