@@ -143,11 +143,13 @@ function isPlayingEmoteAnimation()
 end
 
 function playBellSound(volume)
-	local playerPos = player.getPos();
-	if CanPlayCustomSound then
-		sound.playCustomSound("Bell", playerPos, {volume, 1})
-	else
-		sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
+	if BellSound then
+		local playerPos = player.getPos();
+		if CanPlayCustomSound then
+			sound.playCustomSound("Bell", playerPos, {volume, 1})
+		else
+			sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
+		end
 	end
 end
 
@@ -746,32 +748,30 @@ function tick()
 	local wardenNearby = player.getStatusEffect("minecraft:darkness")
 	local sneaking = player.isSneaking()
 	local onGround = player.isOnGround()
-	if BellSound then
-		WalkDistance = WalkDistance + playerSpeed
-		if WalkDistance >= 1.8 then
-			if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and onGround then
-				if wardenNearby then
-					playBellSound(0.05)
-				elseif sneaking or underwater then
-					playBellSound(0.1)
-				else
-					playBellSound(0.5)
-				end
-			end
-			WalkDistance = 0
-		end
-		if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
+	WalkDistance = WalkDistance + playerSpeed
+	if WalkDistance >= 1.8 then
+		if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and onGround then
 			if wardenNearby then
 				playBellSound(0.05)
-			elseif underwater then
+			elseif sneaking or underwater then
 				playBellSound(0.1)
 			else
 				playBellSound(0.5)
 			end
-			JumpBellCooldown = 10
 		end
-		VelocityYPrev = velocity.y
+		WalkDistance = 0
 	end
+	if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
+		if wardenNearby then
+			playBellSound(0.05)
+		elseif underwater then
+			playBellSound(0.1)
+		else
+			playBellSound(0.5)
+		end
+		JumpBellCooldown = 10
+	end
+	VelocityYPrev = velocity.y
 
 	--耳のアニメーション
 	local leftHanded = player.isLeftHanded()
