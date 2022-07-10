@@ -159,6 +159,12 @@ function playBellSound(volume)
 	end
 end
 
+function playWetSound()
+	if not player.isTouchingWater() and WetCount > 0 then
+		sound.playSound("minecraft:entity.cod.flop", player.getPos(), {WetCount / 1200, 1})
+	end
+end
+
 function canSitDown()
 	local velocity = player.getVelocity()
 	return player.getAnimation() == "STANDING" and player.isOnGround() and not player.getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0
@@ -809,6 +815,7 @@ function tick()
 			else
 				playBellSound(0.5)
 			end
+			playWetSound()
 		end
 		WalkDistance = 0
 	end
@@ -818,9 +825,9 @@ function tick()
 		else
 			playBellSound(0.5)
 		end
+		playWetSound()
 		JumpBellCooldown = 10
 	end
-	VelocityYPrev = velocity.y
 
 	--耳のアニメーション
 	local leftHanded = player.isLeftHanded()
@@ -1578,6 +1585,7 @@ function tick()
 	end
 
 	--チック終了処理
+	VelocityYPrev = velocity.y
 	AnimationCount = AnimationCount + 1
 	HealthPercentagePrev = healthPercentage
 	MaxHealthPrev = maxHealth
