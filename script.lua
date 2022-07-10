@@ -147,10 +147,14 @@ end
 function playBellSound(volume)
 	if BellSound then
 		local playerPos = player.getPos()
+		local volumeCoefficient = 1
+		if player.isUnderwater() then
+			volumeCoefficient = 0.2
+		end
 		if CanPlayCustomSound then
-			sound.playCustomSound("Bell", playerPos, {volume, 1})
+			sound.playCustomSound("Bell", playerPos, {volume * volumeCoefficient, 1})
 		else
-			sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2, 1.5})
+			sound.playSound("minecraft:entity.experience_orb.pickup", playerPos, {volume / 2 * volumeCoefficient, 1.5})
 		end
 	end
 end
@@ -787,7 +791,7 @@ function tick()
 		if not player.getVehicle() and player.getAnimation() ~= "FALL_FLYING" and onGround then
 			if wardenNearby then
 				playBellSound(0.05)
-			elseif sneaking or underwater then
+			elseif sneaking then
 				playBellSound(0.1)
 			else
 				playBellSound(0.5)
@@ -798,8 +802,6 @@ function tick()
 	if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
 		if wardenNearby then
 			playBellSound(0.05)
-		elseif underwater then
-			playBellSound(0.1)
 		else
 			playBellSound(0.5)
 		end
