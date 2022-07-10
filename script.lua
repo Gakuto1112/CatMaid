@@ -6,6 +6,7 @@ MeowSound = true --鳴き声を発するかどうか
 BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
 HideArmor = false --防具を非表示にするかどうか
+AutoShake = true --自動でブルブルするかどうか
 UseSkinName = false --スキン名を使用するかどうか
 ShowNameWarning = true --名前表示関する注意を表示するかどうか
 WalkDistance = 0 --移動距離（鈴のサウンドに使用）
@@ -47,6 +48,7 @@ SitDownWhenSleepy = false --眠い時に座っていたかどうか
 WetCount = 0 --濡れているカウント
 WetDropCount = 0 --濡れている時の水滴のパーティクルのカウント
 WetBodyShakeCount = 0 --濡れている時に体を震わせた時の水しぶきのパーティクルのカウント
+AutoShakeCount = 20 --自動ブルブルまでのカウント
 HairRenderLimit = math.ceil(8192 / meta.getRenderLimit()) --髪の描画リミット（処理のスキップ頻度）
 HairRenderCount = 0 --髪の描画カウント
 ParticleLimit = meta.getParticleLimit() --パーティクル数の制限値
@@ -144,7 +146,7 @@ end
 
 function playBellSound(volume)
 	if BellSound then
-		local playerPos = player.getPos();
+		local playerPos = player.getPos()
 		if CanPlayCustomSound then
 			sound.playCustomSound("Bell", playerPos, {volume, 1})
 		else
@@ -303,29 +305,55 @@ function setActionWheel(openSettings, wardenNeardy)
 			data.save("HideArmor", HideArmor)
 		end)
 
-		--アクションバー5: 名前の変更（スキン名を使用するかどうか）
+		--アクションバー5: 自動ブルブル
+		if AutoShake then
+			action_wheel.SLOT_5.setTitle("自動ブルブル：§cオフ§rにする")
+			action_wheel.SLOT_5.setColor({0 / 255, 170 / 255, 0 / 255})
+			action_wheel.SLOT_5.setHoverColor({85 / 255, 255 / 255, 85 / 255})
+		else
+			action_wheel.SLOT_5.setTitle("自動ブルブル：§aオン§rにする")
+			action_wheel.SLOT_5.setColor({170 / 255, 0 / 255, 0 / 255})
+			action_wheel.SLOT_5.setHoverColor({255 / 255, 85 / 255, 85 / 255})
+		end
+		action_wheel.SLOT_5.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_5.setFunction(function()
+			if AutoShake then
+				action_wheel.SLOT_5.setTitle("自動ブルブル：§aオン§rにする")
+				action_wheel.SLOT_5.setColor({170 / 255, 0 / 255, 0 / 255})
+				action_wheel.SLOT_5.setHoverColor({255 / 255, 85 / 255, 85 / 255})
+			else
+				action_wheel.SLOT_5.setTitle("自動ブルブル：§cオフ§rにする")
+				action_wheel.SLOT_5.setColor({0 / 255, 170 / 255, 0 / 255})
+				action_wheel.SLOT_5.setHoverColor({85 / 255, 255 / 255, 85 / 255})
+			end
+			AutoShake = not AutoShake
+			ping.setAutoShake(AutoShake)
+			data.save("AutoShake", AutoShake)
+		end)
+
+		--アクションバー6: 名前の変更（スキン名を使用するかどうか）
 		if SkinName ~= "" then
 			if UseSkinName then
-				action_wheel.SLOT_5.setTitle("名前：§cプレイヤー名§rにする")
-				action_wheel.SLOT_5.setColor({0 / 255, 170 / 255, 0 / 255})
-				action_wheel.SLOT_5.setHoverColor({85 / 255, 255 / 255, 85 / 255})
+				action_wheel.SLOT_6.setTitle("名前：§cプレイヤー名§rにする")
+				action_wheel.SLOT_6.setColor({0 / 255, 170 / 255, 0 / 255})
+				action_wheel.SLOT_6.setHoverColor({85 / 255, 255 / 255, 85 / 255})
 			else
-				action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
-				action_wheel.SLOT_5.setColor({170 / 255, 0 / 255, 0 / 255})
-				action_wheel.SLOT_5.setHoverColor({255 / 255, 85 / 255, 85 / 255})
+				action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
+				action_wheel.SLOT_6.setColor({170 / 255, 0 / 255, 0 / 255})
+				action_wheel.SLOT_6.setHoverColor({255 / 255, 85 / 255, 85 / 255})
 			end
-			action_wheel.SLOT_5.setItem("minecraft:name_tag")
-			action_wheel.SLOT_5.setFunction(function()
+			action_wheel.SLOT_6.setItem("minecraft:name_tag")
+			action_wheel.SLOT_6.setFunction(function()
 			local playerName = player.getName()
 			if UseSkinName then
-				action_wheel.SLOT_5.setTitle("名前：§aスキン名§rにする")
-				action_wheel.SLOT_5.setColor({170 / 255, 0 / 255, 0 / 255})
-				action_wheel.SLOT_5.setHoverColor({255 / 255, 85 / 255, 85 / 255})
+				action_wheel.SLOT_6.setTitle("名前：§aスキン名§rにする")
+				action_wheel.SLOT_6.setColor({170 / 255, 0 / 255, 0 / 255})
+				action_wheel.SLOT_6.setHoverColor({255 / 255, 85 / 255, 85 / 255})
 				print("あなたは§a"..playerName.."§rと表示されます。")
 			else
-				action_wheel.SLOT_5.setTitle("名前：§aプレイヤー名§rにする")
-				action_wheel.SLOT_5.setColor({0 / 255, 170 / 255, 0 / 255})
-				action_wheel.SLOT_5.setHoverColor({85 / 255, 255 / 255, 85 / 255})
+				action_wheel.SLOT_6.setTitle("名前：§aプレイヤー名§rにする")
+				action_wheel.SLOT_6.setColor({0 / 255, 170 / 255, 0 / 255})
+				action_wheel.SLOT_6.setHoverColor({85 / 255, 255 / 255, 85 / 255})
 				print("あなたは§a"..SkinName.."§rと表示されます。")
 				if ShowNameWarning then
 					print("[§c注意§r] この名前（§a"..SkinName.."§r）はFiguraを導入しているかつ、あなたの信用度を§eTrusted§r以上に設定しているプレイヤーのみに表示されます。それ以外のプレイヤーには通常通り§a"..playerName.."§rと表示されます。また、サーバー側にはこの名前（§a"..SkinName.."§r）は反映されません。§7このメッセージは再び表示されません。")
@@ -338,7 +366,7 @@ function setActionWheel(openSettings, wardenNeardy)
 			data.save("UseSkinName", UseSkinName)
 			end)
 		else
-			action_wheel.SLOT_5.setFunction()
+			action_wheel.SLOT_6.setFunction()
 			UseSkinName = false
 		end
 
@@ -352,7 +380,7 @@ function setActionWheel(openSettings, wardenNeardy)
 		end)
 
 		--未使用のアクション
-		for _, unusedAction in ipairs({action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+		for _, unusedAction in ipairs({action_wheel.SLOT_7}) do
 			unusedAction.setTitle()
 			unusedAction.setItem()
 			unusedAction.setColor()
@@ -481,6 +509,10 @@ function ping.setHideArmor(boolToSet)
 	HideArmor = boolToSet
 end
 
+function ping.setAutoShake(boolToSet)
+	AutoShake = boolToSet
+end
+
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
 	if UseSkinName then
@@ -578,7 +610,7 @@ function ping.bodyShake()
 				WetBodyShakeCount = 20
 				WetCount = 20
 			end
-			EmoteActionCount = 20;
+			EmoteActionCount = 20
 		end
 	end
 end
@@ -656,6 +688,8 @@ WegTail = loadBoolean(WegTail, "WegTail")
 ping.setWegTail(WegTail)
 HideArmor = loadBoolean(HideArmor, "HideArmor")
 ping.setHideArmor(HideArmor)
+AutoShake = loadBoolean(AutoShake, "AutoShake")
+ping.setAutoShake(AutoShake)
 UseSkinName = loadBoolean(UseSkinName, "UseSkinName")
 ping.setUseSkinName(UseSkinName)
 ShowNameWarning = loadBoolean(ShowNameWarning, "ShowNameWarning")
@@ -1444,7 +1478,18 @@ function tick()
 				particle.addParticle("minecraft:splash", {playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5, 0, 0, 0})
 			end
 		end
-	WetBodyShakeCount = WetBodyShakeCount - 1
+		WetBodyShakeCount = WetBodyShakeCount - 1
+	end
+
+	--自動ブルブル
+	if AutoShake and not player.isWet() and WetCount > 0 and not animation["shake"].isPlaying() and playerAnimation ~= "SLEEPING" then
+		if AutoShakeCount == 0 then
+			ping.bodyShake()
+		else
+			AutoShakeCount = AutoShakeCount - 1
+		end
+	else
+		AutoShakeCount = 20
 	end
 
 	--放置中の処理
