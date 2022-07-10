@@ -649,6 +649,19 @@ function ping.touchBell()
 	end
 end
 
+function ping.stopTouchBell()
+	if animation["afk_right_bell"].isPlaying() then
+		animation["afk_right_bell"].stop()
+		rightArm.setEnabled(true)
+		AlternativeRightArm.setEnabled(false)
+	elseif animation["afk_left_bell"].isPlaying() then
+		animation["afk_left_bell"].stop()
+		leftArm.setEnabled(true)
+		AlternativeLeftArm.setEnabled(false)
+	end
+	TouchBellCount = -1
+end
+
 function ping.sleepy()
 	animation["afk_sleepy"].play()
 	SleepStage = 1
@@ -799,7 +812,7 @@ function tick()
 		end
 		WalkDistance = 0
 	end
-	if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown <= 0 then
+	if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown == 0 then
 		if wardenNearby then
 			playBellSound(0.05)
 		else
@@ -811,7 +824,7 @@ function tick()
 
 	--耳のアニメーション
 	local leftHanded = player.isLeftHanded()
-	if AnimationCount >= 300 then
+	if AnimationCount == 300 then
 		if leftHanded then
 			animation["left_ear_bend"].play()
 		else
@@ -849,7 +862,7 @@ function tick()
 		tail1.setRot({0, 0, 0})
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(1)
-		if EmotionCount <= 0 then
+		if EmotionCount == 0 then
 			setEmotion(0, 0, 0, 0)
 		end
 	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
@@ -862,7 +875,7 @@ function tick()
 			tail2.setRot({-15, 0, 0})
 		end
 		animation["wag_tail"].setSpeed(0.75)
-		if EmotionCount <= 0 then
+		if EmotionCount == 0 then
 			setEmotion(0, 0, 0, 0)
 		end
 	else
@@ -873,7 +886,7 @@ function tick()
 			tail2.setRot({0, 0, 0})
 		end
 		animation["wag_tail"].setSpeed(0.5)
-		if EmotionCount <= 0 then
+		if EmotionCount == 0 then
 			setEmotion(2, 2, 0, 0)
 		end
 		tired = true
@@ -935,7 +948,7 @@ function tick()
 	local mainHeldItem = player.getHeldItem(1)
 	local offHeldItem = player.getHeldItem(2)
 	if wardenNearby and playerAnimation ~= "SLEEPING" then
-		if EmotionCount <= 0 then
+		if EmotionCount == 0 then
 			setEmotion(1, 1, 0, 0)
 		end
 		if AttackAnimationCount > 0 then
@@ -1243,9 +1256,9 @@ function tick()
 		return false
 	end
 
-	if ((hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and not leftHanded) or (hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and leftHanded)) and usingItem and EmotionCount <= 0 then
+	if ((hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and not leftHanded) or (hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and leftHanded)) and usingItem and EmotionCount == 0 then
 		setEmotion(-1, 4, 0, 0)
-	elseif ((hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and not leftHanded) or (hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and leftHanded)) and usingItem and EmotionCount <= 0 then
+	elseif ((hasCloseEyeItems(offHeldItem) and activeHand == "OFF_HAND" and not leftHanded) or (hasCloseEyeItems(mainHeldItem) and activeHand == "MAIN_HAND" and leftHanded)) and usingItem and EmotionCount == 0 then
 		setEmotion(4, -1, 0, 0)
 	end
 
@@ -1260,7 +1273,7 @@ function tick()
 				if food == activeItem.getType() then
 					foodFound = true
 					EatCount = EatCount + 1
-					if EmotionCount <= 0 then
+					if EmotionCount == 0 then
 						setEmotion(4, 4, 0, 0)
 					end
 				end
@@ -1281,7 +1294,7 @@ function tick()
 		EatCount = 0
 		horn = false
 	end
-	if EatCount >= 32 then
+	if EatCount == 32 then
 		if tired then
 			playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
 		else
@@ -1294,7 +1307,7 @@ function tick()
 
 	--寝ている時に目と閉じる
 	if playerAnimation == "SLEEPING" or SleepStage == 2 then
-		if SleepSoundCount <= 0 then
+		if SleepSoundCount == 0 then
 			sound.playSound("minecraft:entity.cat.purr", playerPos , {1, 1})
 			SleepSoundCount = 65
 		else
@@ -1318,7 +1331,7 @@ function tick()
 			animation["wag_tail"].cease()
 			animation["sleep"].play()
 		end
-		if EmotionCount <= 0 then
+		if EmotionCount == 0 then
 			setEmotion(4, 4, 0, 0)
 		end
 	elseif AnimationPrev == "SLEEPING" then
@@ -1463,7 +1476,7 @@ function tick()
 		WetCount = math.max(WetCount - 1, 0)
 	end
 	if WetCount > 0 then
-		if WetDropCount >= 5 then
+		if WetDropCount == 5 then
 			if not player.isWet() then
 				for _ = 1, math.min(ParticleLimit / 4, 4) do
 					particle.addParticle("minecraft:falling_water", {playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5, 0, 0, 0})
@@ -1552,6 +1565,9 @@ function tick()
 			ping.touchBell()
 		end
 	else
+		if animation["afk_right_bell"].isPlaying() or animation["afk_left_bell"].isPlaying() then
+			ping.stopTouchBell()
+		end
 		if SleepStage ~= 0 then
 			if not SitDownWhenSleepy then
 				ping.sitDown()
@@ -1577,7 +1593,7 @@ function tick()
 	end
 	local actionWheelOpen = action_wheel.isOpen()
 	if actionWheelOpen and not wardenNearby and not IsInSettings then
-		if ActionWheelCount >= 40 then
+		if ActionWheelCount == 40 then
 			ActionWheelCount = 0
 		else
 			ActionWheelCount = ActionWheelCount + 1
@@ -1591,9 +1607,9 @@ function tick()
 	if EmotionCount > 0 then
 		EmotionCount = EmotionCount - 1
 	end
-	if MeowCount <= 0 then
+	if MeowCount == 0 then
 		--時々ニャーニャー鳴く。
-		if MeowSound and playerAnimation ~= "SLEEPING" and EmoteActionCount <= 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 and not animation["shake"].isPlaying() then
+		if MeowSound and playerAnimation ~= "SLEEPING" and EmoteActionCount == 0 and not underwater and not horn and not wardenNearby and AFKCount > 0 and SleepStage == 0 and not animation["shake"].isPlaying() then
 			if tired then
 				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
 			else
@@ -1603,7 +1619,7 @@ function tick()
 					playMeow("minecraft:entity.cat.ambient", 0.5, 1.5)
 				end
 			end
-			if EmotionCount <= 0 then
+			if EmotionCount == 0 then
 				setEmotion(-1, -1, 1, 20)
 			end
 		end
@@ -1611,8 +1627,8 @@ function tick()
 	else
 		MeowCount = MeowCount - 1
 	end
-	if WinkCount <= 0 then
-		if EmotionCount <= 0 and not horn then
+	if WinkCount == 0 then
+		if EmotionCount == 0 and not horn then
 			setEmotion(4, 4, 0, 1)
 		end
 		WinkCount = 200
@@ -1678,7 +1694,7 @@ end
 
 function render()
 	--FPS計測
-	if FpsCountData[1] >= 1 then
+	if FpsCountData[1] == 1 then
 		Fps = FpsCountData[2] * 20
 		FpsCountData = {0, 0}
 	end
