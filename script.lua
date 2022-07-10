@@ -606,6 +606,7 @@ function ping.sitDown()
 			animation["stand_up"].stop()
 		end
 		playBellSound(0.5)
+		playWetSound()
 		SitDown = not SitDown
 	end
 end
