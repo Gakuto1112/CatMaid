@@ -119,17 +119,17 @@ function setEmotion(rightEye, leftEye, mouth, count)
 	if rightEye >= 0 then
 		EmotionState[1] = rightEye
 	end
-	model.Avatar.Head.FaceParts.RightEye.RightEyeBase.setUV{(EmotionState[1] * 8) / 48, 0 / 96}
-	model.Avatar.Head.FaceParts.RightEye.RightEyeLight.setUV{(EmotionState[1] * 8) / 48, 3 / 96}
+	model.Avatar.Head.FaceParts.RightEye.RightEyeBase.setUV{(EmotionState[1] * 3) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.RightEye.RightEyeLight.setUV{(EmotionState[1] * 3) / 48, 3 / 96}
 	if leftEye >= 0 then
 		EmotionState[2] = leftEye
 	end
-	model.Avatar.Head.FaceParts.LeftEye.LeftEyeBase.setUV{(EmotionState[2] * 8) / 48, 0 / 96}
-	model.Avatar.Head.FaceParts.LeftEye.LeftEyeLight.setUV{(EmotionState[2] * 8) / 48, 3 / 96}
+	model.Avatar.Head.FaceParts.LeftEye.LeftEyeBase.setUV{(EmotionState[2] * 3) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.LeftEye.LeftEyeLight.setUV{(EmotionState[2] * 3) / 48, 3 / 96}
 	if mouth >= 0 then
 		EmotionState[3] = mouth
 	end
-	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 8) / 48, 0 / 96}
+	model.Avatar.Head.FaceParts.Mouth.setUV{(EmotionState[3] * 3) / 48, 0 / 96}
 	EmotionCount = count
 end
 
