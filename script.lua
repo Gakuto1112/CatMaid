@@ -181,12 +181,12 @@ function getHeldItemType(heldItem)
 	if heldItem ~= nil then
 		local itemType = heldItem.getType()
 		if itemType == "minecraft:air" then
-			return nil
+			return "none"
 		else
 			return itemType
 		end
 	else
-		return nil
+		return "none"
 	end
 end
 
@@ -641,7 +641,7 @@ function ping.touchBell()
 	local offHeldItem = player.getHeldItem(2)
 	local leftHanded = player.isLeftHanded()
 	if getHeldItemType(mainHeldItem) ~= getHeldItemType(offHeldItem) then
-		if (getHeldItemType(mainHeldItem) == "minecraft:cake" and not leftHanded) or (getHeldItemType(offHeldItem) and leftHanded) then
+		if (getHeldItemType(mainHeldItem) == "minecraft:cake" and not leftHanded) or (getHeldItemType(offHeldItem) == "minecraft:cake" and leftHanded) then
 			leftArm.setEnabled(false)
 			AlternativeLeftArm.setEnabled(true)
 			animation["afk_left_bell"].play()
@@ -652,12 +652,12 @@ function ping.touchBell()
 		end
 		TouchBellCount = 0
 	else
-		if not leftHanded and not getHeldItemType(mainHeldItem) == "minecraft:cake" then
+		if not leftHanded and getHeldItemType(mainHeldItem) ~= "minecraft:cake" then
 			rightArm.setEnabled(false)
 			AlternativeRightArm.setEnabled(true)
 			animation["afk_right_bell"].play()
 			TouchBellCount = 0
-		elseif leftHanded and not getHeldItemType(mainHeldItem) == "minecraft:cake" then
+		elseif leftHanded and getHeldItemType(mainHeldItem) ~= "minecraft:cake" then
 			leftArm.setEnabled(false)
 			AlternativeLeftArm.setEnabled(true)
 			animation["afk_left_bell"].play()
@@ -1346,10 +1346,10 @@ function tick()
 			SleepSoundCount = SleepSoundCount - 1
 		end
 		if AnimationPrev ~= "SLEEPING" and SleepStage ~= 2 then
-			if (getHeldItemType(mainHeldItem) and not leftHanded) or (getHeldItemType(offHeldItem) and leftHanded) then
+			if (getHeldItemType(mainHeldItem) ~= "none" and not leftHanded) or (getHeldItemType(offHeldItem) ~= "none" and leftHanded) then
 				rightArm.setRot({-15, 0, 0})
 			end
-			if (getHeldItemType(offHeldItem) and not leftHanded) or (getHeldItemType(mainHeldItem) and leftHanded) then
+			if (getHeldItemType(offHeldItem) ~= "none" and not leftHanded) or (getHeldItemType(mainHeldItem) ~= "none" and leftHanded) then
 				leftArm.setRot({-15, 0, 0})
 			end
 			tail1.setRot({0, 0, 0})
