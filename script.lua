@@ -80,11 +80,7 @@ BootsOverlay = {model.Avatar.RightLeg.RightBoots.RightBootsOverlay, model.Avatar
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
 	if loadData ~= nil then
-		if loadData == "true" then
-			return true
-		else
-			return false
-		end
+		return loadData == "true"
 	else
 		return variableToLoad
 	end
@@ -513,7 +509,7 @@ end
 
 function ping.setWegTail(boolToSet)
 	WegTail = boolToSet
-	if WegTail then
+	if WegTail and not SitDown then
 		animation["wag_tail"].play()
 	else
 		animation["wag_tail"].stop()
@@ -584,7 +580,11 @@ function ping.meow(emotionType)
 					end
 				end
 			elseif emotionType == 2 then
-				setEmotion(1, 1, 1, 20)
+				if tired then
+					setEmotion(3, 3, 1, 20)
+				else
+					setEmotion(1, 1, 1, 20)
+				end
 			end
 			EmoteActionCount = 20
 		end
@@ -611,9 +611,13 @@ function ping.sitDown()
 		if SitDown then
 			animation["stand_up"].play()
 			animation["sit_down"].stop()
+			if WegTail then
+				animation["wag_tail"].play()
+			end
 		else
 			animation["sit_down"].play()
 			animation["stand_up"].stop()
+			animation["wag_tail"].stop()
 		end
 		playBellSound(0.5)
 		playWetSound()
@@ -862,52 +866,49 @@ function tick()
 	local gamemode = player.getGamemode()
 	local healthPercentage = player.getHealthPercentage()
 	local foodPercentage = player.getFood() / 20
-	local tired = false
 	local playerAnimation = player.getAnimation()
 	local rightEar = model.Avatar.Head.Ears.RightEar
 	local leftEar = model.Avatar.Head.Ears.LeftEar
 	local tail1 = model.Avatar.Body.Tail
 	local tail2 = model.Avatar.Body.Tail.Tail1.Tail2
-	if WetCount > 0 then
+	local condition = 0 --0. 低HP、低満腹度, 1. 中HP、中満腹度, 2. 高HP、高満腹度
+	if (healthPercentage > 0.5 and foodPercentage > 0.5) or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
+		condition = 2
+	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
+		condition = 1
+	end
+	local tired = condition == 0
+	--耳
+	if condition == 0 or WetCount > 0 then
 		rightEar.setRot({-30, 0, 0})
 		leftEar.setRot({-30, 0, 0})
+	elseif condition == 1 then
+		rightEar.setRot({-15, 0, 0})
+		leftEar.setRot({-15, 0, 0})
+	else
+		rightEar.setRot({0, 0, 0})
+		leftEar.setRot({0, 0, 0})
 	end
-	if (healthPercentage > 0.5 and foodPercentage > 0.5) or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
-		if WetCount == 0 then
-			rightEar.setRot({0, 0, 0})
-			leftEar.setRot({0, 0, 0})
-		end
+	--尻尾
+	if condition == 2 or playerAnimation == "SLEEPING" or SitDown then
 		tail1.setRot({0, 0, 0})
 		tail2.setRot({0, 0, 0})
 		animation["wag_tail"].setSpeed(1)
-		if EmotionCount == 0 then
-			setEmotion(0, 0, 0, 0)
-		end
-	elseif healthPercentage > 0.2 and foodPercentage > 0.3 then
-		if WetCount == 0 then
-			rightEar.setRot({-15, 0, 0})
-			leftEar.setRot({-15, 0, 0})
-		end
-		if playerAnimation ~= "SLEEPING" then
-			tail1.setRot({40, 0, 0})
-			tail2.setRot({-15, 0, 0})
-		end
+	elseif condition == 1 then
+		tail1.setRot({40, 0, 0})
+		tail2.setRot({-15, 0, 0})
 		animation["wag_tail"].setSpeed(0.75)
-		if EmotionCount == 0 then
+	else
+		tail1.setRot({90, 0, 0})
+		tail2.setRot({0, 0, 0})
+		animation["wag_tail"].setSpeed(0.5)
+	end
+	if EmotionCount == 0 then
+		if tired then
+			setEmotion(3, 3, 0, 0)
+		else
 			setEmotion(0, 0, 0, 0)
 		end
-	else
-		rightEar.setRot({-30, 0, 0})
-		leftEar.setRot({-30, 0, 0})
-		if playerAnimation ~= "SLEEPING" then
-			tail1.setRot({90, 0, 0})
-			tail2.setRot({0, 0, 0})
-		end
-		animation["wag_tail"].setSpeed(0.5)
-		if EmotionCount == 0 then
-			setEmotion(3, 3, 0, 0)
-		end
-		tired = true
 	end
 
 	--被ダメージ時、猫のサウンド再生
@@ -959,6 +960,9 @@ function tick()
 	if not canSitDown() and SitDown then
 		animation["stand_up"].play()
 		animation["sit_down"].stop()
+		if WegTail then
+			animation["wag_tail"].play()
+		end
 		SitDown = false
 	end
 
@@ -1306,11 +1310,9 @@ function tick()
 	local activeItem = player.getActiveItem()
 	if activeItem ~= nil then
 		local activeItemAction = activeItem.getUseAction()
-		if activeItemAction == "TOOT_HORN" then
+		horn = activeItemAction == "TOOT_HORN"
+		if horn then
 			setEmotion(6, 6, 0, 0)
-			horn = true
-		else
-			horn = false
 		end
 	else
 		horn = false
@@ -1571,11 +1573,7 @@ function tick()
 		elseif heldItem == nil or HeldItemPrev[heldItemId + 1] == nil then
 			return false
 		else
-			if heldItem.getType() == HeldItemPrev[heldItemId + 1].getType() then
-				return true
-			else
-				return false
-			end
+			return heldItem.getType() == HeldItemPrev[heldItemId + 1].getType()
 		end
 	end
 
