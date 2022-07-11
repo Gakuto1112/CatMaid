@@ -141,7 +141,7 @@ function refuseEmotion()
 end
 
 function isPlayingEmoteAnimation()
-	return animation["right_meow"].isPlaying() or animation["left_meow"].isPlaying() or SweatCount > 0 or animation["shake"].isPlaying() or animation["refuse_emote"].isPlaying()
+	return animation["right_meow"].isPlaying() or animation["left_meow"].isPlaying() or EmoteActionCount > 0 or animation["shake"].isPlaying() or animation["refuse_emote"].isPlaying()
 end
 
 function playBellSound(volume)
@@ -420,49 +420,65 @@ function setActionWheel(openSettings, wardenNeardy)
 			ping.meow(1)
 		end)
 
-		--アクション3：ビックリする
+		--アクション3：「ニャー」と鳴く（ネコのサウンド再生、キラキラ）。
 		if wardenNeardy then
-			action_wheel.SLOT_3.setTitle("§7ビックリする")
+			action_wheel.SLOT_3.setTitle("§7「ニャー」と鳴く（キラキラ）")
 			action_wheel.SLOT_3.setColor({21 / 255, 21 / 255, 21 / 255})
 			action_wheel.SLOT_3.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 		else
-			action_wheel.SLOT_3.setTitle("ビックリする")
+			action_wheel.SLOT_3.setTitle("「ニャー」と鳴く（キラキラ）")
 			action_wheel.SLOT_3.setColor({255 / 255, 85 / 255, 255 / 255})
 			action_wheel.SLOT_3.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		end
 		action_wheel.SLOT_3.setTexture("Custom")
 		action_wheel.SLOT_3.setTextureScale({0.1, 0.06875})
 		action_wheel.SLOT_3.setFunction(function()
-			ping.surprise()
+			ping.meow(2)
 		end)
 
-		--アクション4：座る
+		--アクション4：ビックリする
 		if wardenNeardy then
-			action_wheel.SLOT_4.setTitle("§7おすわり")
+			action_wheel.SLOT_4.setTitle("§7ビックリする")
 			action_wheel.SLOT_4.setColor({21 / 255, 21 / 255, 21 / 255})
 			action_wheel.SLOT_4.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 		else
-			action_wheel.SLOT_4.setTitle("おすわり")
+			action_wheel.SLOT_4.setTitle("ビックリする")
 			action_wheel.SLOT_4.setColor({255 / 255, 85 / 255, 255 / 255})
 			action_wheel.SLOT_4.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		end
-		action_wheel.SLOT_4.setItem("minecraft:oak_stairs")
+		action_wheel.SLOT_4.setTexture("Custom")
+		action_wheel.SLOT_4.setTextureScale({0.1, 0.06875})
 		action_wheel.SLOT_4.setFunction(function()
-			ping.sitDown()
+			ping.surprise()
 		end)
 
-		--アクション5：体をブルブル振る
+		--アクション5：座る
 		if wardenNeardy then
-			action_wheel.SLOT_5.setTitle("§7ブルブル")
+			action_wheel.SLOT_5.setTitle("§7おすわり")
 			action_wheel.SLOT_5.setColor({21 / 255, 21 / 255, 21 / 255})
 			action_wheel.SLOT_5.setHoverColor({0 / 255, 0 / 255, 0 / 255})
 		else
-			action_wheel.SLOT_5.setTitle("ブルブル")
+			action_wheel.SLOT_5.setTitle("おすわり")
 			action_wheel.SLOT_5.setColor({255 / 255, 85 / 255, 255 / 255})
 			action_wheel.SLOT_5.setHoverColor({255 / 255, 255 / 255, 255 / 255})
 		end
-		action_wheel.SLOT_5.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_5.setItem("minecraft:oak_stairs")
 		action_wheel.SLOT_5.setFunction(function()
+			ping.sitDown()
+		end)
+
+		--アクション6：体をブルブル振る
+		if wardenNeardy then
+			action_wheel.SLOT_6.setTitle("§7ブルブル")
+			action_wheel.SLOT_6.setColor({21 / 255, 21 / 255, 21 / 255})
+			action_wheel.SLOT_6.setHoverColor({0 / 255, 0 / 255, 0 / 255})
+		else
+			action_wheel.SLOT_6.setTitle("ブルブル")
+			action_wheel.SLOT_6.setColor({255 / 255, 85 / 255, 255 / 255})
+			action_wheel.SLOT_6.setHoverColor({255 / 255, 255 / 255, 255 / 255})
+		end
+		action_wheel.SLOT_6.setItem("minecraft:water_bucket")
+		action_wheel.SLOT_6.setFunction(function()
 			ping.bodyShake()
 		end)
 
@@ -476,7 +492,7 @@ function setActionWheel(openSettings, wardenNeardy)
 		end)
 
 		--未使用のアクション
-		for _, unusedAction in ipairs({action_wheel.SLOT_6, action_wheel.SLOT_7}) do
+		for _, unusedAction in ipairs({action_wheel.SLOT_7}) do
 			unusedAction.setTitle()
 			unusedAction.setItem()
 			unusedAction.setColor()
@@ -543,27 +559,32 @@ function ping.meow(emotionType)
 				playMeow("minecraft:entity.cat.ambient", 1, 1.5)
 			end
 			particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
-			if player.isLeftHanded() then
-				animation["left_meow"].play()
-				if emotionType == 1 then
+			local leftHanded = player.isLeftHanded()
+			if emotionType <= 1 then
+				if leftHanded then
+					animation["left_meow"].play()
+				else
+					animation["right_meow"].play()
+				end
+			end
+			if emotionType == 0 then
+				setEmotion(5, 5, 1, 20)
+			elseif emotionType == 1 then
+				if leftHanded then
 					if tired then
 						setEmotion(5, 3, 1, 20)
 					else
 						setEmotion(5, 0, 1, 20)
 					end
-				end
-			else
-				animation["right_meow"].play()
-				if emotionType == 1 then
+				else
 					if tired then
 						setEmotion(3, 5, 1, 20)
 					else
 						setEmotion(0, 5, 1, 20)
 					end
 				end
-			end
-			if emotionType == 0 then
-				setEmotion(5, 5, 1, 20)
+			elseif emotionType == 2 then
+				setEmotion(1, 1, 1, 20)
 			end
 			EmoteActionCount = 20
 		end
@@ -1051,22 +1072,26 @@ function tick()
 				setActionWheelTexture(action_wheel.SLOT_1, 1)
 				setActionWheelTexture(action_wheel.SLOT_2, 1)
 				setActionWheelTexture(action_wheel.SLOT_3, 1)
+				setActionWheelTexture(action_wheel.SLOT_4, 1)
 			end
 		else
 			if ActionWheelCount < 20 then
 				setActionWheelTexture(action_wheel.SLOT_1, 0)
 				setActionWheelTexture(action_wheel.SLOT_2, 0)
 				setActionWheelTexture(action_wheel.SLOT_3, 0)
+				setActionWheelTexture(action_wheel.SLOT_4, 0)
 			else
 				setActionWheelTexture(action_wheel.SLOT_1, 2)
 				setActionWheelTexture(action_wheel.SLOT_2, 3)
 				setActionWheelTexture(action_wheel.SLOT_3, 4)
+				setActionWheelTexture(action_wheel.SLOT_4, 5)
 			end
 		end
 	else
 		action_wheel.SLOT_1.setTexture()
 		action_wheel.SLOT_2.setTexture()
 		action_wheel.SLOT_3.setTexture()
+		action_wheel.SLOT_4.setTexture()
 	end
 
 	--ケーキの持ち方
@@ -1254,13 +1279,10 @@ function tick()
 			setEmotion(1, 1, 0, 0)
 		end
 		--特定の食べ物を食べる時にニッコリさせる。
-		if usingItem and not wardenNearby then
-			if (activeHand == "MAIN_HAND" and foodFound == 1) or (activeHand == "OFF_HAND" and foodFound == 2) then
-				EatCount = EatCount + 1
-				if EmotionCount == 0 then
-					setEmotion(5, 5, 0, 0)
-				end
-			else
+		if usingItem and not wardenNearby and ((activeHand == "MAIN_HAND" and foodFound == 1) or (activeHand == "OFF_HAND" and foodFound == 2)) then
+			EatCount = EatCount + 1
+			if EmotionCount == 0 then
+				setEmotion(5, 5, 0, 0)
 			end
 		else
 			EatCount = 0
