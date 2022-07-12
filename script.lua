@@ -45,6 +45,7 @@ SleepStagePrev = 0 --前チックの睡眠のステージ
 AwakeAnimationCount = -1 --寝起きアニメーションのカウント
 SitDown = false --座っているアニメーションかどうか
 SitDownWhenSleepy = false --眠い時に座っていたかどうか
+DamageTaken = 0 --ダメージを受けたかどうか：0. ダメージを受けていない, 1. ダメージを受けた, 2. 死んだ
 WetCount = 0 --濡れているカウント
 WetDropCount = 0 --濡れている時の水滴のパーティクルのカウント
 WetBodyShakeCount = 0 --濡れている時に体を震わせた時の水しぶきのパーティクルのカウント
@@ -156,7 +157,7 @@ end
 
 function canSitDown()
 	local velocity = player.getVelocity()
-	return player.getAnimation() == "STANDING" and player.isOnGround() and not player.getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0
+	return player.getAnimation() == "STANDING" and player.isOnGround() and not player.getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and DamageTaken == 0
 end
 
 function bodyShake()
@@ -881,21 +882,18 @@ function tick()
 
 	--被ダメージ時、猫のサウンド再生
 	local maxHealth = player.getMaxHealth()
-	local air = player.getAir()
-	local damageTaken = 0
+	DamageTaken = 0
 	if healthPercentage < HealthPercentagePrev and healthPercentage > 0 and maxHealth == MaxHealthPrev then
-		if air > 0 and not wardenNearby then
+		if not wardenNearby then
 			playMeow("minecraft:entity.cat.hurt", 1, 1.5)
 		end
 		setEmotion(2, 2, 0, 8)
-		damageTaken = 1
+		DamageTaken = 1
 	end
-	if player.getDeathTime() == 1 and air > 0 then
-		if air > 0 then
-			playMeow("minecraft:entity.ocelot.death", 1, 1.5)
-		end
+	if player.getDeathTime() == 1 then
+		playMeow("minecraft:entity.ocelot.death", 1, 1.5)
 		setEmotion(2, 2, 0, 20)
-		damageTaken = 2
+		DamageTaken = 2
 	end
 
 	--スニーク時にスカートをずらす
@@ -1503,7 +1501,7 @@ function tick()
 		end
 	end
 
-	if (guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" and lookRot - TickLookRotPrev or 0) and not keypressed and playerAnimation == "STANDING" and not wardenNearby and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
+	if (guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" and lookRot - TickLookRotPrev or 0) and not keypressed and playerAnimation == "STANDING" and not wardenNearby and DamageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
 		if AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
@@ -1626,10 +1624,10 @@ function tick()
 	end
 	SleepStagePrev = SleepStage
 	if AwakeAnimationCount >= 0 then
-		if damageTaken == 2 then
+		if DamageTaken == 2 then
 			AwakeAnimationCount = -1
 		elseif AwakeAnimationCount == 30 then
-			if damageTaken == 0 then
+			if DamageTaken == 0 then
 				playMeow("minecraft:entity.cat.hurt", 1, 1.5)
 			end
 			setEmotion(2, 2, 0, 10)
