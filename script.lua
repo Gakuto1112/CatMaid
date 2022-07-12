@@ -5,7 +5,7 @@ SkinName = "Vinny"
 MeowSound = true --鳴き声を発するかどうか
 BellSound = true --ベルを鳴らすかどうか
 WegTail = true --尻尾のアニメーションを再生するかどうか
-HideArmor = false --防具を非表示にするかどうか
+HideArmor = true --防具を非表示にするかどうか
 AutoShake = true --自動でブルブルするかどうか
 UseSkinName = false --スキン名を使用するかどうか
 ShowNameWarning = true --名前表示関する注意を表示するかどうか
@@ -80,7 +80,7 @@ BootsOverlay = {model.Avatar.RightLeg.RightBoots.RightBootsOverlay, model.Avatar
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
-	return loadData ~= nil and loadData == "true" or variableToLoad
+	return loadData == nil and variableToLoad or loadData == "true"
 end
 
 function playMeow(soundName, volume, pitch)
