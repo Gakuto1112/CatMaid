@@ -1501,7 +1501,7 @@ function tick()
 		end
 	end
 
-	if (guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" and lookRot - TickLookRotPrev or 0) and not keypressed and playerAnimation == "STANDING" and not wardenNearby and DamageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
+	if (guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" and lookRot - TickLookRotPrev or 0) == 0 and not keypressed and playerAnimation == "STANDING" and not wardenNearby and DamageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
 		if AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
