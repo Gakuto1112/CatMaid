@@ -79,11 +79,7 @@ BootsOverlay = {model.Avatar.RightLeg.RightBoots.RightBootsOverlay, model.Avatar
 
 function loadBoolean(variableToLoad, name)
 	local loadData = data.load(name)
-	if loadData ~= nil then
-		return loadData == "true"
-	else
-		return variableToLoad
-	end
+	return loadData ~= nil and loadData == "true" or variableToLoad
 end
 
 function playMeow(soundName, volume, pitch)
@@ -143,10 +139,7 @@ end
 function playBellSound(volume)
 	if BellSound then
 		local playerPos = player.getPos()
-		local volumeCoefficient = 1
-		if player.isUnderwater() then
-			volumeCoefficient = 0.2
-		end
+		local volumeCoefficient = player.isUnderwater() and 0.2 or 1
 		if CanPlayCustomSound then
 			sound.playCustomSound("Bell", playerPos, {volume * volumeCoefficient, 1})
 		else
@@ -176,11 +169,7 @@ end
 function getHeldItemType(heldItem)
 	if heldItem ~= nil then
 		local itemType = heldItem.getType()
-		if itemType == "minecraft:air" then
-			return "none"
-		else
-			return itemType
-		end
+		return itemType == "minecraft:air" and "none" or itemType
 	else
 		return "none"
 	end
@@ -526,14 +515,9 @@ end
 
 function ping.setUseSkinName(boolToSet)
 	UseSkinName = boolToSet
-	if UseSkinName then
-		for _, namePlate in pairs(nameplate) do
-			namePlate.setText(SkinName)
-		end
-	else
-		for _, namePlate in pairs(nameplate) do
-			namePlate.setText(player.getName())
-		end
+	local name = UseSkinName and SkinName or player.getName()
+	for _, namePlate in pairs(nameplate) do
+		namePlate.setText(name)
 	end
 end
 
@@ -549,11 +533,7 @@ function ping.meow(emotionType)
 		if player.getStatusEffect("minecraft:darkness") then
 			refuseEmotion()
 		else
-			if tired then
-				playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
-			else
-				playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-			end
+			playMeow(tired and "minecraft:entity.cat.stray_ambient" or "minecraft:entity.cat.ambient", 1, 1.5)
 			particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 			local leftHanded = player.isLeftHanded()
 			if emotionType <= 1 then
@@ -567,17 +547,9 @@ function ping.meow(emotionType)
 				setEmotion(5, 5, 1, 20)
 			elseif emotionType == 1 then
 				if leftHanded then
-					if tired then
-						setEmotion(5, 3, 1, 20)
-					else
-						setEmotion(5, 0, 1, 20)
-					end
+					setEmotion(5, tired and 3 or 0, 1, 20)
 				else
-					if tired then
-						setEmotion(3, 5, 1, 20)
-					else
-						setEmotion(0, 5, 1, 20)
-					end
+					setEmotion(tired and 3 or 0, 5, 1, 20)
 				end
 			elseif emotionType == 2 then
 				if tired then
@@ -835,11 +807,7 @@ function tick()
 		WalkDistance = 0
 	end
 	if VelocityYPrev <= 0 and velocity.y > 0 and JumpBellCooldown == 0 then
-		if wardenNearby then
-			playBellSound(0.05)
-		else
-			playBellSound(0.5)
-		end
+		playBellSound(wardenNearby and 0.05 or 0.5)
 		playWetSound()
 		JumpBellCooldown = 10
 	end
@@ -932,11 +900,7 @@ function tick()
 
 	--スニーク時にスカートをずらす
 	local skirt = model.Avatar.Body.Skirt
-	if SneakPrev and not player.isFlying() then
-		skirt.setRot({15, 0, 0})
-	else
-		skirt.setRot({0, 0, 0})
-	end
+	skirt.setRot({SneakPrev and not player.isFlying() and 15 or 0, 0, 0})
 
 	--腕の基準点の調整
 	if animation["shake"].isPlaying() then
@@ -1106,21 +1070,13 @@ function tick()
 			RightCake.setEnabled(true)
 			if leftHanded then
 				if offHeldItem ~= nil then
-					if offHeldItem.hasGlint() then
-						RightCake.Cake.setShader("Glint")
-					else
-						RightCake.Cake.setShader("None")
-					end
+					RightCake.Cake.setShader(offHeldItem.hasGlint() and "Glint" or "None")
 				else
 					RightCake.Cake.setShader("None")
 				end
 			else
 				if mainHeldItem ~= nil then
-					if mainHeldItem.hasGlint() then
-						RightCake.Cake.setShader("Glint")
-					else
-						RightCake.Cake.setShader("None")
-					end
+					RightCake.Cake.setShader(mainHeldItem.hasGlint() and "Glint" or "None")
 				else
 					RightCake.Cake.setShader("None")
 				end
@@ -1142,15 +1098,9 @@ function tick()
 					elseif cakeRandom >= 0.95 then
 						RightCake.Cake.setUV({0 / 48, 11 / 96})
 						if not wardenNearby then
-							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-								if tired then
-									playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
-								else
-									playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-								end
-								EmoteActionCount = 20
-							end
+							playMeow(tired and "minecraft:entity.cat.stray_ambient" or "minecraft:entity.cat.ambient", 1, 1.5)
 							setEmotion(5, 5, 1, 20)
+							EmoteActionCount = 20
 						end
 					else
 						RightCake.Cake.setUV({0 / 48, 0 / 96})
@@ -1183,21 +1133,13 @@ function tick()
 			LeftCake.setEnabled(true)
 			if leftHanded then
 				if mainHeldItem ~= nil then
-					if mainHeldItem.hasGlint() then
-						LeftCake.Cake.setShader("Glint")
-					else
-						LeftCake.Cake.setShader("None")
-					end
+					LeftCake.Cake.setShader(mainHeldItem.hasGlint() and "Glint" or "None")
 				else
 					LeftCake.Cake.setShader("None")
 				end
 			else
 				if offHeldItem ~= nil then
-					if offHeldItem.hasGlint() then
-						LeftCake.Cake.setShader("Glint")
-					else
-						LeftCake.Cake.setShader("None")
-					end
+					LeftCake.Cake.setShader(offHeldItem.hasGlint() and "Glint" or "None")
 				else
 					LeftCake.Cake.setShader("None")
 				end
@@ -1219,15 +1161,9 @@ function tick()
 					elseif cakeRandom >= 0.95 then
 						LeftCake.Cake.setUV({0 / 48, 11 / 96})
 						if not wardenNearby then
-							if player.getAir() >= 0 or player.getStatusEffect("minecraft:water_breathing") then
-								if tired then
-									playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
-								else
-									playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-								end
-								EmoteActionCount = 20
-							end
+							playMeow(tired and "minecraft:entity.cat.stray_ambient" or "minecraft:entity.cat.ambient", 1, 1.5)
 							setEmotion(5, 5, 1, 20)
+							EmoteActionCount = 20
 						end
 					else
 						LeftCake.Cake.setUV({0 / 48, 0 / 96})
@@ -1295,11 +1231,7 @@ function tick()
 		EatCount = 0
 	end
 	if EatCount == 32 then
-		if tired then
-			playMeow("minecraft:entity.cat.stray_ambient", 1, 1.5)
-		else
-			playMeow("minecraft:entity.cat.ambient", 1, 1.5)
-		end
+		playMeow(tired and "minecraft:entity.cat.stray_ambient" or "minecraft:entity.cat.ambient", 1, 1.5)
 		particle.addParticle("minecraft:heart", {playerPos.x, playerPos.y + 2, playerPos.z, 0, 0, 0})
 		setEmotion(5, 5, 1, 20)
 		EatCount = 0
@@ -1553,12 +1485,6 @@ function tick()
 	local lookDir = player.getLookDir()
 	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
 	local guiName = client.getOpenScreen()
-	local lookRotDelta = 0
-	if guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" then
-		lookRotDelta = lookRot - TickLookRotPrev
-	else
-		lookRotDelta = 0
-	end
 
 	local function hasSameItemType(heldItemId)
 		--0. メインハンド, 1. オフハンド
@@ -1577,7 +1503,7 @@ function tick()
 		end
 	end
 
-	if lookRotDelta == 0 and not keypressed and playerAnimation == "STANDING" and not wardenNearby and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
+	if (guiName ~= "クラフト" and guiName ~= "Crafting" and guiName ~= "class_481" and guiName ~= "Figura Menu" and guiName ~= "Figuraメニュー" and lookRot - TickLookRotPrev or 0) and not keypressed and playerAnimation == "STANDING" and not wardenNearby and damageTaken == 0 and hasSameItemType(0) and hasSameItemType(1) then
 		if AFKCount <= 6000 then
 			AFKCount = AFKCount + 1
 		end
@@ -1623,15 +1549,7 @@ function tick()
 		JumpBellCooldown = JumpBellCooldown - 1
 	end
 	local actionWheelOpen = action_wheel.isOpen()
-	if actionWheelOpen and not wardenNearby and not IsInSettings then
-		if ActionWheelCount == 40 then
-			ActionWheelCount = 0
-		else
-			ActionWheelCount = ActionWheelCount + 1
-		end
-	else
-		ActionWheelCount = 0
-	end
+	ActionWheelCount = actionWheelOpen and not wardenNearby and not IsInSettings and ActionWheelCount < 40 and ActionWheelCount + 1 or 0
 	if not actionWheelOpen and IsInSettings then
 		setActionWheel(false, wardenNearby)
 	end
@@ -1822,12 +1740,7 @@ function render()
 	end
 
 	--寝ている時かつ一人称視点の時、頭を非表示
-	local head = model.Avatar.Head
-	if playerAnimation == "SLEEPING" and firstPerson then
-		head.setEnabled(false)
-	else
-		head.setEnabled(true)
-	end
+	model.Avatar.Head.setEnabled(playerAnimation ~= "SLEEPING" or not firstPerson)
 
 	--レンダー終了処理
 	FpsCountData[2] = FpsCountData[2] + 1
