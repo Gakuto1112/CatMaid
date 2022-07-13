@@ -365,7 +365,7 @@ function setActionWheel(openSettings, wardenNeardy)
 		end)
 
 		--未使用のアクション
-		for _, unusedAction in ipairs({action_wheel.SLOT_7}) do
+		for _, unusedAction in ipairs(SkinName == "" and {action_wheel.SLOT_6, action_wheel.SLOT_7} or {action_wheel.SLOT_7}) do
 			unusedAction.setTitle()
 			unusedAction.setItem()
 			unusedAction.setColor()
