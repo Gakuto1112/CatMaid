@@ -898,7 +898,7 @@ function tick()
 
 	--スニーク時にスカートをずらす
 	local skirt = model.Avatar.Body.Skirt
-	skirt.setRot({SneakPrev and not player.isFlying() and 15 or 0, 0, 0})
+	skirt.setRot({SneakPrev and playerAnimation == "CROUCHING" and not player.isFlying() and 15 or 0, 0, 0})
 
 	--腕の基準点の調整
 	if animation["shake"].isPlaying() then
@@ -1664,11 +1664,7 @@ function render()
 			velocityRot = 360 + velocityRot
 		end
 		if velocityRot == velocityRot then
-			local sneakOffset = 0
-			if player.isSneaking() then
-				sneakOffset = -0.19
-			end
-			local data = playerSpeed + sneakOffset
+			local data = playerSpeed + (SneakPrev and -0.19 or 0)
 			VelocityAverage[1] = (#VelocityData[1] * VelocityAverage[1] + data) / (#VelocityData[1] + 1)
 			table.insert(VelocityData[1], data)
 		else
