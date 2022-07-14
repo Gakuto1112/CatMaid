@@ -1,5 +1,5 @@
 # CatMaid（猫メイド）
-（2022/6/27更新）[Figura Rewrite版への対応の予定](#figura-rewrite版について)を掲載しました。
+（2022/7/14更新）現在[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)への移植作業中です。Rewrite版への移植には、大幅にコードを書き換える必要があるため、多くの時間を要することが予想されます。移植完了までしばらくお待ちください。
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
@@ -172,11 +172,6 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ## おことわり
 マルチプレイでの動作も考慮して作成はしていますが、実際に動作を検証出来る環境が無いため、マルチプレイでの動作検証は出来ていません。もし、マルチプレイでの不具合（一般的な不具合も歓迎です）がありましたら、[Issues](https://github.com/Gakuto1112/CatMaid/issues)での不具合報告をして頂ければ幸いです。
-
-## Figura Rewrite版について
-現在、[公式Discordサーバー](https://discord.com/invite/ekHGHcH8Af)にて、Figuraの時期アップデート版（v0.1.0）となるRewrite版のプレリリースが公開されています。Rewrite版では、[モデル](/player_model.bbmodel)や[Luaスクリプト](/script.lua)仕様が抜本的に異なるため、このアバターがそのままでは使用出来ず、[Luaスクリプト](/script.lua)を大幅に書き換える必要があります。
-
-しかし、現在のRewrite版ではこのアバターを満足に再現出来るだけの機能が備わっていないため、Rewrite版への対応を見送っています。Rewrite版が正式リリースに近づき、機能やドキュメントが充実してきた頃に対応させたいと思います。また、Rewrite版では各リソースファイル（[モデル](/player_model.bbmodel)、[テクスチャ](/texture.png)、[Luaスクリプト](/script.lua)）の分割が可能なようなので、Rewrite版への対応時にこのアバターのリソースを整理しようと思っています。
 
 ## クレジット
 - 鈴の音：音人「鈴の音04」（ https://on-jin.com/sound/sei.php?bunr=%E3%83%99%E3%83%AB%E3%83%BB%E9%90%98%E3%83%BB%E9%88%B4&kate=%E9%81%93%E5%85%B7 ）
