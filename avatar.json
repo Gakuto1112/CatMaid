@@ -1,4 +1,7 @@
 {
 	"name": "猫メイド",
-	"author": "Gakuto1112"
+	"author": "Gakuto1112",
+	"autoScripts": [
+		"scripts/main.lua"
+	]
 }

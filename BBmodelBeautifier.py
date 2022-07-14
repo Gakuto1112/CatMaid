@@ -1,7 +1,10 @@
+import os
 import json
 
-with open("player_model.bbmodel", mode="r") as f:
-	json_data = json.load(f)
+MODEL_LIST = os.listdir("./models")
 
-with open("player_model.bbmodel", mode="w") as f:
-	json.dump(json_data, f, indent=4)
+for model in MODEL_LIST:
+	with open(f"./models/{model}", mode="r") as f:
+		json_data = json.load(f)
+	with open(f"./models/{model}", mode="w") as f:
+		json.dump(json_data, f, indent=4)
