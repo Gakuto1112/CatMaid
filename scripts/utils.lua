@@ -1,18 +1,17 @@
 ---@class Utils 便利な関数の詰め合わせクラス
 ---@field SneakTickTmp boolean SneakPrevTickに正しい値を入れるためのtmp変数
----@field SneakPrevTick boolean 前チックにスニークしていたかどうか
+---@field SneakData table 前チックにスニークしていたかどうかを調べるためにスニーク情報を格納するテーブル
+---@field HealthData table ダメージを受けたかどうか判定するためにHP情報を格納するテーブル
+
+---@alias DamageType
+---| "NONE"
+---| "DAMAGED"
+---| "DIED"
 
 Utils = {}
 
-SneakTickTmp = false
-Utils.SneakPrevTick = false
-
----渡された数値が非数（NaN）かどうか返す
----@param num number 非数（NaN）かどうか判定する通知
----@return boolean
-function Utils.isNan(num)
-	return num ~= num
-end
+SneakData = {}
+HealthData = {}
 
 ---渡されたlistの中にkeyが存在するかどうか返す
 ---@param list table keyを探すリスト
@@ -41,6 +40,31 @@ function Utils.hasItem(item)
 	end
 end
 
+---指定されたステータス効果の情報を返す。指定されたステータス効果が付与されていない場合はnilが返される。
+---@param name string ステータス効果
+---@return table|nil
+function Utils.getStatusEffect(name)
+	for _, effect in ipairs(player:getStatusEffects()) do
+		if effect.name == "effect.minecraft."..name then
+			return effect
+		end
+	end
+	return nil
+end
+
+---前チックにスニークしていたかどうかを返す。
+---@return boolean
+function Utils.getSneakPrevTick()
+	return SneakData[1]
+end
+
+---ダメージを受けたかどうかを返す。
+---@return DamageType
+function Utils.getDamaged()
+	local health = player:getHealth()
+	return health < HealthData[1] and (health == 0 and "DIED" or "DAMAGED") or "NONE"
+end
+
 ---プレイヤーが疲れているか（HPが4以下又は満腹度が6以下）かどうか返す。
 ---@return boolean
 function Utils.isTired()
@@ -48,8 +72,13 @@ function Utils.isTired()
 end
 
 events.TICK:register(function()
-	Utils.SneakPrevTick = SneakTickTmp
-	SneakTickTmp = player:isSneaking()
+	table.insert(SneakData, player:isSneaking())
+	table.insert(HealthData, player:getHealth())
+	for _, dataTable in ipairs({SneakData, HealthData}) do
+		if #dataTable == 3 then
+			table.remove(dataTable, 1)
+		end
+	end
 end)
 
 return Utils
