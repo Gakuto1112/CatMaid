@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1657814829,
+        "creation_time": 1657859919,
         "model_format": "free",
         "box_uv": false
     },
@@ -186,85 +186,6 @@
             },
             "type": "cube",
             "uuid": "915ef8be-9d9e-a201-c343-ab0577c38afb"
-        },
-        {
-            "name": "Inside Hider",
-            "rescale": false,
-            "locked": false,
-            "from": [
-                -4,
-                24,
-                -3.9
-            ],
-            "to": [
-                4,
-                32,
-                -3.9
-            ],
-            "autouv": 0,
-            "color": 1,
-            "inflate": 0.001,
-            "origin": [
-                0,
-                24,
-                0
-            ],
-            "uv_offset": [
-                16,
-                8
-            ],
-            "faces": {
-                "north": {
-                    "uv": [
-                        84,
-                        48.5,
-                        125.99999999999999,
-                        97
-                    ]
-                },
-                "east": {
-                    "uv": [
-                        84,
-                        48.5,
-                        84,
-                        97
-                    ]
-                },
-                "south": {
-                    "uv": [
-                        125.99999999999999,
-                        48.5,
-                        168,
-                        97
-                    ]
-                },
-                "west": {
-                    "uv": [
-                        125.99999999999999,
-                        48.5,
-                        125.99999999999999,
-                        97
-                    ]
-                },
-                "up": {
-                    "uv": [
-                        125.99999999999999,
-                        48.5,
-                        84,
-                        48.5
-                    ]
-                },
-                "down": {
-                    "uv": [
-                        168,
-                        48.5,
-                        125.99999999999999,
-                        48.5
-                    ]
-                }
-            },
-            "type": "cube",
-            "uuid": "cbbe1b74-308b-7d26-b5ff-2fac9f6356fb"
         },
         {
             "name": "RightEyeBase",
@@ -3479,7 +3400,6 @@
                     "children": [
                         "f8a20ddd-e3f9-f664-5591-d4a51ce81efd",
                         "915ef8be-9d9e-a201-c343-ab0577c38afb",
-                        "cbbe1b74-308b-7d26-b5ff-2fac9f6356fb",
                         {
                             "name": "FaceParts",
                             "origin": [
@@ -3679,11 +3599,6 @@
                                         24,
                                         -2
                                     ],
-                                    "rotation": [
-                                        15,
-                                        0,
-                                        0
-                                    ],
                                     "color": 0,
                                     "uuid": "4397e84d-8e05-05ff-8694-629a362a8fef",
                                     "export": true,
@@ -3701,11 +3616,6 @@
                                         0,
                                         24,
                                         2
-                                    ],
-                                    "rotation": [
-                                        -15,
-                                        0,
-                                        0
                                     ],
                                     "color": 0,
                                     "uuid": "aa1f0289-cbc9-7d5a-4b46-6756e7fa5a8a",
