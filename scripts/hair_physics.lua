@@ -1,7 +1,6 @@
----@class HairPhysicsClass 髪をたなびかせるクラス
+---@class HairPhysicsClass 髪を制御するクラス
 ---@field FrontHair CustomModelPart 前髪
 ---@field BackHair CustomModelPart 後ろ髪
----@field Utils Utils ユーティリティクラス
 ---@field HairRenderCount integer 髪の物理演算を計算した回数、上限計算に用いる。
 ---@field HairRenderLimit integer Renderの命令数上限に対する、髪の物理演算の頻度の係数
 ---@field VelocityData table 速度データ：1. 横, 2. 縦, 3. 角速度
@@ -13,7 +12,6 @@ HairPhysicsClass = {}
 FrontHair = models.models.main.Avatar.Body.Hairs.FrontHair
 BackHair = models.models.main.Avatar.Body.Hairs.BackHair
 
-Utils = require("scripts/utils")
 HairRenderCount = 0
 HairRenderLimit = math.ceil(8192 / meta:getMaxWorldRenderCount())
 VelocityData = {{}, {}, {}}

@@ -41,6 +41,12 @@ function Utils.hasItem(item)
 	end
 end
 
+---プレイヤーが疲れているか（HPが4以下又は満腹度が6以下）かどうか返す。
+---@return boolean
+function Utils.isTired()
+	return player:getHealth() <= 4 or player:getFood() <= 6
+end
+
 events.TICK:register(function()
 	Utils.SneakPrevTick = SneakTickTmp
 	SneakTickTmp = player:isSneaking()
