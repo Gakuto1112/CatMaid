@@ -1,4 +1,4 @@
----@class TailAndEars 尻尾と耳を制御するクラス
+---@class TailAndEarsClass 尻尾と耳を制御するクラス
 ---@field EarBendCount integer 耳を曲げるアニメーションを再生するタイミングを計るカウンター
 
 TailAndEarsClass = {}
