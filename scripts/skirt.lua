@@ -4,7 +4,7 @@ SkirtClass = {}
 
 events.TICK:register(function()
 	local skirt = models.models.main.Avatar.Body.Skirt
-	if string.find(General.hasItem(player:getItem(5)), "chestplate$") then --TODO: 防具非表示のオプションも考慮する。
+	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ConfigClass.HideArmor then
 		skirt:setVisible(false)
 	else
 		skirt:setVisible(true)

@@ -1,12 +1,10 @@
 ---@class ActionWheelClass アクションホイールを制御するクラス
 ---@field MainPage Page アクションホイールのメインページ
----@field ConfigPage Page アクションホイールの設定ページ
 ---@field ActionWheelClass.ActionCount number アクション再生中は0より大きくなるカウンター
 
 ActionWheelClass = {}
 
 MainPage = action_wheel:createPage("main_page")
-ConfigPage = action_wheel:createPage("config_page")
 ActionWheelClass.ActionCount = 0
 
 
@@ -22,11 +20,16 @@ function standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
 	animation["main"]["stand_up"]:play()
 	animation["main"]["sit_down"]:stop()
-	animation["main"]["wave_tail"]:play() --TODO: 尻尾を振らないオプションも考慮する。
+	if ConfigClass.WaveTail then
+		animation["main"]["wave_tail"]:play()
+	end
 	models.models.main.Avatar.Head:setRot(0, 0, 0)
 end
 
 events.TICK:register(function()
+	if not action_wheel:isEnabled() then
+		action_wheel:setPage(MainPage)
+	end
 	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		standUp()
 		animation["main"]["sit_down_first_person_fix"]:stop()
@@ -71,7 +74,7 @@ MainPage:newAction()
 
 --TODO: ウォーデンが近くにいる時は、アクションを拒否する。
 --アクション1. 「ニャー」と鳴く（スマイル）
-MainPage:newAction(1):title("「ニャー」と鳴く（スマイル）"):color(255 / 255, 85 / 255, 255 / 255):item("cod"):hoverColor(1, 1, 1):onLeftClick(function()
+MainPage:newAction(1):title("「ニャー」と鳴く（スマイル）"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("cod"):onLeftClick(function()
 	if ActionWheelClass.ActionCount == 0 then
 		local playerPos = player:getPos()
 		MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
@@ -87,7 +90,7 @@ MainPage:newAction(1):title("「ニャー」と鳴く（スマイル）"):color(
 end)
 
 --アクション2. 「ニャー」と鳴く（ウィンク）
-MainPage:newAction(2):title("「ニャー」と鳴く（ウィンク）"):color(255 / 255, 85 / 255, 255 / 255):item("cod"):hoverColor(1, 1, 1):onLeftClick(function()
+MainPage:newAction(2):title("「ニャー」と鳴く（ウィンク）"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("cod"):onLeftClick(function()
 	if ActionWheelClass.ActionCount == 0 then
 		local playerPos = player:getPos()
 		MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
@@ -104,7 +107,7 @@ MainPage:newAction(2):title("「ニャー」と鳴く（ウィンク）"):color(
 end)
 
 --アクション3. 「ニャー」と鳴く（キラキラ）
-MainPage:newAction(3):title("「ニャー」と鳴く（キラキラ）"):color(255 / 255, 85 / 255, 255 / 255):item("cod"):hoverColor(1, 1, 1):onLeftClick(function()
+MainPage:newAction(3):title("「ニャー」と鳴く（キラキラ）"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("cod"):onLeftClick(function()
 	if ActionWheelClass.ActionCount == 0 then
 		local playerPos = player:getPos()
 		particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
@@ -120,7 +123,7 @@ MainPage:newAction(3):title("「ニャー」と鳴く（キラキラ）"):color(
 end)
 
 --アクション4. おすわり
-MainPage:newAction(4):title("おすわり"):color(255 / 255, 85 / 255, 255 / 255):item("oak_stairs"):hoverColor(1, 1, 1):onLeftClick(function()
+MainPage:newAction(4):title("おすわり"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("oak_stairs"):onLeftClick(function()
 	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
 		standUp()
 	elseif canSitDown() then
@@ -132,7 +135,7 @@ MainPage:newAction(4):title("おすわり"):color(255 / 255, 85 / 255, 255 / 255
 end)
 
 --アクション5. ブルブル
-MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255):item("water_bucket"):hoverColor(1, 1, 1):onLeftClick(function()
+MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("water_bucket"):onLeftClick(function()
 	if ActionWheelClass.ActionCount == 0 then
 		animation["main"]["shake"]:play()
 		sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
@@ -142,7 +145,9 @@ MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255
 end)
 
 --アクション6. 設定を開く
-MainPage:newAction(6):title("設定（クリック）"):color(200 / 255, 200 / 255, 200 / 255):item("comparator"):hoverColor(1, 1, 1)
+MainPage:newAction(6):title("§7設定（使用不可）"):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+	print("\n§c§l*** NOTE ***§r\n2022/7/16現在、Rewrite版には、データを保存して後で読み出せるようにする機能が搭載されていません。\nつまり、Prewrite版のような設定ページが現在は作成できません！\n代わりに、設定ファイル（/sripts/config.lua）を直接編集して設定値を変更して下さい。")
+end)
 
 action_wheel:setPage(MainPage)
 

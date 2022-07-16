@@ -18,7 +18,7 @@ VelocityAverage = {0, 0, 0}
 LookRotPrevRender = 0
 
 events.TICK:register(function()
-	if string.find(General.hasItem(player:getItem(5)), "chestplate$") then --TODO: 防具表示/非表示オプションも考慮する。
+	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ConfigClass.HideArmor then
 		FrontHair:setPos(0, 0, -1.1)
 		BackHair:setPos(0, 0, 1.1)
 	else
@@ -68,7 +68,7 @@ events.RENDER:register(function()
 		local chestItemType = General.hasItem(player:getItem(5))
 		if chestItemType == "minecraft:elytra" then
 			hairLimit = {{13, 80}, {0, 0}}
-		elseif string.find(chestItemType, "chestplate$") then --TODO: 防具表示/非表示オプションも考慮する。
+		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
 			hairLimit = {{0, 80}, {-80, 0}}
 		else
 			hairLimit = {{13, 80}, {-80, -13}}

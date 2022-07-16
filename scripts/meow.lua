@@ -33,22 +33,24 @@ function MeowClass.playMeow(soundName, volume)
 end
 
 events.TICK:register(function()
-	if MeowCount == 300 then
-		if player:getPose() ~= "SLEEPING" and EyesAndMouthClass.EmotionCount == 0 and not player:isUnderwater() then --TODO: 鳴くのをスキップする条件の追加: ウォーデンが近くにいる時、放置時、角笛を吹く時など
-			if General.isTired() then
-				MeowClass.playMeow("WEAK", 1)
-			else
-				if math.random() >= 0.7 then
-					MeowClass.playMeow("PURREOW", 1)
+	if ConfigClass.MeowSound then
+		if MeowCount == 300 then
+			if player:getPose() ~= "SLEEPING" and EyesAndMouthClass.EmotionCount == 0 and not player:isUnderwater() then --TODO: 鳴くのをスキップする条件の追加: ウォーデンが近くにいる時、放置時、角笛を吹く時など
+				if General.isTired() then
+					MeowClass.playMeow("WEAK", 1)
 				else
-					MeowClass.playMeow("NORMAL", 0.5)
+					if math.random() >= 0.7 then
+						MeowClass.playMeow("PURREOW", 1)
+					else
+						MeowClass.playMeow("NORMAL", 0.5)
+					end
 				end
 			end
+			EyesAndMouthClass.setEmotion("NONE", "NONE", "OPENED", 20, false)
+			MeowCount = 0
+		elseif not client:isPaused() then
+			MeowCount = MeowCount + 1
 		end
-		EyesAndMouthClass.setEmotion("NONE", "NONE", "OPENED", 20, false)
-		MeowCount = 0
-	elseif not client:isPaused() then
-		MeowCount = MeowCount + 1
 	end
 end)
 

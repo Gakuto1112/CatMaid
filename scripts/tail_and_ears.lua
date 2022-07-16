@@ -41,7 +41,7 @@ events.TICK:register(function()
 		leftEar:setRot(0, 0, 0)
 	end
 	--尻尾
-	if condition == 2 or player:getPose() == "SLEEPING" then --TODO: おすわりアクションの場合も考慮する。 --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
+	if condition == 2 or player:getPose() == "SLEEPING" and animation["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
 		tail1:setRot(0, 0, 0)
 		tail2:setRot(0, 0, 0)
 	elseif condition == 1 then
@@ -61,6 +61,8 @@ events.TICK:register(function()
 	end
 end)
 
-TailAndEarsClass.startTailWave() --TODO: 尻尾振りのオプションも考慮する。
+if ConfigClass.WaveTail then
+	TailAndEarsClass.startTailWave()
+end
 
 return TailAndEarsClass
