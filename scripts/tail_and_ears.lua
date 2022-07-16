@@ -30,7 +30,7 @@ events.TICK:register(function()
 		condition = 0
 	end
 	--耳
-	if condition == 0 then --TODO: 濡れた場合も考慮する。
+	if condition == 0 or WetClass.WetCount > 0 then
 		rightEar:setRot(-30, 0, 0)
 		leftEar:setRot(-30, 0, 0)
 	elseif condition == 1 then

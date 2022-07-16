@@ -6,7 +6,7 @@ ActionWheelClass = {}
 
 MainPage = action_wheel:createPage("main_page")
 ActionWheelClass.ActionCount = 0
-
+ShakeSplashCount = 0
 
 ---現在座れる状況かを返す。
 ---@return boolean
@@ -24,6 +24,18 @@ function standUp()
 		animation["main"]["wave_tail"]:play()
 	end
 	models.models.main.Avatar.Head:setRot(0, 0, 0)
+end
+
+---ブルブル
+function ActionWheelClass.bodyShake()
+	animation["main"]["shake"]:play()
+	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
+	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
+	if WetClass.WetCount > 0 then
+		ShakeSplashCount = 20
+		WetClass.WetCount = 20
+	end
+	ActionWheelClass.ActionCount = 20
 end
 
 events.TICK:register(function()
@@ -51,6 +63,15 @@ events.TICK:register(function()
 		leftArm:setPos(0, 0, 0)
 		rightArm:setPivot(5.5, 22, 0)
 		leftArm:setPivot(-5.5, 22, 0)
+	end
+	if ShakeSplashCount > 0 then
+		if ShakeSplashCount % 5 == 0 then
+			local playerPos = player:getPos()
+			for _ = 1, math.min(meta:getMaxParticles() / 4, 4) do
+				particle:addParticle("minecraft:splash", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+			end
+		end
+		ShakeSplashCount = ShakeSplashCount - 1
 	end
 	ActionWheelClass.ActionCount = ActionWheelClass.ActionCount > 0 and ActionWheelClass.ActionCount - 1 or ActionWheelClass.ActionCount
 end)
@@ -137,10 +158,7 @@ end)
 --アクション5. ブルブル
 MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1):item("water_bucket"):onLeftClick(function()
 	if ActionWheelClass.ActionCount == 0 then
-		animation["main"]["shake"]:play()
-		sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
-		EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
-		ActionWheelClass.ActionCount = 20
+		ActionWheelClass.bodyShake()
 	end
 end)
 

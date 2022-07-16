@@ -13,13 +13,17 @@ OnGroundData = {}
 
 ---プレイヤーの位置で鈴の音を再生する。
 function BellSoundClass.playBellSound()
+	local playerPos = player:getPos()
 	if ConfigClass.BellSound then
 		local volume = (player:isSneaking() or player:isUnderwater()) and 0.05 or 0.25 --TODO: ウォーデンが付近にいる場合も考慮する。
 		if meta:canUseCustomSounds() then
-			sound:playSound("bell", player:getPos(), volume, 1)
+			sound:playSound("bell", playerPos, volume, 1)
 		else
-			sound:playSound("minecraft:entity.experience_orb.pickup", player:getPos(), volume, 1.5)
+			sound:playSound("minecraft:entity.experience_orb.pickup", playerPos, volume, 1.5)
 		end
+	end
+	if not player:isInWater() then
+		sound:playSound("minecraft:entity.cod.flop", playerPos, WetClass.WetCount / 1200, 1)
 	end
 end
 
