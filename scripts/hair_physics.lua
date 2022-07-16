@@ -11,7 +11,6 @@ HairPhysicsClass = {}
 
 FrontHair = models.models.main.Avatar.Body.Hairs.FrontHair
 BackHair = models.models.main.Avatar.Body.Hairs.BackHair
-
 HairRenderCount = 0
 HairRenderLimit = math.ceil(8192 / meta:getMaxWorldRenderCount())
 VelocityData = {{}, {}, {}}

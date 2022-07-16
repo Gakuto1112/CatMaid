@@ -4,6 +4,7 @@
 TailAndEarsClass = {}
 
 EarBendCount = 0
+
 ---尻尾振りを再生する。
 function TailAndEarsClass.startTailWave()
 	animation["main"]["wave_tail"]:play()
