@@ -18,7 +18,7 @@ events.TICK:register(function()
 			end
 		end
 		local paused = client:isPaused()
-		if ConfigClass.AutoShake and animation["main"]["shake"]:getPlayState() ~= "PLAYING" then
+		if ConfigClass.AutoShake and not WardenClass.WardenNearby and animation["main"]["shake"]:getPlayState() ~= "PLAYING" then
 			if AutoShakeCount == 20 then
 				ActionWheelClass.bodyShake()
 				AutoShakeCount = 0

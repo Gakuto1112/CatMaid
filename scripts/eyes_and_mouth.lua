@@ -58,7 +58,9 @@ end
 
 events.TICK:register(function()
 	if EyesAndMouthClass.EmotionCount == 0 then
-		if General.isTired() then
+		if WardenClass.WardenNearby then
+			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)
+		elseif General.isTired() then
 			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
 		else
 			EyesAndMouthClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)

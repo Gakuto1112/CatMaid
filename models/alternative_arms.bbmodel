@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1657976270,
+        "creation_time": 1657977408,
         "model_format": "free",
         "box_uv": false
     },
@@ -1314,13 +1314,152 @@
             }
         },
         {
+            "uuid": "23993d6b-5547-079e-ab62-8472be48c260",
+            "name": "stand_up",
+            "loop": "once",
+            "override": false,
+            "length": 0.16666666666666666,
+            "snapping": 24,
+            "selected": true,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "7639e943-2cf9-f811-bbf6-d125e0a20a77": {
+                    "name": "RightAlternativeArm",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-35",
+                                    "y": "-10",
+                                    "z": "-10"
+                                }
+                            ],
+                            "uuid": "ffd8ae6a-6de0-c3e4-cc50-63fc21c447df",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "d67ac7e8-491f-11bd-cdc3-9e3033364f6e",
+                            "time": 0.16666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": "-9",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "c5d677e7-bf83-8ab5-4aa0-d471385288cb",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": "0",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "b53a8390-dd25-bab2-928d-8a0c629c34a4",
+                            "time": 0.16666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                },
+                "691ae8e2-e023-3214-2fac-d2b8b427c059": {
+                    "name": "LeftAlternativeArm",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-35",
+                                    "y": "10",
+                                    "z": "10"
+                                }
+                            ],
+                            "uuid": "b39f93f2-c26d-bff1-65f4-27be4a75526d",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "2db88a5e-ac02-ee4b-4848-e7e76f55788a",
+                            "time": 0.16666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "-9",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "9ba4cdb7-23a0-7bcf-4dc9-466ceb836a49",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": "0",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "1a90fe2e-fc1b-d30f-cdbf-371ddf527237",
+                            "time": 0.16666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "uuid": "8870d971-db44-08d9-4f82-2342e19f7c44",
             "name": "shake",
             "loop": "once",
             "override": false,
             "length": 1,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",

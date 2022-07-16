@@ -15,6 +15,7 @@ ActionWheelClass = require("scripts/action_wheel")
 MeowClass = require("scripts/meow")
 HurtClass = require("scripts/hurt")
 WetClass = require("scripts/wet")
+WardenClass = require("scripts/warden")
 
 --初期化処理
 vanilla_model.PLAYER:setVisible(false)

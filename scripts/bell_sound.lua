@@ -15,7 +15,7 @@ OnGroundData = {}
 function BellSoundClass.playBellSound()
 	local playerPos = player:getPos()
 	if ConfigClass.BellSound then
-		local volume = (player:isSneaking() or player:isUnderwater()) and 0.05 or 0.25 --TODO: ウォーデンが付近にいる場合も考慮する。
+		local volume = WardenClass.WardenNearby and 0.025 or ((player:isSneaking() or player:isUnderwater()) and 0.05 or 0.25)
 		if meta:canUseCustomSounds() then
 			sound:playSound("bell", playerPos, volume, 1)
 		else
