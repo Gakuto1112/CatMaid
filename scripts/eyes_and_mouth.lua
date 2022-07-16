@@ -57,12 +57,6 @@ function EyesAndMouthClass.setEmotion(rightEye, leftEye, mouth, duration, force)
 end
 
 events.TICK:register(function()
-	local damaged = General.getDamaged()
-	if damaged == "DAMAGED" then
-		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "NONE", 8, true)
-	elseif damaged == "DIED" then
-		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "NONE", 20, true)
-	end
 	if EyesAndMouthClass.EmotionCount == 0 then
 		if General.isTired() then
 			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
@@ -73,7 +67,7 @@ events.TICK:register(function()
 	if BlinkCount == 200 then
 		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "NONE", 2, false)
 		BlinkCount = 0
-	else
+	elseif client.isPaused() then
 		BlinkCount = BlinkCount + 1
 	end
 	EyesAndMouthClass.EmotionCount = EyesAndMouthClass.EmotionCount > 0 and EyesAndMouthClass.EmotionCount - 1 or EyesAndMouthClass.EmotionCount

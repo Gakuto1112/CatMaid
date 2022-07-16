@@ -55,7 +55,7 @@ events.TICK:register(function()
 	if EarBendCount == 300 then
 		animation["main"][player:isLeftHanded() and "left_ear_bend" or "right_ear_bend"]:play()
 		EarBendCount = 0
-	else
+	elseif not client.isPaused() then
 		EarBendCount = EarBendCount + 1
 	end
 end)

@@ -1,16 +1,9 @@
 ---@class General 他の複数のクラスが参照するフィールドや関数を定義するクラス
 ---@field SneakData table 前チックにスニークしていたかどうかを調べる為にスニーク情報を格納するテーブル
----@field HealthData table ダメージを受けたかどうか判定する為にHP情報を格納するテーブル
-
----@alias DamageType
----| "NONE"
----| "DAMAGED"
----| "DIED"
 
 General = {}
 
 SneakData = {}
-HealthData = {}
 
 ---渡されたlistの中にkeyが存在するかどうか返す
 ---@param list table keyを探すリスト
@@ -57,13 +50,6 @@ function General.getSneakPrevTick()
 	return SneakData[1]
 end
 
----ダメージを受けたかどうかを返す。
----@return DamageType
-function General.getDamaged()
-	local health = player:getHealth()
-	return health < HealthData[1] and (health == 0 and "DIED" or "DAMAGED") or "NONE"
-end
-
 ---プレイヤーが疲れているか（HPが4以下又は満腹度が6以下）かどうか返す。
 ---@return boolean
 function General.isTired()
@@ -72,11 +58,8 @@ end
 
 events.TICK:register(function()
 	table.insert(SneakData, player:isSneaking())
-	table.insert(HealthData, player:getHealth())
-	for _, dataTable in ipairs({SneakData, HealthData}) do
-		if #dataTable == 3 then
-			table.remove(dataTable, 1)
-		end
+	if #SneakData == 3 then
+		table.remove(SneakData, 1)
 	end
 end)
 

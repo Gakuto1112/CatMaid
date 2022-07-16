@@ -91,7 +91,7 @@ events.RENDER:register(function()
 			end
 		end
 		HairRenderCount = 0
-	else
+	elseif not client.isPaused() then
 		HairRenderCount = HairRenderCount + 1
 	end
 	LookRotPrevRender = lookRot
