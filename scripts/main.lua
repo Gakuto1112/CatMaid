@@ -7,6 +7,7 @@ EyesAndMouthClass = require("scripts/eyes_and_mouth")
 BellSoundClass = require("scripts/bell_sound")
 SkirtClass = require("scripts/skirt")
 --機能別クラス
+ActionWheelClass = require("scripts/action_wheel")
 MeowClass = require("scripts/meow")
 HurtClass = require("scripts/hurt")
 
