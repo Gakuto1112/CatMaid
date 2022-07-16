@@ -2,6 +2,7 @@
 General = require("scripts/general")
 ConfigClass = require("scripts/config")
 --パーツ別クラス
+ArmsClass = require("scripts/arms")
 HairPhysicsClass = require("scripts/hair_physics")
 TailAndEarsClass = require("scripts/tail_and_ears")
 EyesAndMouthClass = require("scripts/eyes_and_mouth")

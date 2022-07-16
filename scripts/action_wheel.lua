@@ -46,24 +46,6 @@ events.TICK:register(function()
 		standUp()
 		animation["main"]["sit_down_first_person_fix"]:stop()
 	end
-	local rightArm = models.models.main.Avatar.RightArm
-	local leftArm = models.models.main.Avatar.LeftArm
-	if animation["main"]["shake"]:getPlayState() == "PLAYING" then
-		if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not renderer:isFirstPerson() then
-			rightArm:setPos(0, 0.8, 1)
-			leftArm:setPos(0, 0.8, 1)
-		else
-			rightArm:setPos(0, 0, 0)
-			leftArm:setPos(0, 0, 0)
-		end
-		rightArm:setPivot(0, 22, 0)
-		leftArm:setPivot(0, 22, 0)
-	else
-		rightArm:setPos(0, 0, 0)
-		leftArm:setPos(0, 0, 0)
-		rightArm:setPivot(5.5, 22, 0)
-		leftArm:setPivot(-5.5, 22, 0)
-	end
 	if ShakeSplashCount > 0 then
 		if ShakeSplashCount % 5 == 0 then
 			local playerPos = player:getPos()
