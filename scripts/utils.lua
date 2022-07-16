@@ -1,7 +1,6 @@
 ---@class Utils 便利な関数の詰め合わせクラス
----@field SneakTickTmp boolean SneakPrevTickに正しい値を入れるためのtmp変数
----@field SneakData table 前チックにスニークしていたかどうかを調べるためにスニーク情報を格納するテーブル
----@field HealthData table ダメージを受けたかどうか判定するためにHP情報を格納するテーブル
+---@field SneakData table 前チックにスニークしていたかどうかを調べる為にスニーク情報を格納するテーブル
+---@field HealthData table ダメージを受けたかどうか判定する為にHP情報を格納するテーブル
 
 ---@alias DamageType
 ---| "NONE"
