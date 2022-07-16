@@ -31,6 +31,24 @@ events.TICK:register(function()
 		standUp()
 		animation["main"]["sit_down_first_person_fix"]:stop()
 	end
+	local rightArm = models.models.main.Avatar.RightArm
+	local leftArm = models.models.main.Avatar.LeftArm
+	if animation["main"]["shake"]:getPlayState() == "PLAYING" then
+		if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not renderer:isFirstPerson() then
+			rightArm:setPos(0, 0.8, 1)
+			leftArm:setPos(0, 0.8, 1)
+		else
+			rightArm:setPos(0, 0, 0)
+			leftArm:setPos(0, 0, 0)
+		end
+		rightArm:setPivot(0, 22, 0)
+		leftArm:setPivot(0, 22, 0)
+	else
+		rightArm:setPos(0, 0, 0)
+		leftArm:setPos(0, 0, 0)
+		rightArm:setPivot(5.5, 22, 0)
+		leftArm:setPivot(-5.5, 22, 0)
+	end
 	ActionWheelClass.ActionCount = ActionWheelClass.ActionCount > 0 and ActionWheelClass.ActionCount - 1 or ActionWheelClass.ActionCount
 end)
 
@@ -57,7 +75,7 @@ MainPage:newAction(1):title("「ニャー」と鳴く（スマイル）"):color(
 	if ActionWheelClass.ActionCount == 0 then
 		local playerPos = player:getPos()
 		MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
-		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, false)
+		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 		particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 		if player:isLeftHanded() then
 			animation["main"]["left_meow"]:play()
@@ -114,7 +132,14 @@ MainPage:newAction(4):title("おすわり"):color(255 / 255, 85 / 255, 255 / 255
 end)
 
 --アクション5. ブルブル
-MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255):item("water_bucket"):hoverColor(1, 1, 1)
+MainPage:newAction(5):title("ブルブル"):color(255 / 255, 85 / 255, 255 / 255):item("water_bucket"):hoverColor(1, 1, 1):onLeftClick(function()
+	if ActionWheelClass.ActionCount == 0 then
+		animation["main"]["shake"]:play()
+		sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
+		EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
+		ActionWheelClass.ActionCount = 20
+	end
+end)
 
 --アクション6. 設定を開く
 MainPage:newAction(6):title("設定（クリック）"):color(200 / 255, 200 / 255, 200 / 255):item("comparator"):hoverColor(1, 1, 1)
