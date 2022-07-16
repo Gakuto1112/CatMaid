@@ -5,7 +5,7 @@ ArmsClass = {}
 events.TICK:register(function()
 	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
-	if player:isSneaking() then
+	if player:isSneaking() and not player:isFlying() and player:getPose() == "CROUCHING" and not renderer:isFirstPerson() then
 		for _, armPart in ipairs({rightArm, leftArm}) do
 			armPart:setPos(0, 3, 0)
 			armPart:setRot(30, 0, 0)
