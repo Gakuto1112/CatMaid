@@ -68,6 +68,9 @@ events.TICK:register(function()
 		for index, actionName in ipairs(actionTitles) do
 			MainPage:getAction(index):title(actionName):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1)
 		end
+		if not canSitDown() then
+			MainPage:getAction(4):title("§7おすわり"):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
+		end
 	end
 	if not action_wheel:isEnabled() then
 		action_wheel:setPage(MainPage)
