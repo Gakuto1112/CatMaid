@@ -23,7 +23,7 @@ events.TICK:register(function()
 	if not client:isPaused() then
 		WalkDistance = WalkDistance + math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2))
 		if WalkDistance >= 1.8 then
-			if not player:getVehicle() and player:getPose() ~= "FALL_FLYING" and onGround then
+			if not player:getVehicle() and onGround then
 				BellSoundClass.playBellSound()
 			end
 			WalkDistance = 0

@@ -77,7 +77,7 @@ events.RENDER:register(function()
 		local playerPose = player:getPose()
 		if playerPose == "FALL_FLYING" then
 			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
-			BackHair:setRot({hairLimit[2][2], 0, 0})
+			BackHair:setRot(hairLimit[2][2], 0, 0)
 		elseif playerPose == "SWIMMING" then
 			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
 			BackHair:setRot(hairLimit[2][2], 0, 0)
