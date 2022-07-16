@@ -3,6 +3,7 @@
 ---@field WardenNearbyData table 前チックにウォーデンが近くにいたかどうかを調べる為にウォーデン情報を格納するテーブル
 ---@field RightHandItemTypeData table アイテムの持ち替え検出の為に右手のアイテムの情報を格納するテーブル
 ---@field LeftHandItemTypeData table アイテムの持ち替え検出の為に左手のアイテムの情報を格納するテーブル
+---@field FirstPersonData table 視点切り替え検出の為に視点情報を格納するテーブル
 ---@field AttackCount integer 攻撃している間を計るカウンター
 ---@field WardenClass.WardenNearby boolean ウォーデンが近くにいるかどうか（=暗闇デバフを受けているかどうか）
 
@@ -12,6 +13,7 @@ AttackKey = keybind:create("攻撃", keybind:getVanillaKey("key.attack"))
 WardenNearbyData = {}
 RightHandItemTypeData = {}
 LeftHandItemTypeData = {}
+FirstPersonData = {}
 AttackCount = 0
 WardenClass.WardenNearby = false
 
@@ -30,13 +32,14 @@ events.TICK:register(function()
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
+	local firstPerson = renderer:isFirstPerson()
 	if WardenClass.WardenNearby then
 		if not WardenNearbyData[1] then
 			animation["main"]["afraid"]:play()
 			animation["alternative_arms"]["afraid"]:play()
 		end
-		if rightHandItemType == "none" and (AttackCount <= 0 or leftHanded) then
-			if not WardenNearbyData[1] or RightHandItemTypeData[1] ~= "none" or (AttackCount == 0 and not leftHanded) then
+		if rightHandItemType == "none" and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
+			if not WardenNearbyData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
 				animation["alternative_arms"]["right_hide_bell"]:play()
 			end
 			rightArm:setVisible(false)
@@ -46,8 +49,8 @@ events.TICK:register(function()
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
-		if leftHandItemType == "none" and (AttackCount <= 0 or not leftHanded) then
-			if not WardenNearbyData[1] or LeftHandItemTypeData[1] ~= "none" or (AttackCount == 0 and leftHanded) then
+		if leftHandItemType == "none" and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
+			if not WardenNearbyData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
 				animation["alternative_arms"]["left_hide_bell"]:play()
 			end
 			leftArm:setVisible(false)
@@ -70,7 +73,8 @@ events.TICK:register(function()
 	table.insert(WardenNearbyData, WardenClass.WardenNearby)
 	table.insert(RightHandItemTypeData, rightHandItemType)
 	table.insert(LeftHandItemTypeData, leftHandItemType)
-	for _, dataTable in ipairs({WardenNearbyData, RightHandItemTypeData, LeftHandItemTypeData}) do
+	table.insert(FirstPersonData, firstPerson)
+	for _, dataTable in ipairs({WardenNearbyData, RightHandItemTypeData, LeftHandItemTypeData, FirstPersonData}) do
 		if #dataTable == 3 then
 			table.remove(dataTable, 1)
 		end
