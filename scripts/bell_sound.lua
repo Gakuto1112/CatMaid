@@ -13,7 +13,7 @@ OnGroundData = {}
 
 ---プレイヤーの位置で鈴の音を再生する。
 function BellSoundClass.playBellSound() --TODO: 鈴の音を出さないオプションの追加
-	local volume = (player:isSneaking() or player:isUnderwater()) and 0.1 or 0.5 --TODO: ウォーデンが付近にいる場合も考慮する。
+	local volume = (player:isSneaking() or player:isUnderwater()) and 0.05 or 0.25 --TODO: ウォーデンが付近にいる場合も考慮する。
 	sound:playSound("bell", player:getPos(), volume, 1) --TODO: カスタムサウンドを再生する権限が無い場合の代替サウンドの使用
 end
 
