@@ -19,7 +19,7 @@ VelocityAverage = {0, 0, 0}
 LookRotPrevRender = 0
 
 events.TICK:register(function()
-	if string.find(Utils.hasItem(player:getItem(5)), "chestplate$") then --TODO: 防具表示/非表示オプションも考慮する。
+	if string.find(General.hasItem(player:getItem(5)), "chestplate$") then --TODO: 防具表示/非表示オプションも考慮する。
 		FrontHair:setPos(0, 0, -1.1)
 		BackHair:setPos(0, 0, 1.1)
 	else
@@ -40,12 +40,12 @@ events.RENDER:register(function()
 		velocityRot = velocityRot < 0 and 360 + velocityRot or velocityRot
 		local bodyYaw = (player:getBodyYaw() - 270) % 360
 		local directionAbs = math.abs(velocityRot - bodyYaw)
-		local playerSpeedData = (math.min(directionAbs, 360 - directionAbs) >= 90 and -math.sqrt(velocity.x ^ 2 + velocity.z ^ 2) or math.sqrt(velocity.x ^ 2 + velocity.z ^ 2)) + (Utils.getSneakPrevTick() and -0.19 or 0)
+		local playerSpeedData = (math.min(directionAbs, 360 - directionAbs) >= 90 and -math.sqrt(velocity.x ^ 2 + velocity.z ^ 2) or math.sqrt(velocity.x ^ 2 + velocity.z ^ 2)) + (General.getSneakPrevTick() and -0.19 or 0)
 		VelocityAverage[1] = (#VelocityData[1] * VelocityAverage[1] + playerSpeedData) / (#VelocityData[1] + 1)
 		table.insert(VelocityData[1], playerSpeedData)
 		VelocityAverage[2] = (#VelocityData[2] * VelocityAverage[2] + velocity.y) / (#VelocityData[2] + 1)
 		table.insert(VelocityData[2], velocity.y)
-		if not Utils.tableFind({"クラフト", "Crafting", "class_481", "Wardrobe", "Trust"}, client:getScreen()) then
+		if not General.tableFind({"クラフト", "Crafting", "class_481", "Wardrobe", "Trust"}, client:getScreen()) then
 			local lookRotDelta = math.abs(lookRot - LookRotPrevRender)
 			lookRotDelta = lookRotDelta >= 180 and 360 - lookRotDelta or lookRotDelta
 			local lookRotDeltaData = lookRotDelta * FPS
@@ -66,7 +66,7 @@ events.RENDER:register(function()
 		end
 		--求めた平均から髪の角度を決定する。
 		local hairLimit
-		local chestItemType = Utils.hasItem(player:getItem(5))
+		local chestItemType = General.hasItem(player:getItem(5))
 		if chestItemType == "minecraft:elytra" then
 			hairLimit = {{13, 80}, {0, 0}}
 		elseif string.find(chestItemType, "chestplate$") then --TODO: 防具表示/非表示オプションも考慮する。

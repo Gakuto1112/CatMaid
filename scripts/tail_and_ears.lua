@@ -23,7 +23,7 @@ events.TICK:register(function()
 	local condition --0. 低HP、低満腹度, 1. 中HP、中満腹度, 2. 高HP、高満腹度
 	if (player:getHealth() / player:getMaxHealth() > 0.5 and player:getFood() > 10) or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
 		condition = 2
-	elseif not Utils.isTired() then
+	elseif not General.isTired() then
 		condition = 1
 	else
 		condition = 0

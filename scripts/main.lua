@@ -1,5 +1,5 @@
 --クラスのインスタンス化
-Utils = require("scripts/utils")
+General = require("scripts/general")
 HairPhysicsClass = require("scripts/hair_physics")
 TailAndEarsClass = require("scripts/tail_and_ears")
 EyesAndMouth = require("scripts/eyes_and_mouth")

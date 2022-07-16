@@ -57,14 +57,14 @@ function EyesAndMouthClass.setEmotion(rightEye, leftEye, mouth, duration, force)
 end
 
 events.TICK:register(function()
-	local damaged = Utils.getDamaged()
+	local damaged = General.getDamaged()
 	if damaged == "DAMAGED" then
 		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "NONE", 8, true)
 	elseif damaged == "DIED" then
 		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "NONE", 20, true)
 	end
 	if EyesAndMouthClass.EmotionCount == 0 then
-		if Utils.isTired() then
+		if General.isTired() then
 			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
 		else
 			EyesAndMouthClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)
@@ -82,7 +82,7 @@ events.TICK:register(function()
 	--[[
 	--NOTE: CustomModelPart:setLight()がリセットできないので、リセットできるようになるまで、コメントアウトしておく。
 	--TODO: リセットできるようになったら、下のFIXMEを修正してコメントアウトを外す。
-	local nightVision = Utils.getStatusEffect("night_vision")
+	local nightVision = General.getStatusEffect("night_vision")
 	local playerPos = player:getPos()
 	local lightLevel = world.getLightLevel(playerPos.x, playerPos.y + 1, playerPos.z)
 	if nightVision then
