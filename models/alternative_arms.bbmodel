@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1657980715,
+        "creation_time": 1657983837,
         "model_format": "free",
         "box_uv": false
     },
@@ -21,7 +21,7 @@
     },
     "elements": [
         {
-            "name": "RightAlternativeArm",
+            "name": "RightArm",
             "rescale": false,
             "locked": false,
             "from": [
@@ -105,7 +105,7 @@
             "uuid": "9627f7b0-4eba-e680-55d2-9767dd3f3d00"
         },
         {
-            "name": "RightAlternativeArmLayer",
+            "name": "RightArmLayer",
             "rescale": false,
             "locked": false,
             "from": [
@@ -191,7 +191,7 @@
             "uuid": "4e10d165-9066-c44d-de85-57e2824801d6"
         },
         {
-            "name": "RightAlternativeArmBottom",
+            "name": "RightArmBottom",
             "rescale": false,
             "locked": false,
             "from": [
@@ -276,7 +276,7 @@
             "uuid": "65ef1585-5eb3-829f-5aa3-58b236e69b2e"
         },
         {
-            "name": "RightAlternativeArmLayerBottom",
+            "name": "RightArmBottomLayer",
             "rescale": false,
             "locked": false,
             "from": [
@@ -362,7 +362,7 @@
             "uuid": "dd7cd968-b298-21cd-4a2c-4b37ee60cffb"
         },
         {
-            "name": "LeftAlternativeArm",
+            "name": "LeftArm",
             "rescale": false,
             "locked": false,
             "from": [
@@ -447,7 +447,7 @@
             "uuid": "c2b233dd-e524-8ce0-9765-36e20695fb29"
         },
         {
-            "name": "LeftAlternativeArmLayer",
+            "name": "LeftArmLayer",
             "rescale": false,
             "locked": false,
             "from": [
@@ -533,7 +533,7 @@
             "uuid": "b3422ec6-8174-40d8-59da-54e88ec33c64"
         },
         {
-            "name": "LeftAlternativeArmBottom",
+            "name": "LeftArmBottom",
             "rescale": false,
             "locked": false,
             "from": [
@@ -618,7 +618,7 @@
             "uuid": "be55ea7c-c5b1-7d0a-a0db-d21813c24a78"
         },
         {
-            "name": "LeftAlternativeArmLayerBottom",
+            "name": "LeftArmBottomLayer",
             "rescale": false,
             "locked": false,
             "from": [
@@ -721,7 +721,7 @@
             "autouv": 0,
             "children": [
                 {
-                    "name": "AlternativeArm",
+                    "name": "Arms",
                     "origin": [
                         0,
                         24,
@@ -736,7 +736,7 @@
                     "autouv": 0,
                     "children": [
                         {
-                            "name": "RightAlternativeArm",
+                            "name": "RightArm",
                             "origin": [
                                 5.5,
                                 22,
@@ -753,7 +753,7 @@
                                 "9627f7b0-4eba-e680-55d2-9767dd3f3d00",
                                 "4e10d165-9066-c44d-de85-57e2824801d6",
                                 {
-                                    "name": "RightAlternativeArmBottom",
+                                    "name": "RightArmBottom",
                                     "origin": [
                                         5.5,
                                         18,
@@ -774,7 +774,7 @@
                             ]
                         },
                         {
-                            "name": "LeftAlternativeArm",
+                            "name": "LeftArm",
                             "origin": [
                                 -5.5,
                                 22,
@@ -791,7 +791,7 @@
                                 "c2b233dd-e524-8ce0-9765-36e20695fb29",
                                 "b3422ec6-8174-40d8-59da-54e88ec33c64",
                                 {
-                                    "name": "LeftAlternativeArmBottom",
+                                    "name": "LeftArmBottom",
                                     "origin": [
                                         -5.5,
                                         18,
@@ -1188,7 +1188,7 @@
                     ]
                 },
                 "7639e943-2cf9-f811-bbf6-d125e0a20a77": {
-                    "name": "RightAlternativeArm",
+                    "name": "RightArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1250,7 +1250,7 @@
                     ]
                 },
                 "691ae8e2-e023-3214-2fac-d2b8b427c059": {
-                    "name": "LeftAlternativeArm",
+                    "name": "LeftArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1327,7 +1327,7 @@
             "loop_delay": "",
             "animators": {
                 "7639e943-2cf9-f811-bbf6-d125e0a20a77": {
-                    "name": "RightAlternativeArm",
+                    "name": "RightArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1389,7 +1389,7 @@
                     ]
                 },
                 "691ae8e2-e023-3214-2fac-d2b8b427c059": {
-                    "name": "LeftAlternativeArm",
+                    "name": "LeftArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1857,7 +1857,7 @@
             "loop_delay": "",
             "animators": {
                 "7639e943-2cf9-f811-bbf6-d125e0a20a77": {
-                    "name": "RightAlternativeArm",
+                    "name": "RightArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1891,7 +1891,7 @@
                     ]
                 },
                 "bb391550-6920-f584-52a7-7cdfe23fdc57": {
-                    "name": "RightAlternativeArmBottom",
+                    "name": "RightArmBottom",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1940,7 +1940,7 @@
             "loop_delay": "",
             "animators": {
                 "691ae8e2-e023-3214-2fac-d2b8b427c059": {
-                    "name": "LeftAlternativeArm",
+                    "name": "LeftArm",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -1974,7 +1974,7 @@
                     ]
                 },
                 "1fc0e5bb-8b67-b7f7-d3ab-8ba289b0b031": {
-                    "name": "LeftAlternativeArmBottom",
+                    "name": "LeftArmBottom",
                     "type": "bone",
                     "keyframes": [
                         {
@@ -2016,7 +2016,7 @@
             "override": false,
             "length": 0.16666666666666666,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",

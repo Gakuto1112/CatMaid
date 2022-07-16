@@ -25,8 +25,8 @@ events.TICK:register(function()
 	WardenClass.WardenNearby = General.getStatusEffect("darkness") and true or false
 	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
-	local rightAlternativeArm = models.models.alternative_arms.Body.AlternativeArm.RightAlternativeArm
-	local leftAlternativeArm = models.models.alternative_arms.Body.AlternativeArm.LeftAlternativeArm
+	local rightAlternativeArm = models.models.alternative_arms.Body.Arms.RightArm
+	local leftAlternativeArm = models.models.alternative_arms.Body.Arms.LeftArm
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
