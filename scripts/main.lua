@@ -9,6 +9,7 @@ TailAndEarsClass = require("scripts/tail_and_ears")
 EyesAndMouthClass = require("scripts/eyes_and_mouth")
 BellSoundClass = require("scripts/bell_sound")
 SkirtClass = require("scripts/skirt")
+ArmorClass = require("scripts/armor")
 NameplateClass = require("scripts/nameplate")
 --機能別クラス
 ActionWheelClass = require("scripts/action_wheel")
@@ -24,6 +25,4 @@ GoatHornClass = require("scripts/goat_horn")
 
 --初期化処理
 vanilla_model.PLAYER:setVisible(false)
-if ConfigClass.HideArmor then
-	vanilla_model.ARMOR:setVisible(false)
-end
+vanilla_model.ARMOR:setVisible(false)

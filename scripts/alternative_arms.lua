@@ -1,14 +1,17 @@
 ---@class AlternativeArmsClass アニメーション用の代替の腕を制御するクラス
+---@field AlternativeArmsRoot CustomModelPart 代替の腕のルートパス
 
 AlternativeArmsClass = {}
 
-for _, modelPart in ipairs({models.models.alternative_arms, models.models.alternative_arms.Body.Arms.RightArm.RightArmBottom.RightCake, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmBottom.LeftCake}) do
+AlternativeArmsRoot = models.models.alternative_arms
+
+for _, modelPart in ipairs({AlternativeArmsRoot, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightCake, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftCake}) do
 	modelPart:setVisible(false)
 end
-for _, modelPart in ipairs({models.models.alternative_arms.Body.Arms.RightArm, models.models.alternative_arms.Body.Arms.RightArm.RightArmBottom, models.models.alternative_arms.Body.Arms.LeftArm, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmBottom}) do
+for _, modelPart in ipairs({AlternativeArmsRoot.Body.Arms.RightArm, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom, AlternativeArmsRoot.Body.Arms.LeftArm, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom}) do
 	modelPart:setParentType("None")
 end
-for _, cakePlate in ipairs({models.models.alternative_arms.Body.Arms.RightArm.RightArmBottom.RightCake.RightCakePlate, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmBottom.LeftCake.LeftCakePlate}) do
+for _, cakePlate in ipairs({AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightCake.RightCakePlate, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftCake.LeftCakePlate}) do
 	cakePlate:setPrimaryTexture("resource", "minecraft:textures/block/spruce_planks.png")
 end
 
