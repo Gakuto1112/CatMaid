@@ -25,7 +25,9 @@ events.TICK:register(function()
 			HurtClass.Damaged = "DEATH"
 		else
 			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 8, true)
-			MeowClass.playMeow("HURT", 1)
+			if not WardenClass.WardenNearby then
+				MeowClass.playMeow("HURT", 1)
+			end
 			HurtClass.Damaged = "DAMAGED"
 		end
 	else
