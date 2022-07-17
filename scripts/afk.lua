@@ -3,6 +3,7 @@
 ---@field LookRotPrevRender number 前チックのlookRot
 ---@field RightItemTypePrevTick string 前チックの右手のアイテムの種類
 ---@field LeftItemTypePrevTick string 前チックの左手のアイテムの種類
+---@field SitDownWhenSleepy boolean 眠くなり始めた時に座っていたかどうか
 ---@field AFKClass.AFKCount integer 放置するとインクリメントされるカウンター
 ---@field AFKClass.TouchBellCount integer 鈴を弄っている時間を計るカウンター
 
@@ -12,6 +13,7 @@ keyList = {}
 LookRotPrevTick = 0
 RightItemTypePrevTick = "none"
 LeftItemTypePrevTick = "none"
+SitDownWhenSleepy = false
 AFKClass.AFKCount = 0
 AFKClass.TouchBellCount = 0
 
@@ -35,7 +37,26 @@ events.TICK:register(function()
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
 	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick then
 		if not client.isPaused() then
-			if AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
+			if AFKClass.AFKCount >= 6000 then
+				if AFKClass.AFKCount == 6000 then
+					animation["main"]["afk_sleep"]:play()
+				end
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
+				if (AFKClass.AFKCount - 6000) % 65 == 0 then
+					sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
+				end
+			elseif AFKClass.AFKCount >= 5400 then
+				if AFKClass.AFKCount == 5400 then
+					animation["main"]["afk_sleepy"]:play()
+					if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
+						SitDownWhenSleepy = true
+					else
+						ActionWheelClass.sitDown()
+						SitDownWhenSleepy = false
+					end
+				end
+				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, false)
+			elseif AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					animation["main"]["afk_touch_bell"]:play()
 					print(rightHandItemType)
@@ -70,15 +91,27 @@ events.TICK:register(function()
 					end
 				end
 			end
-			AFKClass.AFKCount = AFKClass.AFKCount + 1
+			AFKClass.AFKCount = AFKClass.AFKCount >= 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 		end
+	elseif AFKClass.AFKCount >= 5400 then
+		animation["main"]["afk_sleepy"]:stop()
+		animation["main"]["afk_sleep"]:stop()
+		if not SitDownWhenSleepy then
+			ActionWheelClass.standUp()
+		end
+		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
+		MeowClass.playMeow("HURT", 1)
+		AFKClass.AFKCount = -30
 	else
 		animation["main"]["afk_touch_bell"]:stop()
 		animation["alternative_arms"]["afk_right_bell"]:stop()
 		animation["alternative_arms"]["afk_left_bell"]:stop()
-		AFKClass.AFKCount = 0
+		if AFKClass.AFKCount > 0 then
+			AFKClass.AFKCount = 0
+		end
 		AFKClass.TouchBellCount = 0
 	end
+	AFKClass.AFKCount = AFKClass.AFKCount < 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 	local firstPerson = renderer:isFirstPerson()
 	if AFKClass.TouchBellCount > 0 then
 		if not firstPerson or leftHanded then
@@ -95,8 +128,17 @@ events.TICK:register(function()
 	if touchBellCountAbs == 23 or touchBellCountAbs == 39 then
 		BellSoundClass.playBellSound()
 	end
-	print(AFKClass.AFKCount)
-	print(AFKClass.TouchBellCount)
+	if AFKClass.AFKCount >= -20 and AFKClass.AFKCount < 0 then
+		if AFKClass.AFKCount == -20 then
+			ActionWheelClass.bodyShake()
+		end
+		if AFKClass.AFKCount % 5 == 0 then
+			local playerPos = player:getPos()
+			for _ = 1, math.min(meta:getMaxParticles() / 4, 4) do
+				particle:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
+			end
+		end
+	end
 	LookRotPrevTick = lookRot
 	RightItemTypePrevTick = rightHandItemType
 	LeftItemTypePrevTick = leftHandItemType

@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1658042119,
+        "creation_time": 1658044702,
         "model_format": "free",
         "box_uv": false
     },
@@ -5753,7 +5753,7 @@
             "override": false,
             "length": 3.375,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -6024,6 +6024,146 @@
                             ],
                             "uuid": "bb415cf2-af4c-7e93-23d9-1232eb3fd744",
                             "time": 3.3333333333333335,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "uuid": "ba10ccea-19b8-6e2b-8323-07b97dc7c290",
+            "name": "afk_sleepy",
+            "loop": "loop",
+            "override": false,
+            "length": 6,
+            "snapping": 24,
+            "selected": true,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "f9e65455-8761-e4c9-5894-c3b0838f8b45": {
+                    "name": "Head",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "affb4b63-a44e-8c42-83db-0ba8e334d456",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "catmullrom"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 22,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "9b6bab22-9b83-dd7a-1cdf-151688efffdd",
+                            "time": 2.75,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "8d3a249f-eb94-36cc-d263-e813dd569639",
+                            "time": 4,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "10",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "eb3c1fcd-43cc-3e7e-886f-7d851e53787a",
+                            "time": 2.5,
+                            "color": -1,
+                            "interpolation": "catmullrom"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "24de5832-e71b-085a-f4c8-f0af1084cb9d",
+                            "time": 6,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "uuid": "4e75fd12-fa39-a799-3908-06adf39a6f17",
+            "name": "afk_sleep",
+            "loop": "hold",
+            "override": false,
+            "length": 3,
+            "snapping": 24,
+            "selected": false,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "f9e65455-8761-e4c9-5894-c3b0838f8b45": {
+                    "name": "Head",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "304fb20d-73e7-bcff-1efa-85b36967d82a",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "b5dbc57f-daf1-c586-afbb-cf49cdad5b04",
+                            "time": 3,
                             "color": -1,
                             "interpolation": "linear"
                         }

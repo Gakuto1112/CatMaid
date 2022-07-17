@@ -34,8 +34,18 @@ function canSitDown()
 	return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE"
 end
 
+---座る
+function ActionWheelClass.sitDown()
+	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
+	animation["main"]["sit_down"]:play()
+	animation["alternative_arms"]["sit_down"]:play()
+	animation["main"]["stand_up"]:stop()
+	animation["alternative_arms"]["stand_up"]:stop()
+	animation["main"]["wave_tail"]:stop()
+end
+
 --座っている状態から立ち上がる
-function standUp()
+function ActionWheelClass.standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
 	animation["main"]["stand_up"]:play()
 	animation["alternative_arms"]["stand_up"]:play()
@@ -78,7 +88,7 @@ events.TICK:register(function()
 		action_wheel:setPage(MainPage)
 	end
 	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
-		standUp()
+		ActionWheelClass.standUp()
 		animation["main"]["sit_down_first_person_fix"]:stop()
 	end
 	if ShakeSplashCount > 0 then
@@ -178,14 +188,9 @@ end)
 MainPage:newAction(4):item("oak_stairs"):onLeftClick(function()
 	runAction(function()
 		if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
-			standUp()
+			ActionWheelClass.standUp()
 		elseif canSitDown() then
-			vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
-			animation["main"]["sit_down"]:play()
-			animation["alternative_arms"]["sit_down"]:play()
-			animation["main"]["stand_up"]:stop()
-			animation["alternative_arms"]["stand_up"]:stop()
-			animation["main"]["wave_tail"]:stop()
+			ActionWheelClass.sitDown()
 		end
 	end)
 end)
