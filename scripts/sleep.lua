@@ -18,10 +18,9 @@ events.TICK:register(function()
 	local isSleeping = player:getPose() == "SLEEPING"
 	if isSleeping then
 		if not SleepClass.SleepData[1] then
-			animation["main"]["sleep"]:play()
+			General.playAnimationWithArmor("sleep")
 			if not WardenClass.WardenNearby then
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 			end
 		end
 		if renderer:isFirstPerson() then
@@ -41,6 +40,7 @@ events.TICK:register(function()
 			leftArm:setRot(0, 0, 0)
 			leftItem:setVisible(true)
 		end
+		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
 			if (SleepCount - 40) % 65 == 0 then
 				sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
@@ -67,7 +67,7 @@ events.TICK:register(function()
 				leftItem:setVisible(true)
 			end
 		end
-		animation["main"]["sleep"]:stop()
+		General.stopAnimationWithArmor("sleep")
 		SleepCount = 0
 	end
 	table.insert(SleepClass.SleepData, isSleeping)

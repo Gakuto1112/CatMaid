@@ -39,7 +39,7 @@ events.TICK:register(function()
 		if not client.isPaused() then
 			if AFKClass.AFKCount >= 6000 then
 				if AFKClass.AFKCount == 6000 then
-					animation["main"]["afk_sleep"]:play()
+					General.playAnimationWithArmor("afk_sleep")
 				end
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 				if (AFKClass.AFKCount - 6000) % 65 == 0 then
@@ -47,7 +47,7 @@ events.TICK:register(function()
 				end
 			elseif AFKClass.AFKCount >= 5400 then
 				if AFKClass.AFKCount == 5400 then
-					animation["main"]["afk_sleepy"]:play()
+					General.playAnimationWithArmor("afk_sleepy")
 					if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
 						SitDownWhenSleepy = true
 					else
@@ -58,7 +58,7 @@ events.TICK:register(function()
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, false)
 			elseif AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
-					animation["main"]["afk_touch_bell"]:play()
+					General.playAnimationWithArmor("afk_touch_bell")
 					print(rightHandItemType)
 					if rightHandItemType == "none" then
 						animation["alternative_arms"]["afk_right_bell"]:play()
@@ -70,21 +70,21 @@ events.TICK:register(function()
 				else
 					if leftHanded then
 						if leftHandItemType ~= "minecraft:cake" then
-							animation["main"]["afk_touch_bell"]:play()
+							General.playAnimationWithArmor("afk_touch_bell")
 							animation["alternative_arms"]["afk_left_bell"]:play()
 							AFKClass.TouchBellCount = -67
 						elseif rightHandItemType ~= "minecraft:cake" then
-							animation["main"]["afk_touch_bell"]:play()
+							General.playAnimationWithArmor("afk_touch_bell")
 							animation["alternative_arms"]["afk_right_bell"]:play()
 							AFKClass.TouchBellCount = 67
 						end
 					else
 						if rightHandItemType ~= "minecraft:cake" then
-							animation["main"]["afk_touch_bell"]:play()
+							General.playAnimationWithArmor("afk_touch_bell")
 							animation["alternative_arms"]["afk_right_bell"]:play()
 							AFKClass.TouchBellCount = 67
 						else
-							animation["main"]["afk_touch_bell"]:play()
+							General.playAnimationWithArmor("afk_touch_bell")
 							animation["alternative_arms"]["afk_left_bell"]:play()
 							AFKClass.TouchBellCount = -67
 						end
@@ -94,8 +94,8 @@ events.TICK:register(function()
 			AFKClass.AFKCount = AFKClass.AFKCount >= 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 		end
 	elseif AFKClass.AFKCount >= 5400 then
-		animation["main"]["afk_sleepy"]:stop()
-		animation["main"]["afk_sleep"]:stop()
+		General.stopAnimationWithArmor("afk_sleepy")
+		General.stopAnimationWithArmor("afk_sleep")
 		if not SitDownWhenSleepy then
 			ActionWheelClass.standUp()
 		end
@@ -103,7 +103,7 @@ events.TICK:register(function()
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30
 	else
-		animation["main"]["afk_touch_bell"]:stop()
+		General.stopAnimationWithArmor("afk_touch_bell")
 		animation["alternative_arms"]["afk_right_bell"]:stop()
 		animation["alternative_arms"]["afk_left_bell"]:stop()
 		if AFKClass.AFKCount > 0 then
@@ -115,12 +115,12 @@ events.TICK:register(function()
 	local firstPerson = renderer:isFirstPerson()
 	if AFKClass.TouchBellCount > 0 then
 		if not firstPerson or leftHanded then
-			models.models.main.Avatar.Body.Arms.RightArm:setVisible(false)
+			General.setVisibleArm(false, "RIGHT")
 		end
 		models.models.alternative_arms.Body.Arms.RightArm:setVisible(true)
 	elseif AFKClass.TouchBellCount < 0 then
 		if not firstPerson or not leftHanded then
-			models.models.main.Avatar.Body.Arms.LeftArm:setVisible(false)
+			General.setVisibleArm(false, "LEFT")
 		end
 		models.models.alternative_arms.Body.Arms.LeftArm:setVisible(true)
 	end

@@ -16,7 +16,7 @@ function runAction(action)
 	if ActionWheelClass.ActionCount == 0 then
 		if WardenClass.WardenNearby then
 			if not GoatHornClass.Horn then
-				animation["main"]["refuse_emote"]:play()
+				General.playAnimationWithArmor("refuse_emote")
 				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
 				ActionWheelClass.ActionCount = 30
 				TerrorSweatCount = 30
@@ -37,9 +37,9 @@ end
 ---座る
 function ActionWheelClass.sitDown()
 	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
-	animation["main"]["sit_down"]:play()
+	General.playAnimationWithArmor("sit_down")
 	animation["alternative_arms"]["sit_down"]:play()
-	animation["main"]["stand_up"]:stop()
+	General.stopAnimationWithArmor("stand_up")
 	animation["alternative_arms"]["stand_up"]:stop()
 	animation["main"]["wave_tail"]:stop()
 end
@@ -47,9 +47,9 @@ end
 --座っている状態から立ち上がる
 function ActionWheelClass.standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
-	animation["main"]["stand_up"]:play()
+	General.playAnimationWithArmor("stand_up")
 	animation["alternative_arms"]["stand_up"]:play()
-	animation["main"]["sit_down"]:stop()
+	General.stopAnimationWithArmor("sit_down")
 	animation["alternative_arms"]["sit_down"]:stop()
 	if ConfigClass.WaveTail then
 		animation["main"]["wave_tail"]:play()
@@ -59,7 +59,7 @@ end
 
 ---ブルブル
 function ActionWheelClass.bodyShake()
-	animation["main"]["shake"]:play()
+	General.playAnimationWithArmor("shake")
 	animation["alternative_arms"]["shake"]:play()
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
@@ -138,9 +138,9 @@ MainPage:newAction(1):item("cod"):onLeftClick(function()
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if player:isLeftHanded() then
-				animation["main"]["left_meow"]:play()
+				General.playAnimationWithArmor("left_meow")
 			else
-				animation["main"]["right_meow"]:play()
+				General.playAnimationWithArmor("right_meow")
 			end
 			ActionWheelClass.ActionCount = 20
 		end
@@ -156,10 +156,10 @@ MainPage:newAction(2):item("cod"):onLeftClick(function()
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if player:isLeftHanded() then
 				EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
-				animation["main"]["left_meow"]:play()
+				General.playAnimationWithArmor("left_meow")
 			else
 				EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
-				animation["main"]["right_meow"]:play()
+				General.playAnimationWithArmor("right_meow")
 			end
 			ActionWheelClass.ActionCount = 20
 		end

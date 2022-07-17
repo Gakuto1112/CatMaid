@@ -25,7 +25,7 @@ events.TICK:register(function()
 	local leftHandItemType = General.hasItem(leftHeldItem)
 	local isSleeping = player:getPose() == "SLEEPING"
 	if rightHandItemType == "minecraft:cake" and not isSleeping then
-		rightArm:setVisible(false)
+		General.setVisibleArm(false, "RIGHT")
 		rightAlternativeArm:setVisible(true)
 		rightItem:setVisible(false)
 		rightCake:setVisible(true)
@@ -51,7 +51,7 @@ events.TICK:register(function()
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
-			rightArm:setVisible(true)
+			General.setVisibleArm(true, "RIGHT")
 			rightAlternativeArm:setVisible(false)
 		end
 		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
@@ -62,7 +62,7 @@ events.TICK:register(function()
 		animation["alternative_arms"]["right_cake"]:stop()
 	end
 	if leftHandItemType == "minecraft:cake" and not isSleeping then
-		leftArm:setVisible(false)
+		General.setVisibleArm(false, "LEFT")
 		leftAlternativeArm:setVisible(true)
 		leftItem:setVisible(false)
 		leftCake:setVisible(true)
@@ -88,7 +88,7 @@ events.TICK:register(function()
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
-			leftArm:setVisible(true)
+			General.setVisibleArm(true, "LEFT")
 			leftAlternativeArm:setVisible(false)
 		end
 		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then

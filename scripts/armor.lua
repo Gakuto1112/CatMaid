@@ -6,6 +6,14 @@ ArmorClass = {}
 ArmorRoot = models.models.armor
 
 events.TICK:register(function()
+	local firstPerson = renderer:isFirstPerson()
+	if not ConfigClass.HideArmor then
+		if player:isLeftHanded() then
+			ArmorRoot.Avatar.Body.Arms.LeftArm:setVisible(not firstPerson)
+		else
+			ArmorRoot.Avatar.Body.Arms.RightArm:setVisible(not firstPerson)
+		end
+	end
 	if ArmsClass.isSneaking then
 		for _, armorPart in ipairs({ArmorRoot.Avatar.Body.Arms.RightArm, ArmorRoot.Avatar.Body.Arms.LeftArm}) do
 			armorPart:setPos(0, 3, 0)
