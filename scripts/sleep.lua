@@ -54,11 +54,11 @@ events.TICK:register(function()
 		end
 		head:setVisible(true)
 		if not WardenClass.WardenNearby then
-			if rightHandItemType ~= "minecraft:cake" then
+			if rightHandItemType ~= "minecraft:cake" and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				rightArm:setRot(0, 0, 0)
 				rightItem:setVisible(true)
 			end
-			if leftHandItemType ~= "minecraft:cake" then
+			if leftHandItemType ~= "minecraft:cake" and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				leftArm:setRot(0, 0, 0)
 				leftItem:setVisible(true)
 			end
@@ -71,7 +71,5 @@ events.TICK:register(function()
 		table.remove(SleepClass.SleepData, 1)
 	end
 end)
-
-
 
 return SleepClass

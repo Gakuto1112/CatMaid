@@ -54,7 +54,7 @@ events.TICK:register(function()
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
-		if not isSleeping then
+		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			rightItem:setVisible(true)
 		end
 		rightCake:setVisible(false)
@@ -91,7 +91,7 @@ events.TICK:register(function()
 			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end
-		if not isSleeping then
+		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			leftItem:setVisible(true)
 		end
 		leftCake:setVisible(false)

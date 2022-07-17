@@ -15,10 +15,12 @@ TerrorSweatCount = 0
 function runAction(action)
 	if ActionWheelClass.ActionCount == 0 then
 		if WardenClass.WardenNearby then
-			animation["main"]["refuse_emote"]:play()
-			EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
-			ActionWheelClass.ActionCount = 30
-			TerrorSweatCount = 30
+			if not GoatHornClass.Horn then
+				animation["main"]["refuse_emote"]:play()
+				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
+				ActionWheelClass.ActionCount = 30
+				TerrorSweatCount = 30
+			end
 		else
 			action()
 		end
@@ -120,49 +122,55 @@ MainPage:newAction()
 --アクション1. 「ニャー」と鳴く（スマイル）
 MainPage:newAction(1):item("cod"):onLeftClick(function()
 	runAction(function()
-		local playerPos = player:getPos()
-		MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
-		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-		particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-		if player:isLeftHanded() then
-			animation["main"]["left_meow"]:play()
-		else
-			animation["main"]["right_meow"]:play()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if player:isLeftHanded() then
+				animation["main"]["left_meow"]:play()
+			else
+				animation["main"]["right_meow"]:play()
+			end
+			ActionWheelClass.ActionCount = 20
 		end
-		ActionWheelClass.ActionCount = 20
 	end)
 end)
 
 --アクション2. 「ニャー」と鳴く（ウィンク）
 MainPage:newAction(2):item("cod"):onLeftClick(function()
 	runAction(function()
-		local playerPos = player:getPos()
-		MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
-		particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-		if player:isLeftHanded() then
-			EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
-			animation["main"]["left_meow"]:play()
-		else
-			EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
-			animation["main"]["right_meow"]:play()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if player:isLeftHanded() then
+				EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
+				animation["main"]["left_meow"]:play()
+			else
+				EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
+				animation["main"]["right_meow"]:play()
+			end
+			ActionWheelClass.ActionCount = 20
 		end
-		ActionWheelClass.ActionCount = 20
 	end)
 end)
 
 --アクション3. 「ニャー」と鳴く（キラキラ）
 MainPage:newAction(3):item("cod"):onLeftClick(function()
 	runAction(function()
-		local playerPos = player:getPos()
-		particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-		if General.isTired() then
-			MeowClass.playMeow("WEAK", 1)
-			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
-		else
-			MeowClass.playMeow("NORMAL", 1)
-			EyesAndMouthClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if General.isTired() then
+				MeowClass.playMeow("WEAK", 1)
+				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+			else
+				MeowClass.playMeow("NORMAL", 1)
+				EyesAndMouthClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
+			end
+			ActionWheelClass.ActionCount = 20
 		end
-		ActionWheelClass.ActionCount = 20
 	end)
 end)
 

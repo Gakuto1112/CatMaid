@@ -18,6 +18,7 @@ WetClass = require("scripts/wet")
 SleepClass = require("scripts/sleep")
 WardenClass = require("scripts/warden")
 CakeClass = require("scripts/cake")
+GoatHornClass = require("scripts/goat_horn")
 
 --初期化処理
 vanilla_model.PLAYER:setVisible(false)
