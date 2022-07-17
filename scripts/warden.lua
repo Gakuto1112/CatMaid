@@ -38,8 +38,9 @@ events.TICK:register(function()
 			animation["main"]["afraid"]:play()
 			animation["alternative_arms"]["afraid"]:play()
 		end
-		if rightHandItemType == "none" and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
-			if not WardenNearbyData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
+		local isSleeping = player:getPose() == "SLEEPING"
+		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
+			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
 				animation["alternative_arms"]["right_hide_bell"]:play()
 			end
 			rightArm:setVisible(false)
@@ -49,8 +50,8 @@ events.TICK:register(function()
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
-		if leftHandItemType == "none" and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
-			if not WardenNearbyData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
+		if leftHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
+			if not WardenNearbyData[1] or SleepClass.SleepData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
 				animation["alternative_arms"]["left_hide_bell"]:play()
 			end
 			leftArm:setVisible(false)

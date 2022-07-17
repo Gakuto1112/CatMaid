@@ -5,16 +5,6 @@ TailAndEarsClass = {}
 
 EarBendCount = 0
 
----尻尾振りを再生する。
-function TailAndEarsClass.startTailWave()
-	animation["main"]["wave_tail"]:play()
-end
-
----尻尾振りを止める。
-function TailAndEarsClass.stopTailWave()
-	animation["main"]["wave_tail"]:stop()
-end
-
 events.TICK:register(function()
 	local rightEar = models.models.main.Avatar.Head.Ears.RightEar
 	local leftEar = models.models.main.Avatar.Head.Ears.LeftEar
@@ -41,7 +31,7 @@ events.TICK:register(function()
 		leftEar:setRot(0, 0, 0)
 	end
 	--尻尾
-	if condition == 2 or player:getPose() == "SLEEPING" and animation["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
+	if condition == 2 or player:getPose() == "SLEEPING" or animation["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
 		tail1:setRot(0, 0, 0)
 		tail2:setRot(0, 0, 0)
 	elseif condition == 1 then
@@ -62,7 +52,7 @@ events.TICK:register(function()
 end)
 
 if ConfigClass.WaveTail then
-	TailAndEarsClass.startTailWave()
+	animation["main"]["wave_tail"]:play()
 end
 
 return TailAndEarsClass

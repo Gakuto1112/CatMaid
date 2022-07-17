@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1657980674,
+        "creation_time": 1658025607,
         "model_format": "free",
         "box_uv": false
     },
@@ -3640,7 +3640,7 @@
                             "color": 0,
                             "uuid": "a7908e99-8155-0341-5552-c3b0faf5ecf4",
                             "export": true,
-                            "isOpen": false,
+                            "isOpen": true,
                             "locked": false,
                             "visibility": true,
                             "autouv": 0,
@@ -3784,7 +3784,7 @@
     ],
     "textures": [
         {
-            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u7e5d\u52b1\u039f\u7e5d\u8f14\u3043\u7e67\uff64\u7e5d\uff6b\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\main.png",
+            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\main.png",
             "name": "main.png",
             "folder": "",
             "namespace": "",
@@ -3799,7 +3799,7 @@
             "source": "data:image/png;base64,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"
         },
         {
-            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u7e5d\u52b1\u039f\u7e5d\u8f14\u3043\u7e67\uff64\u7e5d\uff6b\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\eyes.png",
+            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\eyes.png",
             "name": "eyes.png",
             "folder": "",
             "namespace": "",
@@ -3814,7 +3814,7 @@
             "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAAAXNSR0IArs4c6QAAAbpJREFUWEfFVs1Kw0AQ7uJJa9Wi4D2g3oRKhZws8eSziNBHEN9BfAVfwZOhngIWBG8q5CgIiqlp60Wp7KwTmp/N/jiJe0n77ezO980MM8sav+ug15vxn5+TD0Buh3eMf01xvI/6C2RsCNUtgHmeB5H0fT8hzf+b4raCZZHP+icjKhOmEqAqkf1uBwKZiqLqUNm+jCiWyM1gUOhLVkLoi5yoTISMqCoDudT/JYp1niVLfdWkE6KPk28o2svnCHyebq3D3jzeb3811jY2UzgS3G4uVCraiGiRABSHwoIgAMEn0zZoGB7ukAhILgnDEBwcj1fBwdWuiKgKxzO69tn7dUuGhCh35jiOljBrop090VBbrRUQh/3OFNeNjK0dMyVkam9LLHsuV+imMx7to5HoFtnM4GRZbKYzphKgbPi2RGWPmnEsBOgSRWH4zERBJK2jKDqq2R/H4t0ry0BtRGWp1Z39ytSraue/9itLPbUgdvb0Bn2Uz3G+cJZzHLF5PHp9AXtcaE9NLNeeyoiaCOheP4CA86V38OG6Lmm22NG9iOjF8ggc4Cgsw9FW177oftMMGBPFRwo60hFGQfQHOiykWlCGdNwAAAAASUVORK5CYII="
         },
         {
-            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u7e5d\u52b1\u039f\u7e5d\u8f14\u3043\u7e67\uff64\u7e5d\uff6b\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\mouths.png",
+            "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\mouths.png",
             "name": "mouths.png",
             "folder": "",
             "namespace": "",
@@ -5479,13 +5479,204 @@
             }
         },
         {
+            "uuid": "ceb9c2ba-b852-b03a-7f27-25f7d23bec86",
+            "name": "sleep",
+            "loop": "loop",
+            "override": false,
+            "length": 10,
+            "snapping": 24,
+            "selected": true,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "54e29e1a-0b7b-fd71-c983-cbd41fd76e0a": {
+                    "name": "Avatar",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "180\n",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "9759ee6f-3e9c-6be1-03c2-9f6a74ab5f40",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        }
+                    ]
+                },
+                "f9e65455-8761-e4c9-5894-c3b0838f8b45": {
+                    "name": "Head",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-80\n",
+                                    "y": "0\n",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "e4b9c923-abcf-ed55-9b2b-c2fd1c11eae8",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": "2"
+                                }
+                            ],
+                            "uuid": "645f78c7-1ffd-bc9e-fd26-a39d043a02ae",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        }
+                    ]
+                },
+                "a7908e99-8155-0341-5552-c3b0faf5ecf4": {
+                    "name": "Tail",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": -99.99999758746208,
+                                    "y": 1.0533358363318257e-07,
+                                    "z": 40
+                                }
+                            ],
+                            "uuid": "7aa0c00c-7df6-2ec8-7304-16fba26e2421",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        }
+                    ]
+                },
+                "6d85c71c-79f9-1a5a-0c87-06c4101e0e1a": {
+                    "name": "Tail2",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "60",
+                                    "y": "-60",
+                                    "z": "-110"
+                                }
+                            ],
+                            "uuid": "c17e339a-8b04-1261-b4b5-739b863b54ed",
+                            "time": 9.833333333333334,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "50",
+                                    "y": "-60",
+                                    "z": "-110"
+                                }
+                            ],
+                            "uuid": "bacef366-1138-de13-5e54-c9ee37f4f557",
+                            "time": 10,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "50",
+                                    "y": "-60",
+                                    "z": "-110"
+                                }
+                            ],
+                            "uuid": "1d227417-1af1-b22c-a0a7-c5d3f66eb7aa",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "50",
+                                    "y": "-60",
+                                    "z": "-110"
+                                }
+                            ],
+                            "uuid": "eb85f226-2c2a-e190-396d-76e97f0fc389",
+                            "time": 9.666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                },
+                "c0529f89-3d21-ad5c-1978-f9c19dcd099d": {
+                    "name": "RightArm",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-180",
+                                    "y": "0",
+                                    "z": "30"
+                                }
+                            ],
+                            "uuid": "362e9518-2c49-1de8-d195-ffeb5441b04b",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        }
+                    ]
+                },
+                "e4825a6e-4d6f-2b1c-a9df-bb6cead667c6": {
+                    "name": "LeftArm",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-180",
+                                    "y": "0",
+                                    "z": "-30\n"
+                                }
+                            ],
+                            "uuid": "47677d26-8a53-d177-4fe6-844fb4625c2d",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "step"
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "uuid": "51cea649-f0a4-f69c-3e0c-572c0d613a4a",
             "name": "afraid",
             "loop": "loop",
             "override": false,
             "length": 0.16666666666666666,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",

@@ -15,6 +15,7 @@ ActionWheelClass = require("scripts/action_wheel")
 MeowClass = require("scripts/meow")
 HurtClass = require("scripts/hurt")
 WetClass = require("scripts/wet")
+SleepClass = require("scripts/sleep")
 WardenClass = require("scripts/warden")
 CakeClass = require("scripts/cake")
 
