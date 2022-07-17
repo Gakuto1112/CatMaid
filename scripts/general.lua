@@ -74,24 +74,6 @@ function General.stopAnimationWithArmor(animationName)
 	animation["armor"][animationName]:stop()
 end
 
----腕と防具の腕の表示を変更する。
----@param visible boolean 隠すか表示させるか
----@param arm ArmType 隠す腕
-function General.setVisibleArm(visible, arm)
-	local enableArmor = not ConfigClass.HideArmor and not renderer:isFirstPerson()
-	if arm == "RIGHT" then
-		models.models.main.Avatar.Body.Arms.RightArm:setVisible(visible)
-		if enableArmor then
-			models.models.armor.Avatar.Body.Arms.RightArm:setVisible(visible)
-		end
-	else
-		models.models.main.Avatar.Body.Arms.LeftArm:setVisible(visible)
-		if enableArmor then
-			models.models.armor.Avatar.Body.Arms.LeftArm:setVisible(visible)
-		end
-	end
-end
-
 events.TICK:register(function()
 	table.insert(SneakData, player:isSneaking())
 	if #SneakData == 3 then

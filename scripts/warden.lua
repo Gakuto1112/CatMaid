@@ -43,22 +43,22 @@ events.TICK:register(function()
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
 				animation["alternative_arms"]["right_hide_bell"]:play()
 			end
-			General.setVisibleArm(false, "RIGHT")
+			rightArm:setVisible(false)
 			rightAlternativeArm:setVisible(true)
 		else
 			animation["alternative_arms"]["right_hide_bell"]:stop()
-			General.setVisibleArm(true, "RIGHT")
+			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
 		if leftHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
 				animation["alternative_arms"]["left_hide_bell"]:play()
 			end
-			General.setVisibleArm(false, "LEFT")
+			leftArm:setVisible(false)
 			leftAlternativeArm:setVisible(true)
 		else
 			animation["alternative_arms"]["left_hide_bell"]:stop()
-			General.setVisibleArm(true, "LEFT")
+			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end
 	else
@@ -67,11 +67,11 @@ events.TICK:register(function()
 		animation["alternative_arms"]["right_hide_bell"]:stop()
 		animation["alternative_arms"]["left_hide_bell"]:stop()
 		if AFKClass.TouchBellCount <= 0 then
-			General.setVisibleArm(true, "RIGHT")
+			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
 		if AFKClass.TouchBellCount >= 0 then
-			General.setVisibleArm(true, "LEFT")
+			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end
 	end

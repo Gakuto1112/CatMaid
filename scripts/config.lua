@@ -21,7 +21,7 @@ ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
-ConfigClass.HideArmor = false
+ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
 ConfigClass.UseSkinName = true
 

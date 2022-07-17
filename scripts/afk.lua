@@ -59,7 +59,6 @@ events.TICK:register(function()
 			elseif AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					General.playAnimationWithArmor("afk_touch_bell")
-					print(rightHandItemType)
 					if rightHandItemType == "none" then
 						animation["alternative_arms"]["afk_right_bell"]:play()
 						AFKClass.TouchBellCount = 67
@@ -115,12 +114,12 @@ events.TICK:register(function()
 	local firstPerson = renderer:isFirstPerson()
 	if AFKClass.TouchBellCount > 0 then
 		if not firstPerson or leftHanded then
-			General.setVisibleArm(false, "RIGHT")
+			models.models.main.Avatar.Body.Arms.RightArm:setVisible(false)
 		end
 		models.models.alternative_arms.Body.Arms.RightArm:setVisible(true)
 	elseif AFKClass.TouchBellCount < 0 then
 		if not firstPerson or not leftHanded then
-			General.setVisibleArm(false, "LEFT")
+			models.models.main.Avatar.Body.Arms.LeftArm:setVisible(false)
 		end
 		models.models.alternative_arms.Body.Arms.LeftArm:setVisible(true)
 	end
