@@ -19,7 +19,7 @@ ConfigClass = {}
 ]]
 
 ConfigClass.SkinName = "Vinny"
-ConfigClass.Language = "jp" --Valid value: "en", "jp". If you want to use English, plase set to "en".
+ConfigClass.Language = "jp" --Valid value: "en", "jp". If you want to use English, please set to "en".
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
