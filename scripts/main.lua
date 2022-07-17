@@ -16,6 +16,7 @@ MeowClass = require("scripts/meow")
 HurtClass = require("scripts/hurt")
 WetClass = require("scripts/wet")
 WardenClass = require("scripts/warden")
+CakeClass = require("scripts/cake")
 
 --初期化処理
 vanilla_model.PLAYER:setVisible(false)
