@@ -1,0 +1,106 @@
+---@class AFKClass 放置時の挙動を制御するクラス
+---@field keyList table AFK復帰判定の為に使用するキーを格納するテーブル
+---@field LookRotPrevRender number 前チックのlookRot
+---@field RightItemTypePrevTick string 前チックの右手のアイテムの種類
+---@field LeftItemTypePrevTick string 前チックの左手のアイテムの種類
+---@field AFKClass.AFKCount integer 放置するとインクリメントされるカウンター
+---@field AFKClass.TouchBellCount integer 鈴を弄っている時間を計るカウンター
+
+AFKClass = {}
+
+keyList = {}
+LookRotPrevTick = 0
+RightItemTypePrevTick = "none"
+LeftItemTypePrevTick = "none"
+AFKClass.AFKCount = 0
+AFKClass.TouchBellCount = 0
+
+for index, keyName in ipairs({"key.playerlist", "figura.config.action_wheel_button", "key.sneak", "key.hotbar.1", "key.hotbar.2", "key.hotbar.3", "key.hotbar.4", "key.hotbar.5", "key.hotbar.6", "key.hotbar.7", "key.hotbar.8", "key.hotbar.9", "key.sprint", "key.togglePerspective", "key.spectatorOutlines", "key.left", "key.chat", "key.pickItem", "key.socialInteractions", "key.fullscreen", "key.attack", "key.smoothCamera", "key.advancements", "key.use", "key.loadToolbarActivator", "key.forward", "key.right", "key.screenshot", "key.back", "key.swapOffhand", "key.command", "key.saveToolbarActivator", "key.inventory", "key.jump", "key.drop"}) do
+	table.insert(keyList, keybind:create("AFK復帰判定用_"..index, keybind:getVanillaKey(keyName)))
+end
+
+events.TICK:register(function()
+	local keyPressed = false
+	for _, key in ipairs(keyList) do
+		if key:isPressed() then
+			keyPressed = true
+			break
+		end
+	end
+	local lookDir = player:getLookDir()
+	local lookRot = math.deg(math.atan2(lookDir.z, lookDir.x))
+	local lookRotDelta = lookRot - LookRotPrevTick
+	local leftHanded = player:isLeftHanded()
+	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
+	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
+	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick then
+		if not client.isPaused() then
+			if AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
+				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
+					animation["main"]["afk_touch_bell"]:play()
+					print(rightHandItemType)
+					if rightHandItemType == "none" then
+						animation["alternative_arms"]["afk_right_bell"]:play()
+						AFKClass.TouchBellCount = 67
+					else
+						animation["alternative_arms"]["afk_left_bell"]:play()
+						AFKClass.TouchBellCount = -67
+					end
+				else
+					if leftHanded then
+						if leftHandItemType ~= "minecraft:cake" then
+							animation["main"]["afk_touch_bell"]:play()
+							animation["alternative_arms"]["afk_left_bell"]:play()
+							AFKClass.TouchBellCount = -67
+						elseif rightHandItemType ~= "minecraft:cake" then
+							animation["main"]["afk_touch_bell"]:play()
+							animation["alternative_arms"]["afk_right_bell"]:play()
+							AFKClass.TouchBellCount = 67
+						end
+					else
+						if rightHandItemType ~= "minecraft:cake" then
+							animation["main"]["afk_touch_bell"]:play()
+							animation["alternative_arms"]["afk_right_bell"]:play()
+							AFKClass.TouchBellCount = 67
+						else
+							animation["main"]["afk_touch_bell"]:play()
+							animation["alternative_arms"]["afk_left_bell"]:play()
+							AFKClass.TouchBellCount = -67
+						end
+					end
+				end
+			end
+			AFKClass.AFKCount = AFKClass.AFKCount + 1
+		end
+	else
+		animation["main"]["afk_touch_bell"]:stop()
+		animation["alternative_arms"]["afk_right_bell"]:stop()
+		animation["alternative_arms"]["afk_left_bell"]:stop()
+		AFKClass.AFKCount = 0
+		AFKClass.TouchBellCount = 0
+	end
+	local firstPerson = renderer:isFirstPerson()
+	if AFKClass.TouchBellCount > 0 then
+		if not firstPerson or leftHanded then
+			models.models.main.Avatar.Body.Arms.RightArm:setVisible(false)
+		end
+		models.models.alternative_arms.Body.Arms.RightArm:setVisible(true)
+	elseif AFKClass.TouchBellCount < 0 then
+		if not firstPerson or not leftHanded then
+			models.models.main.Avatar.Body.Arms.LeftArm:setVisible(false)
+		end
+		models.models.alternative_arms.Body.Arms.LeftArm:setVisible(true)
+	end
+	local touchBellCountAbs = math.abs(AFKClass.TouchBellCount)
+	if touchBellCountAbs == 23 or touchBellCountAbs == 39 then
+		BellSoundClass.playBellSound()
+	end
+	print(AFKClass.AFKCount)
+	print(AFKClass.TouchBellCount)
+	LookRotPrevTick = lookRot
+	RightItemTypePrevTick = rightHandItemType
+	LeftItemTypePrevTick = leftHandItemType
+	AFKClass.TouchBellCount = AFKClass.TouchBellCount ~= 0 and (AFKClass.TouchBellCount > 0 and AFKClass.TouchBellCount - 1 or AFKClass.TouchBellCount + 1) or 0
+end)
+
+return AFKClass

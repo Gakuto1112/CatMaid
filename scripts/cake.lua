@@ -50,7 +50,7 @@ events.TICK:register(function()
 			animation["alternative_arms"]["right_cake"]:play()
 		end
 	else
-		if not WardenClass.WardenNearby then
+		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
@@ -87,7 +87,7 @@ events.TICK:register(function()
 			animation["alternative_arms"]["left_cake"]:play()
 		end
 	else
-		if not WardenClass.WardenNearby then
+		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
 			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end

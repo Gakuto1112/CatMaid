@@ -66,10 +66,14 @@ events.TICK:register(function()
 		animation["alternative_arms"]["afraid"]:stop()
 		animation["alternative_arms"]["right_hide_bell"]:stop()
 		animation["alternative_arms"]["left_hide_bell"]:stop()
-		rightArm:setVisible(true)
-		rightAlternativeArm:setVisible(false)
-		leftArm:setVisible(true)
-		leftAlternativeArm:setVisible(false)
+		if AFKClass.TouchBellCount <= 0 then
+			rightArm:setVisible(true)
+			rightAlternativeArm:setVisible(false)
+		end
+		if AFKClass.TouchBellCount >= 0 then
+			leftArm:setVisible(true)
+			leftAlternativeArm:setVisible(false)
+		end
 	end
 	table.insert(WardenNearbyData, WardenClass.WardenNearby)
 	table.insert(RightHandItemTypeData, rightHandItemType)
