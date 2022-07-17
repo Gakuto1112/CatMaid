@@ -1,11 +1,14 @@
 # CatMaid（猫メイド）
-（2022/7/14更新）現在[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)への移植作業中です。Rewrite版への移植には、大幅にコードを書き換える必要があるため、多くの時間を要することが予想されます。移植完了までしばらくお待ちください。
+（2022/7/18更新）[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)への移植作業が完了しました。詳しくは[こちら](https://github.com/Gakuto1112/CatMaid/tree/Rewrite)をご覧ください。
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
 **このアバターは上位の権限を必要とします。Figuraの信用度設定のUntrustedでは正常に表示されません。また、同信用度ではリソース超過によるエラーが発生する可能性があります。**
 
 ![メイン画像](README_Images/メイン.jpg)
+
+## このブランチについて
+このブランチのアバター、[Figura Prewrite版（v0.0.8）](https://github.com/Moonlight-MC/Figura)向けのアバターです。[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)では使用出来ません。[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid/tree/Rewrite)からダウンロードして下さい。なお、[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)が正式リリースされる頃に、[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)のアバターをこのブランチにマージする予定です。
 
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
