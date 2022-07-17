@@ -21,6 +21,7 @@ events.TICK:register(function()
 			animation["main"]["sleep"]:play()
 			if not WardenClass.WardenNearby then
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 			end
 		end
 		if renderer:isFirstPerson() then
@@ -41,7 +42,6 @@ events.TICK:register(function()
 			leftItem:setVisible(true)
 		end
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
-			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 			if (SleepCount - 40) % 65 == 0 then
 				sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
 			end

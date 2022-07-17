@@ -52,8 +52,8 @@ function EyesAndMouthClass.setEmotion(rightEye, leftEye, mouth, duration, force)
 		if MouthTypeID[mouth] >= 0 then
 			models.models.main.Avatar.Head.FaceParts.Mouth:setUVPixels(MouthTypeID[mouth] * 4, 0)
 		end
+		EyesAndMouthClass.EmotionCount = duration
 	end
-	EyesAndMouthClass.EmotionCount = duration
 end
 
 events.TICK:register(function()
