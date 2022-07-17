@@ -9,7 +9,7 @@
 
 WardenClass = {}
 
-AttackKey = keybind:create("攻撃", keybind:getVanillaKey("key.attack"))
+AttackKey = keybind:create(LanguageClass.getTranslate("key__attack"), keybind:getVanillaKey("key.attack"))
 WardenNearbyData = {}
 RightHandItemTypeData = {}
 LeftHandItemTypeData = {}

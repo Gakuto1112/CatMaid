@@ -71,7 +71,7 @@ function ActionWheelClass.bodyShake()
 end
 
 events.TICK:register(function()
-	local actionTitles = {"「ニャー」と鳴く（スマイル）", "「ニャー」と鳴く（ウィンク）", "「ニャー」と鳴く（キラキラ）", "おすわり", "ブルブル"}
+	local actionTitles = {LanguageClass.getTranslate("action_wheel__main__action_1__title"), LanguageClass.getTranslate("action_wheel__main__action_2__title"), LanguageClass.getTranslate("action_wheel__main__action_3__title"), LanguageClass.getTranslate("action_wheel__main__action_4__title"), LanguageClass.getTranslate("action_wheel__main__action_5__title")}
 	if WardenClass.WardenNearby then
 		for index, actionName in ipairs(actionTitles) do
 			MainPage:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
@@ -81,7 +81,7 @@ events.TICK:register(function()
 			MainPage:getAction(index):title(actionName):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1)
 		end
 		if not canSitDown() then
-			MainPage:getAction(4):title("§7おすわり"):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
+			MainPage:getAction(4):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_4__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
 		end
 	end
 	if not action_wheel:isEnabled() then
@@ -203,8 +203,8 @@ MainPage:newAction(5):item("water_bucket"):onLeftClick(function()
 end)
 
 --アクション6. 設定を開く
-MainPage:newAction(6):title("§7設定（使用不可）"):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
-	print("\n§c§l*** NOTE ***§r\n2022/7/16現在、Rewrite版には、データを保存して後で読み出せるようにする機能が搭載されていません。\nつまり、Prewrite版のような設定ページが現在は作成できません！\n代わりに、設定ファイル（/sripts/config.lua）を直接編集して設定値を変更して下さい。")
+MainPage:newAction(6):title(LanguageClass.getTranslate("action_wheel__main__action_6__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 
 action_wheel:setPage(MainPage)

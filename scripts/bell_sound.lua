@@ -6,7 +6,7 @@
 
 BellSoundClass = {}
 
-JumpKey = keybind:create("ジャンプ", keybind:getVanillaKey("key.jump"))
+JumpKey = keybind:create(LanguageClass.getTranslate("key__jump"), keybind:getVanillaKey("key.jump"))
 WalkDistance = 0
 VelocityYData = {}
 OnGroundData = {}
@@ -52,7 +52,7 @@ events.TICK:register(function()
 end)
 
 if not meta:canUseCustomSounds() then
-	print("§cカスタムサウンドを再生する権限がありません！§r鈴の音は代替サウンドが使用されます。")
+	print(LanguageClass.getTranslate("message__custom_sound_unavailable"))
 end
 
 return BellSoundClass

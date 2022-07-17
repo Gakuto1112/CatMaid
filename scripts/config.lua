@@ -1,11 +1,12 @@
 ---@class ConfigClass アバター設定を管理するクラス
----@field ConfigClass.SkinName string このスキンの名前
----@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか
----@field ConfigClass.BellSound boolean 鈴の音を鳴らすかどうか
----@field ConfigClass.WaveTail boolean 尻尾を振るかどうか
----@field ConfigClass.HideArmor boolean 防具を隠すかどうか
----@field ConfigClass.AutoShake boolean 水から上がった際に自動でブルブルアクションを実行するかどうか
----@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか
+---@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
+---@field ConfigClass.Language string 使用する言語名 Language to use in the avatar messages.
+---@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか Whether or not meow regularly.
+---@field ConfigClass.BellSound boolean 鈴の音を鳴らすかどうか Whether or not play bell sound.
+---@field ConfigClass.WaveTail boolean 尻尾を振るかどうか Whether or not wave tail.
+---@field ConfigClass.HideArmor boolean 防具を隠すかどうか Whether or not hide armors.
+---@field ConfigClass.AutoShake boolean 水から上がった際に自動でブルブルアクションを実行するかどうか Whether or not run body shake action automately after out of the water.
+---@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか Whether or not use skin name.
 
 ConfigClass = {}
 
@@ -18,6 +19,7 @@ ConfigClass = {}
 ]]
 
 ConfigClass.SkinName = "Vinny"
+ConfigClass.Language = "jp" --Valid value: "en", "jp". If you want to use English, plase set to "en".
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
 ConfigClass.WaveTail = true

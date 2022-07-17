@@ -1,6 +1,7 @@
 --クラスのインスタンス化
 General = require("scripts/general")
 ConfigClass = require("scripts/config")
+LanguageClass = require("scripts/language")
 --パーツ別クラス
 ArmsClass = require("scripts/arms")
 ElytraClass = require("scripts/elytra")
