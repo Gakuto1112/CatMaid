@@ -58,6 +58,9 @@ function setArmor(armorItem, armorType, armorPartList, overlayPartList)
 		end
 		return true
 	else
+		for _, overlayPart in ipairs(overlayPartList) do
+			overlayPart:setVisible(false)
+		end
 		return false
 	end
 end
