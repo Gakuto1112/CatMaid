@@ -6,6 +6,7 @@
 ---@field ConfigClass.WaveTail boolean 尻尾を振るかどうか Whether or not wave tail.
 ---@field ConfigClass.HideArmor boolean 防具を隠すかどうか Whether or not hide armors.
 ---@field ConfigClass.AutoShake boolean 水から上がった際に自動でブルブルアクションを実行するかどうか Whether or not run body shake action automately after out of the water.
+---@field ConfigClass.AFKAction boolean 放置している時に専用アニメーションを再生するかどうか Whether or not play dedicated animations when you are AFK.
 ---@field ConfigClass.BurnEffect boolean 黒焦げの視覚効果を有効にするかどうか Whether or not enable burn effect.
 ---@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか Whether or not use skin name.
 
@@ -26,6 +27,7 @@ ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
 ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
+ConfigClass.AFKAction = true
 ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
 

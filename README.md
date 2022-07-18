@@ -81,7 +81,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![エモートを拒否する](README_Images/エモート拒否.gif)
 
-- 放置するとアクションを起こします。
+- 放置すると専用アクションを起こします（[アバター設定](#アバター設定について)で無効に出来ます）。
   - 30秒おきに鈴をいじります。
 
   ![鈴をいじる](README_Images/鈴をいじる.gif)
@@ -144,6 +144,7 @@ ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
 ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
+ConfigClass.AFKAction = true
 ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
 ```
@@ -157,6 +158,7 @@ ConfigClass.UseSkinName = true
 | ```ConfigClass.WaveTail``` | 尻尾を揺らすかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.HideArmor``` | 防具を隠すかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
+| ```ConfigClass.AFKAction``` | 放置している時に[専用アクション](#特徴)を再生するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.BurnEffect``` | 黒焦げになる視覚効果を有効にするかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
 

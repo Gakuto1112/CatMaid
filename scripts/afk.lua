@@ -35,7 +35,7 @@ events.TICK:register(function()
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
-	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick then
+	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and ConfigClass.AFKAction then
 		if not client.isPaused() then
 			if AFKClass.AFKCount >= 6000 then
 				if AFKClass.AFKCount == 6000 then
