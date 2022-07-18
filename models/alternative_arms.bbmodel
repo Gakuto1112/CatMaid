@@ -1,7 +1,7 @@
 {
     "meta": {
         "format_version": "4.0",
-        "creation_time": 1658053751,
+        "creation_time": 1658119191,
         "model_format": "free",
         "box_uv": false
     },
@@ -2731,10 +2731,10 @@
             "render_mode": "default",
             "visible": true,
             "mode": "bitmap",
-            "saved": true,
+            "saved": false,
             "uuid": "e6d9eb4f-50e9-91d5-93c1-6cad3c01dd74",
-            "relative_path": "../../textures/plate.png",
-            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC"
+            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC",
+            "relative_path": "../../textures/plate.png"
         },
         {
             "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\leather_layer_1.png",
@@ -2746,10 +2746,10 @@
             "render_mode": "default",
             "visible": true,
             "mode": "bitmap",
-            "saved": true,
+            "saved": false,
             "uuid": "24d48f5a-bc87-a06a-8161-57878e892d2b",
-            "relative_path": "../../textures/leather_layer_1.png",
-            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC"
+            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC",
+            "relative_path": "../../textures/leather_layer_1.png"
         },
         {
             "path": "C:\\Users\\gakut\\Documents\\Minecraft JavaEdition\\\u30d7\u30ed\u30d5\u30a1\u30a4\u30eb\\Fabric\\figura\\avatars\\CatMaid\\Vinny\\textures\\leather_layer_1_overlay.png",
@@ -2761,10 +2761,10 @@
             "render_mode": "default",
             "visible": true,
             "mode": "bitmap",
-            "saved": true,
+            "saved": false,
             "uuid": "2a694d6c-0ef6-ef70-3630-4170a8dbec51",
-            "relative_path": "../../textures/leather_layer_1_overlay.png",
-            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC"
+            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAFNJREFUOE9j/P///38GMsHTp08ZGEEGgBjkgDdv3tDRAGlpabAjkV1LkgtGkgHY/AoKPKLDgKoGIBtGlgsGxgBS8gRJKRGbwWADnjx58h/EIBcAAOMkxz3HA3M9AAAAAElFTkSuQmCC",
+            "relative_path": "../../textures/leather_layer_1_overlay.png"
         }
     ],
     "animations": [
@@ -2775,7 +2775,7 @@
             "override": false,
             "length": 0.16666666666666666,
             "snapping": 24,
-            "selected": false,
+            "selected": true,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -3126,34 +3126,6 @@
                     "type": "bone",
                     "keyframes": [
                         {
-                            "channel": "rotation",
-                            "data_points": [
-                                {
-                                    "x": "0",
-                                    "y": "0",
-                                    "z": "0"
-                                }
-                            ],
-                            "uuid": "c7a59dcd-3167-c395-bdec-736e78420418",
-                            "time": 0,
-                            "color": -1,
-                            "interpolation": "linear"
-                        },
-                        {
-                            "channel": "rotation",
-                            "data_points": [
-                                {
-                                    "x": "-35",
-                                    "y": "-10",
-                                    "z": "-10"
-                                }
-                            ],
-                            "uuid": "e3e343f8-42d2-b762-9ce6-3387e64383e9",
-                            "time": 0.16666666666666666,
-                            "color": -1,
-                            "interpolation": "linear"
-                        },
-                        {
                             "channel": "position",
                             "data_points": [
                                 {
@@ -3187,34 +3159,6 @@
                     "name": "LeftArm",
                     "type": "bone",
                     "keyframes": [
-                        {
-                            "channel": "rotation",
-                            "data_points": [
-                                {
-                                    "x": "-35",
-                                    "y": "10",
-                                    "z": "10"
-                                }
-                            ],
-                            "uuid": "a7a67625-41ed-a7c0-e08b-2bd4d2dd8709",
-                            "time": 0.16666666666666666,
-                            "color": -1,
-                            "interpolation": "linear"
-                        },
-                        {
-                            "channel": "rotation",
-                            "data_points": [
-                                {
-                                    "x": "0",
-                                    "y": "0",
-                                    "z": "0"
-                                }
-                            ],
-                            "uuid": "0508d3c7-062d-460b-0e2a-f7b8041deb3b",
-                            "time": 0,
-                            "color": -1,
-                            "interpolation": "linear"
-                        },
                         {
                             "channel": "position",
                             "data_points": [
@@ -4812,7 +4756,7 @@
             "override": false,
             "length": 3.375,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
