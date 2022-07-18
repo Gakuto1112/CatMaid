@@ -31,7 +31,7 @@ end
 ---@return boolean
 function canSitDown()
 	local velocity = player:getVelocity()
-	return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE"
+	return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE" and not WardenClass.WardenNearby
 end
 
 ---座る
@@ -72,20 +72,23 @@ end
 
 events.TICK:register(function()
 	local actionTitles = {LanguageClass.getTranslate("action_wheel__main__action_1__title"), LanguageClass.getTranslate("action_wheel__main__action_2__title"), LanguageClass.getTranslate("action_wheel__main__action_3__title"), LanguageClass.getTranslate("action_wheel__main__action_4__title"), LanguageClass.getTranslate("action_wheel__main__action_5__title")}
+	local action4 = MainPage:getAction(4)
 	if WardenClass.WardenNearby then
 		for index, actionName in ipairs(actionTitles) do
 			MainPage:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
 		end
 	else
 		for index, actionName in ipairs(actionTitles) do
-			MainPage:getAction(index):title(actionName):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1)
+			if index == 4 then
+				if canSitDown() then
+					action4:title(actionName):color(255 / 255, 85 / 255, 255 / 255):toggleColor(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1)
+				else
+					action4:title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):toggleColor(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
+				end
+			else
+				MainPage:getAction(index):title(actionName):color(255 / 255, 85 / 255, 255 / 255):hoverColor(1, 1, 1)
+			end
 		end
-		if not canSitDown() then
-			MainPage:getAction(4):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_4__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255)
-		end
-	end
-	if not action_wheel:isEnabled() then
-		action_wheel:setPage(MainPage)
 	end
 	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		ActionWheelClass.standUp()
@@ -119,6 +122,7 @@ events.RENDER:register(function()
 end)
 
 events.WORLD_RENDER:register(function()
+	MainPage:getAction(4):toggled(canSitDown() and MainPage:getAction(4):isToggled())
 	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
 		animation["main"]["sit_down_first_person_fix"]:play()
 	else
@@ -185,14 +189,14 @@ MainPage:newAction(3):item("cod"):onLeftClick(function()
 end)
 
 --アクション4. おすわり
-MainPage:newAction(4):item("oak_stairs"):onLeftClick(function()
+MainPage:newToggle(4):item("oak_stairs"):onToggle(function()
 	runAction(function()
-		if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
-			ActionWheelClass.standUp()
-		elseif canSitDown() then
+		if canSitDown() then
 			ActionWheelClass.sitDown()
 		end
 	end)
+end):onUntoggle(function()
+	ActionWheelClass.standUp()
 end)
 
 --アクション5. ブルブル
@@ -203,7 +207,7 @@ MainPage:newAction(5):item("water_bucket"):onLeftClick(function()
 end)
 
 --アクション6. 設定を開く
-MainPage:newAction(6):title(LanguageClass.getTranslate("action_wheel__main__action_6__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+MainPage:newAction(6):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_6__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(255 / 255, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 
