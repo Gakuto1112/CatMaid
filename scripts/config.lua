@@ -30,6 +30,11 @@ ConfigClass.AutoShake = true
 ConfigClass.AFKAction = true
 ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
+ConfigClass.CinematicModeCamera = {
+	PitchInit = 30,
+	RollInit = 0,
+	YawInit = 45
+}
 
 --- *** 設定フィールド終了 ***
 

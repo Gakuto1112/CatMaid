@@ -126,10 +126,38 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![ブルブル](README_Images/ブルブル.gif)
 
-### アクション6：設定画面を開く
+### アクション6：シネマティックモード
+[シネマティックモード](#シネマティックモードについて)を開始します。
+
+![シネマティックモード1](README_Images/シネマティックモード1.jpg)
+![シネマティックモード2](README_Images/シネマティックモード2.jpg)
+
+（シェーダーパックはご自身でご用意下さい）
+
+### アクション7：設定画面を開く
 ~~クリックして設定画面を開きます。~~
 
 **2022/7/18現在、機能していません！！**
+
+## シネマティックモードについて
+シネマティックモードはプレイヤーの頭の向きに関わらずカメラを自由に回転させることが出来るモードです。スクリーンショットの撮影に向いているかもしれません。シネマティックモードは三人称視点のみ有効です。
+
+![シネマティックモード操作画面](README_Images/シネマティックモード操作画面.jpg)
+
+### アクション1：カメラピッチ調整
+ボタン上でスクロールするとカメラのピッチを動かせます。
+
+### アクション2：カメラロール調整
+ボタン上でスクロールするとカメラのロールを動かせます。
+
+### アクション3：カメラヨー調整
+ボタン上でスクロールするとカメラのヨーを動かせます。
+
+### アクション4：カメラの向きリセット
+カメラの向きをリセットして初期値に戻します。
+
+### アクション5：シネマティックモード終了
+シネマティックモードを終了して通常モードに戻します。
 
 ## アバター設定について
 2022/7/18現在、ゲーム内での設定画面が実装出来ないので、代わりに[設定画面ファイル（./scripts/config.lua）](./scripts/config.lua)を直接編集して下さい。
@@ -147,6 +175,11 @@ ConfigClass.AutoShake = true
 ConfigClass.AFKAction = true
 ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
+ConfigClass.CinematicModeCamera = {
+	PitchInit = 30,
+	RollInit = 0,
+	YawInit = 45
+}
 ```
 
 | 項目 | 説明 | 有効な値 | 初期値 |
@@ -161,6 +194,9 @@ ConfigClass.UseSkinName = true
 | ```ConfigClass.AFKAction``` | 放置している時に[専用アクション](#特徴)を再生するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.BurnEffect``` | 黒焦げになる視覚効果を有効にするかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
+| ```ConfigClass.CinematicModeCamera.PitchInit``` | シネマティックモードのカメラのピッチの初期値です。 | ```integer``` -90 - 90 | 30 |
+| ```ConfigClass.CinematicModeCamera.RollInit``` | シネマティックモードのカメラのロールの初期値です。 | ```integer``` -180 - 180 | 0 |
+| ```ConfigClass.CinematicModeCamera.YawInit``` | シネマティックモードのカメラのヨーの初期値です。 | ```integer``` 0 - 360 | 45 |
 
 ## テクスチャ
 このアバターのテクスチャは以下の通りです。バニラのスキンをベースに作られているので、テクスチャを書き換えてスキンを変更出来ます。なお、バニラスキンと直接かかわりがあるもののみ説明します。

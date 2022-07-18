@@ -24,6 +24,7 @@ SleepClass = require("scripts/sleep")
 BurnClass = require("scripts/burn")
 WardenClass = require("scripts/warden")
 CakeClass = require("scripts/cake")
+CinematicModeClass = require("scripts/cinematic_mode")
 GoatHornClass = require("scripts/goat_horn")
 
 --初期化処理
