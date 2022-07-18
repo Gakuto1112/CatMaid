@@ -17,10 +17,6 @@ SitDownWhenSleepy = false
 AFKClass.AFKCount = 0
 AFKClass.TouchBellCount = 0
 
-for index, keyName in ipairs({"key.playerlist", "figura.config.action_wheel_button", "key.sneak", "key.hotbar.1", "key.hotbar.2", "key.hotbar.3", "key.hotbar.4", "key.hotbar.5", "key.hotbar.6", "key.hotbar.7", "key.hotbar.8", "key.hotbar.9", "key.sprint", "key.togglePerspective", "key.spectatorOutlines", "key.left", "key.chat", "key.pickItem", "key.socialInteractions", "key.fullscreen", "key.attack", "key.smoothCamera", "key.advancements", "key.use", "key.loadToolbarActivator", "key.forward", "key.right", "key.screenshot", "key.back", "key.swapOffhand", "key.command", "key.saveToolbarActivator", "key.inventory", "key.jump", "key.drop"}) do
-	table.insert(keyList, keybind:create(LanguageClass.getTranslate("key__afk_check").."_"..index, keybind:getVanillaKey(keyName)))
-end
-
 events.TICK:register(function()
 	local keyPressed = false
 	for _, key in ipairs(keyList) do
@@ -145,5 +141,11 @@ events.TICK:register(function()
 	LeftItemTypePrevTick = leftHandItemType
 	AFKClass.TouchBellCount = AFKClass.TouchBellCount ~= 0 and (AFKClass.TouchBellCount > 0 and AFKClass.TouchBellCount - 1 or AFKClass.TouchBellCount + 1) or 0
 end)
+
+if ConfigClass.AFKAction then
+	for index, keyName in ipairs({"key.playerlist", "figura.config.action_wheel_button", "key.sneak", "key.hotbar.1", "key.hotbar.2", "key.hotbar.3", "key.hotbar.4", "key.hotbar.5", "key.hotbar.6", "key.hotbar.7", "key.hotbar.8", "key.hotbar.9", "key.sprint", "key.togglePerspective", "key.spectatorOutlines", "key.left", "key.chat", "key.pickItem", "key.socialInteractions", "key.fullscreen", "key.attack", "key.smoothCamera", "key.advancements", "key.use", "key.loadToolbarActivator", "key.forward", "key.right", "key.screenshot", "key.back", "key.swapOffhand", "key.command", "key.saveToolbarActivator", "key.inventory", "key.jump", "key.drop"}) do
+		table.insert(keyList, keybind:create(LanguageClass.getTranslate("key__afk_check").."_"..index, keybind:getVanillaKey(keyName)))
+	end
+end
 
 return AFKClass
