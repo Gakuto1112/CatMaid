@@ -48,11 +48,13 @@ events.TICK:register(function()
 			elseif AFKClass.AFKCount >= 5400 then
 				if AFKClass.AFKCount == 5400 then
 					General.playAnimationWithArmor("afk_sleepy")
-					if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
-						SitDownWhenSleepy = true
-					else
-						ActionWheelClass.sitDown()
-						SitDownWhenSleepy = false
+					if player:isOnGround() then
+						if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
+							SitDownWhenSleepy = true
+						else
+							ActionWheelClass.sitDown()
+							SitDownWhenSleepy = false
+						end
 					end
 				end
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, false)
