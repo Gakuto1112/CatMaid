@@ -30,8 +30,12 @@ end
 ---現在座れる状況かを返す。
 ---@return boolean
 function canSitDown()
-	local velocity = player:getVelocity()
-	return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE" and not WardenClass.WardenNearby
+	if player:exists() then
+		local velocity = player:getVelocity()
+		return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE" and not WardenClass.WardenNearby
+	else
+		return false
+	end
 end
 
 ---座る
