@@ -27,7 +27,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
   - 耳はたまにアニメーションします。
-  - 尻尾は左右に振れます（[アクションバー](#アクションバー)で無効に出来ます）。
+  - 尻尾は左右に振れます（[アバター設定](#アバター設定について)で無効に出来ます）。
 
 	![尻尾を振る](README_Images/尻尾を振る.gif)
 
@@ -42,11 +42,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   - プレイヤーの利き手に応じてどちらが動くかが変化します。
 - 時々瞬きします。
 - ダメージを受けた時、低HP時、低満腹度時に目が変化します。
-- [アクションバー](#アクションバー)でニッコリしたり、ウィンクしたりします。
+- [アバター設定](#アバター設定について)でニッコリしたり、ウィンクしたりします。
   ![ニッコリ](README_Images/「ニャー」と鳴く（スマイル）.gif)
   ![スマイル](README_Images/「ニャー」と鳴く（ウィンク）.gif)
 
-- 歩いたり、跳んだりすると鈴の音がなります（[アクションバー](#アクションバー)で無効に出来ます）。
+- 歩いたり、跳んだりすると鈴の音がなります（[アバター設定](#アバター設定について)で無効に出来ます）。
   - スニーク時は音量が1/5になります。
 - ダメージを受けると「ネコがダメージを受ける」サウンドが再生されます。
 - お気に入りの食べ物を手に持つと目がキラキラ光り、食べると満足して「ニャー」と鳴きます。
@@ -68,6 +68,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   - 水から上がった時に「ブルブル」アクションをすると体に付いた水滴を飛ばせます。
 
   ![ずぶ濡れ](README_Images/ずぶ濡れ.gif)
+
+- 溶岩や火に入って燃えてしまうと、黒焦げになってしまいます（[アバター設定](#アバター設定について)で無効に出来ます）。
+  - 雨や水に当たるとより早く冷めます。
+
+  ![黒焦げ](README_Images/黒焦げ.jpg)
 
 - ウォーデンが近くにいる（暗闇デバフを受ける）と、怯えて震えます。
   - この状態では、鈴を押さえて音が出ないようにしたり（首を絞めている訳ではないよ！）、エモートを拒否するようになります。
@@ -139,6 +144,7 @@ ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
 ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
+ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
 ```
 
@@ -151,6 +157,7 @@ ConfigClass.UseSkinName = true
 | ```ConfigClass.WaveTail``` | 尻尾を揺らすかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.HideArmor``` | 防具を隠すかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
+| ```ConfigClass.BurnEffect``` | 黒焦げになる視覚効果を有効にするかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
 
 ## テクスチャ
