@@ -156,7 +156,7 @@ ConfigClass.UseSkinName = true
 ## テクスチャ
 このアバターのテクスチャは以下の通りです。バニラのスキンをベースに作られているので、テクスチャを書き換えてスキンを変更出来ます。なお、バニラスキンと直接かかわりがあるもののみ説明します。
 
-<**追記**> 現在、Figuraは、モデルファイル内にあるテクスチャを参照しているようであり、単純にテクスチャを編集したり、置き換えたりするだけではテクスチャが反映されません。取り急ぎ、**[BlockBench](https://www.blockbench.net/)で、一度開いて保存すれば反映されるようです**。
+<**追記**> 現在、Figuraは、モデルファイル内にあるテクスチャを参照しているようであり、単純にテクスチャを編集したり、置き換えたりするだけではテクスチャが反映されません。取り急ぎ、**[BlockBench](https://www.blockbench.net/)で、一度開いて保存すれば反映されるようです**。あるいは、[TextureInjector.py](TextureInjector.py)を実行すると、[BlockBench](https://www.blockbench.net/)を使用せずにテクスチャを適用できます（実行には[Python](https://www.python.org/)が必要です）。
 
 ### [main.png](./textures/main.png)
 アバターのメイン部分となるテクスチャです。
