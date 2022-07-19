@@ -37,7 +37,7 @@ events.TICK:register(function()
 				if AFKClass.AFKCount == 6000 then
 					General.playAnimationWithArmor("afk_sleep")
 				end
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, true)
 				if (AFKClass.AFKCount - 6000) % 65 == 0 then
 					sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
 				end
@@ -53,8 +53,8 @@ events.TICK:register(function()
 						end
 					end
 				end
-				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, false)
-			elseif AFKClass.AFKCount % 300 == 0 and AFKClass.AFKCount > 0 then
+				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, true)
+			elseif AFKClass.AFKCount % 600 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					General.playAnimationWithArmor("afk_touch_bell")
 					if rightHandItemType == "none" then
