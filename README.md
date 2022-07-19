@@ -96,6 +96,10 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![髪がたなびく](README_Images/髪がたなびく.gif)
 
+- バニラのネコのテクスチャを基にした、複数種類の耳と尻尾のテクスチャを用意しています。[アバター設定](#アバター設定について)でお好みのテクスチャに変更出来ます。
+
+  ![色々な尻尾](/README_Images/色々な尻尾.jpg)
+
 ## アクションホイール
 このスキンにはいくつかのアクションが用意されています。
 
@@ -165,8 +169,9 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 - 設定値以外の所は編集しないで下さい。正常に動作しなくなるもとになります。
 
 ```lua
-ConfigClass.SkinName = "Vinny"
 ConfigClass.Language = "jp"
+ConfigClass.CatType = "BLACK"
+ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
@@ -184,8 +189,9 @@ ConfigClass.CinematicModeCamera = {
 
 | 項目 | 説明 | 有効な値 | 初期値 |
 | - | - | - | - |
-| ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
 | ```ConfigClass.Language``` | アバターのメッセージやアクションホイールのアクション名に使用される言語です。 **If you want to use English, please set to "en"!** | ```string``` "en", "jp" | jp |
+| ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | "ORIGINAL" |
+| ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
 | ``` ConfigClass.MeowSound ``` | 定期的に猫の鳴き声を発するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.BellSound``` | 鈴の音を鳴らすかどうかです。**カスタムサウンドを再生する権限が無い場合は代替の音が使用されます。** | ```boolean``` | ```true``` |
 | ```ConfigClass.WaveTail``` | 尻尾を揺らすかどうかです。 | ```boolean``` | ```true``` |
@@ -210,16 +216,15 @@ ConfigClass.CinematicModeCamera = {
 
 1. バニラスキン
    - スリムモデルのみ対応です。
-   - クラッシックモデルの右腕パーツの端から2ピクセルが被らないようにして下さい。
-   - 目（と口）は分離して8に描いて下さい。
-2. 猫耳
-3. 尻尾
-4. 鈴
-5. 前髪
-6. 後ろ髪
-7. 背中のリボン
-8. メイドスカート
-9. メイドスカートのオーバーレイ
+   - 目（と口）は分離して[mouths.png](./textures/mouths.png)に描いて下さい。
+2. 尻尾に付けるリボン
+   - 鈴に付けるリボンと共用です。
+3. 鈴
+4. 前髪
+5. 後ろ髪
+6. 背中のリボン
+7. メイドスカート
+8. メイドスカートのオーバーレイ
 
 ### [eyes.png](./textures/eyes.png)
 アバターの目のテクスチャです。

@@ -1,6 +1,7 @@
 ---@class ConfigClass アバター設定を管理するクラス
----@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
 ---@field ConfigClass.Language string 使用する言語名 Language to use in the avatar messages.
+---@field ConfigClass.CatType CatType 耳と尻尾のテクスチャの名前 The name of texture of ears and tails.
+---@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
 ---@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか Whether or not meow regularly.
 ---@field ConfigClass.BellSound boolean 鈴の音を鳴らすかどうか Whether or not play bell sound.
 ---@field ConfigClass.WaveTail boolean 尻尾を振るかどうか Whether or not wave tail.
@@ -9,6 +10,22 @@
 ---@field ConfigClass.AFKAction boolean 放置している時に専用アニメーションを再生するかどうか Whether or not play dedicated animations when you are AFK.
 ---@field ConfigClass.BurnEffect boolean 黒焦げの視覚効果を有効にするかどうか Whether or not enable burn effect.
 ---@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか Whether or not use skin name.
+
+---@alias CatType
+---| "ORIGINAL"
+---| "ALL_BLACK"
+---| "BLACK"
+---| "BRITISH_SHORTHAIR"
+---| "CALICO"
+---| "GLEY_TABBY"
+---| "JELLIE"
+---| "OCELOT"
+---| "PERSIAN"
+---| "RAGDOLL"
+---| "RED"
+---| "SIAMESE"
+---| "TABBY"
+---| "WHITE"
 
 ConfigClass = {}
 
@@ -20,8 +37,9 @@ ConfigClass = {}
 	何が何を表しているのか、有効か値は何かは、上の"@field"を参照して下さい。
 ]]
 
-ConfigClass.SkinName = "Vinny"
 ConfigClass.Language = "jp" --Valid value: "en", "jp". If you want to use English, please set to "en".
+ConfigClass.CatType = "ORIGINAL"
+ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
 ConfigClass.WaveTail = true
