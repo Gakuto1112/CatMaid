@@ -147,11 +147,18 @@ MainPage:newAction(1):item("cod"):onLeftClick(function()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if player:isLeftHanded() then
-				General.playAnimationWithArmor("left_meow")
-			else
-				General.playAnimationWithArmor("right_meow")
-			end
+			General.playAnimationWithArmor("left_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end)
+end):onRightClick(function()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			General.playAnimationWithArmor("right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)
@@ -164,13 +171,19 @@ MainPage:newAction(2):item("cod"):onLeftClick(function()
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if player:isLeftHanded() then
-				EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
-				General.playAnimationWithArmor("left_meow")
-			else
-				EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
-				General.playAnimationWithArmor("right_meow")
-			end
+			EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
+			General.playAnimationWithArmor("left_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end)
+end):onRightClick(function()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
+			General.playAnimationWithArmor("right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)
