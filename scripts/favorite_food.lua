@@ -1,13 +1,16 @@
 ---@class FavoriteFoodClass お気に入りの食べ物を食べた時の挙動を制御するクラス
 ---@field FavoriteFoods table お気に入りの食べ物を定義するテーブル
 ---@field FavoriteFoodClass.FoodEatCount integer 食べ終わりのタイミングを計るためのカウンター
+---@field FavoriteFoodClass.SatisfyCount integer お気に入りの食べ物を食べた後ゴロゴロ言うタイミングを計るカウンター
 
 FavoriteFoodClass = {}
 
 FavoriteFoods = {"minecraft:cod", "minecraft:salmon", "minecraft:cooked_cod", "minecraft:cooked_salmon"}
 FavoriteFoodClass.FoodEatCount = 0
+FavoriteFoodClass.SatisfyCount = 0
 
 events.TICK:register(function()
+	local isPaused = client:isPaused()
 	if player:getPose() ~= "SLEEPING" and not WardenClass.WardenNearby then
 		local activeItem = player:getActiveItem()
 		if General.tableFind(FavoriteFoods, General.hasItem(activeItem)) then
@@ -18,6 +21,7 @@ events.TICK:register(function()
 				MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 				FavoriteFoodClass.FoodEatCount = 0
+				FavoriteFoodClass.SatisfyCount = 170
 			end
 			FavoriteFoodClass.FoodEatCount = FavoriteFoodClass.FoodEatCount + 1
 		else
@@ -26,8 +30,17 @@ events.TICK:register(function()
 				EyesAndMouthClass.setEmotion("SHINE", "SHINE", "CLOSED", 1, false)
 			end
 		end
+		if FavoriteFoodClass.SatisfyCount > 0 and FavoriteFoodClass.SatisfyCount <= 130 and FavoriteFoodClass.SatisfyCount % 65 == 0 and not isPaused then
+			if player:getAir() > 0 then
+				sound:playSound("minecraft:entity.cat.purr", player:getPos(), player:isUnderwater() and 0.2 or 1, 1)
+			end
+		end
 	else
 		FavoriteFoodClass.FoodEatCount = 0
+		FavoriteFoodClass.SatisfyCount = 0
+	end
+	if not isPaused then
+		FavoriteFoodClass.SatisfyCount = math.max(FavoriteFoodClass.SatisfyCount - 1, 0)
 	end
 end)
 
