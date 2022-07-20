@@ -39,7 +39,7 @@ events.TICK:register(function()
 				end
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, true)
 				if (AFKClass.AFKCount - 6000) % 65 == 0 then
-					sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
+					MeowClass.playMeow("PURR", 1)
 				end
 			elseif AFKClass.AFKCount >= 5400 then
 				if AFKClass.AFKCount == 5400 then

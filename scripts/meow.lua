@@ -5,13 +5,14 @@
 ---@alias MeowName
 ---| "NORMAL"
 ---| "PURREOW"
+---| "PURR"
 ---| "WEAK"
 ---| "HURT"
 ---| "DEATH"
 
 MeowClass = {}
 
-MeowNameID = {NORMAL = "minecraft:entity.cat.ambient", PURREOW = "minecraft:entity.cat.purreow", WEAK = "minecraft:entity.cat.stray_ambient", HURT = "minecraft:entity.cat.hurt", DEATH = "minecraft:entity.ocelot.death"}
+MeowNameID = {NORMAL = {name = "minecraft:entity.cat.ambient", pitch = 1.5}, PURREOW = {name = "minecraft:entity.cat.purreow", pitch = 1.5}, PURR = {name = "minecraft:entity.cat.purr", pitch = 1}, WEAK = {name = "minecraft:entity.cat.stray_ambient", pitch = 1.5}, HURT = {name = "minecraft:entity.cat.hurt", pitch = 1.5}, DEATH = {name = "minecraft:entity.ocelot.death", pitch = 1.5}}
 MeowCount = 0
 
 ---猫の鳴き声を再生する。
@@ -21,13 +22,13 @@ function MeowClass.playMeow(soundName, volume)
 	local playerPos = player:getPos()
 	if player:getAir() > 0 or General.getStatusEffect("water_breathing") then
 		if player:isUnderwater() then
-			sound:playSound(MeowNameID[soundName], playerPos, volume * 0.2, 1.5)
+			sound:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
 			sound:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
 			for _ = 1, 4 do
 				particle:addParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
 			end
 		else
-			sound:playSound(MeowNameID[soundName], playerPos, volume, 1.5)
+			sound:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])
 		end
 	end
 end

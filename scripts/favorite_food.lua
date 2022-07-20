@@ -31,9 +31,7 @@ events.TICK:register(function()
 			end
 		end
 		if FavoriteFoodClass.SatisfyCount > 0 and FavoriteFoodClass.SatisfyCount <= 130 and FavoriteFoodClass.SatisfyCount % 65 == 0 and not isPaused then
-			if player:getAir() > 0 then
-				sound:playSound("minecraft:entity.cat.purr", player:getPos(), player:isUnderwater() and 0.2 or 1, 1)
-			end
+			MeowClass.playMeow("PURR", 1)
 		end
 	else
 		FavoriteFoodClass.FoodEatCount = 0

@@ -43,7 +43,7 @@ events.TICK:register(function()
 		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
 			if (SleepCount - 40) % 65 == 0 then
-				sound:playSound("minecraft:entity.cat.purr", player:getPos(), 1, 1)
+				MeowClass.playMeow("PURR", 1)
 			end
 		end
 		animation["main"]["wave_tail"]:stop()
