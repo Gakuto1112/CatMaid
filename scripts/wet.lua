@@ -10,6 +10,7 @@ WetClass.WetCount = 0
 events.TICK:register(function()
 	if player:isWet() then
 		WetClass.WetCount = player:isInWater() and 1200 or WetClass.WetCount + 4
+		AutoShakeCount = 0
 	elseif WetClass.WetCount > 0 then
 		if WetClass.WetCount % 5 == 0 then
 			local playerPos = player:getPos()
