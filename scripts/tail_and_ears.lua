@@ -37,15 +37,18 @@ events.TICK:register(function()
 		LeftEar:setRot(0, 0, 0)
 	end
 	--尻尾
-	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
+	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 		Tail1:setRot(0, 0, 0)
 		Tail2:setRot(0, 0, 0)
+		animations["main"]["wave_tail"]:speed(1)
 	elseif condition == 1 then
 		Tail1:setRot(40, 0, 0)
 		Tail2:setRot(-15, 0, 0)
+		animations["main"]["wave_tail"]:speed(0.75)
 	else
 		Tail1:setRot(90, 0, 0)
 		Tail2:setRot(0, 0, 0)
+		animations["main"]["wave_tail"]:speed(0.5)
 	end
 
 	--耳曲げ
