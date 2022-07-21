@@ -1,5 +1,5 @@
 ---@class LanguageClass アバターの表示言語を管理するクラス
----@param LanguageData table 言語データ
+---@field LanguageData table 言語データ
 
 LanguageClass = {}
 

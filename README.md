@@ -92,6 +92,12 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   ![居眠り](README_Images/居眠り.gif)
   ![AFK復帰](README_Images/AFK復帰.gif)
 
+- 暗視が付与されている時は、猫のように目が光ります。
+  - 暗視の仕様上、自分自身では目が光るのを確認できません。
+  - どうしても確認したい方は、シェーダーパックを使用すると確認出来ます。
+
+  ![目が光る](README_Images/夜目.jpg)
+
 - プレイヤーが動くと髪がたなびきます。
 
   ![髪がたなびく](README_Images/髪がたなびく.gif)

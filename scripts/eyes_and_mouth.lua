@@ -75,9 +75,6 @@ events.TICK:register(function()
 	EyesAndMouthClass.EmotionCount = EyesAndMouthClass.EmotionCount > 0 and EyesAndMouthClass.EmotionCount - 1 or EyesAndMouthClass.EmotionCount
 
 	--目を光らせる
-	--[[
-	--NOTE: CustomModelPart:setLight()がリセットできないので、リセットできるようになるまで、コメントアウトしておく。
-	--TODO: リセットできるようになったら、下のFIXMEを修正してコメントアウトを外す。
 	local nightVision = General.getStatusEffect("night_vision")
 	local playerPos = player:getPos()
 	local lightLevel = world.getLightLevel(playerPos.x, playerPos.y + 1, playerPos.z)
@@ -91,10 +88,9 @@ events.TICK:register(function()
 			LeftEyeLight:setLight(15)
 		end
 	else
-		RightEyeLight:setLight() --FIXME: リセット処理を書く。
-		LeftEyeLight:setLight() --FIXME: リセット処理を書く。
+		RightEyeLight:setLight()
+		LeftEyeLight:setLight()
 	end
-	]]
 end)
 
 return EyesAndMouthClass
