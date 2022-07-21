@@ -45,7 +45,7 @@ events.TICK:register(function()
 				if AFKClass.AFKCount == 5400 then
 					General.playAnimationWithArmor("afk_sleepy")
 					if player:isOnGround() then
-						if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
+						if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 							SitDownWhenSleepy = true
 						else
 							ActionWheelClass.sitDown()
@@ -58,31 +58,31 @@ events.TICK:register(function()
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					General.playAnimationWithArmor("afk_touch_bell")
 					if rightHandItemType == "none" then
-						animation["alternative_arms"]["afk_right_bell"]:play()
+						animations["alternative_arms"]["afk_right_bell"]:play()
 						AFKClass.TouchBellCount = 67
 					else
-						animation["alternative_arms"]["afk_left_bell"]:play()
+						animations["alternative_arms"]["afk_left_bell"]:play()
 						AFKClass.TouchBellCount = -67
 					end
 				else
 					if leftHanded then
 						if leftHandItemType ~= "minecraft:cake" then
 							General.playAnimationWithArmor("afk_touch_bell")
-							animation["alternative_arms"]["afk_left_bell"]:play()
+							animations["alternative_arms"]["afk_left_bell"]:play()
 							AFKClass.TouchBellCount = -67
 						elseif rightHandItemType ~= "minecraft:cake" then
 							General.playAnimationWithArmor("afk_touch_bell")
-							animation["alternative_arms"]["afk_right_bell"]:play()
+							animations["alternative_arms"]["afk_right_bell"]:play()
 							AFKClass.TouchBellCount = 67
 						end
 					else
 						if rightHandItemType ~= "minecraft:cake" then
 							General.playAnimationWithArmor("afk_touch_bell")
-							animation["alternative_arms"]["afk_right_bell"]:play()
+							animations["alternative_arms"]["afk_right_bell"]:play()
 							AFKClass.TouchBellCount = 67
 						else
 							General.playAnimationWithArmor("afk_touch_bell")
-							animation["alternative_arms"]["afk_left_bell"]:play()
+							animations["alternative_arms"]["afk_left_bell"]:play()
 							AFKClass.TouchBellCount = -67
 						end
 					end
@@ -101,8 +101,8 @@ events.TICK:register(function()
 		AFKClass.AFKCount = -30
 	else
 		General.stopAnimationWithArmor("afk_touch_bell")
-		animation["alternative_arms"]["afk_right_bell"]:stop()
-		animation["alternative_arms"]["afk_left_bell"]:stop()
+		animations["alternative_arms"]["afk_right_bell"]:stop()
+		animations["alternative_arms"]["afk_left_bell"]:stop()
 		if AFKClass.AFKCount > 0 then
 			AFKClass.AFKCount = 0
 		end

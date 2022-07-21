@@ -37,7 +37,7 @@ events.TICK:register(function()
 		LeftEar:setRot(0, 0, 0)
 	end
 	--尻尾
-	if condition == 2 or player:getPose() == "SLEEPING" or animation["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
+	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" then --TODO: アニメーションの速度変更関数が実装された時に、conditionに応じて尻尾の速度を変更する。
 		Tail1:setRot(0, 0, 0)
 		Tail2:setRot(0, 0, 0)
 	elseif condition == 1 then
@@ -50,7 +50,7 @@ events.TICK:register(function()
 
 	--耳曲げ
 	if EarBendCount == 300 then
-		animation["main"][player:isLeftHanded() and "left_ear_bend" or "right_ear_bend"]:play()
+		animations["main"][player:isLeftHanded() and "left_ear_bend" or "right_ear_bend"]:play()
 		EarBendCount = 0
 	elseif not client.isPaused() then
 		EarBendCount = EarBendCount + 1
@@ -63,7 +63,7 @@ Tail1.Tail1.Tail1:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
 Tail2.Tail2:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
 
 if ConfigClass.WaveTail then
-	animation["main"]["wave_tail"]:play()
+	animations["main"]["wave_tail"]:play()
 end
 
 return TailAndEarsClass

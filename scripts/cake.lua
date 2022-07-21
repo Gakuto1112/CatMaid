@@ -47,19 +47,19 @@ events.TICK:register(function()
 					rightCakeBody:setUVPixels(0, 0)
 				end
 			end
-			animation["alternative_arms"]["right_cake"]:play()
+			animations["alternative_arms"]["right_cake"]:play()
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
-		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			rightItem:setVisible(true)
 		end
 		rightCake:setVisible(false)
 		rightCakeBody:setSecondaryRenderType(nil)
-		animation["alternative_arms"]["right_cake"]:stop()
+		animations["alternative_arms"]["right_cake"]:stop()
 	end
 	if leftHandItemType == "minecraft:cake" and not isSleeping then
 		leftArm:setVisible(false)
@@ -84,19 +84,19 @@ events.TICK:register(function()
 					leftCakeBody:setUVPixels(0, 0)
 				end
 			end
-			animation["alternative_arms"]["left_cake"]:play()
+			animations["alternative_arms"]["left_cake"]:play()
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
 			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end
-		if not isSleeping and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			leftItem:setVisible(true)
 		end
 		leftCake:setVisible(false)
 		leftCakeBody:setSecondaryRenderType(nil)
-		animation["alternative_arms"]["left_cake"]:stop()
+		animations["alternative_arms"]["left_cake"]:stop()
 	end
 	table.insert(RightHandItemTypeData, rightHandItemType)
 	table.insert(LeftHandItemTypeData, leftHandItemType)

@@ -63,15 +63,15 @@ end
 ---防具モデルと同時にアニメーションを再生する。
 ---@param animationName string アニメーションの名前
 function General.playAnimationWithArmor(animationName)
-	animation["main"][animationName]:play()
-	animation["armor"][animationName]:play()
+	animations["main"][animationName]:play()
+	animations["armor"][animationName]:play()
 end
 
 ---防具モデルと同時にアニメーションを停止する。
 ---@param animationName string アニメーションの名前
 function General.stopAnimationWithArmor(animationName)
-	animation["main"][animationName]:stop()
-	animation["armor"][animationName]:stop()
+	animations["main"][animationName]:stop()
+	animations["armor"][animationName]:stop()
 end
 
 events.TICK:register(function()

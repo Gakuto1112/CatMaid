@@ -3,7 +3,7 @@
 NameplateClass = {}
 
 events.TICK:register(function()
-	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
+	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 		nameplate.ENTITY:setPos(0, -0.5, 0)
 	else
 		nameplate.ENTITY:setPos(0, 0, 0)

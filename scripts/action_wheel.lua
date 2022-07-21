@@ -44,21 +44,21 @@ end
 function ActionWheelClass.sitDown()
 	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
 	General.playAnimationWithArmor("sit_down")
-	animation["alternative_arms"]["sit_down"]:play()
+	animations["alternative_arms"]["sit_down"]:play()
 	General.stopAnimationWithArmor("stand_up")
-	animation["alternative_arms"]["stand_up"]:stop()
-	animation["main"]["wave_tail"]:stop()
+	animations["alternative_arms"]["stand_up"]:stop()
+	animations["main"]["wave_tail"]:stop()
 end
 
 --座っている状態から立ち上がる
 function ActionWheelClass.standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
 	General.playAnimationWithArmor("stand_up")
-	animation["alternative_arms"]["stand_up"]:play()
+	animations["alternative_arms"]["stand_up"]:play()
 	General.stopAnimationWithArmor("sit_down")
-	animation["alternative_arms"]["sit_down"]:stop()
+	animations["alternative_arms"]["sit_down"]:stop()
 	if ConfigClass.WaveTail then
-		animation["main"]["wave_tail"]:play()
+		animations["main"]["wave_tail"]:play()
 	end
 	models.models.main.Avatar.Head:setRot(0, 0, 0)
 end
@@ -66,7 +66,7 @@ end
 ---ブルブル
 function ActionWheelClass.bodyShake()
 	General.playAnimationWithArmor("shake")
-	animation["alternative_arms"]["shake"]:play()
+	animations["alternative_arms"]["shake"]:play()
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
 	if WetClass.WetCount > 0 then
@@ -96,9 +96,9 @@ events.TICK:register(function()
 			end
 		end
 	end
-	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
+	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		ActionWheelClass.standUp()
-		animation["main"]["sit_down_first_person_fix"]:stop()
+		animations["main"]["sit_down_first_person_fix"]:stop()
 	end
 	if ShakeSplashCount > 0 then
 		if ShakeSplashCount % 5 == 0 then
@@ -122,17 +122,17 @@ events.TICK:register(function()
 end)
 
 events.RENDER:register(function()
-	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" then
+	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 		models.models.main.Avatar.Head:setRot(10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1), 0, 0)
 	end
 end)
 
 events.WORLD_RENDER:register(function()
 	MainPage:getAction(4):toggled(canSitDown() and MainPage:getAction(4):isToggled())
-	if animation["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
-		animation["main"]["sit_down_first_person_fix"]:play()
+	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
+		animations["main"]["sit_down_first_person_fix"]:play()
 	else
-		animation["main"]["sit_down_first_person_fix"]:stop()
+		animations["main"]["sit_down_first_person_fix"]:stop()
 	end
 end)
 

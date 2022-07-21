@@ -46,21 +46,21 @@ events.TICK:register(function()
 				MeowClass.playMeow("PURR", 1)
 			end
 		end
-		animation["main"]["wave_tail"]:stop()
+		animations["main"]["wave_tail"]:stop()
 		SleepCount = SleepCount + 1
 	else
 		if SleepClass.SleepData[1] and ConfigClass.WaveTail then
-			animation["main"]["wave_tail"]:play()
+			animations["main"]["wave_tail"]:play()
 		end
 		head:setVisible(true)
 		if not WardenClass.WardenNearby then
-			if rightHandItemType ~= "minecraft:cake" and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+			if rightHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then
 					rightArm:setRot(0, 0, 0)
 				end
 				rightItem:setVisible(true)
 			end
-			if leftHandItemType ~= "minecraft:cake" and animation["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+			if leftHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then
 					leftArm:setRot(0, 0, 0)
 				end

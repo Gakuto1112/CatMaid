@@ -36,36 +36,36 @@ events.TICK:register(function()
 	if WardenClass.WardenNearby then
 		if not WardenNearbyData[1] then
 			General.playAnimationWithArmor("afraid")
-			animation["alternative_arms"]["afraid"]:play()
+			animations["alternative_arms"]["afraid"]:play()
 		end
 		local isSleeping = player:getPose() == "SLEEPING"
 		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
-				animation["alternative_arms"]["right_hide_bell"]:play()
+				animations["alternative_arms"]["right_hide_bell"]:play()
 			end
 			rightArm:setVisible(false)
 			rightAlternativeArm:setVisible(true)
 		else
-			animation["alternative_arms"]["right_hide_bell"]:stop()
+			animations["alternative_arms"]["right_hide_bell"]:stop()
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
 		end
 		if leftHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
-				animation["alternative_arms"]["left_hide_bell"]:play()
+				animations["alternative_arms"]["left_hide_bell"]:play()
 			end
 			leftArm:setVisible(false)
 			leftAlternativeArm:setVisible(true)
 		else
-			animation["alternative_arms"]["left_hide_bell"]:stop()
+			animations["alternative_arms"]["left_hide_bell"]:stop()
 			leftArm:setVisible(true)
 			leftAlternativeArm:setVisible(false)
 		end
 	else
 		General.stopAnimationWithArmor("afraid")
-		animation["alternative_arms"]["afraid"]:stop()
-		animation["alternative_arms"]["right_hide_bell"]:stop()
-		animation["alternative_arms"]["left_hide_bell"]:stop()
+		animations["alternative_arms"]["afraid"]:stop()
+		animations["alternative_arms"]["right_hide_bell"]:stop()
+		animations["alternative_arms"]["left_hide_bell"]:stop()
 		if AFKClass.TouchBellCount <= 0 then
 			rightArm:setVisible(true)
 			rightAlternativeArm:setVisible(false)
