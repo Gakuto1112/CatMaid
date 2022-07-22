@@ -26,6 +26,7 @@ WardenClass = require("scripts/warden")
 CakeClass = require("scripts/cake")
 CinematicModeClass = require("scripts/cinematic_mode")
 GoatHornClass = require("scripts/goat_horn")
+SummerFeatureClass = require("scripts/summer_feature")
 
 --初期化処理
 vanilla_model.PLAYER:setVisible(false)

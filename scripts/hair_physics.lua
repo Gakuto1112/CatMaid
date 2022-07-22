@@ -71,6 +71,11 @@ events.RENDER:register(function()
 			hairLimit = {{15, 80}, {0, 0}, {0, 0}}
 		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
 			hairLimit = {{0, 80}, {-80, 0}, {0, 0}}
+		elseif SummerFeatureClass.SummerFeature then
+			hairLimit = {{11, 80}, {-80, -11}, {0, 0}}
+			if chestItemType == "minecraft:elytra" then
+				hairLimit[2] = {0, 0}
+			end
 		else
 			hairLimit = {{15, 80}, {-80, -17}, {-75, 0}}
 		end

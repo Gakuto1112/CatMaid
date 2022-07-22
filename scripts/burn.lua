@@ -11,7 +11,7 @@ SmokeCount = 0
 ---@param burn integer 焦げ具合
 function setBurn(burn)
 	models.models.main.Avatar.Head.Head:setColor(burn, burn, burn)
-	models.models.main.Avatar.Head["Hat Layer"]:setColor(burn, burn, burn)
+	models.models.main.Avatar.Head.HatLayer:setColor(burn, burn, burn)
 	models.models.main.Avatar.Head.Ears:setColor(burn, burn, burn)
 	models.models.main.Avatar.Body:setColor(burn, burn, burn)
 	models.models.main.Avatar.RightLeg:setColor(burn, burn, burn)

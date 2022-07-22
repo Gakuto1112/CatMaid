@@ -6,6 +6,14 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![メイン画像](README_Images/メイン.jpg)
 
+🌊 **It's summer time!** 🌊
+
+![夏機能1](README_Images/夏機能1.jpg)
+
+![夏機能2](README_Images/夏機能2.jpg)
+
+詳しくは[こちら](#アクション7夏機能のオンオフ)
+
 ## このブランチについて
 このブランチのアバター、[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura Prewrite版（v0.0.8）](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura Prewrite版（v0.0.8）](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
 
@@ -106,6 +114,10 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![色々な尻尾](/README_Images/色々な尻尾.jpg)
 
+- 夏機能搭載！有効にすると水着姿になります。
+
+  ![夏機能1](README_Images/夏機能1.jpg)
+
 ## アクションホイール
 このスキンにはいくつかのアクションが用意されています。
 
@@ -144,7 +156,12 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 （シェーダーパックはご自身でご用意下さい）
 
-### アクション7：設定画面を開く
+### アクション7：夏機能のオン/オフ
+夏機能のオン/オフを切り替えます。
+
+![夏機能1](README_Images/夏機能1.jpg)
+
+### アクション8：設定画面を開く
 ~~クリックして設定画面を開きます。~~
 
 **2022/7/18現在、機能していません！！**
@@ -231,6 +248,7 @@ ConfigClass.CinematicModeCamera = {
 6. 背中のリボン
 7. メイドスカート
 8. メイドスカートのオーバーレイ
+9. 夏機能用の水着スキン
 
 ### [eyes.png](./textures/eyes.png)
 アバターの目のテクスチャです。

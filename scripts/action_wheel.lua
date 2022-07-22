@@ -225,14 +225,21 @@ MainPage:newAction(5):item("water_bucket"):onLeftClick(function()
 	end)
 end)
 
---アクション6. シネマティックモード
-MainPage:newAction(6):title(LanguageClass.getTranslate("action_wheel__main__action_6__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+--アクション6. 夏機能
+MainPage:newToggle(6):title(LanguageClass.getTranslate("action_wheel__main__action_6__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main__action_6__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+	SummerFeatureClass.setSummerFeature(true)
+end):onUntoggle(function()
+	SummerFeatureClass.setSummerFeature(false)
+end)
+
+--アクション7. シネマティックモード
+MainPage:newAction(7):title(LanguageClass.getTranslate("action_wheel__main__action_7__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = true
 	action_wheel:setPage(CinematicPage)
 end)
 
---アクション7. 設定を開く
-MainPage:newAction(7):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_7__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+--アクション8. 設定を開く
+MainPage:newAction(8):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_8__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 
