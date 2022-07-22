@@ -36,7 +36,8 @@ events.TICK:register(function()
 		LeftEar:setRot(0, 0, 0)
 	end
 	--尻尾
-	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
+	local gamemode = player:getGamemode()
+	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
 		Tail1:setRot(0, 0, 0)
 		Tail2:setRot(0, 0, 0)
 		animations["main"]["wave_tail"]:speed(1)
