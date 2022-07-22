@@ -11,6 +11,7 @@ HairPhysicsClass = {}
 
 FrontHair = models.models.main.Avatar.Body.Hairs.FrontHair
 BackHair = models.models.main.Avatar.Body.Hairs.BackHair
+RibbonLine = models.models.main.Avatar.Body.Skirt.BackRibbon.RibbonLine
 HairRenderCount = 0
 HairRenderLimit = math.ceil(8192 / meta:getMaxWorldRenderCount())
 VelocityData = {{}, {}, {}}
@@ -67,26 +68,30 @@ events.RENDER:register(function()
 		local hairLimit
 		local chestItemType = General.hasItem(player:getItem(5))
 		if chestItemType == "minecraft:elytra" then
-			hairLimit = {{13, 80}, {0, 0}}
+			hairLimit = {{15, 80}, {0, 0}, {0, 0}}
 		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
-			hairLimit = {{0, 80}, {-80, 0}}
+			hairLimit = {{0, 80}, {-80, 0}, {0, 0}}
 		else
-			hairLimit = {{13, 80}, {-80, -13}}
+			hairLimit = {{15, 80}, {-80, -17}, {-75, 0}}
 		end
 		local playerPose = player:getPose()
 		if playerPose == "FALL_FLYING" then
 			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
 			BackHair:setRot(hairLimit[2][2], 0, 0)
+			RibbonLine:setRot(hairLimit[3][2], 0, 0)
 		elseif playerPose == "SWIMMING" then
 			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
 			BackHair:setRot(hairLimit[2][2], 0, 0)
+			RibbonLine:setRot(hairLimit[3][2], 0, 0)
 		else
 			if math.floor(VelocityAverage[2] * 100 + 0.5) / 100 < 0 then
 				FrontHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[2] * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
 				BackHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0)
+				RibbonLine:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80, hairLimit[3][1]), hairLimit[3][2]), 0, 0)
 			else
 				FrontHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[3] * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
 				BackHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[3] * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0)
+				RibbonLine:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[3] * 0.05, hairLimit[3][1]), hairLimit[3][2]), 0, 0)
 			end
 		end
 		HairRenderCount = 0
