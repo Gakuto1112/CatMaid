@@ -16,9 +16,8 @@ CatTypeID = {ORIGINAL = 0, ALL_BLACK = 1, BLACK = 2, BRITISH_SHORTHAIR = 3, CALI
 EarBendCount = 0
 
 events.TICK:register(function()
-	local gamemode = player:getGamemode()
 	local condition --0. 低HP、低満腹度, 1. 中HP、中満腹度, 2. 高HP、高満腹度
-	if ((player:getHealth() / player:getMaxHealth() > 0.5 and player:getFood() > 10) or gamemode == "CREATIVE" or gamemode == "SPECTATOR") and player:getFrozenTicks() < 140 then
+	if player:getHealth() / player:getMaxHealth() > 0.5 and player:getFood() > 10 and player:getFrozenTicks() < 140 then
 		condition = 2
 	elseif not General.isTired() then
 		condition = 1

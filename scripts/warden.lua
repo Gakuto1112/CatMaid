@@ -38,6 +38,11 @@ events.TICK:register(function()
 			General.playAnimationWithArmor("afraid")
 			animations["alternative_arms"]["afraid"]:play()
 		end
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
+		else
+			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)
+		end
 		local isSleeping = player:getPose() == "SLEEPING"
 		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then

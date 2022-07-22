@@ -96,7 +96,11 @@ events.TICK:register(function()
 		if not SitDownWhenSleepy then
 			ActionWheelClass.standUp()
 		end
-		EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 10, true)
+		else
+			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
+		end
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30
 	else

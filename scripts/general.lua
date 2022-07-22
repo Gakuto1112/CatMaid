@@ -57,7 +57,8 @@ end
 ---プレイヤーが疲れているか（HPが4以下又は満腹度が6以下）かどうか返す。
 ---@return boolean
 function General.isTired()
-	return player:getHealth() <= 4 or player:getFood() <= 6 or player:getFrozenTicks() == 140
+	local gamemode = player:getGamemode()
+	return (player:getHealth() <= 4 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
 end
 
 ---防具モデルと同時にアニメーションを再生する。

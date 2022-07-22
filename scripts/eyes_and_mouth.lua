@@ -11,6 +11,7 @@
 ---| "NORMAL"
 ---| "SHINE"
 ---| "SURPLISED"
+---| "SURPLISED_TIRED"
 ---| "TIRED"
 ---| "SLEEPY"
 ---| "CLOSED"
@@ -25,7 +26,7 @@ EyesAndMouthClass = {}
 
 RightEyeLight = models.models.main.Avatar.Head.FaceParts.RightEye.RightEyeLight
 LeftEyeLight = models.models.main.Avatar.Head.FaceParts.LeftEye.LeftEyeLight
-EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, TIRED = 3, SLEEPY = 4, CLOSED = 5, UNEQUAL = 6}
+EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, SURPLISED_TIRED = 3, TIRED = 4, SLEEPY = 5, CLOSED = 6, UNEQUAL = 7}
 MouthTypeID = {NONE = -1, CLOSED = 0, OPENED = 1}
 BlinkCount = 0
 EyesAndMouthClass.EmotionCount = 0
@@ -58,9 +59,7 @@ end
 
 events.TICK:register(function()
 	if EyesAndMouthClass.EmotionCount == 0 then
-		if WardenClass.WardenNearby then
-			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)
-		elseif General.isTired() then
+		if General.isTired() then
 			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
 		else
 			EyesAndMouthClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)

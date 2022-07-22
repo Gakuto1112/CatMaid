@@ -176,7 +176,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ```lua
 ConfigClass.Language = "jp"
-ConfigClass.CatType = "BLACK"
+ConfigClass.CatType = "ORIGINAL"
 ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true
 ConfigClass.BellSound = true
@@ -239,7 +239,7 @@ ConfigClass.CinematicModeCamera = {
 
 - 上から右目の光らない部分、右目の光る部分、左目の光らない部分、左目の光る部分、口です。
 - 目と口だけは他の部位と比べて2倍の解像度になっています。
-- 目は左から、通常の目、キラキラした目、ダメージを受けた時の目、低HP時、低満腹度時の目、眠い時の目、閉じている目です。
+- 目は左から、通常の目、キラキラした目、驚いた目、低HP時、低満腹度時に驚いた目、低HP時、低満腹度時の目、眠い時の目、閉じている目です。
 
 ### [mouths.png](./textures/mouths.png)
 アバターの口のテクスチャです。
