@@ -31,6 +31,7 @@ events.TICK:register(function()
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
+	local onGround = player:isOnGround()
 	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and ConfigClass.AFKAction then
 		if not client.isPaused() then
 			if AFKClass.AFKCount >= 6000 then
@@ -44,7 +45,7 @@ events.TICK:register(function()
 			elseif AFKClass.AFKCount >= 5400 then
 				if AFKClass.AFKCount == 5400 then
 					General.playAnimationWithArmor("afk_sleepy")
-					if player:isOnGround() then
+					if onGround then
 						if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 							SitDownWhenSleepy = true
 						else
@@ -93,7 +94,7 @@ events.TICK:register(function()
 	elseif AFKClass.AFKCount >= 5400 then
 		General.stopAnimationWithArmor("afk_sleepy")
 		General.stopAnimationWithArmor("afk_sleep")
-		if not SitDownWhenSleepy then
+		if not SitDownWhenSleepy and onGround then
 			ActionWheelClass.standUp()
 		end
 		if General.isTired() then
