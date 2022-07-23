@@ -1,13 +1,15 @@
 ---@class ActionWheelClass アクションホイールを制御するクラス
----@field MainPage Page アクションホイールのメインページ
+---@field MainPages table アクションホイールのメインページのテーブル
 ---@field CinematicPage Page シネマティックモードモードの操作ページ
+---@field CurrentMainPage integer 現在のメインページのページ数
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
 ---@field TerrorSweatCount integer エモートを拒否する時にかく汗のタイミングを計るカウンター
 
 ActionWheelClass = {}
 
-MainPage = action_wheel:createPage("main_page")
+MainPages = {action_wheel:createPage("main_page_1"), action_wheel:createPage("main_page_2")}
 CinematicPage = action_wheel:createPage("cinematic_mode_page")
+CurrentMainPage = 1
 ActionWheelClass.ActionCount = 0
 ShakeSplashCount = 0
 TerrorSweatCount = 0
@@ -77,22 +79,29 @@ function ActionWheelClass.bodyShake()
 end
 
 events.TICK:register(function()
-	local actionTitles = {LanguageClass.getTranslate("action_wheel__main__action_1__title"), LanguageClass.getTranslate("action_wheel__main__action_2__title"), LanguageClass.getTranslate("action_wheel__main__action_3__title"), LanguageClass.getTranslate("action_wheel__main__action_4__title"), LanguageClass.getTranslate("action_wheel__main__action_5__title")}
-	local action4 = MainPage:getAction(4)
+	local actionTitles1 = {LanguageClass.getTranslate("action_wheel__main_1__action_1__title"), LanguageClass.getTranslate("action_wheel__main_1__action_2__title"), LanguageClass.getTranslate("action_wheel__main_1__action_3__title")}
+	local actionTitles2 = {LanguageClass.getTranslate("action_wheel__main_2__action_1__title"), LanguageClass.getTranslate("action_wheel__main_2__action_2__title")}
+	local sitDownAction = MainPages[2]:getAction(1)
 	if WardenClass.WardenNearby then
-		for index, actionName in ipairs(actionTitles) do
-			MainPage:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+		for index, actionName in ipairs(actionTitles1) do
+			MainPages[1]:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+		end
+		for index, actionName in ipairs(actionTitles2) do
+			MainPages[2]:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
 		end
 	else
-		for index, actionName in ipairs(actionTitles) do
-			if index == 4 then
+		for index, actionName in ipairs(actionTitles1) do
+			MainPages[1]:getAction(index):title(actionName):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
+		end
+		for index, actionName in ipairs(actionTitles2) do
+			if index == 1 then
 				if canSitDown() then
-					action4:title(actionName):color(1, 85 / 255, 1):toggleColor(1, 85 / 255, 1):hoverColor(1, 1, 1)
+					sitDownAction:title(actionName):color(1, 85 / 255, 1):toggleColor(1, 85 / 255, 1):hoverColor(1, 1, 1)
 				else
-					action4:title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):toggleColor(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+					sitDownAction:title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):toggleColor(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
 				end
 			else
-				MainPage:getAction(index):title(actionName):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
+				MainPages[2]:getAction(index):title(actionName):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
 			end
 		end
 	end
@@ -128,7 +137,7 @@ events.RENDER:register(function()
 end)
 
 events.WORLD_RENDER:register(function()
-	MainPage:getAction(4):toggled(canSitDown() and MainPage:getAction(4):isToggled())
+	MainPages[2]:getAction(1):toggled(canSitDown() and MainPages[2]:getAction(1):isToggled())
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
 		animations["main"]["sit_down_first_person_fix"]:play()
 	else
@@ -137,10 +146,8 @@ events.WORLD_RENDER:register(function()
 end)
 
 --メインページのアクションの設定
-MainPage:newAction()
-
---アクション1. 「ニャー」と鳴く（スマイル）
-MainPage:newAction(1):item("cod"):onLeftClick(function()
+--アクション1-1. 「ニャー」と鳴く（スマイル）
+MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
@@ -164,8 +171,8 @@ end):onRightClick(function()
 	end)
 end)
 
---アクション2. 「ニャー」と鳴く（ウィンク）
-MainPage:newAction(2):item("cod"):onLeftClick(function()
+--アクション1-2. 「ニャー」と鳴く（ウィンク）
+MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
@@ -189,8 +196,8 @@ end):onRightClick(function()
 	end)
 end)
 
---アクション3. 「ニャー」と鳴く（キラキラ）
-MainPage:newAction(3):item("cod"):onLeftClick(function()
+--アクション1-3. 「ニャー」と鳴く（キラキラ）
+MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
@@ -207,8 +214,8 @@ MainPage:newAction(3):item("cod"):onLeftClick(function()
 	end)
 end)
 
---アクション4. おすわり
-MainPage:newToggle(4):item("oak_stairs"):onToggle(function()
+--アクション2-1. おすわり
+MainPages[2]:newToggle(1):item("oak_stairs"):onToggle(function()
 	runAction(function()
 		if canSitDown() then
 			ActionWheelClass.sitDown()
@@ -218,30 +225,39 @@ end):onUntoggle(function()
 	ActionWheelClass.standUp()
 end)
 
---アクション5. ブルブル
-MainPage:newAction(5):item("water_bucket"):onLeftClick(function()
+--アクション2-2. ブルブル
+MainPages[2]:newAction(2):item("water_bucket"):onLeftClick(function()
 	runAction(function()
 		ActionWheelClass.bodyShake()
 	end)
 end)
 
---アクション6. 夏機能
-MainPage:newToggle(6):title(LanguageClass.getTranslate("action_wheel__main__action_6__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main__action_6__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+--アクション2-3. 夏機能
+MainPages[2]:newToggle(3):title(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
 	SummerFeatureClass.setSummerFeature(true)
 end):onUntoggle(function()
 	SummerFeatureClass.setSummerFeature(false)
 end)
 
---アクション7. シネマティックモード
-MainPage:newAction(7):title(LanguageClass.getTranslate("action_wheel__main__action_7__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+--アクション2-4. シネマティックモード
+MainPages[2]:newAction(4):title(LanguageClass.getTranslate("action_wheel__main_2__action_4__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = true
 	action_wheel:setPage(CinematicPage)
 end)
 
---アクション8. 設定を開く
-MainPage:newAction(8):title("§7"..LanguageClass.getTranslate("action_wheel__main__action_8__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+--アクション2-5. 設定を開く
+MainPages[2]:newAction(5):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_5__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
+
+--アクション8（共通）. ページ切り替え
+for index, mainPage in ipairs(MainPages) do
+	mainPage:newScroll(8):title(LanguageClass.getTranslate("action_wheel__main__page_switch__title")..index.."/"..#MainPages):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
+		CurrentMainPage = CurrentMainPage - direction
+		CurrentMainPage = CurrentMainPage < 1 and CurrentMainPage + #MainPages or (CurrentMainPage > #MainPages and CurrentMainPage - #MainPages or CurrentMainPage)
+		action_wheel:setPage(MainPages[CurrentMainPage])
+	end)
+end
 
 --シネマティックモードのページのアクションの設定
 --アクション1. ピッチ調整
@@ -274,9 +290,9 @@ end)
 --アクション5. シネマティックモード終了
 CinematicPage:newAction(5):title(LanguageClass.getTranslate("action_wheel__cinematic__action_5__title")):color(200 / 255, 200 / 255, 200 /255):hoverColor(1, 1, 1):item("barrier"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = false
-	action_wheel:setPage(MainPage)
+	action_wheel:setPage(MainPages[2])
 end)
 
-action_wheel:setPage(MainPage)
+action_wheel:setPage(MainPages[1])
 
 return ActionWheelClass
