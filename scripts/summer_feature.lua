@@ -27,10 +27,9 @@ function SummerFeatureClass.setSummerFeature(value)
 		BikineSkirtList[3]:setUVPixels(84, 0)
 		BikineSkirtList[4]:setUVPixels(42, 11)
 	else
-		BikineSkirtList[1]:setUVPixels(0, 0)
-		BikineSkirtList[2]:setUVPixels(0, 0)
-		BikineSkirtList[3]:setUVPixels(0, 0)
-		BikineSkirtList[4]:setUVPixels(0, 0)
+		for _, modelPart in ipairs(BikineSkirtList) do
+			modelPart:setUVPixels(0, 0)
+		end
 	end
 	SummerFeatureClass.SummerFeature = value
 end

@@ -26,8 +26,6 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 - プレイヤーの頭（被り物）の消去
 - アクションホイールでの、顔アニメーションによるエモートのプレビュー
   - 代替のアイコンを使用しています。
-- 暗闇で目が光る機能
-  - リセットする方法がありませんでした。
 - エリトラや手持ちアイテムの移動
   - 代替処理として、移動が必要な場合は非表示にしています。
   - オウムと望遠鏡はどうにもなりませんでした。
@@ -213,7 +211,7 @@ ConfigClass.CinematicModeCamera = {
 | 項目 | 説明 | 有効な値 | 初期値 |
 | - | - | - | - |
 | ```ConfigClass.Language``` | アバターのメッセージやアクションホイールのアクション名に使用される言語です。 **If you want to use English, please set to "en"!** | ```string``` "en", "jp" | jp |
-| ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | "ORIGINAL" |
+| ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | ORIGINAL |
 | ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
 | ``` ConfigClass.MeowSound ``` | 定期的に猫の鳴き声を発するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.BellSound``` | 鈴の音を鳴らすかどうかです。**カスタムサウンドを再生する権限が無い場合は代替の音が使用されます。** | ```boolean``` | ```true``` |
