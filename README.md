@@ -113,6 +113,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   ![色々な尻尾](/README_Images/色々な尻尾.jpg)
 
 - 夏機能搭載！有効にすると水着姿になります。
+  - 夏機能が有効な場合は革の帽子がサマーハットに変化します。
 
   ![夏機能1](README_Images/夏機能1.jpg)
 

@@ -126,8 +126,16 @@ events.TICK:register(function()
 end)
 
 events.RENDER:register(function()
+	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head}
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
-		models.models.main.Avatar.Head:setRot(10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1), 0, 0)
+		local headRot = 10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1)
+		for _, modelPart in ipairs(headRotationList) do
+			modelPart:setRot(headRot, 0, 0)
+		end
+	else
+		for _, modelPart in ipairs(headRotationList) do
+			modelPart:setRot(0, 0, 0)
+		end
 	end
 end)
 

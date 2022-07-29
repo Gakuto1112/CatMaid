@@ -92,7 +92,13 @@ events.TICK:register(function()
 		local chetplate = {ArmorRoot.Avatar.Body.Chestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom}
 		local leggings = {ArmorRoot.Avatar.Body.Leggings, ArmorRoot.Avatar.RightLeg.RightLeggings, ArmorRoot.Avatar.LeftLeg.LeftLeggings}
 		local boots = {ArmorRoot.Avatar.RightLeg.RightBoots, ArmorRoot.Avatar.LeftLeg.LeftBoots}
-		helmet:setVisible(setArmor(player:getItem(6), "HELMET", {helmet}, {helmet.HelmetOverlay}))
+		local helmetItem = player:getItem(6)
+		if not SummerFeatureClass.SummerFeature or General.hasItem(helmetItem) ~= "minecraft:leather_helmet" then
+			helmet:setVisible(setArmor(helmetItem, "HELMET", {helmet}, {helmet.HelmetOverlay}))
+		else
+			helmet:setVisible(false)
+			helmet.HelmetOverlay:setVisible(false)
+		end
 		if setArmor(player:getItem(5), "CHESTPLATE", chetplate, {ArmorRoot.Avatar.Body.Chestplate.ChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom.RightChestplateBottomOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom.LeftChestplateBottomOverlay}) then
 			chetplate[1]:setVisible(true)
 			setArmArmor(true)
