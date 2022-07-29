@@ -62,6 +62,7 @@ events.TICK:register(function()
 			whiteHat:setVisible(false)
 			snorkel:setVisible(true)
 			snorkel:setPos(0, player:isUnderwater() and 0 or 4, 0)
+			snorkel:setSecondaryRenderType(helmetItem:hasGlint() and "GLINT" or nil)
 		else
 			whiteHat:setVisible(false)
 			snorkel:setVisible(false)
