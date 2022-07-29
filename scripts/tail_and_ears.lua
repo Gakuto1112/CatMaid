@@ -60,10 +60,9 @@ events.TICK:register(function()
 	end
 end)
 
-RightEar:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
-LeftEar:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
-Tail1.Tail1.Tail1:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
-Tail2.Tail2:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
+for _, modelPart in ipairs({RightEar, LeftEar, Tail1.Tail1.Tail1, Tail2.Tail2, Tail1.Tail1.TailSection1, Tail1.Tail1.TailSection2, Tail2.TailSection3, Tail2.TailSection4}) do
+	modelPart:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
+end
 
 if ConfigClass.WaveTail then
 	animations["main"]["wave_tail"]:play()
