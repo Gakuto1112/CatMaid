@@ -93,7 +93,8 @@ events.TICK:register(function()
 		local leggings = {ArmorRoot.Avatar.Body.Leggings, ArmorRoot.Avatar.RightLeg.RightLeggings, ArmorRoot.Avatar.LeftLeg.LeftLeggings}
 		local boots = {ArmorRoot.Avatar.RightLeg.RightBoots, ArmorRoot.Avatar.LeftLeg.LeftBoots}
 		local helmetItem = player:getItem(6)
-		if not SummerFeatureClass.SummerFeature or General.hasItem(helmetItem) ~= "minecraft:leather_helmet" then
+		local helmetItemType = General.hasItem(helmetItem)
+		if not SummerFeatureClass.SummerFeature or (helmetItemType ~= "minecraft:leather_helmet" and helmetItemType ~= "minecraft:turtle_helmet")  then
 			helmet:setVisible(setArmor(helmetItem, "HELMET", {helmet}, {helmet.HelmetOverlay}))
 		else
 			helmet:setVisible(false)
