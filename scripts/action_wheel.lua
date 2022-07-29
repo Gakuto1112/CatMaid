@@ -3,7 +3,7 @@
 ---@field CinematicPage Page シネマティックモードモードの操作ページ
 ---@field CurrentMainPage integer 現在のメインページのページ数
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
----@field TerrorSweatCount integer エモートを拒否する時にかく汗のタイミングを計るカウンター
+---@field SweatCount integer 汗のタイミングを計るカウンター
 
 ActionWheelClass = {}
 
@@ -12,7 +12,7 @@ CinematicPage = action_wheel:createPage("cinematic_mode_page")
 CurrentMainPage = 1
 ActionWheelClass.ActionCount = 0
 ShakeSplashCount = 0
-TerrorSweatCount = 0
+SweatCount = 0
 
 ---アクションの色の有効色/無効色の切り替え
 ---@param pageNumber integer アクションのページの番号
@@ -36,7 +36,7 @@ function runAction(action, ignoreCooldown)
 				General.setAnimations("PLAY", "refuse_emote")
 				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
 				ActionWheelClass.ActionCount = 30
-				TerrorSweatCount = 30
+				SweatCount = 30
 			end
 		else
 			action()
@@ -88,14 +88,14 @@ end
 
 events.TICK:register(function()
 	if WardenClass.WardenNearby or ActionWheelClass.ActionCount > 0 then
-		for i = 1, 3 do
+		for i = 1, 4 do
 			setActionEnabled(1, i, false)
 		end
 		for i = 1, 2 do
 			setActionEnabled(2, i, false)
 		end
 	else
-		for i = 1, 3 do
+		for i = 1, 4 do
 			setActionEnabled(1, i, true)
 		end
 		setActionEnabled(2, 2, true)
@@ -115,14 +115,14 @@ events.TICK:register(function()
 		ShakeSplashCount = ShakeSplashCount - 1
 	end
 	ActionWheelClass.ActionCount = ActionWheelClass.ActionCount > 0 and ActionWheelClass.ActionCount - 1 or ActionWheelClass.ActionCount
-	if TerrorSweatCount > 0 then
-		if TerrorSweatCount % 5 == 0 then
+	if SweatCount > 0 then
+		if SweatCount % 5 == 0 then
 			local playerPos = player:getPos()
 			for _ = 1, math.min(meta:getMaxParticles() / 4, 4) do
 				particle:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
 			end
 		end
-		TerrorSweatCount = TerrorSweatCount - 1
+		SweatCount = SweatCount - 1
 	end
 end)
 
@@ -215,6 +215,20 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 			end
 			ActionWheelClass.ActionCount = 20
 		end
+	end, false)
+end)
+
+--アクション1-4. 驚く
+MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
+	runAction(function()
+		MeowClass.playMeow("HURT", 1)
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+		else
+			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+		end
+		SweatCount = 20
+		ActionWheelClass.ActionCount = 20
 	end, false)
 end)
 

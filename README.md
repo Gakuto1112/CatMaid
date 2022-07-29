@@ -139,6 +139,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![「ニャー」と鳴く（キラキラ）](README_Images/「ニャー」と鳴く（キラキラ）.gif)
 
+### アクション1-4：ビックリ
+ビックリして、汗をかきます。（以前実装したものを再実装したものになります）
+
+![ビックリ](README_Images/ビックリ.gif)
+
 ![アクションホイール2](README_Images/アクションホイール2.jpg)
 
 ### アクション2-1：おすわり
