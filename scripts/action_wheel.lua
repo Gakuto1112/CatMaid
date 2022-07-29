@@ -71,7 +71,7 @@ function ActionWheelClass.bodyShake()
 	animations["cakes"]["shake"]:play()
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
-	if WetClass.WetCount > 0 then
+	if WetClass.WetCount > 0 and not player:isWet() then
 		ShakeSplashCount = 20
 		WetClass.WetCount = 20
 	end
