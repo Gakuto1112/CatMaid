@@ -1,6 +1,6 @@
 ---@class ArmorClass 防具の表示を制御するクラス
+---@field ModelRoot CustomModelPart モデルのルートパス
 ---@field ArmorRoot CustomModelPart 防具モデルのルートパス
----@field AlternativeArmsRoot CustomModelPart 代替の腕のルートパス
 
 ---@alias ArmorType
 ---| "HELMET"
@@ -10,8 +10,8 @@
 
 ArmorClass = {}
 
+ModelRoot = models.models.main
 ArmorRoot = models.models.armor
-AlternativeArmsRoot = models.models.alternative_arms
 
 ---防具の設定。有効な防具であれば、trueを返す。
 ---@param armorItem ItemStack 対象の防具のアイテムスタック
@@ -68,32 +68,32 @@ end
 ---腕の防具を設定する。腕が表示されているかどうかも考慮される。
 ---@param armorEnabled  boolean 防具を表示するかどうか
 function setArmArmor(armorEnabled)
-	ArmorRoot.Avatar.Body.Arms.RightArm:setVisible(models.models.main.Avatar.Body.Arms.RightArm:getVisible() and armorEnabled)
-	ArmorRoot.Avatar.Body.Arms.LeftArm:setVisible(models.models.main.Avatar.Body.Arms.LeftArm:getVisible() and armorEnabled)
-	if AlternativeArmsRoot.Body.Arms.RightArm:getVisible() and armorEnabled then
-		AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate:setVisible(true)
-		AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(true)
+	ArmorRoot.Avatar.Body.Arms.RightArm:setVisible(ModelRoot.Avatar.Body.Arms.RightArm:getVisible() and armorEnabled)
+	ArmorRoot.Avatar.Body.Arms.LeftArm:setVisible(ModelRoot.Avatar.Body.Arms.LeftArm:getVisible() and armorEnabled)
+	if ModelRoot.Avatar.Body.Arms.RightArm:getVisible() and armorEnabled then
+		ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate:setVisible(true)
+		ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(true)
 	else
-		AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate:setVisible(false)
-		AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(false)
+		ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate:setVisible(false)
+		ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(false)
 	end
-	if AlternativeArmsRoot.Body.Arms.LeftArm:getVisible() and armorEnabled then
-		AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate:setVisible(true)
-		AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom:setVisible(true)
+	if ModelRoot.Avatar.Body.Arms.LeftArm:getVisible() and armorEnabled then
+		ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate:setVisible(true)
+		ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom:setVisible(true)
 	else
-		AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate:setVisible(false)
-		AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom:setVisible(false)
+		ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate:setVisible(false)
+		ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom:setVisible(false)
 	end
 end
 
 events.TICK:register(function()
 	if not ConfigClass.HideArmor then
 		local helmet = ArmorRoot.Avatar.Head.Helmet
-		local chetplate = {ArmorRoot.Avatar.Body.Chestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom, AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom}
+		local chetplate = {ArmorRoot.Avatar.Body.Chestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom}
 		local leggings = {ArmorRoot.Avatar.Body.Leggings, ArmorRoot.Avatar.RightLeg.RightLeggings, ArmorRoot.Avatar.LeftLeg.LeftLeggings}
 		local boots = {ArmorRoot.Avatar.RightLeg.RightBoots, ArmorRoot.Avatar.LeftLeg.LeftBoots}
 		helmet:setVisible(setArmor(player:getItem(6), "HELMET", {helmet}, {helmet.HelmetOverlay}))
-		if setArmor(player:getItem(5), "CHESTPLATE", chetplate, {ArmorRoot.Avatar.Body.Chestplate.ChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom.RightChestplateBottomOverlay, AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom.LeftChestplateBottomOverlay}) then
+		if setArmor(player:getItem(5), "CHESTPLATE", chetplate, {ArmorRoot.Avatar.Body.Chestplate.ChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom.RightChestplateBottomOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom.LeftChestplateBottomOverlay}) then
 			chetplate[1]:setVisible(true)
 			setArmArmor(true)
 		else
@@ -101,20 +101,20 @@ events.TICK:register(function()
 			setArmArmor(false)
 		end
 		if setArmor(player:getItem(4),"LEGGINGS", leggings, {ArmorRoot.Avatar.Body.Leggings.LeggingsOverlay, ArmorRoot.Avatar.RightLeg.RightLeggings.RightLeggingsOverlay, ArmorRoot.Avatar.LeftLeg.LeftLeggings.LeftLeggingsOverlay}) then
-			for index, armorPart in ipairs(leggings) do
+			for _, armorPart in ipairs(leggings) do
 				armorPart:setVisible(true)
 			end
 		else
-			for index, armorPart in ipairs(leggings) do
+			for _, armorPart in ipairs(leggings) do
 				armorPart:setVisible(false)
 			end
 		end
 		if setArmor(player:getItem(3), "BOOTS", boots, {ArmorRoot.Avatar.RightLeg.RightBoots.RightBootsOverlay, ArmorRoot.Avatar.LeftLeg.LeftBoots.LeftBootsOverlay}) then
-			for index, armorPart in ipairs(boots) do
+			for _, armorPart in ipairs(boots) do
 				armorPart:setVisible(true)
 			end
 		else
-			for index, armorPart in ipairs(boots) do
+			for _, armorPart in ipairs(boots) do
 				armorPart:setVisible(false)
 			end
 		end
@@ -133,13 +133,13 @@ events.TICK:register(function()
 end)
 
 ArmorRoot:setVisible(not ConfigClass.HideArmor)
-for _, armorPart in ipairs({AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom, AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom}) do
+for _, armorPart in ipairs({ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplate}) do
 	armorPart:setVisible(not ConfigClass.HideArmor)
 end
-for _, modelPart in ipairs({ArmorRoot.Avatar.RightLeg.RightLeggings, ArmorRoot.Avatar.LeftLeg.LeftLeggings}) do
+for _, modelPart in ipairs({ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom, ArmorRoot.Avatar.RightLeg.RightLeggings, ArmorRoot.Avatar.LeftLeg.LeftLeggings}) do
 	modelPart:setParentType("None")
 end
-for _, overlayPart in ipairs({ArmorRoot.Avatar.Head.Helmet.HelmetOverlay, ArmorRoot.Avatar.Body.Chestplate.ChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeArmsRoot.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, AlternativeArmsRoot.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom.RightChestplateBottomOverlay, AlternativeArmsRoot.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, AlternativeArmsRoot.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom.LeftChestplateBottomOverlay, ArmorRoot.Avatar.RightLeg.RightBoots.RightBootsOverlay, ArmorRoot.Avatar.LeftLeg.LeftBoots.LeftBootsOverlay}) do
+for _, overlayPart in ipairs({ArmorRoot.Avatar.Head.Helmet.HelmetOverlay, ArmorRoot.Avatar.Body.Chestplate.ChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightChestplate.RightChestplateOverlay, ArmorRoot.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom.RightChestplateBottomOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftChestplate.LeftChestplateOverlay, ArmorRoot.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom.LeftChestplateBottomOverlay, ArmorRoot.Avatar.RightLeg.RightBoots.RightBootsOverlay, ArmorRoot.Avatar.LeftLeg.LeftBoots.LeftBootsOverlay}) do
 	overlayPart:setPrimaryTexture("resource", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
 end
 for _, overlayPart in ipairs({ArmorRoot.Avatar.Body.Leggings.LeggingsOverlay, ArmorRoot.Avatar.RightLeg.RightLeggings.RightLeggingsOverlay, ArmorRoot.Avatar.LeftLeg.LeftLeggings.LeftLeggingsOverlay}) do

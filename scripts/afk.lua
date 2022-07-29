@@ -57,33 +57,28 @@ events.TICK:register(function()
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, true)
 			elseif AFKClass.AFKCount % 600 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
-					General.playAnimationWithArmor("afk_touch_bell")
 					if rightHandItemType == "none" then
-						animations["alternative_arms"]["afk_right_bell"]:play()
+						General.playAnimationWithArmor("afk_right_bell")
 						AFKClass.TouchBellCount = 67
 					else
-						animations["alternative_arms"]["afk_left_bell"]:play()
+						General.playAnimationWithArmor("afk_left_bell")
 						AFKClass.TouchBellCount = -67
 					end
 				else
 					if leftHanded then
 						if leftHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_touch_bell")
-							animations["alternative_arms"]["afk_left_bell"]:play()
+							General.playAnimationWithArmor("afk_left_bell")
 							AFKClass.TouchBellCount = -67
 						elseif rightHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_touch_bell")
-							animations["alternative_arms"]["afk_right_bell"]:play()
+							General.playAnimationWithArmor("afk_right_bell")
 							AFKClass.TouchBellCount = 67
 						end
 					else
 						if rightHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_touch_bell")
-							animations["alternative_arms"]["afk_right_bell"]:play()
+							General.playAnimationWithArmor("afk_right_bell")
 							AFKClass.TouchBellCount = 67
 						else
-							General.playAnimationWithArmor("afk_touch_bell")
-							animations["alternative_arms"]["afk_left_bell"]:play()
+							General.playAnimationWithArmor("afk_left_bell")
 							AFKClass.TouchBellCount = -67
 						end
 					end
@@ -105,9 +100,8 @@ events.TICK:register(function()
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30
 	else
-		General.stopAnimationWithArmor("afk_touch_bell")
-		animations["alternative_arms"]["afk_right_bell"]:stop()
-		animations["alternative_arms"]["afk_left_bell"]:stop()
+		General.stopAnimationWithArmor("afk_right_bell")
+		General.stopAnimationWithArmor("afk_left_bell")
 		if AFKClass.AFKCount > 0 then
 			AFKClass.AFKCount = 0
 		end
@@ -117,14 +111,14 @@ events.TICK:register(function()
 	local firstPerson = renderer:isFirstPerson()
 	if AFKClass.TouchBellCount > 0 then
 		if not firstPerson or leftHanded then
-			models.models.main.Avatar.Body.Arms.RightArm:setVisible(false)
+			General.setParentTypeWithArmor("RIGHT", "Body")
 		end
-		models.models.alternative_arms.Body.Arms.RightArm:setVisible(true)
+		General.setParentTypeWithArmor("RIGHT", "RightArm")
 	elseif AFKClass.TouchBellCount < 0 then
 		if not firstPerson or not leftHanded then
-			models.models.main.Avatar.Body.Arms.LeftArm:setVisible(false)
+			General.setParentTypeWithArmor("LEFT", "Body")
 		end
-		models.models.alternative_arms.Body.Arms.LeftArm:setVisible(true)
+		General.setParentTypeWithArmor("LEFT", "LeftArm")
 	end
 	local touchBellCountAbs = math.abs(AFKClass.TouchBellCount)
 	if touchBellCountAbs == 23 or touchBellCountAbs == 39 then

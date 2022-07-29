@@ -46,9 +46,9 @@ end
 function ActionWheelClass.sitDown()
 	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
 	General.playAnimationWithArmor("sit_down")
-	animations["alternative_arms"]["sit_down"]:play()
+	animations["cakes"]["sit_down"]:play()
 	General.stopAnimationWithArmor("stand_up")
-	animations["alternative_arms"]["stand_up"]:stop()
+	animations["cakes"]["stand_up"]:stop()
 	animations["main"]["wave_tail"]:stop()
 end
 
@@ -56,9 +56,9 @@ end
 function ActionWheelClass.standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
 	General.playAnimationWithArmor("stand_up")
-	animations["alternative_arms"]["stand_up"]:play()
+	animations["cakes"]["stand_up"]:play()
 	General.stopAnimationWithArmor("sit_down")
-	animations["alternative_arms"]["sit_down"]:stop()
+	animations["cakes"]["sit_down"]:stop()
 	if ConfigClass.WaveTail then
 		animations["main"]["wave_tail"]:play()
 	end
@@ -68,7 +68,7 @@ end
 ---ブルブル
 function ActionWheelClass.bodyShake()
 	General.playAnimationWithArmor("shake")
-	animations["alternative_arms"]["shake"]:play()
+	animations["cakes"]["shake"]:play()
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
 	if WetClass.WetCount > 0 then

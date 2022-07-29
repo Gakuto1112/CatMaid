@@ -8,14 +8,10 @@ RightHandItemTypeData = {false}
 LeftHandItemTypeData = {false}
 
 events.TICK:register(function()
-	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
-	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
-	local rightAlternativeArm = models.models.alternative_arms.Body.Arms.RightArm
-	local leftAlternativeArm = models.models.alternative_arms.Body.Arms.LeftArm
 	local rightItem = vanilla_model.RIGHT_ITEM
 	local leftItem = vanilla_model.LEFT_ITEM
-	local rightCake = rightAlternativeArm.RightArmBottom.RightCake
-	local leftCake = leftAlternativeArm.LeftArmBottom.LeftCake
+	local rightCake = models.models.cakes.Body.RightCake
+	local leftCake = models.models.cakes.Body.LeftCake
 	local rightCakeBody = rightCake.Cake
 	local leftCakeBody = leftCake.Cake
 	local leftHanded = player:isLeftHanded()
@@ -25,8 +21,7 @@ events.TICK:register(function()
 	local leftHandItemType = General.hasItem(leftHeldItem)
 	local isSleeping = player:getPose() == "SLEEPING"
 	if rightHandItemType == "minecraft:cake" and not isSleeping then
-		rightArm:setVisible(false)
-		rightAlternativeArm:setVisible(true)
+		General.setParentTypeWithArmor("RIGHT", "Body")
 		rightItem:setVisible(false)
 		rightCake:setVisible(true)
 		rightCakeBody:setSecondaryRenderType(rightHeldItem:hasGlint() and "GLINT" or nil)
@@ -47,23 +42,21 @@ events.TICK:register(function()
 					rightCakeBody:setUVPixels(0, 0)
 				end
 			end
-			animations["alternative_arms"]["right_cake"]:play()
+			General.playAnimationWithArmor("right_cake")
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
-			rightArm:setVisible(true)
-			rightAlternativeArm:setVisible(false)
+			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end
 		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			rightItem:setVisible(true)
 		end
 		rightCake:setVisible(false)
 		rightCakeBody:setSecondaryRenderType(nil)
-		animations["alternative_arms"]["right_cake"]:stop()
+		General.stopAnimationWithArmor("right_cake")
 	end
 	if leftHandItemType == "minecraft:cake" and not isSleeping then
-		leftArm:setVisible(false)
-		leftAlternativeArm:setVisible(true)
+		General.setParentTypeWithArmor("LEFT", "Body")
 		leftItem:setVisible(false)
 		leftCake:setVisible(true)
 		leftCakeBody:setSecondaryRenderType(leftHeldItem:hasGlint() and "GLINT" or nil)
@@ -84,19 +77,18 @@ events.TICK:register(function()
 					leftCakeBody:setUVPixels(0, 0)
 				end
 			end
-			animations["alternative_arms"]["left_cake"]:play()
+			General.playAnimationWithArmor("left_cake")
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
-			leftArm:setVisible(true)
-			leftAlternativeArm:setVisible(false)
+			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
 		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 			leftItem:setVisible(true)
 		end
 		leftCake:setVisible(false)
 		leftCakeBody:setSecondaryRenderType(nil)
-		animations["alternative_arms"]["left_cake"]:stop()
+		General.stopAnimationWithArmor("left_cake")
 	end
 	table.insert(RightHandItemTypeData, rightHandItemType)
 	table.insert(LeftHandItemTypeData, leftHandItemType)
@@ -106,5 +98,9 @@ events.TICK:register(function()
 		end
 	end
 end)
+
+for _, cakePlate in ipairs({models.models.cakes.Body.RightCake.RightCakePlate, models.models.cakes.Body.LeftCake.LeftCakePlate}) do
+	cakePlate:setPrimaryTexture("resource", "minecraft:textures/block/spruce_planks.png")
+end
 
 return CakeClass

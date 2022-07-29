@@ -16,7 +16,7 @@ function setBurn(burn)
 	models.models.main.Avatar.Body:setColor(burn, burn, burn)
 	models.models.main.Avatar.RightLeg:setColor(burn, burn, burn)
 	models.models.main.Avatar.LeftLeg:setColor(burn, burn, burn)
-	models.models.alternative_arms:setColor(burn, burn, burn)
+	models.models.cakes:setColor(burn, burn, burn)
 	models.models.armor:setColor(burn, burn, burn)
 end
 

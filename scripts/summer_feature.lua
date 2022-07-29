@@ -6,7 +6,7 @@
 
 SummerFeatureClass = {}
 
-ChangeUVList = {models.models.main.Avatar.Body.Body, models.models.main.Avatar.Body.BodyLayer, models.models.main.Avatar.Body.Arms, models.models.main.Avatar.RightLeg, models.models.main.Avatar.RightLeg, models.models.main.Avatar.LeftLeg, models.models.alternative_arms.Body.Arms.RightArm.RightArm, models.models.alternative_arms.Body.Arms.RightArm.RightArmLayer, models.models.alternative_arms.Body.Arms.RightArm.RightArmBottom.RightArmBottom, models.models.alternative_arms.Body.Arms.RightArm.RightArmBottom.RightArmBottomLayer, models.models.alternative_arms.Body.Arms.LeftArm.LeftArm, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmLayer, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottom, models.models.alternative_arms.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottomLayer}
+ChangeUVList = {models.models.main.Avatar.Body.Body, models.models.main.Avatar.Body.BodyLayer, models.models.main.Avatar.Body.Arms, models.models.main.Avatar.RightLeg, models.models.main.Avatar.RightLeg, models.models.main.Avatar.LeftLeg}
 HiddenPartList = {models.models.main.Avatar.Body.Skirt.BackRibbon, models.models.main.Avatar.Body.Skirt.Skirt3, models.models.main.Avatar.Body.Skirt.Skirt3Layer}
 BikineSkirtList = {models.models.main.Avatar.Body.Skirt.Skirt1, models.models.main.Avatar.Body.Skirt.Skirt1Layer, models.models.main.Avatar.Body.Skirt.Skirt2, models.models.main.Avatar.Body.Skirt.Skirt2Layer}
 SummerFeatureClass.SummerFeature = false

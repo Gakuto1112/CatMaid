@@ -61,6 +61,16 @@ function General.isTired()
 	return (player:getHealth() <= 4 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
 end
 
+--防具モデルと同時に描画タイプを変更する。
+---@param armType ArmType 右腕か左腕か
+---@param parentType ParentTypes 描画タイプ
+function General.setParentTypeWithArmor(armType, parentType)
+	local arm = armType == "LEFT" and "LeftArm" or "RightArm"
+	for _, modelPart in ipairs({models.models.main.Avatar.Body.Arms[arm], models.models.armor.Avatar.Body.Arms[arm]}) do
+		modelPart:setParentType(parentType)
+	end
+end
+
 ---防具モデルと同時にアニメーションを再生する。
 ---@param animationName string アニメーションの名前
 function General.playAnimationWithArmor(animationName)

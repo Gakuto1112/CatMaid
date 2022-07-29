@@ -22,4 +22,8 @@ events.TICK:register(function()
 	end
 end)
 
+for _, modelPart in ipairs({models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom}) do
+	modelPart:setParentType("None")
+end
+
 return ArmsClass

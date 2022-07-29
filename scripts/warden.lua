@@ -25,10 +25,6 @@ end
 
 events.TICK:register(function()
 	WardenClass.WardenNearby = General.getStatusEffect("darkness") and true or false
-	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
-	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
-	local rightAlternativeArm = models.models.alternative_arms.Body.Arms.RightArm
-	local leftAlternativeArm = models.models.alternative_arms.Body.Arms.LeftArm
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
@@ -36,7 +32,7 @@ events.TICK:register(function()
 	if WardenClass.WardenNearby then
 		if not WardenNearbyData[1] then
 			General.playAnimationWithArmor("afraid")
-			animations["alternative_arms"]["afraid"]:play()
+			animations["cakes"]["afraid"]:play()
 		end
 		if General.isTired() then
 			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
@@ -46,38 +42,32 @@ events.TICK:register(function()
 		local isSleeping = player:getPose() == "SLEEPING"
 		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
-				animations["alternative_arms"]["right_hide_bell"]:play()
+				General.playAnimationWithArmor("right_hide_bell")
 			end
-			rightArm:setVisible(false)
-			rightAlternativeArm:setVisible(true)
+			General.setParentTypeWithArmor("RIGHT", "Body")
 		else
-			animations["alternative_arms"]["right_hide_bell"]:stop()
-			rightArm:setVisible(true)
-			rightAlternativeArm:setVisible(false)
+			General.stopAnimationWithArmor("right_hide_bell")
+			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end
 		if leftHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
-				animations["alternative_arms"]["left_hide_bell"]:play()
+				General.playAnimationWithArmor("left_hide_bell")
 			end
-			leftArm:setVisible(false)
-			leftAlternativeArm:setVisible(true)
+			General.setParentTypeWithArmor("LEFT", "Body")
 		else
-			animations["alternative_arms"]["left_hide_bell"]:stop()
-			leftArm:setVisible(true)
-			leftAlternativeArm:setVisible(false)
+			General.stopAnimationWithArmor("left_hide_bell")
+			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
 	else
 		General.stopAnimationWithArmor("afraid")
-		animations["alternative_arms"]["afraid"]:stop()
-		animations["alternative_arms"]["right_hide_bell"]:stop()
-		animations["alternative_arms"]["left_hide_bell"]:stop()
-		if AFKClass.TouchBellCount <= 0 then
-			rightArm:setVisible(true)
-			rightAlternativeArm:setVisible(false)
+		animations["cakes"]["afraid"]:stop()
+		General.stopAnimationWithArmor("right_hide_bell")
+		General.stopAnimationWithArmor("left_hide_bell")
+		if AFKClass.TouchBellCount == 0 then
+			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end
-		if AFKClass.TouchBellCount >= 0 then
-			leftArm:setVisible(true)
-			leftAlternativeArm:setVisible(false)
+		if AFKClass.TouchBellCount == 0 then
+			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
 	end
 	table.insert(WardenNearbyData, WardenClass.WardenNearby)
