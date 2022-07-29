@@ -1,6 +1,10 @@
 ---@class General 他の複数のクラスが参照するフィールドや関数を定義するクラス
 ---@field SneakData table 前チックにスニークしていたかどうかを調べる為にスニーク情報を格納するテーブル
 
+---@alias AnimationState
+---| "PLAY"
+---| "STOP"
+
 ---@alias ArmType
 ---| "RIGHT"
 ---| "LEFT"
@@ -71,18 +75,26 @@ function General.setParentTypeWithArmor(armType, parentType)
 	end
 end
 
----防具モデルと同時にアニメーションを再生する。
+--複数のモデルファイルのアニメーションを同時に制御する。
+---@param animationState AnimationState アニメーションの設定値
 ---@param animationName string アニメーションの名前
-function General.playAnimationWithArmor(animationName)
-	animations["main"][animationName]:play()
-	animations["armor"][animationName]:play()
-end
-
----防具モデルと同時にアニメーションを停止する。
----@param animationName string アニメーションの名前
-function General.stopAnimationWithArmor(animationName)
-	animations["main"][animationName]:stop()
-	animations["armor"][animationName]:stop()
+function General.setAnimations(animationState, animationName)
+	local modelFiles = models.models:getChildren()
+	if animationState == "PLAY" then
+		for _, modelPart in ipairs(modelFiles) do
+			local targetAnimation = animations[modelPart.name][animationName]
+			if targetAnimation ~= nil then
+				targetAnimation:play()
+			end
+		end
+	else
+		for _, modelPart in ipairs(modelFiles) do
+			local targetAnimation = animations[modelPart.name][animationName]
+			if targetAnimation ~= nil then
+				targetAnimation:stop()
+			end
+		end
+	end
 end
 
 events.TICK:register(function()

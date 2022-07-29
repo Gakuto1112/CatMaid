@@ -31,8 +31,7 @@ events.TICK:register(function()
 	local firstPerson = renderer:isFirstPerson()
 	if WardenClass.WardenNearby then
 		if not WardenNearbyData[1] then
-			General.playAnimationWithArmor("afraid")
-			animations["cakes"]["afraid"]:play()
+			General.setAnimations("PLAY", "afraid")
 		end
 		if General.isTired() then
 			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
@@ -42,27 +41,26 @@ events.TICK:register(function()
 		local isSleeping = player:getPose() == "SLEEPING"
 		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or RightHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and not leftHanded) then
-				General.playAnimationWithArmor("right_hide_bell")
+				General.setAnimations("PLAY", "right_hide_bell")
 			end
 			General.setParentTypeWithArmor("RIGHT", "Body")
 		else
-			General.stopAnimationWithArmor("right_hide_bell")
+			General.setAnimations("STOP", "right_hide_bell")
 			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end
 		if leftHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or not leftHanded) then
 			if not WardenNearbyData[1] or SleepClass.SleepData[1] or LeftHandItemTypeData[1] ~= "none" or ((AttackCount == 0 or FirstPersonData[1]) and leftHanded) then
-				General.playAnimationWithArmor("left_hide_bell")
+				General.setAnimations("PLAY", "left_hide_bell")
 			end
 			General.setParentTypeWithArmor("LEFT", "Body")
 		else
-			General.stopAnimationWithArmor("left_hide_bell")
+			General.setAnimations("STOP", "left_hide_bell")
 			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
 	else
-		General.stopAnimationWithArmor("afraid")
-		animations["cakes"]["afraid"]:stop()
-		General.stopAnimationWithArmor("right_hide_bell")
-		General.stopAnimationWithArmor("left_hide_bell")
+		General.setAnimations("STOP", "afraid")
+		General.setAnimations("STOP", "right_hide_bell")
+		General.setAnimations("STOP", "left_hide_bell")
 		if AFKClass.TouchBellCount == 0 then
 			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end

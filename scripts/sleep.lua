@@ -18,7 +18,7 @@ events.TICK:register(function()
 	local isSleeping = player:getPose() == "SLEEPING"
 	if isSleeping then
 		if not SleepClass.SleepData[1] then
-			General.playAnimationWithArmor("sleep")
+			General.setAnimations("PLAY", "sleep")
 			if not WardenClass.WardenNearby then
 				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
 			end
@@ -67,7 +67,7 @@ events.TICK:register(function()
 				leftItem:setVisible(true)
 			end
 		end
-		General.stopAnimationWithArmor("sleep")
+		General.setAnimations("STOP", "sleep")
 		SleepCount = 0
 	end
 	table.insert(SleepClass.SleepData, isSleeping)

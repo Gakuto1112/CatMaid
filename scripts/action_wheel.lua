@@ -20,7 +20,7 @@ function runAction(action)
 	if ActionWheelClass.ActionCount == 0 then
 		if WardenClass.WardenNearby then
 			if not GoatHornClass.Horn then
-				General.playAnimationWithArmor("refuse_emote")
+				General.setAnimations("PLAY", "refuse_emote")
 				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
 				ActionWheelClass.ActionCount = 30
 				TerrorSweatCount = 30
@@ -45,20 +45,16 @@ end
 ---座る
 function ActionWheelClass.sitDown()
 	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
-	General.playAnimationWithArmor("sit_down")
-	animations["cakes"]["sit_down"]:play()
-	General.stopAnimationWithArmor("stand_up")
-	animations["cakes"]["stand_up"]:stop()
+	General.setAnimations("PLAY", "sit_down")
+	General.setAnimations("STOP", "stand_up")
 	animations["main"]["wave_tail"]:stop()
 end
 
 --座っている状態から立ち上がる
 function ActionWheelClass.standUp()
 	vanilla_model.HELD_ITEMS:setVisible(true)
-	General.playAnimationWithArmor("stand_up")
-	animations["cakes"]["stand_up"]:play()
-	General.stopAnimationWithArmor("sit_down")
-	animations["cakes"]["sit_down"]:stop()
+	General.setAnimations("PLAY", "stand_up")
+	General.setAnimations("STOP", "sit_down")
 	if ConfigClass.WaveTail then
 		animations["main"]["wave_tail"]:play()
 	end
@@ -67,8 +63,7 @@ end
 
 ---ブルブル
 function ActionWheelClass.bodyShake()
-	General.playAnimationWithArmor("shake")
-	animations["cakes"]["shake"]:play()
+	General.setAnimations("PLAY", "shake")
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
 	if WetClass.WetCount > 0 and not player:isWet() then
@@ -154,7 +149,7 @@ MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			General.playAnimationWithArmor("left_meow")
+			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)
@@ -165,7 +160,7 @@ end):onRightClick(function()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			General.playAnimationWithArmor("right_meow")
+			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)
@@ -179,7 +174,7 @@ MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
-			General.playAnimationWithArmor("left_meow")
+			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)
@@ -190,7 +185,7 @@ end):onRightClick(function()
 			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
-			General.playAnimationWithArmor("right_meow")
+			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
 	end)

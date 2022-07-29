@@ -36,7 +36,7 @@ events.TICK:register(function()
 		if not client.isPaused() then
 			if AFKClass.AFKCount >= 6000 then
 				if AFKClass.AFKCount == 6000 then
-					General.playAnimationWithArmor("afk_sleep")
+					General.setAnimations("PLAY", "afk_sleep")
 				end
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, true)
 				if (AFKClass.AFKCount - 6000) % 65 == 0 then
@@ -44,7 +44,7 @@ events.TICK:register(function()
 				end
 			elseif AFKClass.AFKCount >= 5400 then
 				if AFKClass.AFKCount == 5400 then
-					General.playAnimationWithArmor("afk_sleepy")
+					General.setAnimations("PLAY", "afk_sleepy")
 					if onGround then
 						if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 							SitDownWhenSleepy = true
@@ -58,27 +58,27 @@ events.TICK:register(function()
 			elseif AFKClass.AFKCount % 600 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					if rightHandItemType == "none" then
-						General.playAnimationWithArmor("afk_right_bell")
+						General.setAnimations("PLAY", "afk_right_bell")
 						AFKClass.TouchBellCount = 67
 					else
-						General.playAnimationWithArmor("afk_left_bell")
+						General.setAnimations("PLAY", "afk_left_bell")
 						AFKClass.TouchBellCount = -67
 					end
 				else
 					if leftHanded then
 						if leftHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_left_bell")
+							General.setAnimations("PLAY", "afk_left_bell")
 							AFKClass.TouchBellCount = -67
 						elseif rightHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_right_bell")
+							General.setAnimations("PLAY", "afk_right_bell")
 							AFKClass.TouchBellCount = 67
 						end
 					else
 						if rightHandItemType ~= "minecraft:cake" then
-							General.playAnimationWithArmor("afk_right_bell")
+							General.setAnimations("PLAY", "afk_right_bell")
 							AFKClass.TouchBellCount = 67
 						else
-							General.playAnimationWithArmor("afk_left_bell")
+							General.setAnimations("PLAY", "afk_left_bell")
 							AFKClass.TouchBellCount = -67
 						end
 					end
@@ -87,8 +87,8 @@ events.TICK:register(function()
 			AFKClass.AFKCount = AFKClass.AFKCount >= 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 		end
 	elseif AFKClass.AFKCount >= 5400 then
-		General.stopAnimationWithArmor("afk_sleepy")
-		General.stopAnimationWithArmor("afk_sleep")
+		General.setAnimations("STOP", "afk_sleep")
+		General.setAnimations("STOP", "afk_sleepy")
 		if not SitDownWhenSleepy and onGround then
 			ActionWheelClass.standUp()
 		end
@@ -100,8 +100,8 @@ events.TICK:register(function()
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30
 	else
-		General.stopAnimationWithArmor("afk_right_bell")
-		General.stopAnimationWithArmor("afk_left_bell")
+		General.setAnimations("STOP", "afk_right_bell")
+		General.setAnimations("STOP", "afk_left_bell")
 		if AFKClass.AFKCount > 0 then
 			AFKClass.AFKCount = 0
 		end

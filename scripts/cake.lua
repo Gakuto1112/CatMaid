@@ -42,7 +42,7 @@ events.TICK:register(function()
 					rightCakeBody:setUVPixels(0, 0)
 				end
 			end
-			General.playAnimationWithArmor("right_cake")
+			General.setAnimations("PLAY", "right_cake")
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
@@ -53,7 +53,7 @@ events.TICK:register(function()
 		end
 		rightCake:setVisible(false)
 		rightCakeBody:setSecondaryRenderType(nil)
-		General.stopAnimationWithArmor("right_cake")
+		General.setAnimations("STOP", "right_cake")
 	end
 	if leftHandItemType == "minecraft:cake" and not isSleeping then
 		General.setParentTypeWithArmor("LEFT", "Body")
@@ -77,7 +77,7 @@ events.TICK:register(function()
 					leftCakeBody:setUVPixels(0, 0)
 				end
 			end
-			General.playAnimationWithArmor("left_cake")
+			General.setAnimations("PLAY", "left_cake")
 		end
 	else
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
@@ -88,7 +88,7 @@ events.TICK:register(function()
 		end
 		leftCake:setVisible(false)
 		leftCakeBody:setSecondaryRenderType(nil)
-		General.stopAnimationWithArmor("left_cake")
+		General.setAnimations("STOP", "left_cake")
 	end
 	table.insert(RightHandItemTypeData, rightHandItemType)
 	table.insert(LeftHandItemTypeData, leftHandItemType)
