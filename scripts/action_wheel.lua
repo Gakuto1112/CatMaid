@@ -14,10 +14,23 @@ ActionWheelClass.ActionCount = 0
 ShakeSplashCount = 0
 TerrorSweatCount = 0
 
+---アクションの色の有効色/無効色の切り替え
+---@param pageNumber integer アクションのページの番号
+---@param actionNumber integer pageNumber内のアクションの番号
+---@param enabled boolean 有好色か無効色か
+function setActionEnabled(pageNumber, actionNumber, enabled)
+	if enabled then
+		MainPages[pageNumber]:getAction(actionNumber):title(LanguageClass.getTranslate("action_wheel__main_"..pageNumber.."__action_"..actionNumber.."__title")):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
+	else
+		MainPages[pageNumber]:getAction(actionNumber):title("§7"..LanguageClass.getTranslate("action_wheel__main_"..pageNumber.."__action_"..actionNumber.."__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+	end
+end
+
 ---アクションを実行する。ウォーデンが近くにいる時は拒否アクションを実行する。
----@param action function
-function runAction(action)
-	if ActionWheelClass.ActionCount == 0 then
+---@param action function 実行するアクションの関数
+---@param ignoreCooldown boolean アニメーションのクールダウンを無視するかどうか
+function runAction(action, ignoreCooldown)
+	if ActionWheelClass.ActionCount == 0 or ignoreCooldown then
 		if WardenClass.WardenNearby then
 			if not GoatHornClass.Horn then
 				General.setAnimations("PLAY", "refuse_emote")
@@ -74,32 +87,20 @@ function ActionWheelClass.bodyShake()
 end
 
 events.TICK:register(function()
-	local actionTitles1 = {LanguageClass.getTranslate("action_wheel__main_1__action_1__title"), LanguageClass.getTranslate("action_wheel__main_1__action_2__title"), LanguageClass.getTranslate("action_wheel__main_1__action_3__title")}
-	local actionTitles2 = {LanguageClass.getTranslate("action_wheel__main_2__action_1__title"), LanguageClass.getTranslate("action_wheel__main_2__action_2__title")}
-	local sitDownAction = MainPages[2]:getAction(1)
-	if WardenClass.WardenNearby then
-		for index, actionName in ipairs(actionTitles1) do
-			MainPages[1]:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+	if WardenClass.WardenNearby or ActionWheelClass.ActionCount > 0 then
+		for i = 1, 3 do
+			setActionEnabled(1, i, false)
 		end
-		for index, actionName in ipairs(actionTitles2) do
-			MainPages[2]:getAction(index):title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
+		for i = 1, 2 do
+			setActionEnabled(2, i, false)
 		end
 	else
-		for index, actionName in ipairs(actionTitles1) do
-			MainPages[1]:getAction(index):title(actionName):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
+		for i = 1, 3 do
+			setActionEnabled(1, i, true)
 		end
-		for index, actionName in ipairs(actionTitles2) do
-			if index == 1 then
-				if canSitDown() then
-					sitDownAction:title(actionName):color(1, 85 / 255, 1):toggleColor(1, 85 / 255, 1):hoverColor(1, 1, 1)
-				else
-					sitDownAction:title("§7"..actionName):color(42 / 255, 42 / 255, 42 / 255):toggleColor(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255)
-				end
-			else
-				MainPages[2]:getAction(index):title(actionName):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
-			end
-		end
+		setActionEnabled(2, 2, true)
 	end
+	setActionEnabled(2, 1, not WardenClass.WardenNearby and canSitDown())
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		ActionWheelClass.standUp()
 		animations["main"]["sit_down_first_person_fix"]:stop()
@@ -160,7 +161,7 @@ MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
-	end)
+	end, false)
 end):onRightClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
@@ -171,7 +172,7 @@ end):onRightClick(function()
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
-	end)
+	end, false)
 end)
 
 --アクション1-2. 「ニャー」と鳴く（ウィンク）
@@ -185,7 +186,7 @@ MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
-	end)
+	end, false)
 end):onRightClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
@@ -196,7 +197,7 @@ end):onRightClick(function()
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
-	end)
+	end, false)
 end)
 
 --アクション1-3. 「ニャー」と鳴く（キラキラ）
@@ -214,16 +215,16 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 			end
 			ActionWheelClass.ActionCount = 20
 		end
-	end)
+	end, false)
 end)
 
 --アクション2-1. おすわり
-MainPages[2]:newToggle(1):item("oak_stairs"):onToggle(function()
+MainPages[2]:newToggle(1):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
 	runAction(function()
 		if canSitDown() then
 			ActionWheelClass.sitDown()
 		end
-	end)
+	end, not WardenClass.WardenNearby)
 end):onUntoggle(function()
 	ActionWheelClass.standUp()
 end)
@@ -232,7 +233,7 @@ end)
 MainPages[2]:newAction(2):item("water_bucket"):onLeftClick(function()
 	runAction(function()
 		ActionWheelClass.bodyShake()
-	end)
+	end, false)
 end)
 
 --アクション2-3. 夏機能
