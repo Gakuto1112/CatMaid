@@ -7,12 +7,13 @@
 ---| "PURREOW"
 ---| "PURR"
 ---| "WEAK"
+---| "HISS"
 ---| "HURT"
 ---| "DEATH"
 
 MeowClass = {}
 
-MeowNameID = {NORMAL = {name = "minecraft:entity.cat.ambient", pitch = 1.5}, PURREOW = {name = "minecraft:entity.cat.purreow", pitch = 1.5}, PURR = {name = "minecraft:entity.cat.purr", pitch = 1}, WEAK = {name = "minecraft:entity.cat.stray_ambient", pitch = 1.5}, HURT = {name = "minecraft:entity.cat.hurt", pitch = 1.5}, DEATH = {name = "minecraft:entity.ocelot.death", pitch = 1.5}}
+MeowNameID = {NORMAL = {name = "minecraft:entity.cat.ambient", pitch = 1.5}, PURREOW = {name = "minecraft:entity.cat.purreow", pitch = 1.5}, PURR = {name = "minecraft:entity.cat.purr", pitch = 1}, WEAK = {name = "minecraft:entity.cat.stray_ambient", pitch = 1.5}, HISS = {name = "minecraft:entity.cat.hiss", pitch = 1}, HURT = {name = "minecraft:entity.cat.hurt", pitch = 1.5}, DEATH = {name = "minecraft:entity.ocelot.death", pitch = 1.5}}
 MeowCount = 0
 
 ---猫の鳴き声を再生する。

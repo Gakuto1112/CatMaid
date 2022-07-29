@@ -17,7 +17,7 @@ SweatCount = 0
 ---アクションの色の有効色/無効色の切り替え
 ---@param pageNumber integer アクションのページの番号
 ---@param actionNumber integer pageNumber内のアクションの番号
----@param enabled boolean 有好色か無効色か
+---@param enabled boolean 有効色か無効色か
 function setActionEnabled(pageNumber, actionNumber, enabled)
 	if enabled then
 		MainPages[pageNumber]:getAction(actionNumber):title(LanguageClass.getTranslate("action_wheel__main_"..pageNumber.."__action_"..actionNumber.."__title")):color(1, 85 / 255, 1):hoverColor(1, 1, 1)
@@ -88,14 +88,14 @@ end
 
 events.TICK:register(function()
 	if WardenClass.WardenNearby or ActionWheelClass.ActionCount > 0 then
-		for i = 1, 4 do
+		for i = 1, 5 do
 			setActionEnabled(1, i, false)
 		end
 		for i = 1, 2 do
 			setActionEnabled(2, i, false)
 		end
 	else
-		for i = 1, 4 do
+		for i = 1, 5 do
 			setActionEnabled(1, i, true)
 		end
 		setActionEnabled(2, 2, true)
@@ -229,6 +229,24 @@ MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
 		end
 		SweatCount = 20
 		ActionWheelClass.ActionCount = 20
+	end, false)
+end)
+
+--アクション1-5. 威嚇
+MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
+	runAction(function()
+		local playerPos = player:getPos()
+		for _ = 1, math.min(meta:getMaxParticles(), 16) do
+			particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+		end
+		MeowClass.playMeow("HISS", 1)
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+		else
+			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+		end
+		General.setAnimations("PLAY", "intimidate")
+		ActionWheelClass.ActionCount = 40
 	end, false)
 end)
 
