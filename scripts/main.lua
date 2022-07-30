@@ -12,6 +12,7 @@ BellSoundClass = require("scripts/bell_sound")
 SkirtClass = require("scripts/skirt")
 ArmorClass = require("scripts/armor")
 NameplateClass = require("scripts/nameplate")
+PlayerHandsClass = require("scripts/player_hands")
 --機能別クラス
 ActionWheelClass = require("scripts/action_wheel")
 MeowClass = require("scripts/meow")

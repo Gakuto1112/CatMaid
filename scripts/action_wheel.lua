@@ -5,6 +5,7 @@
 ---@field ActionCancelFunction function 現在再生中のアクションをキャンセルする処理
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
 ---@field SweatCount integer 汗のタイミングを計るカウンター
+---@field PatAnimationCount integer ナデナデするアクションのタイミングを計るカウンター
 
 ActionWheelClass = {}
 
@@ -15,6 +16,7 @@ ActionWheelClass.ActionCount = 0
 ActionCancelFunction = nil
 ShakeSplashCount = 0
 SweatCount = 0
+PatAnimationCount = -1
 
 ---アクションの色の有効色/無効色の切り替え
 ---@param pageNumber integer アクションのページの番号
@@ -100,16 +102,17 @@ events.TICK:register(function()
 		for i = 1, 7 do
 			setActionEnabled(1, i, false)
 		end
-		for i = 1, 2 do
+		for i = 1, 3 do
 			setActionEnabled(2, i, false)
 		end
 	else
 		for i = 1, 7 do
 			setActionEnabled(1, i, true)
 		end
-		setActionEnabled(2, 2, true)
+		setActionEnabled(2, 1, player:getPose() == "STANDING")
+		setActionEnabled(2, 3, true)
 	end
-	setActionEnabled(2, 1, not WardenClass.WardenNearby and canSitDown())
+	setActionEnabled(2, 2, not WardenClass.WardenNearby and canSitDown())
 	if (WardenClass.WardenNearby or HurtClass.Damaged ~= "NONE") and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
@@ -137,10 +140,29 @@ events.TICK:register(function()
 		end
 		SweatCount = SweatCount - 1
 	end
+	if PatAnimationCount >= 0 then
+		if PatAnimationCount == 145 then
+			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
+			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			PatAnimationCount = -1
+		else
+			if PatAnimationCount == 55 then
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
+			elseif PatAnimationCount == 95 then
+				local playerPos = player:getPos()
+				MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			elseif PatAnimationCount == 115 then
+				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
+			end
+			PatAnimationCount = PatAnimationCount + 1
+		end
+	end
 end)
 
 events.RENDER:register(function()
-	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head}
+	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head, models.models.player_hands.Avatar.Head}
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
 		local headRot = 10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1)
 		for _, modelPart in ipairs(headRotationList) do
@@ -154,7 +176,7 @@ events.RENDER:register(function()
 end)
 
 events.WORLD_RENDER:register(function()
-	MainPages[2]:getAction(1):toggled(canSitDown() and MainPages[2]:getAction(1):isToggled())
+	MainPages[2]:getAction(2):toggled(canSitDown() and MainPages[2]:getAction(2):isToggled())
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
 		animations["main"]["sit_down_first_person_fix"]:play()
 	else
@@ -326,8 +348,25 @@ MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
 	end, false)
 end)
 
---アクション2-1. おすわり
-MainPages[2]:newToggle(1):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
+--アクション2-1. ナデナデ（頭）
+MainPages[2]:newAction(1):item("feather"):onLeftClick(function()
+	runAction(function()
+		if player:getPose() == "STANDING" then
+			General.setAnimations("PLAY", "pat_head")
+			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(true)
+			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			PatAnimationCount = 0
+			ActionWheelClass.ActionCount = 145
+		end
+	end, function()
+		General.setAnimations("STOP", "pat_head")
+		models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
+		PatAnimationCount = -1
+	end)
+end)
+
+--アクション2-2. おすわり
+MainPages[2]:newToggle(2):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
 	runAction(function()
 		if canSitDown() then
 			ActionWheelClass.sitDown()
@@ -337,8 +376,8 @@ end):onUntoggle(function()
 	ActionWheelClass.standUp()
 end)
 
---アクション2-2. ブルブル
-MainPages[2]:newAction(2):item("water_bucket"):onLeftClick(function()
+--アクション2-3. ブルブル
+MainPages[2]:newAction(3):item("water_bucket"):onLeftClick(function()
 	runAction(function()
 		ActionWheelClass.bodyShake()
 	end, function()
@@ -347,21 +386,21 @@ MainPages[2]:newAction(2):item("water_bucket"):onLeftClick(function()
 	end, false)
 end)
 
---アクション2-3. 夏機能
-MainPages[2]:newToggle(3):title(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+--アクション2-4. 夏機能
+MainPages[2]:newToggle(4):title(LanguageClass.getTranslate("action_wheel__main_2__action_4__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
 	SummerFeatureClass.setSummerFeature(true)
 end):onUntoggle(function()
 	SummerFeatureClass.setSummerFeature(false)
 end)
 
---アクション2-4. シネマティックモード
-MainPages[2]:newAction(4):title(LanguageClass.getTranslate("action_wheel__main_2__action_4__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+--アクション2-5. シネマティックモード
+MainPages[2]:newAction(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = true
 	action_wheel:setPage(CinematicPage)
 end)
 
---アクション2-5. 設定を開く
-MainPages[2]:newAction(5):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_5__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+--アクション2-6. 設定を開く
+MainPages[2]:newAction(6):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_6__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 
