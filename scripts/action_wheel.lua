@@ -88,14 +88,14 @@ end
 
 events.TICK:register(function()
 	if WardenClass.WardenNearby or ActionWheelClass.ActionCount > 0 then
-		for i = 1, 5 do
+		for i = 1, 6 do
 			setActionEnabled(1, i, false)
 		end
 		for i = 1, 2 do
 			setActionEnabled(2, i, false)
 		end
 	else
-		for i = 1, 5 do
+		for i = 1, 6 do
 			setActionEnabled(1, i, true)
 		end
 		setActionEnabled(2, 2, true)
@@ -218,8 +218,26 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 	end, false)
 end)
 
---アクション1-4. 驚く
+--アクション1-4. 「ニャー」と鳴く（> <）
 MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if General.isTired() then
+				MeowClass.playMeow("WEAK", 1)
+				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+			else
+				MeowClass.playMeow("NORMAL", 1)
+				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "OPENED", 20, true)
+			end
+			ActionWheelClass.ActionCount = 20
+		end
+	end, false)
+end)
+
+--アクション1-5. 驚く
+MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
 	runAction(function()
 		MeowClass.playMeow("HURT", 1)
 		if General.isTired() then
@@ -232,8 +250,8 @@ MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
 	end, false)
 end)
 
---アクション1-5. 威嚇
-MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
+--アクション1-6. 威嚇
+MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 	runAction(function()
 		local playerPos = player:getPos()
 		for _ = 1, math.min(meta:getMaxParticles(), 16) do
