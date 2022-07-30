@@ -2,6 +2,7 @@
 ---@field MainPages table アクションホイールのメインページのテーブル
 ---@field CinematicPage Page シネマティックモードモードの操作ページ
 ---@field CurrentMainPage integer 現在のメインページのページ数
+---@field ActionCancelFunction function 現在再生中のアクションをキャンセルする処理
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
 ---@field SweatCount integer 汗のタイミングを計るカウンター
 
@@ -11,6 +12,7 @@ MainPages = {action_wheel:createPage("main_page_1"), action_wheel:createPage("ma
 CinematicPage = action_wheel:createPage("cinematic_mode_page")
 CurrentMainPage = 1
 ActionWheelClass.ActionCount = 0
+ActionCancelFunction = nil
 ShakeSplashCount = 0
 SweatCount = 0
 
@@ -28,18 +30,21 @@ end
 
 ---アクションを実行する。ウォーデンが近くにいる時は拒否アクションを実行する。
 ---@param action function 実行するアクションの関数
+---@param actionCancelFunction function アクションのキャンセル処理の関数
 ---@param ignoreCooldown boolean アニメーションのクールダウンを無視するかどうか
-function runAction(action, ignoreCooldown)
+function runAction(action, actionCancelFunction, ignoreCooldown)
 	if ActionWheelClass.ActionCount == 0 or ignoreCooldown then
 		if WardenClass.WardenNearby then
 			if not GoatHornClass.Horn then
 				General.setAnimations("PLAY", "refuse_emote")
 				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
+				ActionCancelFunction = nil
 				ActionWheelClass.ActionCount = 30
 				SweatCount = 30
 			end
 		else
 			action()
+			ActionCancelFunction = actionCancelFunction
 		end
 	end
 end
@@ -76,6 +81,10 @@ end
 
 ---ブルブル
 function ActionWheelClass.bodyShake()
+	ActionCancelFunction = function()
+		General.setAnimations("STOP", "shake")
+		ShakeSplashCount = 0
+	end
 	General.setAnimations("PLAY", "shake")
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
 	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
@@ -101,6 +110,10 @@ events.TICK:register(function()
 		setActionEnabled(2, 2, true)
 	end
 	setActionEnabled(2, 1, not WardenClass.WardenNearby and canSitDown())
+	if (WardenClass.WardenNearby or HurtClass.Damaged ~= "NONE") and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
+		ActionCancelFunction()
+		ActionWheelClass.ActionCount = 0
+	end
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		ActionWheelClass.standUp()
 		animations["main"]["sit_down_first_person_fix"]:stop()
@@ -161,6 +174,8 @@ MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
+	end, function()
+		General.setAnimations("STOP", "left_meow")
 	end, false)
 end):onRightClick(function()
 	runAction(function()
@@ -172,6 +187,8 @@ end):onRightClick(function()
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
+	end, function()
+		General.setAnimations("STOP", "right_meow")
 	end, false)
 end)
 
@@ -186,6 +203,8 @@ MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
+	end, function()
+		General.setAnimations("STOP", "left_meow")
 	end, false)
 end):onRightClick(function()
 	runAction(function()
@@ -197,6 +216,8 @@ end):onRightClick(function()
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
+	end, function()
+		General.setAnimations("STOP", "right_meow")
 	end, false)
 end)
 
@@ -215,7 +236,7 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 			end
 			ActionWheelClass.ActionCount = 20
 		end
-	end, false)
+	end, nil, false)
 end)
 
 --アクション1-4. 「ニャー」と鳴く（> <）
@@ -233,7 +254,7 @@ MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
 			end
 			ActionWheelClass.ActionCount = 20
 		end
-	end, false)
+	end, nil, false)
 end)
 
 --アクション1-5. 驚く
@@ -247,6 +268,8 @@ MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
 		end
 		SweatCount = 20
 		ActionWheelClass.ActionCount = 20
+	end, function()
+		SweatCount = 0
 	end, false)
 end)
 
@@ -265,6 +288,8 @@ MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 		end
 		General.setAnimations("PLAY", "intimidate")
 		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "intimidate")
 	end, false)
 end):onRightClick(function()
 	runAction(function()
@@ -280,6 +305,8 @@ end):onRightClick(function()
 		end
 		General.setAnimations("PLAY", "intimidate")
 		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "intimidate")
 	end, false)
 end)
 
@@ -294,6 +321,8 @@ MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
 		end
 		General.setAnimations("PLAY", "depressed")
 		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "depressed")
 	end, false)
 end)
 
@@ -303,7 +332,7 @@ MainPages[2]:newToggle(1):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggl
 		if canSitDown() then
 			ActionWheelClass.sitDown()
 		end
-	end, not WardenClass.WardenNearby)
+	end, nil, not WardenClass.WardenNearby)
 end):onUntoggle(function()
 	ActionWheelClass.standUp()
 end)
@@ -312,6 +341,9 @@ end)
 MainPages[2]:newAction(2):item("water_bucket"):onLeftClick(function()
 	runAction(function()
 		ActionWheelClass.bodyShake()
+	end, function()
+		General.setAnimations("STOP", "shake")
+		ShakeSplashCount = 0
 	end, false)
 end)
 
