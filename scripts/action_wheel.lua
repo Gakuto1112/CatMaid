@@ -369,10 +369,12 @@ end)
 MainPages[2]:newToggle(2):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
 	runAction(function()
 		if canSitDown() then
+			BellSoundClass.playBellSound()
 			ActionWheelClass.sitDown()
 		end
 	end, nil, not WardenClass.WardenNearby)
 end):onUntoggle(function()
+	BellSoundClass.playBellSound()
 	ActionWheelClass.standUp()
 end)
 
