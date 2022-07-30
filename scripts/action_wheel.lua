@@ -254,6 +254,21 @@ end)
 MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 	runAction(function()
 		local playerPos = player:getPos()
+		for _ = 1, math.min(meta:getMaxParticles(), 8) do
+			particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+		end
+		MeowClass.playMeow("HISS", 0.5)
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
+		else
+			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
+		end
+		General.setAnimations("PLAY", "intimidate")
+		ActionWheelClass.ActionCount = 40
+	end, false)
+end):onRightClick(function()
+	runAction(function()
+		local playerPos = player:getPos()
 		for _ = 1, math.min(meta:getMaxParticles(), 16) do
 			particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 		end

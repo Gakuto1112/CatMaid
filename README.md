@@ -157,6 +157,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 ### アクション1-6：威嚇
 - 敵に対して威嚇します。
 - 尻尾の毛が逆立ちます。
+- 左クリックで弱い威嚇、右クリックで強い威嚇になります（下の画像は強い威嚇です）。
 - 「ごしゅじんをまもるのです！」
 
 ![威嚇](README_Images/威嚇.gif)
