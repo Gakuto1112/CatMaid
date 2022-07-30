@@ -10,14 +10,9 @@ SmokeCount = 0
 ---焦げ具合を設定する。
 ---@param burn integer 焦げ具合
 function setBurn(burn)
-	models.models.main.Avatar.Head.Head:setColor(burn, burn, burn)
-	models.models.main.Avatar.Head.HatLayer:setColor(burn, burn, burn)
-	models.models.main.Avatar.Head.Ears:setColor(burn, burn, burn)
-	models.models.main.Avatar.Body:setColor(burn, burn, burn)
-	models.models.main.Avatar.RightLeg:setColor(burn, burn, burn)
-	models.models.main.Avatar.LeftLeg:setColor(burn, burn, burn)
-	models.models.cakes:setColor(burn, burn, burn)
-	models.models.armor:setColor(burn, burn, burn)
+	for _, modelPart in ipairs({models.models.main.Avatar.Head.Head, models.models.main.Avatar.Head.HatLayer, models.models.main.Avatar.Head.Ears, models.models.main.Avatar.Body, models.models.main.Avatar.RightLeg, models.models.main.Avatar.LeftLeg, models.models.cakes, models.models.summer_features, models.models.armor}) do
+		modelPart:setColor(burn, burn, burn)
+	end
 end
 
 events.TICK:register(function()

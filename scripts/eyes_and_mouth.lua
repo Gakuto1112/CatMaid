@@ -14,6 +14,8 @@
 ---| "SURPLISED_TIRED"
 ---| "INTIMIDATE"
 ---| "INTIMIDATE_TIRED"
+---| "DEPRESSED"
+---| "DEPRESSED_TIRED"
 ---| "TIRED"
 ---| "SLEEPY"
 ---| "CLOSED"
@@ -29,7 +31,7 @@ EyesAndMouthClass = {}
 
 RightEyeLight = models.models.main.Avatar.Head.FaceParts.RightEye.RightEyeLight
 LeftEyeLight = models.models.main.Avatar.Head.FaceParts.LeftEye.LeftEyeLight
-EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, SURPLISED_TIRED = 3, INTIMIDATE = 4, INTIMIDATE_TIRED = 5, TIRED = 6, SLEEPY = 7, CLOSED = 8, UNEQUAL = 9}
+EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, SURPLISED_TIRED = 3, INTIMIDATE = 4, INTIMIDATE_TIRED = 5, DEPRESSED = 6, DEPRESSED_TIRED = 7, TIRED = 8, SLEEPY = 9, CLOSED = 10, UNEQUAL = 11}
 MouthTypeID = {NONE = -1, CLOSED = 0, OPENED = 1, TOOTH = 2}
 BlinkCount = 0
 EyesAndMouthClass.EmotionCount = 0

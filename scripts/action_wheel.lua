@@ -88,14 +88,14 @@ end
 
 events.TICK:register(function()
 	if WardenClass.WardenNearby or ActionWheelClass.ActionCount > 0 then
-		for i = 1, 6 do
+		for i = 1, 7 do
 			setActionEnabled(1, i, false)
 		end
 		for i = 1, 2 do
 			setActionEnabled(2, i, false)
 		end
 	else
-		for i = 1, 6 do
+		for i = 1, 7 do
 			setActionEnabled(1, i, true)
 		end
 		setActionEnabled(2, 2, true)
@@ -264,6 +264,20 @@ MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
 		end
 		General.setAnimations("PLAY", "intimidate")
+		ActionWheelClass.ActionCount = 40
+	end, false)
+end)
+
+--アクション1-7. しょんぼり
+MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
+	runAction(function()
+		MeowClass.playMeow("HURT", 0.5)
+		if General.isTired() then
+			EyesAndMouthClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
+		else
+			EyesAndMouthClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
+		end
+		General.setAnimations("PLAY", "depressed")
 		ActionWheelClass.ActionCount = 40
 	end, false)
 end)

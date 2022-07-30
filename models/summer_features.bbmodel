@@ -1753,6 +1753,195 @@
             }
         },
         {
+            "uuid": "bcdd3b91-9684-2731-a452-fc6be0cb4f48",
+            "name": "depressed",
+            "loop": "once",
+            "override": false,
+            "length": 2,
+            "snapping": 24,
+            "selected": true,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "562e2a14-c049-521d-b579-706c8faa08e1": {
+                    "name": "Head",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "28d8f793-c1ab-3a5d-13d0-90b676564768",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "fc4412f4-e9f2-f9cd-7cce-d581964da434",
+                            "time": 2,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20\n",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "6bc20f17-0259-9d6f-7944-fd6841dcd619",
+                            "time": 0.16666666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20\n",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "0b54d9f9-21b9-046e-3e8d-9128ffd3f207",
+                            "time": 1.8333333333333333,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "d5da7e39-d68c-2aaa-e003-9ab4f22c632e",
+                            "time": 0.5,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "db35540e-7aa5-8a8d-f724-c5931c1c1af4",
+                            "time": 0.5833333333333334,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "-10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "73202ccb-91be-a338-7ac1-60e02f7d6cc0",
+                            "time": 0.75,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "dfd8ed54-5534-7d32-236d-270b52466e5e",
+                            "time": 0.9166666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "0",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "e01a90dd-ccf5-24d4-bd9c-0b9b31682bc9",
+                            "time": 1.5,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "-10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "3aeaae09-21d5-7375-0cb9-744b7b62fe4d",
+                            "time": 1.0833333333333333,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "c3c77bc2-6402-2188-be9a-3c3138bff6ba",
+                            "time": 1.25,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "20",
+                                    "y": "-10",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "132ccd54-6288-d90e-a3a9-f8d555ee6d81",
+                            "time": 1.4166666666666667,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "uuid": "89b14740-435a-1f2f-f225-98b96c4c0622",
             "name": "sit_down",
             "loop": "hold",
