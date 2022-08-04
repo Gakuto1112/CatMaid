@@ -23,7 +23,10 @@ events.TICK:register(function()
 			modelPart:setUVPixels(8, 16)
 		end
 	else
-		for _, modelPart in ipairs({main, overlay}) do
+		for _, modelPart in ipairs(main) do
+			modelPart:setUVPixels(0, 0)
+		end
+		for _, modelPart in ipairs(overlay) do
 			modelPart:setUVPixels(0, 0)
 		end
 	end
