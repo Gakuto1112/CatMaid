@@ -5,7 +5,8 @@
 ---@field ActionCancelFunction function 現在再生中のアクションをキャンセルする処理
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
 ---@field SweatCount integer 汗のタイミングを計るカウンター
----@field PatAnimationCount integer ナデナデするアクションのタイミングを計るカウンター
+---@field HeadPatAnimationCount integer 頭をナデナデするアクションのタイミングを計るカウンター
+---@field TailPatAnimationCount integer 尻尾をナデナデするアクションのタイミングを計るカウンター
 
 ActionWheelClass = {}
 
@@ -16,7 +17,8 @@ ActionWheelClass.ActionCount = 0
 ActionCancelFunction = nil
 ShakeSplashCount = 0
 SweatCount = 0
-PatAnimationCount = -1
+HeadPatAnimationCount = -1
+TailPatAnimationCount = -1
 
 ---アクションの色の有効色/無効色の切り替え
 ---@param pageNumber integer アクションのページの番号
@@ -67,7 +69,7 @@ function ActionWheelClass.sitDown()
 	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
 	General.setAnimations("PLAY", "sit_down")
 	General.setAnimations("STOP", "stand_up")
-	animations["main"]["wave_tail"]:stop()
+	General.setAnimations("STOP", "wave_tail")
 end
 
 --座っている状態から立ち上がる
@@ -76,7 +78,7 @@ function ActionWheelClass.standUp()
 	General.setAnimations("PLAY", "stand_up")
 	General.setAnimations("STOP", "sit_down")
 	if ConfigClass.WaveTail then
-		animations["main"]["wave_tail"]:play()
+		General.setAnimations("PLAY", "wave_tail")
 	end
 	models.models.main.Avatar.Head:setRot(0, 0, 0)
 end
@@ -102,17 +104,19 @@ events.TICK:register(function()
 		for i = 1, 7 do
 			setActionEnabled(1, i, false)
 		end
-		for i = 1, 3 do
+		for i = 1, 4 do
 			setActionEnabled(2, i, false)
 		end
 	else
 		for i = 1, 7 do
 			setActionEnabled(1, i, true)
 		end
-		setActionEnabled(2, 1, player:getPose() == "STANDING")
-		setActionEnabled(2, 3, true)
+		for i = 1, 2 do
+			setActionEnabled(2, i, player:getPose() == "STANDING")
+		end
+		setActionEnabled(2, 4, true)
 	end
-	setActionEnabled(2, 2, not WardenClass.WardenNearby and canSitDown())
+	setActionEnabled(2, 3, not WardenClass.WardenNearby and canSitDown())
 	if (WardenClass.WardenNearby or HurtClass.Damaged ~= "NONE") and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
@@ -140,23 +144,51 @@ events.TICK:register(function()
 		end
 		SweatCount = SweatCount - 1
 	end
-	if PatAnimationCount >= 0 then
-		if PatAnimationCount == 145 then
+	if HeadPatAnimationCount >= 0 then
+		if HeadPatAnimationCount == 145 then
 			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
 			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			PatAnimationCount = -1
+			HeadPatAnimationCount = -1
 		else
-			if PatAnimationCount == 55 then
+			if HeadPatAnimationCount == 55 then
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
-			elseif PatAnimationCount == 95 then
+			elseif HeadPatAnimationCount == 95 then
 				local playerPos = player:getPos()
 				MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
 				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			elseif PatAnimationCount == 115 then
+			elseif HeadPatAnimationCount == 115 then
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
 			end
-			PatAnimationCount = PatAnimationCount + 1
+			HeadPatAnimationCount = HeadPatAnimationCount + 1
+		end
+	elseif TailPatAnimationCount >= 0 then
+		if TailPatAnimationCount == 80 then
+			models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
+			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			TailPatAnimationCount = -1
+		else
+			if TailPatAnimationCount == 19 then
+				MeowClass.playMeow("HURT", 1)
+				if General.isTired() then
+					EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
+				else
+					EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
+				end
+			elseif TailPatAnimationCount == 40 then
+				local playerPos = player:getPos()
+				MeowClass.playMeow("HISS", 1)
+				for _ = 1, math.min(meta:getMaxParticles(), 8) do
+					particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+				end
+				if General.isTired() then
+					EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+				else
+					EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+				end
+				General.setAnimations("PLAY", "intimidate")
+			end
+			TailPatAnimationCount = TailPatAnimationCount + 1
 		end
 	end
 end)
@@ -176,7 +208,7 @@ events.RENDER:register(function()
 end)
 
 events.WORLD_RENDER:register(function()
-	MainPages[2]:getAction(2):toggled(canSitDown() and MainPages[2]:getAction(2):isToggled())
+	MainPages[2]:getAction(3):toggled(canSitDown() and MainPages[2]:getAction(3):isToggled())
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
 		animations["main"]["sit_down_first_person_fix"]:play()
 	else
@@ -355,18 +387,37 @@ MainPages[2]:newAction(1):item("feather"):onLeftClick(function()
 			General.setAnimations("PLAY", "pat_head")
 			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(true)
 			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			PatAnimationCount = 0
+			HeadPatAnimationCount = 0
 			ActionWheelClass.ActionCount = 145
 		end
 	end, function()
 		General.setAnimations("STOP", "pat_head")
 		models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
-		PatAnimationCount = -1
+		HeadPatAnimationCount = -1
 	end)
 end)
 
---アクション2-2. おすわり
-MainPages[2]:newToggle(2):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
+--アクション2-2. ナデナデ（尻尾）
+MainPages[2]:newAction(2):item("feather"):onLeftClick(function()
+	runAction(function()
+		if player:getPose() == "STANDING" then
+			General.setAnimations("PLAY", "pat_tail")
+			models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(true)
+			sound:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			TailPatAnimationCount = 0
+			ActionWheelClass.ActionCount = 80
+		end
+	end, function()
+		General.setAnimations("STOP", "pat_tail")
+		General.setAnimations("STOP", "intimidate")
+		models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
+		TailPatAnimationCount = -1
+	end)
+end)
+
+
+--アクション2-3. おすわり
+MainPages[2]:newToggle(3):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
 	runAction(function()
 		if canSitDown() then
 			BellSoundClass.playBellSound()
@@ -378,8 +429,8 @@ end):onUntoggle(function()
 	ActionWheelClass.standUp()
 end)
 
---アクション2-3. ブルブル
-MainPages[2]:newAction(3):item("water_bucket"):onLeftClick(function()
+--アクション2-4. ブルブル
+MainPages[2]:newAction(4):item("water_bucket"):onLeftClick(function()
 	runAction(function()
 		ActionWheelClass.bodyShake()
 	end, function()
@@ -388,21 +439,21 @@ MainPages[2]:newAction(3):item("water_bucket"):onLeftClick(function()
 	end, false)
 end)
 
---アクション2-4. 夏機能
-MainPages[2]:newToggle(4):title(LanguageClass.getTranslate("action_wheel__main_2__action_4__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+--アクション2-5. 夏機能
+MainPages[2]:newToggle(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
 	SummerFeatureClass.setSummerFeature(true)
 end):onUntoggle(function()
 	SummerFeatureClass.setSummerFeature(false)
 end)
 
---アクション2-5. シネマティックモード
-MainPages[2]:newAction(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+--アクション2-6. シネマティックモード
+MainPages[2]:newAction(6):title(LanguageClass.getTranslate("action_wheel__main_2__action_6__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = true
 	action_wheel:setPage(CinematicPage)
 end)
 
---アクション2-6. 設定を開く
-MainPages[2]:newAction(6):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_6__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+--アクション2-7. 設定を開く
+MainPages[2]:newAction(7):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_7__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 

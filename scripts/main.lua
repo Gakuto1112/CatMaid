@@ -29,5 +29,6 @@ GoatHornClass = require("scripts/goat_horn")
 SummerFeatureClass = require("scripts/summer_feature")
 
 --初期化処理
-vanilla_model.PLAYER:setVisible(false)
-vanilla_model.ARMOR:setVisible(false)
+for _, vanillaModel in ipairs({vanilla_model.PLAYER, vanilla_model.ARMOR}) do
+	vanillaModel:setVisible(false)
+end

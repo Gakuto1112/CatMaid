@@ -344,6 +344,332 @@
             },
             "type": "cube",
             "uuid": "51b10257-77e0-d40d-63ec-dc5726fa5604"
+        },
+        {
+            "name": "Classic2",
+            "rescale": false,
+            "locked": false,
+            "from": [
+                8,
+                13,
+                11
+            ],
+            "to": [
+                12,
+                25,
+                15
+            ],
+            "autouv": 0,
+            "color": 5,
+            "origin": [
+                10,
+                -15,
+                18
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        44,
+                        20,
+                        48,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "east": {
+                    "uv": [
+                        40,
+                        20,
+                        44,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "south": {
+                    "uv": [
+                        52,
+                        20,
+                        56,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "west": {
+                    "uv": [
+                        48,
+                        20,
+                        52,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "up": {
+                    "uv": [
+                        44,
+                        16,
+                        48,
+                        20
+                    ],
+                    "rotation": 180,
+                    "texture": 0
+                },
+                "down": {
+                    "uv": [
+                        48,
+                        16,
+                        52,
+                        20
+                    ],
+                    "texture": 0
+                }
+            },
+            "type": "cube",
+            "uuid": "e9431fb4-dab7-cc59-b1dc-991c6c3d4189"
+        },
+        {
+            "name": "Classic2Layer",
+            "rescale": false,
+            "locked": false,
+            "from": [
+                8,
+                13,
+                11
+            ],
+            "to": [
+                12,
+                25,
+                15
+            ],
+            "autouv": 0,
+            "color": 5,
+            "inflate": 0.25,
+            "origin": [
+                10,
+                -15,
+                18
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        44,
+                        36,
+                        48,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "east": {
+                    "uv": [
+                        40,
+                        36,
+                        44,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "south": {
+                    "uv": [
+                        52,
+                        36,
+                        56,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "west": {
+                    "uv": [
+                        48,
+                        36,
+                        52,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "up": {
+                    "uv": [
+                        44,
+                        32,
+                        48,
+                        36
+                    ],
+                    "rotation": 180,
+                    "texture": 0
+                },
+                "down": {
+                    "uv": [
+                        48,
+                        32,
+                        52,
+                        36
+                    ],
+                    "texture": 0
+                }
+            },
+            "type": "cube",
+            "uuid": "dee06e45-16b8-46d1-246b-685bfe9778ca"
+        },
+        {
+            "name": "Slim2",
+            "rescale": false,
+            "locked": false,
+            "from": [
+                8.5,
+                13,
+                11
+            ],
+            "to": [
+                11.5,
+                25,
+                15
+            ],
+            "autouv": 0,
+            "color": 3,
+            "origin": [
+                10,
+                -15,
+                18
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        44,
+                        20,
+                        47,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "east": {
+                    "uv": [
+                        40,
+                        20,
+                        44,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "south": {
+                    "uv": [
+                        51,
+                        20,
+                        54,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "west": {
+                    "uv": [
+                        47,
+                        20,
+                        51,
+                        32
+                    ],
+                    "texture": 0
+                },
+                "up": {
+                    "uv": [
+                        44,
+                        16,
+                        47,
+                        20
+                    ],
+                    "rotation": 180,
+                    "texture": 0
+                },
+                "down": {
+                    "uv": [
+                        47,
+                        16,
+                        50,
+                        20
+                    ],
+                    "texture": 0
+                }
+            },
+            "type": "cube",
+            "uuid": "95a6fdf7-88cf-d6ec-ced2-25189cb4e648"
+        },
+        {
+            "name": "Slim2Layer",
+            "rescale": false,
+            "locked": false,
+            "from": [
+                8.5,
+                13,
+                11
+            ],
+            "to": [
+                11.5,
+                25,
+                15
+            ],
+            "autouv": 0,
+            "color": 3,
+            "inflate": 0.25,
+            "origin": [
+                10,
+                -15,
+                18
+            ],
+            "faces": {
+                "north": {
+                    "uv": [
+                        44,
+                        36,
+                        47,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "east": {
+                    "uv": [
+                        40,
+                        36,
+                        44,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "south": {
+                    "uv": [
+                        51,
+                        36,
+                        54,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "west": {
+                    "uv": [
+                        47,
+                        36,
+                        51,
+                        48
+                    ],
+                    "texture": 0
+                },
+                "up": {
+                    "uv": [
+                        44,
+                        32,
+                        47,
+                        36
+                    ],
+                    "rotation": 180,
+                    "texture": 0
+                },
+                "down": {
+                    "uv": [
+                        47,
+                        32,
+                        50,
+                        36
+                    ],
+                    "texture": 0
+                }
+            },
+            "type": "cube",
+            "uuid": "84de53c1-4cb9-ae51-4367-952be42e4629"
         }
     ],
     "outliner": [
@@ -398,7 +724,7 @@
                             "autouv": 0,
                             "children": [
                                 {
-                                    "name": "Classic",
+                                    "name": "Classic1",
                                     "origin": [
                                         0,
                                         -3,
@@ -417,7 +743,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "Slim",
+                                    "name": "Slim1",
                                     "origin": [
                                         0,
                                         -3,
@@ -433,6 +759,134 @@
                                     "children": [
                                         "d5543df4-47dc-b37d-010b-71c4d61182dd",
                                         "51b10257-77e0-d40d-63ec-dc5726fa5604"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Body",
+                    "origin": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "color": 0,
+                    "uuid": "cf29210b-2a90-e1ef-a5eb-9684d902ba73",
+                    "export": true,
+                    "isOpen": true,
+                    "locked": false,
+                    "visibility": true,
+                    "autouv": 0,
+                    "children": [
+                        {
+                            "name": "Tail",
+                            "origin": [
+                                0,
+                                14,
+                                2
+                            ],
+                            "color": 0,
+                            "uuid": "5b8c2e5e-91dd-8b70-8af7-a9f801c49354",
+                            "export": true,
+                            "isOpen": true,
+                            "locked": false,
+                            "visibility": true,
+                            "autouv": 0,
+                            "children": [
+                                {
+                                    "name": "Tail1",
+                                    "origin": [
+                                        0.5,
+                                        14,
+                                        2
+                                    ],
+                                    "color": 0,
+                                    "uuid": "550f84d5-1f73-c887-a0d5-8c1f109dfa0a",
+                                    "export": true,
+                                    "isOpen": true,
+                                    "locked": false,
+                                    "visibility": true,
+                                    "autouv": 0,
+                                    "children": [
+                                        {
+                                            "name": "Tail2",
+                                            "origin": [
+                                                0,
+                                                15.7,
+                                                9.8
+                                            ],
+                                            "color": 0,
+                                            "uuid": "3cb8f9cc-d54e-6619-c5c9-90ed5044cdf0",
+                                            "export": true,
+                                            "isOpen": true,
+                                            "locked": false,
+                                            "visibility": true,
+                                            "autouv": 0,
+                                            "children": [
+                                                {
+                                                    "name": "PlayerHand2",
+                                                    "origin": [
+                                                        10,
+                                                        25,
+                                                        13
+                                                    ],
+                                                    "rotation": [
+                                                        120,
+                                                        90,
+                                                        0
+                                                    ],
+                                                    "color": 0,
+                                                    "uuid": "bbdf9496-d7da-63c9-16f9-0447895559cc",
+                                                    "export": true,
+                                                    "isOpen": true,
+                                                    "locked": false,
+                                                    "visibility": true,
+                                                    "autouv": 0,
+                                                    "children": [
+                                                        {
+                                                            "name": "Classic2",
+                                                            "origin": [
+                                                                10,
+                                                                -15,
+                                                                18
+                                                            ],
+                                                            "color": 0,
+                                                            "uuid": "2010f534-9a5e-1daa-84ac-a9c20472065c",
+                                                            "export": true,
+                                                            "isOpen": true,
+                                                            "locked": false,
+                                                            "visibility": true,
+                                                            "autouv": 0,
+                                                            "children": [
+                                                                "e9431fb4-dab7-cc59-b1dc-991c6c3d4189",
+                                                                "dee06e45-16b8-46d1-246b-685bfe9778ca"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "Slim2",
+                                                            "origin": [
+                                                                10,
+                                                                -15,
+                                                                18
+                                                            ],
+                                                            "color": 0,
+                                                            "uuid": "e0c810b1-2132-b87a-6174-ac0750fcbf69",
+                                                            "export": true,
+                                                            "isOpen": true,
+                                                            "locked": false,
+                                                            "visibility": true,
+                                                            "autouv": 0,
+                                                            "children": [
+                                                                "95a6fdf7-88cf-d6ec-ced2-25189cb4e648",
+                                                                "84de53c1-4cb9-ae51-4367-952be42e4629"
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
                                     ]
                                 }
                             ]
@@ -461,13 +915,76 @@
     ],
     "animations": [
         {
+            "uuid": "1ee497ce-42fe-96ab-acc5-cafa36276904",
+            "name": "wave_tail",
+            "loop": "loop",
+            "override": false,
+            "length": 4,
+            "snapping": 24,
+            "selected": true,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "5b8c2e5e-91dd-8b70-8af7-a9f801c49354": {
+                    "name": "Tail",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "30",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "c6611948-726b-71c3-648c-3380cfd928c5",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "catmullrom"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0",
+                                    "y": "30",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "a9baf035-266d-7fe4-a8c9-1c308c0a1aa5",
+                            "time": 4,
+                            "color": -1,
+                            "interpolation": "catmullrom"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": "-30",
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "3b1a4940-4acb-7b6c-08e2-84f19b207a8e",
+                            "time": 2,
+                            "color": -1,
+                            "interpolation": "catmullrom"
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "uuid": "b12e218f-1b7c-3799-bcb4-7141882a5adc",
             "name": "pat_head",
             "loop": "once",
             "override": false,
             "length": 7.25,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -908,6 +1425,167 @@
                             ],
                             "uuid": "05cfdbd1-f571-dd97-6deb-9cfc88af7a75",
                             "time": 7.25,
+                            "color": -1,
+                            "interpolation": "linear"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "uuid": "fd903f5a-2437-3de9-fd0e-caaa87da13ff",
+            "name": "pat_tail",
+            "loop": "once",
+            "override": false,
+            "length": 4,
+            "snapping": 24,
+            "selected": false,
+            "anim_time_update": "",
+            "blend_weight": "",
+            "start_delay": "",
+            "loop_delay": "",
+            "animators": {
+                "bbdf9496-d7da-63c9-16f9-0447895559cc": {
+                    "name": "PlayerHand2",
+                    "type": "bone",
+                    "keyframes": [
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "50\n",
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "8c1103ac-19eb-aecc-c4eb-a7c84a39f8d7",
+                            "time": 0.5,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "0 ",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "93ec2c0e-d215-0efe-469b-395ad53a652f",
+                            "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 30,
+                                    "y": 2.5,
+                                    "z": 19.999999999999545
+                                }
+                            ],
+                            "uuid": "b3470d7c-60b1-58a3-0ee3-236e00e0643a",
+                            "time": 0.5833333333333334,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 209.99999999999955,
+                                    "y": 2.5,
+                                    "z": -159.99999999999955
+                                }
+                            ],
+                            "uuid": "c0787649-b1f4-cd48-ffd0-486a56b29aec",
+                            "time": 0.75,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 30,
+                                    "y": 2.5,
+                                    "z": 19.999999999999545
+                                }
+                            ],
+                            "uuid": "4cd005ee-8055-4cb6-bd56-d324847cdefc",
+                            "time": 0.9166666666666666,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 30,
+                                    "y": "0",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "f8028065-bca8-a45a-7d14-e6f5f0e7fbb8",
+                            "time": 0.9583333333333334,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": 30,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "dfdbaaaa-c1f7-82bc-3df8-d85df52ada5f",
+                            "time": 2,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "90",
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "a9a9ff62-9958-689c-e4ba-27fd92118ebe",
+                            "time": 2.3333333333333335,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": "-4",
+                                    "y": "-2 ",
+                                    "z": "0"
+                                }
+                            ],
+                            "uuid": "bc476ef0-ee63-847e-ed4a-43a9303a6134",
+                            "time": 0.9583333333333334,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "position",
+                            "data_points": [
+                                {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0
+                                }
+                            ],
+                            "uuid": "19008ddf-8f81-d7ab-6628-500f8fc80095",
+                            "time": 0.9166666666666666,
                             "color": -1,
                             "interpolation": "linear"
                         }

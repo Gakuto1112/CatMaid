@@ -1,8 +1,8 @@
 ---@class TailAndEarsClass 尻尾と耳を制御するクラス
 ---@field RightEar CustomModelPart 右耳
 ---@field LeftEar CustomModelPart 左耳
----@field Tail1 CustomModelPart 尻尾（付け根の方）
----@field Tail2 CustomModelPart 尻尾（先っぽの方）
+---@field Tail1 table 尻尾（付け根の方）
+---@field Tail2 table 尻尾（先っぽの方）
 ---@field CatTypeID table CatTypeとIDを紐づけるテーブル
 ---@field EarBendCount integer 耳を曲げるアニメーションを再生するタイミングを計るカウンター
 
@@ -10,8 +10,8 @@ TailAndEarsClass = {}
 
 RightEar = models.models.main.Avatar.Head.Ears.RightEar
 LeftEar = models.models.main.Avatar.Head.Ears.LeftEar
-Tail1 = models.models.main.Avatar.Body.Tail
-Tail2 = models.models.main.Avatar.Body.Tail.Tail1.Tail2
+Tail1 = {models.models.main.Avatar.Body.Tail, models.models.player_hands.Avatar.Body.Tail}
+Tail2 = {models.models.main.Avatar.Body.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
 CatTypeID = {ORIGINAL = 0, ALL_BLACK = 1, BLACK = 2, BRITISH_SHORTHAIR = 3, CALICO = 4, GLEY_TABBY = 5, JELLIE = 6, OCELOT = 7, PERSIAN = 8, RAGDOLL = 9, RED = 10, SIAMESE = 11, TABBY = 12, WHITE = 13}
 EarBendCount = 0
 
@@ -38,17 +38,32 @@ events.TICK:register(function()
 	--尻尾
 	local gamemode = player:getGamemode()
 	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
-		Tail1:setRot(0, 0, 0)
-		Tail2:setRot(0, 0, 0)
+		for _, modelPart in ipairs(Tail1) do
+			modelPart:setRot(0, 0, 0)
+		end
+		for _, modelPart in ipairs(Tail2) do
+			modelPart:setRot(0, 0, 0)
+		end
 		animations["main"]["wave_tail"]:speed(1)
+		animations["player_hands"]["wave_tail"]:speed(1)
 	elseif condition == 1 then
-		Tail1:setRot(40, 0, 0)
-		Tail2:setRot(-15, 0, 0)
+		for _, modelPart in ipairs(Tail1) do
+			modelPart:setRot(40, 0, 0)
+		end
+		for _, modelPart in ipairs(Tail2) do
+			modelPart:setRot(-15, 0, 0)
+		end
 		animations["main"]["wave_tail"]:speed(0.75)
+		animations["player_hands"]["wave_tail"]:speed(0.75)
 	else
-		Tail1:setRot(90, 0, 0)
-		Tail2:setRot(0, 0, 0)
+		for _, modelPart in ipairs(Tail1) do
+			modelPart:setRot(90, 0, 0)
+		end
+		for _, modelPart in ipairs(Tail2) do
+			modelPart:setRot(0, 0, 0)
+		end
 		animations["main"]["wave_tail"]:speed(0.5)
+		animations["player_hands"]["wave_tail"]:speed(0.75)
 	end
 
 	--耳曲げ
@@ -60,12 +75,12 @@ events.TICK:register(function()
 	end
 end)
 
-for _, modelPart in ipairs({RightEar, LeftEar, Tail1.Tail1.Tail1, Tail2.Tail2, Tail1.Tail1.TailSection1, Tail1.Tail1.TailSection2, Tail2.TailSection3, Tail2.TailSection4}) do
+for _, modelPart in ipairs({RightEar, LeftEar, Tail1[1].Tail1.Tail1, Tail2[1].Tail2, Tail1[1].Tail1.TailSection1, Tail1[1].Tail1.TailSection2, Tail2[1].TailSection3, Tail2[1].TailSection4}) do
 	modelPart:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
 end
 
 if ConfigClass.WaveTail then
-	animations["main"]["wave_tail"]:play()
+	General.setAnimations("PLAY", "wave_tail")
 end
 
 return TailAndEarsClass

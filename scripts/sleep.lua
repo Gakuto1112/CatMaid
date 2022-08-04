@@ -46,11 +46,11 @@ events.TICK:register(function()
 				MeowClass.playMeow("PURR", 1)
 			end
 		end
-		animations["main"]["wave_tail"]:stop()
+		General.setAnimations("STOP", "wave_tail")
 		SleepCount = SleepCount + 1
 	else
 		if SleepClass.SleepData[1] and ConfigClass.WaveTail then
-			animations["main"]["wave_tail"]:play()
+			General.setAnimations("PLAY", "wave_tail")
 		end
 		head:setVisible(true)
 		if not WardenClass.WardenNearby then
