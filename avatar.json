@@ -1,6 +1,7 @@
 {
 	"name": "Cat Maid",
 	"author": "Gakuto1112",
+	"color": "ff9494",
 	"autoScripts": [
 		"scripts/main.lua"
 	]
