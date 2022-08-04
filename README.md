@@ -154,6 +154,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ### アクション1-5：ビックリ
 - ビックリして、汗をかきます。（以前実装したものを再実装したものになります）
+- 右クリックで青ざめます。
 - 「みゃっ！？」
 
 ![ビックリ](README_Images/ビックリ.gif)
@@ -169,6 +170,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ### アクション1-7：しょんぼり
 - しょんぼりします。
+- 右クリックで青ざめます。
 - 「ごしゅじん...」
 
 ![しょんぼり](README_Images/しょんぼり.gif)

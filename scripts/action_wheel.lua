@@ -326,6 +326,20 @@ MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
 	end, function()
 		SweatCount = 0
 	end, false)
+end):onRightClick(function()
+	runAction(function()
+		MeowClass.playMeow("HURT", 1)
+		if General.isTired then
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+		else
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+		end
+		FacePartsClass.setComplexion("PALE", 20, true)
+		SweatCount = 20
+		ActionWheelClass.ActionCount = 20
+	end, function()
+		SweatCount = 0
+	end, false)
 end)
 
 --アクション1-6. 威嚇
@@ -374,6 +388,20 @@ MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
 		else
 			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
 		end
+		General.setAnimations("PLAY", "depressed")
+		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "depressed")
+	end, false)
+end):onRightClick(function()
+	runAction(function()
+		MeowClass.playMeow("HURT", 0.5)
+		if General.isTired then
+			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
+		else
+			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
+		end
+		FacePartsClass.setComplexion("PALE", 40, true)
 		General.setAnimations("PLAY", "depressed")
 		ActionWheelClass.ActionCount = 40
 	end, function()
