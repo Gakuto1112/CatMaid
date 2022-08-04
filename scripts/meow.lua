@@ -37,7 +37,7 @@ end
 events.TICK:register(function()
 	if ConfigClass.MeowSound then
 		if MeowCount == 300 then
-			if player:getPose() ~= "SLEEPING" and EyesAndMouthClass.EmotionCount == 0 and not player:isUnderwater() and FavoriteFoodClass.FoodEatCount == 0 and FavoriteFoodClass.SatisfyCount == 0 and not WardenClass.WardenNearby and not GoatHornClass.Horn and AFKClass.AFKCount < 5400 then
+			if player:getPose() ~= "SLEEPING" and FacePartsClass.EmotionCount == 0 and not player:isUnderwater() and FoodClass.FoodEatCount == 0 and FoodClass.SatisfyCount == 0 and not WardenClass.WardenNearby and not GoatHornClass.Horn and AFKClass.AFKCount < 5400 then
 				if General.isTired then
 					MeowClass.playMeow("WEAK", 1)
 				else
@@ -47,7 +47,7 @@ events.TICK:register(function()
 						MeowClass.playMeow("NORMAL", 0.5)
 					end
 				end
-				EyesAndMouthClass.setEmotion("NONE", "NONE", "OPENED", 20, false)
+				FacePartsClass.setEmotion("NONE", "NONE", "OPENED", 20, false)
 			end
 			MeowCount = 0
 		elseif not client:isPaused() then

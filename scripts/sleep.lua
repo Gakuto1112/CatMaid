@@ -20,7 +20,7 @@ events.TICK:register(function()
 		if not SleepClass.SleepData[1] then
 			General.setAnimations("PLAY", "sleep")
 			if not WardenClass.WardenNearby then
-				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
+				FacePartsClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
 			end
 		end
 		if renderer:isFirstPerson() then
@@ -40,7 +40,7 @@ events.TICK:register(function()
 			leftArm:setRot(0, 0, 0)
 			leftItem:setVisible(true)
 		end
-		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
+		FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
 			if (SleepCount - 40) % 65 == 0 then
 				MeowClass.playMeow("PURR", 1)

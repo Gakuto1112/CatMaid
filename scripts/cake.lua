@@ -31,12 +31,12 @@ events.TICK:register(function()
 				if randamCake >= 0.99 then
 					rightCakeBody:setUVPixels(0, 44)
 					sound:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
-					EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
 				elseif randamCake >= 0.95 then
 					rightCakeBody:setUVPixels(0, 22)
 					if not WardenClass.WardenNearby then
 						MeowClass.playMeow("NORMAL", 1)
-						EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+						FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 					end
 				else
 					rightCakeBody:setUVPixels(0, 0)
@@ -66,12 +66,12 @@ events.TICK:register(function()
 				if randamCake >= 0.99 then
 					leftCakeBody:setUVPixels(0, 44)
 					sound:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
-					EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
 				elseif randamCake >= 0.95 then
 					leftCakeBody:setUVPixels(0, 22)
 					if not WardenClass.WardenNearby then
 						MeowClass.playMeow("NORMAL", 1)
-						EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+						FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 					end
 				else
 					leftCakeBody:setUVPixels(0, 0)

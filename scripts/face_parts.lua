@@ -1,10 +1,12 @@
----@class EyesAndMouthClass 目と口を制御するクラス
+---@class FacePartsClass 目と口を制御するクラス
 ---@field RightEyeLight CustomModelPart 右目の光る部分
 ---@field LeftEyeLight CustomModelPart 左目の光る部分
 ---@field EyeTypeID table EyeTypeとIDを紐付けるテーブル
 ---@field MouthTypeID table MouthTypeとIDを紐付けるテーブル
+---@field ComplexionTypeID table ComplexionTypeとIDを紐付けるテーブル
+---@field FacePartsClass.EmotionCount integer エモーションの時間を計るカウンター
+---@field ComplexionCount integer 顔色の時間を計るカウンター
 ---@field BlinkCount integer 瞬きのタイミングを計るカウンター
----@field EmotionCount integer エモーションの時間を計るカウンター
 
 ---@alias EyeType
 ---| "NONE"
@@ -27,14 +29,21 @@
 ---| "OPENED"
 ---| "TOOTH"
 
-EyesAndMouthClass = {}
+---@alias ComplexionType
+---| "NONE"
+---| "PALE"
+---| "ASHAMED"
+
+FacePartsClass = {}
 
 RightEyeLight = models.models.main.Avatar.Head.FaceParts.RightEye.RightEyeLight
 LeftEyeLight = models.models.main.Avatar.Head.FaceParts.LeftEye.LeftEyeLight
 EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, SURPLISED_TIRED = 3, INTIMIDATE = 4, INTIMIDATE_TIRED = 5, DEPRESSED = 6, DEPRESSED_TIRED = 7, TIRED = 8, SLEEPY = 9, CLOSED = 10, UNEQUAL = 11}
 MouthTypeID = {NONE = -1, CLOSED = 0, OPENED = 1, TOOTH = 2}
+ComplexionID = {NONE = 0, PALE = 1, ASHAMED = 2}
+FacePartsClass.EmotionCount = 0
+ComplexionCount = 0
 BlinkCount = 0
-EyesAndMouthClass.EmotionCount = 0
 
 ---表情を設定する。
 ---@param rightEye EyeType 設定する右目の名前（"NONE"にすると変更されない）
@@ -42,8 +51,8 @@ EyesAndMouthClass.EmotionCount = 0
 ---@param mouth MouthType 設定する口の名前（"NONE"にすると変更されない）
 ---@param duration integer この表情を有効にする時間
 ---@param force boolean trueにすると以前のエモーションが再生中でも強制的に現在のエモーションを適用させる。
-function EyesAndMouthClass.setEmotion(rightEye, leftEye, mouth, duration, force)
-	if EyesAndMouthClass.EmotionCount == 0 or force then
+function FacePartsClass.setEmotion(rightEye, leftEye, mouth, duration, force)
+	if FacePartsClass.EmotionCount == 0 or force then
 		--右目
 		if EyeTypeID[rightEye] >= 0 then
 			models.models.main.Avatar.Head.FaceParts.RightEye.RightEyeBase:setUVPixels(EyeTypeID[rightEye] * 6, 0)
@@ -58,25 +67,40 @@ function EyesAndMouthClass.setEmotion(rightEye, leftEye, mouth, duration, force)
 		if MouthTypeID[mouth] >= 0 then
 			models.models.main.Avatar.Head.FaceParts.Mouth:setUVPixels(MouthTypeID[mouth] * 4, 0)
 		end
-		EyesAndMouthClass.EmotionCount = duration
+		FacePartsClass.EmotionCount = duration
+	end
+end
+
+---顔色を設定する。
+---@param complexionType ComplexionType 設定する顔色の名前
+---@param duration integer この顔色を有効にする時間
+---@param force boolean trueにすると以前の顔色が再生中でも強制的に現在の顔色を適用させる。
+function FacePartsClass.setComplexion(complexionType, duration, force)
+	if ComplexionCount == 0 or force then
+		models.models.main.Avatar.Head.FaceParts.Complexion:setUVPixels(ComplexionID[complexionType] * 8, 0)
+		ComplexionCount = duration
 	end
 end
 
 events.TICK:register(function()
-	if EyesAndMouthClass.EmotionCount == 0 then
+	if FacePartsClass.EmotionCount == 0 then
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
+			FacePartsClass.setEmotion("TIRED", "TIRED", "CLOSED", 0, false)
 		else
-			EyesAndMouthClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)
+			FacePartsClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)
 		end
 	end
+	if ComplexionCount == 0 then
+		FacePartsClass.setComplexion("NONE", 0, false)
+	end
 	if BlinkCount == 200 then
-		EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "NONE", 2, false)
+		FacePartsClass.setEmotion("CLOSED", "CLOSED", "NONE", 2, false)
 		BlinkCount = 0
 	elseif client.isPaused() then
 		BlinkCount = BlinkCount + 1
 	end
-	EyesAndMouthClass.EmotionCount = EyesAndMouthClass.EmotionCount > 0 and EyesAndMouthClass.EmotionCount - 1 or EyesAndMouthClass.EmotionCount
+	FacePartsClass.EmotionCount = FacePartsClass.EmotionCount > 0 and FacePartsClass.EmotionCount - 1 or FacePartsClass.EmotionCount
+	ComplexionCount = ComplexionCount > 0 and ComplexionCount - 1 or ComplexionCount
 
 	--目を光らせる
 	local nightVision = General.getStatusEffect("night_vision")
@@ -97,4 +121,4 @@ events.TICK:register(function()
 	end
 end)
 
-return EyesAndMouthClass
+return FacePartsClass

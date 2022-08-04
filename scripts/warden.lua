@@ -34,9 +34,9 @@ events.TICK:register(function()
 			General.setAnimations("PLAY", "afraid")
 		end
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
 		else
-			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)
 		end
 		local isSleeping = player:getPose() == "SLEEPING"
 		if rightHandItemType == "none" and not isSleeping and ((AttackCount <= 0 and not firstPerson) or leftHanded) then

@@ -8,7 +8,7 @@ GoatHornClass.Horn = false
 events.TICK:register(function()
 	GoatHornClass.Horn = General.hasItem(player:getActiveItem()) == "minecraft:goat_horn"
 	if GoatHornClass.Horn then
-		EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 1, true)
+		FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 1, true)
 	end
 end)
 

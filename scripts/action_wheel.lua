@@ -41,7 +41,7 @@ function runAction(action, actionCancelFunction, ignoreCooldown)
 		if WardenClass.WardenNearby then
 			if not GoatHornClass.Horn then
 				General.setAnimations("PLAY", "refuse_emote")
-				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
+				FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 30, true)
 				ActionCancelFunction = nil
 				ActionWheelClass.ActionCount = 30
 				SweatCount = 30
@@ -91,7 +91,7 @@ function ActionWheelClass.bodyShake()
 	end
 	General.setAnimations("PLAY", "shake")
 	sound:playSound("minecraft:entity.wolf.shake", player:getPos(), 1, 1.5)
-	EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
+	FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "CLOSED", 20, true)
 	if WetClass.WetCount > 0 and not player:isWet() then
 		ShakeSplashCount = 20
 		WetClass.WetCount = 20
@@ -151,14 +151,14 @@ events.TICK:register(function()
 			HeadPatAnimationCount = -1
 		else
 			if HeadPatAnimationCount == 55 then
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
+				FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
 			elseif HeadPatAnimationCount == 95 then
 				local playerPos = player:getPos()
 				MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+				FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			elseif HeadPatAnimationCount == 115 then
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
+				FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
 			end
 			HeadPatAnimationCount = HeadPatAnimationCount + 1
 		end
@@ -171,9 +171,9 @@ events.TICK:register(function()
 			if TailPatAnimationCount == 19 then
 				MeowClass.playMeow("HURT", 1)
 				if General.isTired then
-					EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
+					FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
 				else
-					EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
+					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
 				end
 			elseif TailPatAnimationCount == 40 then
 				local playerPos = player:getPos()
@@ -182,9 +182,9 @@ events.TICK:register(function()
 					particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 				end
 				if General.isTired then
-					EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+					FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
 				else
-					EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+					FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
 				end
 				General.setAnimations("PLAY", "intimidate")
 			end
@@ -223,7 +223,7 @@ MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
@@ -236,7 +236,7 @@ end):onRightClick(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
@@ -253,7 +253,7 @@ MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
+			FacePartsClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
@@ -266,7 +266,7 @@ end):onRightClick(function()
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
+			FacePartsClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
@@ -283,10 +283,10 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
-				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
 			else
 				MeowClass.playMeow("NORMAL", 1)
-				EyesAndMouthClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
+				FacePartsClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
 			end
 			ActionWheelClass.ActionCount = 20
 		end
@@ -301,10 +301,10 @@ MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
-				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
 			else
 				MeowClass.playMeow("NORMAL", 1)
-				EyesAndMouthClass.setEmotion("UNEQUAL", "UNEQUAL", "OPENED", 20, true)
+				FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "OPENED", 20, true)
 			end
 			ActionWheelClass.ActionCount = 20
 		end
@@ -316,9 +316,9 @@ MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
 	runAction(function()
 		MeowClass.playMeow("HURT", 1)
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
 		else
-			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
 		end
 		SweatCount = 20
 		ActionWheelClass.ActionCount = 20
@@ -336,9 +336,9 @@ MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 		end
 		MeowClass.playMeow("HISS", 0.5)
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
+			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
 		else
-			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
+			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
 		end
 		General.setAnimations("PLAY", "intimidate")
 		ActionWheelClass.ActionCount = 40
@@ -353,9 +353,9 @@ end):onRightClick(function()
 		end
 		MeowClass.playMeow("HISS", 1)
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
 		else
-			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
 		end
 		General.setAnimations("PLAY", "intimidate")
 		ActionWheelClass.ActionCount = 40
@@ -369,9 +369,9 @@ MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
 	runAction(function()
 		MeowClass.playMeow("HURT", 0.5)
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
+			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
 		else
-			EyesAndMouthClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
+			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
 		end
 		General.setAnimations("PLAY", "depressed")
 		ActionWheelClass.ActionCount = 40

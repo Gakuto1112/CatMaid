@@ -38,7 +38,7 @@ events.TICK:register(function()
 				if AFKClass.AFKCount == 6000 then
 					General.setAnimations("PLAY", "afk_sleep")
 				end
-				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, true)
+				FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, true)
 				if (AFKClass.AFKCount - 6000) % 65 == 0 then
 					MeowClass.playMeow("PURR", 1)
 				end
@@ -54,7 +54,7 @@ events.TICK:register(function()
 						end
 					end
 				end
-				EyesAndMouthClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, true)
+				FacePartsClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 1, true)
 			elseif AFKClass.AFKCount % 600 == 0 and AFKClass.AFKCount > 0 then
 				if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 					if rightHandItemType == "none" then
@@ -93,9 +93,9 @@ events.TICK:register(function()
 			ActionWheelClass.standUp()
 		end
 		if General.isTired then
-			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 10, true)
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 10, true)
 		else
-			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
 		end
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30

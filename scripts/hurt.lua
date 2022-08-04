@@ -20,14 +20,14 @@ events.TICK:register(function()
 	end
 	if health < HealthData[1] then
 		if health == 0 then
-			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
 			MeowClass.playMeow("DEATH", 1)
 			HurtClass.Damaged = "DEATH"
 		else
 			if General.isTired then
-				EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 8, true)
+				FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 8, true)
 			else
-				EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 8, true)
+				FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 8, true)
 			end
 			MeowClass.playMeow("HURT",  WardenClass.WardenNearby and 0.1 or 1)
 			HurtClass.Damaged = "DAMAGED"
