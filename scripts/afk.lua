@@ -92,7 +92,7 @@ events.TICK:register(function()
 		if not SitDownWhenSleepy and onGround then
 			ActionWheelClass.standUp()
 		end
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 10, true)
 		else
 			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)

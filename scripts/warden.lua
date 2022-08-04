@@ -33,7 +33,7 @@ events.TICK:register(function()
 		if not WardenNearbyData[1] then
 			General.setAnimations("PLAY", "afraid")
 		end
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 0, false)
 		else
 			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 0, false)

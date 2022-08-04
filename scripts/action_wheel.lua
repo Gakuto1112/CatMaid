@@ -154,7 +154,7 @@ events.TICK:register(function()
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
 			elseif HeadPatAnimationCount == 95 then
 				local playerPos = player:getPos()
-				MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+				MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			elseif HeadPatAnimationCount == 115 then
@@ -170,7 +170,7 @@ events.TICK:register(function()
 		else
 			if TailPatAnimationCount == 19 then
 				MeowClass.playMeow("HURT", 1)
-				if General.isTired() then
+				if General.isTired then
 					EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
 				else
 					EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
@@ -181,7 +181,7 @@ events.TICK:register(function()
 				for _ = 1, math.min(meta:getMaxParticles(), 8) do
 					particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 				end
-				if General.isTired() then
+				if General.isTired then
 					EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
 				else
 					EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
@@ -222,7 +222,7 @@ MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "left_meow")
@@ -235,7 +235,7 @@ end):onRightClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "right_meow")
@@ -251,7 +251,7 @@ MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			EyesAndMouthClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
 			General.setAnimations("PLAY", "left_meow")
@@ -264,7 +264,7 @@ end):onRightClick(function()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			EyesAndMouthClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
 			General.setAnimations("PLAY", "right_meow")
@@ -281,7 +281,7 @@ MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if General.isTired() then
+			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
 				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
 			else
@@ -299,7 +299,7 @@ MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if General.isTired() then
+			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
 				EyesAndMouthClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
 			else
@@ -315,7 +315,7 @@ end)
 MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
 	runAction(function()
 		MeowClass.playMeow("HURT", 1)
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
 		else
 			EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
@@ -335,7 +335,7 @@ MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
 			particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 		end
 		MeowClass.playMeow("HISS", 0.5)
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
 		else
 			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
@@ -352,7 +352,7 @@ end):onRightClick(function()
 			particle:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 		end
 		MeowClass.playMeow("HISS", 1)
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
 		else
 			EyesAndMouthClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
@@ -368,7 +368,7 @@ end)
 MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
 	runAction(function()
 		MeowClass.playMeow("HURT", 0.5)
-		if General.isTired() then
+		if General.isTired then
 			EyesAndMouthClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
 		else
 			EyesAndMouthClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)

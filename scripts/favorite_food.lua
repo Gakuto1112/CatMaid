@@ -18,7 +18,7 @@ events.TICK:register(function()
 			if FavoriteFoodClass.FoodEatCount == activeItem:getUseDuration() - 2 then
 				local playerPos = player:getPos()
 				EyesAndMouthClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-				MeowClass.playMeow(General.isTired() and "WEAK" or "NORMAL", 1)
+				MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 				FavoriteFoodClass.FoodEatCount = 0
 				FavoriteFoodClass.SatisfyCount = 170
@@ -26,7 +26,7 @@ events.TICK:register(function()
 			FavoriteFoodClass.FoodEatCount = FavoriteFoodClass.FoodEatCount + 1
 		else
 			FavoriteFoodClass.FoodEatCount = 0
-			if (General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(false))) or General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(true)))) and not General.isTired() and EyesAndMouthClass.EmotionCount == 0 then
+			if (General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(false))) or General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(true)))) and not General.isTired and EyesAndMouthClass.EmotionCount == 0 then
 				EyesAndMouthClass.setEmotion("SHINE", "SHINE", "CLOSED", 1, false)
 			end
 		end

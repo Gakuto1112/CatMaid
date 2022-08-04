@@ -1,5 +1,6 @@
 ---@class General 他の複数のクラスが参照するフィールドや関数を定義するクラス
 ---@field SneakData table 前チックにスニークしていたかどうかを調べる為にスニーク情報を格納するテーブル
+---@field General.isTired boolean 疲れている（低HP、低満腹度）かどうか
 
 ---@alias AnimationState
 ---| "PLAY"
@@ -12,6 +13,7 @@
 General = {}
 
 SneakData = {}
+General.isTired = false;
 
 ---渡されたlistの中にkeyが存在するかどうか返す
 ---@param list table keyを探すリスト
@@ -58,13 +60,6 @@ function General.getSneakPrevTick()
 	return SneakData[1]
 end
 
----プレイヤーが疲れているか（HPが4以下又は満腹度が6以下）かどうか返す。
----@return boolean
-function General.isTired()
-	local gamemode = player:getGamemode()
-	return (player:getHealth() <= 4 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
-end
-
 --防具モデルと同時に描画タイプを変更する。
 ---@param armType ArmType 右腕か左腕か
 ---@param parentType ParentTypes 描画タイプ
@@ -103,6 +98,8 @@ end
 
 events.TICK:register(function()
 	table.insert(SneakData, player:isSneaking())
+	local gamemode = player:getGamemode()
+	General.isTired = (player:getHealth() / player:getMaxHealth() <= 0.2 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
 	if #SneakData == 3 then
 		table.remove(SneakData, 1)
 	end

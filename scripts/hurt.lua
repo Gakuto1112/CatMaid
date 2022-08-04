@@ -24,7 +24,7 @@ events.TICK:register(function()
 			MeowClass.playMeow("DEATH", 1)
 			HurtClass.Damaged = "DEATH"
 		else
-			if General.isTired() then
+			if General.isTired then
 				EyesAndMouthClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 8, true)
 			else
 				EyesAndMouthClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 8, true)
