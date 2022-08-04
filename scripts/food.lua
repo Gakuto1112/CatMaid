@@ -26,8 +26,8 @@ events.TICK:register(function()
 			FoodClass.FoodEatCount = FoodClass.FoodEatCount + 1
 		else
 			FoodClass.FoodEatCount = 0
-			if General.tableFind({"minecraft:rotten_flesh", "minecraft:poisonous_potato", "minecraft:spider_eye", "minecraft:suspicious_stew", "minecraft:pufferfish"}, General.hasItem(activeItem)) then
-				FacePartsClass.setComplexion("PALE", 1, false)
+			if General.tableFind({"minecraft:rotten_flesh", "minecraft:poisonous_potato", "minecraft:spider_eye", "minecraft:suspicious_stew", "minecraft:pufferfish"}, General.hasItem(activeItem)) and FacePartsClass.ComplexionCount == 0 then
+				FacePartsClass.setComplexion("PALE", 0, false)
 			end
 			if (General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(false))) or General.tableFind(FavoriteFoods, General.hasItem(player:getHeldItem(true)))) and not General.isTired and FacePartsClass.EmotionCount == 0 then
 				FacePartsClass.setEmotion("SHINE", "SHINE", "CLOSED", 1, false)

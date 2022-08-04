@@ -97,6 +97,7 @@ events.TICK:register(function()
 		else
 			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 10, true)
 		end
+		FacePartsClass.setComplexion("ASHAMED", 20, true)
 		MeowClass.playMeow("HURT", 1)
 		AFKClass.AFKCount = -30
 	else

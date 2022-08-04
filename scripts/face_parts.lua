@@ -5,7 +5,7 @@
 ---@field MouthTypeID table MouthTypeとIDを紐付けるテーブル
 ---@field ComplexionTypeID table ComplexionTypeとIDを紐付けるテーブル
 ---@field FacePartsClass.EmotionCount integer エモーションの時間を計るカウンター
----@field ComplexionCount integer 顔色の時間を計るカウンター
+---@field FacePartsClass.ComplexionCount integer 顔色の時間を計るカウンター
 ---@field BlinkCount integer 瞬きのタイミングを計るカウンター
 
 ---@alias EyeType
@@ -42,7 +42,7 @@ EyeTypeID = {NONE = -1, NORMAL = 0, SHINE = 1, SURPLISED = 2, SURPLISED_TIRED = 
 MouthTypeID = {NONE = -1, CLOSED = 0, OPENED = 1, TOOTH = 2}
 ComplexionID = {NONE = 0, PALE = 1, ASHAMED = 2}
 FacePartsClass.EmotionCount = 0
-ComplexionCount = 0
+FacePartsClass.ComplexionCount = 0
 BlinkCount = 0
 
 ---表情を設定する。
@@ -76,9 +76,9 @@ end
 ---@param duration integer この顔色を有効にする時間
 ---@param force boolean trueにすると以前の顔色が再生中でも強制的に現在の顔色を適用させる。
 function FacePartsClass.setComplexion(complexionType, duration, force)
-	if ComplexionCount == 0 or force then
+	if FacePartsClass.ComplexionCount == 0 or force then
 		models.models.main.Avatar.Head.FaceParts.Complexion:setUVPixels(ComplexionID[complexionType] * 8, 0)
-		ComplexionCount = duration
+		FacePartsClass.ComplexionCount = duration
 	end
 end
 
@@ -90,7 +90,7 @@ events.TICK:register(function()
 			FacePartsClass.setEmotion("NORMAL", "NORMAL", "CLOSED", 0, false)
 		end
 	end
-	if ComplexionCount == 0 then
+	if FacePartsClass.ComplexionCount == 0 then
 		FacePartsClass.setComplexion("NONE", 0, false)
 	end
 	if BlinkCount == 200 then
@@ -100,7 +100,7 @@ events.TICK:register(function()
 		BlinkCount = BlinkCount + 1
 	end
 	FacePartsClass.EmotionCount = FacePartsClass.EmotionCount > 0 and FacePartsClass.EmotionCount - 1 or FacePartsClass.EmotionCount
-	ComplexionCount = ComplexionCount > 0 and ComplexionCount - 1 or ComplexionCount
+	FacePartsClass.ComplexionCount = FacePartsClass.ComplexionCount > 0 and FacePartsClass.ComplexionCount - 1 or FacePartsClass.ComplexionCount
 
 	--目を光らせる
 	local nightVision = General.getStatusEffect("night_vision")

@@ -8,8 +8,8 @@ events.TICK:register(function()
 		for matchString in string.gmatch(effect.name, "([^\\.]+)") do
 			table.insert(splitTable, matchString)
 		end
-		if General.tableFind({"bad_omen", "blindness", "darkness", "hunger", "mining_fatigue",  "nausea", "poison", "slowness", "weakness", "wither"}, splitTable[3]) then
-			FacePartsClass.setComplexion("PALE", 1, false)
+		if General.tableFind({"bad_omen", "blindness", "darkness", "hunger", "mining_fatigue",  "nausea", "poison", "slowness", "weakness", "wither"}, splitTable[3]) and FacePartsClass.ComplexionCount == 0 then
+			FacePartsClass.setComplexion("PALE", 0, false)
 			break;
 		end
 	end

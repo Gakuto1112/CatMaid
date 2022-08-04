@@ -175,6 +175,7 @@ events.TICK:register(function()
 				else
 					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
 				end
+				FacePartsClass.setComplexion("ASHAMED", 20, true)
 			elseif TailPatAnimationCount == 40 then
 				local playerPos = player:getPos()
 				MeowClass.playMeow("HISS", 1)

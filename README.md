@@ -59,6 +59,10 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![お気に入りの食べ物](README_Images/お気に入りの食べ物.gif)
 
+- 具合が悪かったり、とても食べられないような物を食べると顔を青ざめます。
+
+  ![具合が悪い](README_Images/具合が悪い.gif)
+
 - 就寝時は猫っぽく寝ます。
   - 就寝時の視点もポーズに合わせて変更されています。
   - 就寝時はゴロゴロ言います。
