@@ -29,8 +29,8 @@ events.TICK:register(function()
 		if BurnCount > 0 then
 			if SmokeCount == 5 then
 				local playerPos = player:getPos()
-				for _ = 1, math.min(meta:getMaxParticles() / 4, 16) do
-					particle:addParticle("minecraft:smoke", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+				for _ = 1, math.min(avatar:getMaxParticles() / 4, 16) do
+					particles:addParticle("minecraft:smoke", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 				end
 				SmokeCount = 0
 			else
@@ -46,7 +46,7 @@ events.TICK:register(function()
 end)
 
 events.WORLD_TICK:register(function()
-	if ConfigClass.BurnEffect and not player:exists() then
+	if ConfigClass.BurnEffect then
 		BurnCount = 0
 	end
 end)

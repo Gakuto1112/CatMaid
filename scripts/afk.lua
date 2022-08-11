@@ -131,8 +131,8 @@ events.TICK:register(function()
 		end
 		if AFKClass.AFKCount % 5 == 0 then
 			local playerPos = player:getPos()
-			for _ = 1, math.min(meta:getMaxParticles() / 4, 4) do
-				particle:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
+			for _ = 1, math.min(avatar:getMaxParticles() / 4, 4) do
+				particles:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
 			end
 		end
 	end

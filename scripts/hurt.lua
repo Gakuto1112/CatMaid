@@ -22,6 +22,7 @@ events.TICK:register(function()
 		if health == 0 then
 			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
 			MeowClass.playMeow("DEATH", 1)
+			print(LanguageClass.getTranslate("player_api_bug_message"))
 			HurtClass.Damaged = "DEATH"
 		else
 			if General.isTired then

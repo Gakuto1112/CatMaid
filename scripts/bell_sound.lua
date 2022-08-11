@@ -16,14 +16,14 @@ function BellSoundClass.playBellSound()
 	local playerPos = player:getPos()
 	if ConfigClass.BellSound then
 		local volume = WardenClass.WardenNearby and 0.025 or ((player:isSneaking() or player:isUnderwater()) and 0.05 or 0.15)
-		if meta:canUseCustomSounds() then
-			sound:playSound("bell", playerPos, volume, 1)
+		if avatar:canUseCustomSounds() then
+			sounds:playSound("bell", playerPos, volume, 1)
 		else
-			sound:playSound("minecraft:entity.experience_orb.pickup", playerPos, volume, 1.5)
+			sounds:playSound("minecraft:entity.experience_orb.pickup", playerPos, volume, 1.5)
 		end
 	end
 	if not player:isInWater() then
-		sound:playSound("minecraft:entity.cod.flop", playerPos, WetClass.WetCount / 1200, 1)
+		sounds:playSound("minecraft:entity.cod.flop", playerPos, WetClass.WetCount / 1200, 1)
 	end
 end
 
@@ -51,7 +51,7 @@ events.TICK:register(function()
 	end
 end)
 
-if not meta:canUseCustomSounds() then
+if not avatar:canUseCustomSounds() then
 	print(LanguageClass.getTranslate("message__custom_sound_unavailable"))
 end
 

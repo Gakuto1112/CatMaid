@@ -14,8 +14,8 @@ events.TICK:register(function()
 	elseif WetClass.WetCount > 0 then
 		if WetClass.WetCount % 5 == 0 then
 			local playerPos = player:getPos()
-			for _ = 1, math.min(meta:getMaxParticles() / 4, 4) do
-				particle:addParticle("minecraft:falling_water", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+			for _ = 1, math.min(avatar:getMaxParticles() / 4, 4) do
+				particles:addParticle("minecraft:falling_water", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 			end
 		end
 		local paused = client:isPaused()

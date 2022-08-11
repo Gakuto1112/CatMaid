@@ -30,7 +30,7 @@ events.TICK:register(function()
 				local randamCake = math.random()
 				if randamCake >= 0.99 then
 					rightCakeBody:setUVPixels(0, 44)
-					sound:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
+					sounds:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
 					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
 				elseif randamCake >= 0.95 then
 					rightCakeBody:setUVPixels(0, 22)
@@ -65,7 +65,7 @@ events.TICK:register(function()
 				local randamCake = math.random()
 				if randamCake >= 0.99 then
 					leftCakeBody:setUVPixels(0, 44)
-					sound:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
+					sounds:playSound("minecraft:block.lava.extinguish", player:getPos(), 1, 1)
 					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
 				elseif randamCake >= 0.95 then
 					leftCakeBody:setUVPixels(0, 22)

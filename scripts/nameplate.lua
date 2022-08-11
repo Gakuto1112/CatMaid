@@ -11,7 +11,7 @@ events.TICK:register(function()
 end)
 
 if ConfigClass.UseSkinName and ConfigClass.SkinName ~= "" then
-	for _, nameplatePart in pairs(nameplate) do
+	for _, nameplatePart in ipairs({nameplate.CHAT, nameplate.ENTITY, nameplate.LIST}) do
 		nameplatePart:setText(ConfigClass.SkinName)
 	end
 end

@@ -23,13 +23,13 @@ function MeowClass.playMeow(soundName, volume)
 	local playerPos = player:getPos()
 	if player:getAir() > 0 or General.getStatusEffect("water_breathing") then
 		if player:isUnderwater() then
-			sound:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
-			sound:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
+			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
+			sounds:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
 			for _ = 1, 4 do
-				particle:addParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
+				particles:addParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
 			end
 		else
-			sound:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])
+			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])
 		end
 	end
 end

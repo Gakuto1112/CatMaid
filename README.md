@@ -2,7 +2,7 @@
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
-**このアバターは上位の権限を必要とします。Figuraの信用度設定のUntrustedでは正常に表示されません。**
+**2022/8/11更新**　[Figura-0.1.0-rc](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)では、現在プレイヤーが死亡するとアバターのスクリプトが正常に動作しない不具合が発生しています。もし、死亡した場合はその都度アバターを再読み込みして下さい。
 
 ![メイン画像](README_Images/メイン.jpg)
 
@@ -15,20 +15,25 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 詳しくは[こちら](#アクション7夏機能のオンオフ)
 
 ## このブランチについて
-このブランチのアバター、[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura Prewrite版（v0.0.8）](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura Prewrite版（v0.0.8）](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
+このブランチのアバター、[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura-0.1.0-rc1](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura-0.0.8](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
 
-また、[Figura Rewrite版（v0.1.0）](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)の機能不足により、一部の機能は現時点（2022/7/18）では実装できませんでした。
+[Figura-0.1.0-rc1]((https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite))は[こちら](https://cdn.discordapp.com/attachments/959863825581101116/1007104909180678144/figura-0.1.0-rc.1-1.19.jar)からダウンロード出来ます。
+
+また、[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)の機能不足により、一部の機能は現時点（2022/7/18）では実装できませんでした。
 
 ### 実装不可能なもの
 - 設定画面（詳しくは[こちら](#アバター設定について)）
-- マルチプレイにおける、クライアント間のアクション同期（ping）
-  - 相手に向かってエモートを実行しても相手はそのエモートを見ることが出来ません。
-- プレイヤーの頭（被り物）の消去
+- ~~マルチプレイにおける、クライアント間のアクション同期（ping）~~
+  - ~~相手に向かってエモートを実行しても相手はそのエモートを見ることが出来ません。~~
+  - [Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
+- ~~プレイヤーの頭（被り物）の消去~~
+  - [Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
 - アクションホイールでの、顔アニメーションによるエモートのプレビュー
   - 代替のアイコンを使用しています。
-- エリトラや手持ちアイテムの移動
+- エリトラや~~手持ちアイテム~~の移動
   - 代替処理として、移動が必要な場合は非表示にしています。
-  - オウムと望遠鏡はどうにもなりませんでした。
+  - ~~オウムと望遠鏡はどうにもなりませんでした。~~
+  - 一部は[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
 
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。

@@ -19,7 +19,7 @@ events.TICK:register(function()
 				local playerPos = player:getPos()
 				FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 				MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-				particle:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+				particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 				FoodClass.FoodEatCount = 0
 				FoodClass.SatisfyCount = 170
 			end
