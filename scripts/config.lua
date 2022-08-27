@@ -1,5 +1,4 @@
 ---@class ConfigClass アバター設定を管理するクラス
----@field ConfigClass.Language string 使用する言語名 Language to use in the avatar messages.
 ---@field ConfigClass.CatType CatType 耳と尻尾のテクスチャの名前 The name of texture of ears and tails.
 ---@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
 ---@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか Whether or not meow regularly.
@@ -37,7 +36,6 @@ ConfigClass = {}
 	何が何を表しているのか、有効か値は何かは、上の"@field"を参照して下さい。
 ]]
 
-ConfigClass.Language = "jp" --Valid value: "en", "jp". If you want to use English, please set to "en".
 ConfigClass.CatType = "ORIGINAL"
 ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true

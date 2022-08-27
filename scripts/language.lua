@@ -1,5 +1,6 @@
 ---@class LanguageClass アバターの表示言語を管理するクラス
 ---@field LanguageData table 言語データ
+---@field ActiveLanguage string 設定言語
 
 LanguageClass = {}
 
@@ -63,13 +64,17 @@ LanguageData = {
 		key__afk_check = "AFK復帰判定用"
 	}
 }
+ActiveLanguage = "en"
 
 ---翻訳キーに対する訳文を返す。設定言語が存在しない場合は英語の文が返される。また、指定したキーの訳が無い場合は英語->キーそのままが返される。
 ---@param keyName string 翻訳キー
 ---@return string
 function LanguageClass.getTranslate(keyName)
-	local language = LanguageData[ConfigClass.Language] and ConfigClass.Language or "en"
-	return LanguageData[language][keyName] and LanguageData[language][keyName] or (LanguageData["en"][keyName] and LanguageData["en"][keyName] or keyName)
+	return LanguageData[ActiveLanguage][keyName] and LanguageData[ActiveLanguage][keyName] or (LanguageData["en"][keyName] and LanguageData["en"][keyName] or keyName)
 end
+
+events.WORLD_TICK:register(function ()
+	ActiveLanguage = client:getActiveLang() == "ja_jp" and "jp" or "en"
+end)
 
 return LanguageClass

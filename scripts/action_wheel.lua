@@ -196,6 +196,20 @@ events.TICK:register(function()
 	end
 end)
 
+events.WORLD_TICK:register(function ()
+	MainPages[2]:getAction(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__disable"))
+	MainPages[2]:getAction(6):title(LanguageClass.getTranslate("action_wheel__main_2__action_6__title"))
+	MainPages[2]:getAction(7):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_7__title"))
+	for index, mainPage in ipairs(MainPages) do
+		mainPage:getAction(8):title(LanguageClass.getTranslate("action_wheel__main__page_switch__title")..index.."/"..#MainPages)
+	end
+	CinematicPage:getAction(1):title(LanguageClass.getTranslate("action_wheel__cinematic__action_1__title").." "..CinematicModeClass.CameraRot[1])
+	CinematicPage:getAction(2):title(LanguageClass.getTranslate("action_wheel__cinematic__action_2__title").." "..CinematicModeClass.CameraRot[2])
+	CinematicPage:getAction(3):title(LanguageClass.getTranslate("action_wheel__cinematic__action_3__title").." "..CinematicModeClass.CameraRot[3])
+	CinematicPage:getAction(4):title(LanguageClass.getTranslate("action_wheel__cinematic__action_4__title"))
+	CinematicPage:getAction(5):title(LanguageClass.getTranslate("action_wheel__cinematic__action_5__title"))
+end)
+
 events.RENDER:register(function()
 	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head, models.models.player_hands.Avatar.Head}
 	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
@@ -471,26 +485,26 @@ MainPages[2]:newAction(4):item("water_bucket"):onLeftClick(function()
 end)
 
 --アクション2-5. 夏機能
-MainPages[2]:newToggle(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_3__title")..LanguageClass.getTranslate("action_wheel__disable")):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+MainPages[2]:newToggle(5):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
 	SummerFeatureClass.setSummerFeature(true)
 end):onUntoggle(function()
 	SummerFeatureClass.setSummerFeature(false)
 end)
 
 --アクション2-6. シネマティックモード
-MainPages[2]:newAction(6):title(LanguageClass.getTranslate("action_wheel__main_2__action_6__title")):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+MainPages[2]:newAction(6):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = true
 	action_wheel:setPage(CinematicPage)
 end)
 
 --アクション2-7. 設定を開く
-MainPages[2]:newAction(7):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_7__title")):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
+MainPages[2]:newAction(7):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
 end)
 
 --アクション8（共通）. ページ切り替え
-for index, mainPage in ipairs(MainPages) do
-	mainPage:newScroll(8):title(LanguageClass.getTranslate("action_wheel__main__page_switch__title")..index.."/"..#MainPages):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
+for _, mainPage in ipairs(MainPages) do
+	mainPage:newScroll(8):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
 		CurrentMainPage = CurrentMainPage - direction
 		CurrentMainPage = CurrentMainPage < 1 and CurrentMainPage + #MainPages or (CurrentMainPage > #MainPages and CurrentMainPage - #MainPages or CurrentMainPage)
 		action_wheel:setPage(MainPages[CurrentMainPage])
@@ -499,34 +513,27 @@ end
 
 --シネマティックモードのページのアクションの設定
 --アクション1. ピッチ調整
-CinematicPage:newScroll(1):title(LanguageClass.getTranslate("action_wheel__cinematic__action_1__title").." "..ConfigClass.CinematicModeCamera.PitchInit):color(1, 85 / 255, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
+CinematicPage:newScroll(1):color(1, 85 / 255, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
 	CinematicModeClass.addCameraPitch(direction == 1 and 5 or -5)
-	CinematicPage:getAction(1):title(LanguageClass.getTranslate("action_wheel__cinematic__action_1__title").." "..CinematicModeClass.CameraRot[1])
 end)
 
 --アクション2. ロール調整
-CinematicPage:newScroll(2):title(LanguageClass.getTranslate("action_wheel__cinematic__action_2__title").." "..ConfigClass.CinematicModeCamera.RollInit):color(85 / 255, 1, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
+CinematicPage:newScroll(2):color(85 / 255, 1, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
 	CinematicModeClass.addCameraRoll(direction == 1 and 5 or -5)
-	CinematicPage:getAction(2):title(LanguageClass.getTranslate("action_wheel__cinematic__action_2__title").." "..CinematicModeClass.CameraRot[2])
 end)
 
 --アクション3. ヨー調整
-CinematicPage:newScroll(3):title(LanguageClass.getTranslate("action_wheel__cinematic__action_3__title").." "..ConfigClass.CinematicModeCamera.YawInit):color(85 / 255, 85 / 255, 1):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
+CinematicPage:newScroll(3):color(85 / 255, 85 / 255, 1):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
 	CinematicModeClass.addCameraYaw(direction == 1 and 5 or -5)
-	CinematicPage:getAction(3):title(LanguageClass.getTranslate("action_wheel__cinematic__action_3__title").." "..CinematicModeClass.CameraRot[3])
 end)
 
 --アクション4. カメラリセット
-CinematicPage:newAction(4):title(LanguageClass.getTranslate("action_wheel__cinematic__action_4__title")):color(170 / 255, 0, 170 / 255):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
+CinematicPage:newAction(4):color(170 / 255, 0, 170 / 255):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
 	CinematicModeClass.resetCamera()
-	CinematicPage:getAction(1):title(LanguageClass.getTranslate("action_wheel__cinematic__action_1__title").." "..ConfigClass.CinematicModeCamera.PitchInit)
-	CinematicPage:getAction(2):title(LanguageClass.getTranslate("action_wheel__cinematic__action_2__title").." "..ConfigClass.CinematicModeCamera.RollInit)
-	CinematicPage:getAction(3):title(LanguageClass.getTranslate("action_wheel__cinematic__action_3__title").." "..ConfigClass.CinematicModeCamera.YawInit)
 end)
 
-
 --アクション5. シネマティックモード終了
-CinematicPage:newAction(5):title(LanguageClass.getTranslate("action_wheel__cinematic__action_5__title")):color(200 / 255, 200 / 255, 200 /255):hoverColor(1, 1, 1):item("barrier"):onLeftClick(function()
+CinematicPage:newAction(5):color(200 / 255, 200 / 255, 200 /255):hoverColor(1, 1, 1):item("barrier"):onLeftClick(function()
 	CinematicModeClass.CinematicMode = false
 	action_wheel:setPage(MainPages[2])
 end)

@@ -272,7 +272,6 @@ ConfigClass.CinematicModeCamera = {
 
 | 項目 | 説明 | 有効な値 | 初期値 |
 | - | - | - | - |
-| ```ConfigClass.Language``` | アバターのメッセージやアクションホイールのアクション名に使用される言語です。 **If you want to use English, please set to "en"!** | ```string``` "en", "jp" | jp |
 | ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | ORIGINAL |
 | ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
 | ``` ConfigClass.MeowSound ``` | 定期的に猫の鳴き声を発するかどうかです。 | ```boolean``` | ```true``` |
