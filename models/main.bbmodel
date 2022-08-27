@@ -5700,7 +5700,23 @@
                                     "autouv": 0,
                                     "children": [
                                         "21dfde47-2175-62b7-79e4-f36e7ea86f65",
-                                        "1c126636-035d-8584-9490-6c71498b9b7a"
+                                        "1c126636-035d-8584-9490-6c71498b9b7a",
+                                        {
+                                            "name": "RightSpyglassPivot",
+                                            "origin": [
+                                                2,
+                                                26,
+                                                -4
+                                            ],
+                                            "color": 0,
+                                            "uuid": "7324b8e1-e40c-dc43-01df-51c01bffa194",
+                                            "export": true,
+                                            "isOpen": true,
+                                            "locked": false,
+                                            "visibility": true,
+                                            "autouv": 0,
+                                            "children": []
+                                        }
                                     ]
                                 },
                                 {
@@ -5719,7 +5735,23 @@
                                     "autouv": 0,
                                     "children": [
                                         "acf9651c-cf12-1012-95cd-395eb872e9ef",
-                                        "e083e08c-1a1d-876a-eee3-56ca97a67014"
+                                        "e083e08c-1a1d-876a-eee3-56ca97a67014",
+                                        {
+                                            "name": "LeftSpyglassPivot",
+                                            "origin": [
+                                                -2,
+                                                26,
+                                                -4
+                                            ],
+                                            "color": 0,
+                                            "uuid": "31090a9f-269f-b772-84e2-80bcabec3d10",
+                                            "export": true,
+                                            "isOpen": true,
+                                            "locked": false,
+                                            "visibility": true,
+                                            "autouv": 0,
+                                            "children": []
+                                        }
                                     ]
                                 },
                                 "1233efdd-ddc9-756a-c980-bb419b3ecaa6",
@@ -8817,7 +8849,7 @@
             "override": false,
             "length": 0.16666666666666666,
             "snapping": 24,
-            "selected": false,
+            "selected": true,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -9035,20 +9067,6 @@
                             "channel": "rotation",
                             "data_points": [
                                 {
-                                    "x": "-35",
-                                    "y": "-10",
-                                    "z": "-10"
-                                }
-                            ],
-                            "uuid": "b4e5eacb-a576-31f7-9b98-2b5901e8273c",
-                            "time": 0.16666666666666666,
-                            "color": -1,
-                            "interpolation": "linear"
-                        },
-                        {
-                            "channel": "rotation",
-                            "data_points": [
-                                {
                                     "x": 0,
                                     "y": 0,
                                     "z": 0
@@ -9056,6 +9074,20 @@
                             ],
                             "uuid": "f4452005-ef24-dffc-b57f-aaa2cd1f0268",
                             "time": 0,
+                            "color": -1,
+                            "interpolation": "linear"
+                        },
+                        {
+                            "channel": "rotation",
+                            "data_points": [
+                                {
+                                    "x": "-35",
+                                    "y": "-10",
+                                    "z": "-10"
+                                }
+                            ],
+                            "uuid": "b4e5eacb-a576-31f7-9b98-2b5901e8273c",
+                            "time": 0.16666666666666666,
                             "color": -1,
                             "interpolation": "linear"
                         }
