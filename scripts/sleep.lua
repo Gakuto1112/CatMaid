@@ -11,8 +11,6 @@ events.TICK:register(function()
 	local head = models.models.main.Avatar.Head
 	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
-	local rightItem = vanilla_model.RIGHT_ITEM
-	local leftItem = vanilla_model.LEFT_ITEM
 	local rightHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local isSleeping = player:getPose() == "SLEEPING"
@@ -28,17 +26,13 @@ events.TICK:register(function()
 		end
 		if rightHandItemType ~= "none" then
 			rightArm:setRot(-15, 0, 0)
-			rightItem:setVisible(false)
 		else
 			rightArm:setRot(0, 0, 0)
-			rightItem:setVisible(true)
 		end
 		if leftHandItemType ~= "none" then
 			leftArm:setRot(-15, 0, 0)
-			leftItem:setVisible(false)
 		else
 			leftArm:setRot(0, 0, 0)
-			leftItem:setVisible(true)
 		end
 		FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
@@ -58,13 +52,11 @@ events.TICK:register(function()
 				if not ArmsClass.isSneaking then
 					rightArm:setRot(0, 0, 0)
 				end
-				rightItem:setVisible(true)
 			end
 			if leftHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then
 					leftArm:setRot(0, 0, 0)
 				end
-				leftItem:setVisible(true)
 			end
 		end
 		General.setAnimations("STOP", "sleep")

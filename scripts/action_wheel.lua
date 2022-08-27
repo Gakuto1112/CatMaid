@@ -66,7 +66,6 @@ end
 
 ---座る
 function ActionWheelClass.sitDown()
-	vanilla_model.HELD_ITEMS:setVisible(false) --FIXME: BBmodelに手持ちアイテムのキーワードが存在しないので、暫定処理として手持ちアイテムを非表示にする。
 	General.setAnimations("PLAY", "sit_down")
 	General.setAnimations("STOP", "stand_up")
 	General.setAnimations("STOP", "wave_tail")
@@ -74,7 +73,6 @@ end
 
 --座っている状態から立ち上がる
 function ActionWheelClass.standUp()
-	vanilla_model.HELD_ITEMS:setVisible(true)
 	General.setAnimations("PLAY", "stand_up")
 	General.setAnimations("STOP", "sit_down")
 	if ConfigClass.WaveTail then

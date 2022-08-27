@@ -48,9 +48,7 @@ events.TICK:register(function()
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount <= 0 then
 			General.setParentTypeWithArmor("RIGHT", "RightArm")
 		end
-		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
-			rightItem:setVisible(true)
-		end
+		rightItem:setVisible(true)
 		rightCake:setVisible(false)
 		rightCakeBody:setSecondaryRenderType(nil)
 		General.setAnimations("STOP", "right_cake")
@@ -83,9 +81,7 @@ events.TICK:register(function()
 		if not WardenClass.WardenNearby and AFKClass.TouchBellCount >= 0 then
 			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
-		if not isSleeping and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
-			leftItem:setVisible(true)
-		end
+		leftItem:setVisible(true)
 		leftCake:setVisible(false)
 		leftCakeBody:setSecondaryRenderType(nil)
 		General.setAnimations("STOP", "left_cake")

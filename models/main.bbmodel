@@ -6401,7 +6401,23 @@
                                             "autouv": 0,
                                             "children": [
                                                 "7cf8acb9-0f09-1dbb-3d89-f40eca6c6abf",
-                                                "dc0fc74f-cdbd-56ec-5573-2cd212d254b9"
+                                                "dc0fc74f-cdbd-56ec-5573-2cd212d254b9",
+                                                {
+                                                    "name": "RightItemPivot",
+                                                    "origin": [
+                                                        5.5,
+                                                        12,
+                                                        -2
+                                                    ],
+                                                    "color": 0,
+                                                    "uuid": "81f98395-d0fd-f5c6-3f16-fbeaf0cab1f9",
+                                                    "export": true,
+                                                    "isOpen": true,
+                                                    "locked": false,
+                                                    "visibility": true,
+                                                    "autouv": 0,
+                                                    "children": []
+                                                }
                                             ]
                                         }
                                     ]
@@ -6439,7 +6455,23 @@
                                             "autouv": 0,
                                             "children": [
                                                 "db46a885-6584-868e-12fd-f9b8b5e77a2f",
-                                                "76dfd948-0ff8-87ad-1bfb-b20c1b3972b1"
+                                                "76dfd948-0ff8-87ad-1bfb-b20c1b3972b1",
+                                                {
+                                                    "name": "LeftItemPivot",
+                                                    "origin": [
+                                                        -5.5,
+                                                        12,
+                                                        -2
+                                                    ],
+                                                    "color": 0,
+                                                    "uuid": "28e21bb4-f20f-2f5b-f5fb-8ceffc50d661",
+                                                    "export": true,
+                                                    "isOpen": true,
+                                                    "locked": false,
+                                                    "visibility": true,
+                                                    "autouv": 0,
+                                                    "children": []
+                                                }
                                             ]
                                         }
                                     ]
@@ -6563,7 +6595,7 @@
             "saved": true,
             "uuid": "2f9f93eb-748a-2153-ebb9-73ece35de425",
             "relative_path": "../../textures/complexions.png",
-            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAICAYAAADjoT9jAAAAAXNSR0IArs4c6QAAAEtJREFUOE9jZKAxYKSx+QxEWaC6+r8PNofcDmXcQsiBRFngthO7Bbvch4oF2cew+2CqFZV8QKwF/7OzwXHFOHUqPG6IigNCEYlPHgBXABgJenIeWQAAAABJRU5ErkJggg=="
+            "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAICAYAAADjoT9jAAAAAXNSR0IArs4c6QAAAEtJREFUOE9jZKAxYKSx+QxEWaC6+r8PNofcDmXcQsiBRFngthO7Bbvch4oF2cew+2CqFZV8QKwF/xkYwHHFyMAAjxui4oBQROKTBwB5QRYJcJ4XUAAAAABJRU5ErkJggg=="
         }
     ],
     "animations": [
