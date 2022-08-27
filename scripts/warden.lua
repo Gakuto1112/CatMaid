@@ -18,9 +18,15 @@ AttackCount = 0
 WardenClass.WardenNearby = false
 
 AttackKey.onPress = function()
-	if not action_wheel:isEnabled() then
-		AttackCount = 6
+	local leftHanded = player:isLeftHanded()
+	if not action_wheel:isEnabled() and WardenClass.WardenNearby and ((General.hasItem(player:getHeldItem(leftHanded)) == "none" and not leftHanded) or (General.hasItem(player:getHeldItem(not leftHanded)) == "none" and leftHanded)) then
+		pings.attack()
 	end
+end
+
+--ping関数
+function pings.attack()
+	AttackCount = 6
 end
 
 events.TICK:register(function()

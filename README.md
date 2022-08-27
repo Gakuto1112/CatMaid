@@ -21,9 +21,6 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ### 実装不可能なもの
 - 設定画面（詳しくは[こちら](#アバター設定について)）
-- ~~マルチプレイにおける、クライアント間のアクション同期（ping）~~
-  - ~~相手に向かってエモートを実行しても相手はそのエモートを見ることが出来ません。~~
-  - [Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
 - ~~プレイヤーの頭（被り物）の消去~~
   - [Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
 - アクションホイールでの、顔アニメーションによるエモートのプレビュー

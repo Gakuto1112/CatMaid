@@ -83,7 +83,7 @@ function ActionWheelClass.standUp()
 	models.models.main.Avatar.Head:setRot(0, 0, 0)
 end
 
----ブルブル
+--ブルブル
 function ActionWheelClass.bodyShake()
 	ActionCancelFunction = function()
 		General.setAnimations("STOP", "shake")
@@ -97,6 +97,265 @@ function ActionWheelClass.bodyShake()
 		WetClass.WetCount = 20
 	end
 	ActionWheelClass.ActionCount = 20
+end
+
+--ping関数
+function pings.main1_action1_left()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
+			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			General.setAnimations("PLAY", "left_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end, function()
+		General.setAnimations("STOP", "left_meow")
+	end, false)
+end
+
+function pings.main1_action1_right()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
+			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			General.setAnimations("PLAY", "right_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end, function()
+		General.setAnimations("STOP", "right_meow")
+	end, false)
+end
+
+function pings.main1_action2_left()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			FacePartsClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
+			General.setAnimations("PLAY", "left_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end, function()
+		General.setAnimations("STOP", "left_meow")
+	end, false)
+end
+
+function pings.main1_action2_right()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			FacePartsClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
+			General.setAnimations("PLAY", "right_meow")
+			ActionWheelClass.ActionCount = 20
+		end
+	end, function()
+		General.setAnimations("STOP", "right_meow")
+	end, false)
+end
+
+function pings.main1_action3()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if General.isTired then
+				MeowClass.playMeow("WEAK", 1)
+				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+			else
+				MeowClass.playMeow("NORMAL", 1)
+				FacePartsClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
+			end
+			ActionWheelClass.ActionCount = 20
+		end
+	end, nil, false)
+end
+
+function pings.main1_action4()
+	runAction(function()
+		if not GoatHornClass.Horn then
+			local playerPos = player:getPos()
+			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			if General.isTired then
+				MeowClass.playMeow("WEAK", 1)
+				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
+			else
+				MeowClass.playMeow("NORMAL", 1)
+				FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "OPENED", 20, true)
+			end
+			ActionWheelClass.ActionCount = 20
+		end
+	end, nil, false)
+end
+
+function pings.main1_action5_left()
+	runAction(function()
+		MeowClass.playMeow("HURT", 1)
+		if General.isTired then
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+		else
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+		end
+		SweatCount = 20
+		ActionWheelClass.ActionCount = 20
+	end, function()
+		SweatCount = 0
+	end, false)
+end
+
+function pings.main1_action5_right()
+	runAction(function()
+		MeowClass.playMeow("HURT", 1)
+		if General.isTired then
+			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
+		else
+			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
+		end
+		FacePartsClass.setComplexion("PALE", 20, true)
+		SweatCount = 20
+		ActionWheelClass.ActionCount = 20
+	end, function()
+		SweatCount = 0
+	end, false)
+end
+
+function pings.main1_action6_left()
+	runAction(function()
+		local playerPos = player:getPos()
+		for _ = 1, math.min(avatar:getMaxParticles(), 8) do
+			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+		end
+		MeowClass.playMeow("HISS", 0.5)
+		if General.isTired then
+			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
+		else
+			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
+		end
+		General.setAnimations("PLAY", "intimidate")
+		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "intimidate")
+	end, false)
+end
+
+function pings.main1_action6_right()
+	runAction(function()
+		local playerPos = player:getPos()
+		for _ = 1, math.min(avatar:getMaxParticles(), 16) do
+			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+		end
+		MeowClass.playMeow("HISS", 1)
+		if General.isTired then
+			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+		else
+			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+		end
+		General.setAnimations("PLAY", "intimidate")
+		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "intimidate")
+	end, false)
+end
+
+function pings.main1_action7_left()
+	runAction(function()
+		MeowClass.playMeow("HURT", 0.5)
+		if General.isTired then
+			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
+		else
+			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
+		end
+		General.setAnimations("PLAY", "depressed")
+		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "depressed")
+	end, false)
+end
+
+function pings.main1_action7_right()
+	runAction(function()
+		MeowClass.playMeow("HURT", 0.5)
+		if General.isTired then
+			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
+		else
+			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
+		end
+		FacePartsClass.setComplexion("PALE", 40, true)
+		General.setAnimations("PLAY", "depressed")
+		ActionWheelClass.ActionCount = 40
+	end, function()
+		General.setAnimations("STOP", "depressed")
+	end, false)
+end
+
+function pings.main2_action1()
+	runAction(function()
+		if player:getPose() == "STANDING" then
+			General.setAnimations("PLAY", "pat_head")
+			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(true)
+			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			HeadPatAnimationCount = 0
+			ActionWheelClass.ActionCount = 145
+		end
+	end, function()
+		General.setAnimations("STOP", "pat_head")
+		models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
+		HeadPatAnimationCount = -1
+	end)
+end
+
+function pings.main2_action2()
+	runAction(function()
+		if player:getPose() == "STANDING" then
+			General.setAnimations("PLAY", "pat_tail")
+			models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(true)
+			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+			TailPatAnimationCount = 0
+			ActionWheelClass.ActionCount = 80
+		end
+	end, function()
+		General.setAnimations("STOP", "pat_tail")
+		General.setAnimations("STOP", "intimidate")
+		models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
+		TailPatAnimationCount = -1
+	end)
+end
+
+function pings.main2_action3_toggle()
+	runAction(function()
+		if canSitDown() then
+			BellSoundClass.playBellSound()
+			ActionWheelClass.sitDown()
+		end
+	end, nil, not WardenClass.WardenNearby)
+end
+
+function pings.main2_action3_untoggle()
+	BellSoundClass.playBellSound()
+	ActionWheelClass.standUp()
+end
+
+function pings.main2_action4()
+	runAction(function()
+		ActionWheelClass.bodyShake()
+	end, function()
+		General.setAnimations("STOP", "shake")
+		ShakeSplashCount = 0
+	end, false)
+end
+
+function pings.main2_action5_toggle()
+	SummerFeatureClass.setSummerFeature(true)
+end
+
+function pings.main2_action5_untoggle()
+	SummerFeatureClass.setSummerFeature(false)
 end
 
 events.TICK:register(function()
@@ -236,259 +495,76 @@ end)
 --メインページのアクションの設定
 --アクション1-1. 「ニャー」と鳴く（スマイル）
 MainPages[1]:newAction(1):item("cod"):onLeftClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			General.setAnimations("PLAY", "left_meow")
-			ActionWheelClass.ActionCount = 20
-		end
-	end, function()
-		General.setAnimations("STOP", "left_meow")
-	end, false)
+	pings.main1_action1_left()
 end):onRightClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			General.setAnimations("PLAY", "right_meow")
-			ActionWheelClass.ActionCount = 20
-		end
-	end, function()
-		General.setAnimations("STOP", "right_meow")
-	end, false)
+	pings.main1_action1_right()
 end)
 
 --アクション1-2. 「ニャー」と鳴く（ウィンク）
 MainPages[1]:newAction(2):item("cod"):onLeftClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			FacePartsClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
-			General.setAnimations("PLAY", "left_meow")
-			ActionWheelClass.ActionCount = 20
-		end
-	end, function()
-		General.setAnimations("STOP", "left_meow")
-	end, false)
+	pings.main1_action2_left()
 end):onRightClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			FacePartsClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
-			General.setAnimations("PLAY", "right_meow")
-			ActionWheelClass.ActionCount = 20
-		end
-	end, function()
-		General.setAnimations("STOP", "right_meow")
-	end, false)
+	pings.main1_action2_right()
 end)
 
 --アクション1-3. 「ニャー」と鳴く（キラキラ）
 MainPages[1]:newAction(3):item("cod"):onLeftClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if General.isTired then
-				MeowClass.playMeow("WEAK", 1)
-				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
-			else
-				MeowClass.playMeow("NORMAL", 1)
-				FacePartsClass.setEmotion("SHINE", "SHINE", "OPENED", 20, true)
-			end
-			ActionWheelClass.ActionCount = 20
-		end
-	end, nil, false)
+	pings.main1_action3()
 end)
 
 --アクション1-4. 「ニャー」と鳴く（> <）
 MainPages[1]:newAction(4):item("cod"):onLeftClick(function()
-	runAction(function()
-		if not GoatHornClass.Horn then
-			local playerPos = player:getPos()
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-			if General.isTired then
-				MeowClass.playMeow("WEAK", 1)
-				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
-			else
-				MeowClass.playMeow("NORMAL", 1)
-				FacePartsClass.setEmotion("UNEQUAL", "UNEQUAL", "OPENED", 20, true)
-			end
-			ActionWheelClass.ActionCount = 20
-		end
-	end, nil, false)
+	pings.main1_action4()
 end)
 
 --アクション1-5. 驚く
 MainPages[1]:newAction(5):item("cod"):onLeftClick(function()
-	runAction(function()
-		MeowClass.playMeow("HURT", 1)
-		if General.isTired then
-			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
-		else
-			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
-		end
-		SweatCount = 20
-		ActionWheelClass.ActionCount = 20
-	end, function()
-		SweatCount = 0
-	end, false)
+	pings.main1_action5_left()
 end):onRightClick(function()
-	runAction(function()
-		MeowClass.playMeow("HURT", 1)
-		if General.isTired then
-			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 20, true)
-		else
-			FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 20, true)
-		end
-		FacePartsClass.setComplexion("PALE", 20, true)
-		SweatCount = 20
-		ActionWheelClass.ActionCount = 20
-	end, function()
-		SweatCount = 0
-	end, false)
+	pings.main1_action5_right()
 end)
 
 --アクション1-6. 威嚇
 MainPages[1]:newAction(6):item("cod"):onLeftClick(function()
-	runAction(function()
-		local playerPos = player:getPos()
-		for _ = 1, math.min(avatar:getMaxParticles(), 8) do
-			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
-		end
-		MeowClass.playMeow("HISS", 0.5)
-		if General.isTired then
-			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "CLOSED", 40, true)
-		else
-			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "CLOSED", 40, true)
-		end
-		General.setAnimations("PLAY", "intimidate")
-		ActionWheelClass.ActionCount = 40
-	end, function()
-		General.setAnimations("STOP", "intimidate")
-	end, false)
+	pings.main1_action6_left()
 end):onRightClick(function()
-	runAction(function()
-		local playerPos = player:getPos()
-		for _ = 1, math.min(avatar:getMaxParticles(), 16) do
-			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
-		end
-		MeowClass.playMeow("HISS", 1)
-		if General.isTired then
-			FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
-		else
-			FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
-		end
-		General.setAnimations("PLAY", "intimidate")
-		ActionWheelClass.ActionCount = 40
-	end, function()
-		General.setAnimations("STOP", "intimidate")
-	end, false)
+	pings.main1_action6_right()
 end)
 
 --アクション1-7. しょんぼり
 MainPages[1]:newAction(7):item("cod"):onLeftClick(function()
-	runAction(function()
-		MeowClass.playMeow("HURT", 0.5)
-		if General.isTired then
-			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
-		else
-			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
-		end
-		General.setAnimations("PLAY", "depressed")
-		ActionWheelClass.ActionCount = 40
-	end, function()
-		General.setAnimations("STOP", "depressed")
-	end, false)
+	pings.main1_action7_left()
 end):onRightClick(function()
-	runAction(function()
-		MeowClass.playMeow("HURT", 0.5)
-		if General.isTired then
-			FacePartsClass.setEmotion("DEPRESSED_TIRED", "DEPRESSED_TIRED", "CLOSED", 40, true)
-		else
-			FacePartsClass.setEmotion("DEPRESSED", "DEPRESSED", "CLOSED", 40, true)
-		end
-		FacePartsClass.setComplexion("PALE", 40, true)
-		General.setAnimations("PLAY", "depressed")
-		ActionWheelClass.ActionCount = 40
-	end, function()
-		General.setAnimations("STOP", "depressed")
-	end, false)
+	pings.main1_action7_right()
 end)
 
 --アクション2-1. ナデナデ（頭）
 MainPages[2]:newAction(1):item("feather"):onLeftClick(function()
-	runAction(function()
-		if player:getPose() == "STANDING" then
-			General.setAnimations("PLAY", "pat_head")
-			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(true)
-			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			HeadPatAnimationCount = 0
-			ActionWheelClass.ActionCount = 145
-		end
-	end, function()
-		General.setAnimations("STOP", "pat_head")
-		models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
-		HeadPatAnimationCount = -1
-	end)
+	pings.main2_action1()
 end)
 
 --アクション2-2. ナデナデ（尻尾）
 MainPages[2]:newAction(2):item("feather"):onLeftClick(function()
-	runAction(function()
-		if player:getPose() == "STANDING" then
-			General.setAnimations("PLAY", "pat_tail")
-			models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(true)
-			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			TailPatAnimationCount = 0
-			ActionWheelClass.ActionCount = 80
-		end
-	end, function()
-		General.setAnimations("STOP", "pat_tail")
-		General.setAnimations("STOP", "intimidate")
-		models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
-		TailPatAnimationCount = -1
-	end)
+	pings.main2_action2()
 end)
-
 
 --アクション2-3. おすわり
 MainPages[2]:newToggle(3):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
-	runAction(function()
-		if canSitDown() then
-			BellSoundClass.playBellSound()
-			ActionWheelClass.sitDown()
-		end
-	end, nil, not WardenClass.WardenNearby)
+	pings.main2_action3_toggle()
 end):onUntoggle(function()
-	BellSoundClass.playBellSound()
-	ActionWheelClass.standUp()
+	pings.main2_action3_untoggle()
 end)
 
 --アクション2-4. ブルブル
 MainPages[2]:newAction(4):item("water_bucket"):onLeftClick(function()
-	runAction(function()
-		ActionWheelClass.bodyShake()
-	end, function()
-		General.setAnimations("STOP", "shake")
-		ShakeSplashCount = 0
-	end, false)
+	pings.main2_action4()
 end)
 
 --アクション2-5. 夏機能
 MainPages[2]:newToggle(5):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
-	SummerFeatureClass.setSummerFeature(true)
+	pings.main2_action5_toggle()
 end):onUntoggle(function()
-	SummerFeatureClass.setSummerFeature(false)
+	pings.main2_action5_untoggle()
 end)
 
 --アクション2-6. シネマティックモード
