@@ -134,7 +134,7 @@ events.TICK:register(function()
 		end
 		ShakeSplashCount = ShakeSplashCount - 1
 	end
-	ActionWheelClass.ActionCount = ActionWheelClass.ActionCount > 0 and ActionWheelClass.ActionCount - 1 or ActionWheelClass.ActionCount
+	ActionWheelClass.ActionCount = ActionWheelClass.ActionCount > 0 and not client:isPaused() and ActionWheelClass.ActionCount - 1 or ActionWheelClass.ActionCount
 	if SweatCount > 0 then
 		if SweatCount % 5 == 0 then
 			local playerPos = player:getPos()
@@ -144,52 +144,54 @@ events.TICK:register(function()
 		end
 		SweatCount = SweatCount - 1
 	end
-	if HeadPatAnimationCount >= 0 then
-		if HeadPatAnimationCount == 145 then
-			models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
-			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			HeadPatAnimationCount = -1
-		else
-			if HeadPatAnimationCount == 55 then
-				FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
-			elseif HeadPatAnimationCount == 95 then
-				local playerPos = player:getPos()
-				MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-				particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
-				FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			elseif HeadPatAnimationCount == 115 then
-				FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
+	if not client:isPaused() then
+		if HeadPatAnimationCount >= 0 then
+			if HeadPatAnimationCount == 145 then
+				models.models.player_hands.Avatar.Head.PlayerHand1:setVisible(false)
+				sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+				HeadPatAnimationCount = -1
+			else
+				if HeadPatAnimationCount == 55 then
+					FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 40, true)
+				elseif HeadPatAnimationCount == 95 then
+					local playerPos = player:getPos()
+					MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
+					particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+					FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
+				elseif HeadPatAnimationCount == 115 then
+					FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
+				end
+				HeadPatAnimationCount = HeadPatAnimationCount + 1
 			end
-			HeadPatAnimationCount = HeadPatAnimationCount + 1
-		end
-	elseif TailPatAnimationCount >= 0 then
-		if TailPatAnimationCount == 80 then
-			models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
-			sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
-			TailPatAnimationCount = -1
-		else
-			if TailPatAnimationCount == 19 then
-				MeowClass.playMeow("HURT", 1)
-				if General.isTired then
-					FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
-				else
-					FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
+		elseif TailPatAnimationCount >= 0 then
+			if TailPatAnimationCount == 80 then
+				models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2:setVisible(false)
+				sounds:playSound("entity.item.pickup", player:getPos(), 1, 0.5)
+				TailPatAnimationCount = -1
+			else
+				if TailPatAnimationCount == 19 then
+					MeowClass.playMeow("HURT", 1)
+					if General.isTired then
+						FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 21, true)
+					else
+						FacePartsClass.setEmotion("SURPLISED", "SURPLISED", "CLOSED", 21, true)
+					end
+					FacePartsClass.setComplexion("ASHAMED", 20, true)
+				elseif TailPatAnimationCount == 40 then
+					local playerPos = player:getPos()
+					MeowClass.playMeow("HISS", 1)
+					for _ = 1, math.min(avatar:getMaxParticles(), 8) do
+						particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+					end
+					if General.isTired then
+						FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
+					else
+						FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
+					end
+					General.setAnimations("PLAY", "intimidate")
 				end
-				FacePartsClass.setComplexion("ASHAMED", 20, true)
-			elseif TailPatAnimationCount == 40 then
-				local playerPos = player:getPos()
-				MeowClass.playMeow("HISS", 1)
-				for _ = 1, math.min(avatar:getMaxParticles(), 8) do
-					particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
-				end
-				if General.isTired then
-					FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)
-				else
-					FacePartsClass.setEmotion("INTIMIDATE", "INTIMIDATE", "TOOTH", 40, true)
-				end
-				General.setAnimations("PLAY", "intimidate")
+				TailPatAnimationCount = TailPatAnimationCount + 1
 			end
-			TailPatAnimationCount = TailPatAnimationCount + 1
 		end
 	end
 end)

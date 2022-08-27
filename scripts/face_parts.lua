@@ -96,11 +96,11 @@ events.TICK:register(function()
 	if BlinkCount == 200 then
 		FacePartsClass.setEmotion("CLOSED", "CLOSED", "NONE", 2, false)
 		BlinkCount = 0
-	elseif client.isPaused() then
+	elseif not client.isPaused() then
 		BlinkCount = BlinkCount + 1
 	end
-	FacePartsClass.EmotionCount = FacePartsClass.EmotionCount > 0 and FacePartsClass.EmotionCount - 1 or FacePartsClass.EmotionCount
-	FacePartsClass.ComplexionCount = FacePartsClass.ComplexionCount > 0 and FacePartsClass.ComplexionCount - 1 or FacePartsClass.ComplexionCount
+	FacePartsClass.EmotionCount = FacePartsClass.EmotionCount > 0 and not client:isPaused() and FacePartsClass.EmotionCount - 1 or FacePartsClass.EmotionCount
+	FacePartsClass.ComplexionCount = FacePartsClass.ComplexionCount > 0 and not client:isPaused() and FacePartsClass.ComplexionCount - 1 or FacePartsClass.ComplexionCount
 
 	--目を光らせる
 	local nightVision = General.getStatusEffect("night_vision")
