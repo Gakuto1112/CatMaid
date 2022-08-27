@@ -2,8 +2,6 @@
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
-**2022/8/11更新**　[Figura-0.1.0-rc](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)では、現在プレイヤーが死亡するとアバターのスクリプトが正常に動作しない不具合が発生しています。もし、死亡した場合はその都度アバターを再読み込みして下さい。
-
 ![メイン画像](README_Images/メイン.jpg)
 
 🌊 **It's summer time!** 🌊
@@ -15,11 +13,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 詳しくは[こちら](#アクション7夏機能のオンオフ)
 
 ## このブランチについて
-このブランチのアバター、[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura-0.1.0-rc1](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura-0.0.8](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
+このブランチのアバター、[Figura-0.1.0-rc6](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura-0.1.0-rc6](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura-0.0.8](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
 
-[Figura-0.1.0-rc1]((https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite))は[こちら](https://cdn.discordapp.com/attachments/959863825581101116/1007104909180678144/figura-0.1.0-rc.1-1.19.jar)からダウンロード出来ます。
+[Figura-0.1.0-rc6]((https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite))は[こちら](https://discord.com/channels/805969743466332191/959863825581101116/1012161422106574878)からダウンロード出来ます。
 
-また、[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)の機能不足により、一部の機能は現時点（2022/7/18）では実装できませんでした。
+また、[Figura-0.1.0-rc6](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)の機能不足により、一部の機能は現時点（2022/7/18）では実装できませんでした。
 
 ### 実装不可能なもの
 - 設定画面（詳しくは[こちら](#アバター設定について)）

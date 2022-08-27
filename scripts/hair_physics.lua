@@ -45,16 +45,11 @@ events.RENDER:register(function()
 		table.insert(VelocityData[1], playerSpeedData)
 		VelocityAverage[2] = (#VelocityData[2] * VelocityAverage[2] + velocity.y) / (#VelocityData[2] + 1)
 		table.insert(VelocityData[2], velocity.y)
-		if not General.tableFind({"クラフト", "Crafting", "class_481", "Wardrobe", "Trust"}, client:getScreen()) then
-			local lookRotDelta = math.abs(lookRot - LookRotPrevRender)
-			lookRotDelta = lookRotDelta >= 180 and 360 - lookRotDelta or lookRotDelta
-			local lookRotDeltaData = lookRotDelta * FPS
-			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3] + lookRotDeltaData) / (#VelocityData[3] + 1)
-			table.insert(VelocityData[3], lookRotDeltaData)
-		else
-			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3]) / (#VelocityData[3] + 1)
-			table.insert(VelocityData[3], 0)
-		end
+		local lookRotDelta = math.abs(lookRot - LookRotPrevRender)
+		lookRotDelta = lookRotDelta >= 180 and 360 - lookRotDelta or lookRotDelta
+		local lookRotDeltaData = lookRotDelta * FPS
+		VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3] + lookRotDeltaData) / (#VelocityData[3] + 1)
+		table.insert(VelocityData[3], lookRotDeltaData)
 		--古いデータの切り捨て
 		for index, velocityTable in ipairs(VelocityData) do
 			while #velocityTable > FPS * 0.25 / HairRenderLimit do

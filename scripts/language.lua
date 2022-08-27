@@ -31,8 +31,7 @@ LanguageData = {
 		action_wheel__cinematic__action_5__title = "Exit cinematic mode",
 		key__jump = "Jump",
 		key__attack = "Attack",
-		key__afk_check = "for AFK check",
-		player_api_bug_message = "\n§c§l*** NOTE ***§r\nFigura 0.1.0-rc has a problem when it dies and avatars do not work properly.\nPlease reload the avatar."
+		key__afk_check = "for AFK check"
 	},
 	jp = {
 		message__config_unavailable = "\n§c§l*** NOTE ***§r\n2022/7/16現在、Rewrite版には、データを保存して後で読み出せるようにする機能が搭載されていません。\nつまり、Prewrite版のような設定ページが現在は作成できません！\n代わりに、設定ファイル（/sripts/config.lua）を直接編集して設定値を変更して下さい。",
@@ -61,8 +60,7 @@ LanguageData = {
 		action_wheel__cinematic__action_5__title = "シネマティックモード終了",
 		key__jump = "ジャンプ",
 		key__attack = "攻撃",
-		key__afk_check = "AFK復帰判定用",
-		player_api_bug_message = "\n§c§l*** NOTE ***§r\nFigura 0.1.0-rcでは、死亡すると不具合が発生し、アバターが正常に動作しなくなります。\nアバターを再読み込みして下さい。"
+		key__afk_check = "AFK復帰判定用"
 	}
 }
 
