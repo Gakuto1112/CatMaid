@@ -5846,7 +5846,7 @@
                             "color": 0,
                             "uuid": "3f2177d5-b5b8-62ca-724e-cc07d3abff38",
                             "export": true,
-                            "isOpen": true,
+                            "isOpen": false,
                             "locked": false,
                             "visibility": true,
                             "autouv": 0,
@@ -5865,7 +5865,7 @@
                             "color": 0,
                             "uuid": "1f5bb7d5-cf0c-6329-e798-00300cea5dd0",
                             "export": true,
-                            "isOpen": true,
+                            "isOpen": false,
                             "locked": false,
                             "visibility": true,
                             "autouv": 0,
@@ -5931,7 +5931,7 @@
                             "color": 0,
                             "uuid": "5526a84f-c3d2-f844-9883-3eadabb58635",
                             "export": true,
-                            "isOpen": true,
+                            "isOpen": false,
                             "locked": false,
                             "visibility": true,
                             "autouv": 0,
@@ -5984,7 +5984,7 @@
                             "color": 0,
                             "uuid": "a7908e99-8155-0341-5552-c3b0faf5ecf4",
                             "export": true,
-                            "isOpen": true,
+                            "isOpen": false,
                             "locked": false,
                             "visibility": true,
                             "autouv": 0,
@@ -6382,6 +6382,55 @@
                                             ]
                                         }
                                     ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Parrots",
+                            "origin": [
+                                0,
+                                24,
+                                0
+                            ],
+                            "color": 0,
+                            "uuid": "ff611380-4975-9588-fea9-eaeface8b46c",
+                            "export": true,
+                            "isOpen": true,
+                            "locked": false,
+                            "visibility": true,
+                            "autouv": 0,
+                            "children": [
+                                {
+                                    "name": "RightParrotPivot",
+                                    "origin": [
+                                        6.5,
+                                        24,
+                                        0
+                                    ],
+                                    "color": 0,
+                                    "uuid": "0f5a5ff5-ac41-cc5a-88be-b25bf8afaea7",
+                                    "export": true,
+                                    "isOpen": true,
+                                    "locked": false,
+                                    "visibility": true,
+                                    "autouv": 0,
+                                    "children": []
+                                },
+                                {
+                                    "name": "LeftParrotPivot",
+                                    "origin": [
+                                        -6.5,
+                                        24,
+                                        0
+                                    ],
+                                    "color": 0,
+                                    "uuid": "a03c7dd4-02fd-5b9c-8dc8-ab0fa0659229",
+                                    "export": true,
+                                    "isOpen": true,
+                                    "locked": false,
+                                    "visibility": true,
+                                    "autouv": 0,
+                                    "children": []
                                 }
                             ]
                         },
