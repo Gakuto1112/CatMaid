@@ -63,7 +63,7 @@ events.RENDER:register(function()
 		local hairLimit
 		local chestItemType = General.hasItem(player:getItem(5))
 		if chestItemType == "minecraft:elytra" then
-			hairLimit = {{15, 80}, {0, 0}, {0, 0}}
+			hairLimit = {{16, 80}, {0, 0}, {0, 0}}
 		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
 			hairLimit = {{0, 80}, {-80, 0}, {0, 0}}
 		elseif SummerFeatureClass.SummerFeature then
@@ -72,7 +72,7 @@ events.RENDER:register(function()
 				hairLimit[2] = {0, 0}
 			end
 		else
-			hairLimit = {{15, 80}, {-80, -17}, {-75, 0}}
+			hairLimit = {{16, 80}, {-80, -17}, {-75, 0}}
 		end
 		local playerPose = player:getPose()
 		if playerPose == "FALL_FLYING" then
