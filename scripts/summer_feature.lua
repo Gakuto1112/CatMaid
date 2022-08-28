@@ -67,6 +67,7 @@ events.TICK:register(function()
 			whiteHat:setVisible(false)
 			snorkel:setVisible(false)
 		end
+		models.models.summer_features.Head:setParentType(player:getPose() == "SLEEPING" and "None" or "Head")
 	end
 end)
 

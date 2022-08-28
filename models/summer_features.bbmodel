@@ -1948,7 +1948,7 @@
             "override": false,
             "length": 7.25,
             "snapping": 24,
-            "selected": true,
+            "selected": false,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -3532,7 +3532,7 @@
             "override": false,
             "length": 0,
             "snapping": 24,
-            "selected": false,
+            "selected": true,
             "anim_time_update": "",
             "blend_weight": "",
             "start_delay": "",
@@ -3606,12 +3606,12 @@
                             "channel": "rotation",
                             "data_points": [
                                 {
-                                    "x": "-80\n",
-                                    "y": "0\n",
+                                    "x": "15",
+                                    "y": "-90\n",
                                     "z": "0"
                                 }
                             ],
-                            "uuid": "59132081-ce0d-ebee-cf94-ef2996592722",
+                            "uuid": "54258502-01fd-530b-bd45-6c73acba8876",
                             "time": 0,
                             "color": -1,
                             "interpolation": "step"
@@ -3620,12 +3620,12 @@
                             "channel": "position",
                             "data_points": [
                                 {
-                                    "x": 0,
-                                    "y": 0,
-                                    "z": "2"
+                                    "x": "0",
+                                    "y": -2,
+                                    "z": -4
                                 }
                             ],
-                            "uuid": "e6d95727-cf41-288c-b60c-854c582d4c52",
+                            "uuid": "0ab3dec6-80fd-04fa-c79f-e0102d4d2237",
                             "time": 0,
                             "color": -1,
                             "interpolation": "step"
