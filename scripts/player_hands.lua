@@ -32,21 +32,18 @@ events.TICK:register(function()
 	end
 end)
 
-events.ENTITY_INIT:register(function ()
-	if player:getModelType() == "DEFAULT" then
-		for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1.Slim1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2.Slim2}) do
-			modelPart:setVisible(false)
-		end
-	else
-		for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1.Classic1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2.Classic2}) do
-			modelPart:setVisible(false)
-		end
-	end
-end)
-
 PlayerHandsRoot:setPrimaryTexture("skin")
 for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2}) do
 	modelPart:setVisible(false)
+end
+if player:getModelType() == "DEFAULT" then
+	for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1.Slim1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2.Slim2}) do
+		modelPart:setVisible(false)
+	end
+else
+	for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1.Classic1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2.Classic2}) do
+		modelPart:setVisible(false)
+	end
 end
 
 return PlayerHandsClass
