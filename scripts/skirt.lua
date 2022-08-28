@@ -3,7 +3,7 @@
 SkirtClass = {}
 
 events.TICK:register(function()
-	local skirt = models.models.main.Avatar.Body.Skirt
+	local skirt = models.models.main.Avatar.Body.BodyBottom.Skirt
 	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ConfigClass.HideArmor then
 		skirt:setVisible(false)
 	else

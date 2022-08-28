@@ -10,8 +10,8 @@ TailAndEarsClass = {}
 
 RightEar = models.models.main.Avatar.Head.Ears.RightEar
 LeftEar = models.models.main.Avatar.Head.Ears.LeftEar
-Tail1 = {models.models.main.Avatar.Body.Tail, models.models.player_hands.Avatar.Body.Tail}
-Tail2 = {models.models.main.Avatar.Body.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
+Tail1 = {models.models.main.Avatar.Body.BodyBottom.Tail, models.models.player_hands.Avatar.Body.Tail}
+Tail2 = {models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
 CatTypeID = {ORIGINAL = 0, ALL_BLACK = 1, BLACK = 2, BRITISH_SHORTHAIR = 3, CALICO = 4, GLEY_TABBY = 5, JELLIE = 6, OCELOT = 7, PERSIAN = 8, RAGDOLL = 9, RED = 10, SIAMESE = 11, TABBY = 12, WHITE = 13}
 EarBendCount = 0
 

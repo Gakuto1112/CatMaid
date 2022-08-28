@@ -6,8 +6,8 @@
 SummerFeatureClass = {}
 
 ChangeUVList = {models.models.main.Avatar.Body.Body, models.models.main.Avatar.Body.BodyLayer, models.models.main.Avatar.Body.Arms.RightArm.RightArm, models.models.main.Avatar.Body.Arms.RightArm.RightArmLayer, models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom.RightArmBottom, models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom.RightArmBottomLayer, models.models.main.Avatar.Body.Arms.LeftArm.LeftArm, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmLayer, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottom, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottomLayer, models.models.main.Avatar.RightLeg, models.models.main.Avatar.RightLeg, models.models.main.Avatar.LeftLeg}
-HiddenPartList = {models.models.main.Avatar.Body.Skirt.BackRibbon, models.models.main.Avatar.Body.Skirt.Skirt3, models.models.main.Avatar.Body.Skirt.Skirt3Layer}
-BikineSkirtList = {models.models.main.Avatar.Body.Skirt.Skirt1, models.models.main.Avatar.Body.Skirt.Skirt1Layer, models.models.main.Avatar.Body.Skirt.Skirt2, models.models.main.Avatar.Body.Skirt.Skirt2Layer}
+HiddenPartList = {models.models.main.Avatar.Body.BodyBottom.Skirt.BackRibbon, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt3, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt3Layer}
+BikineSkirtList = {models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt1, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt1Layer, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt2, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt2Layer}
 SummerFeatureClass.SummerFeature = false
 
 ---夏機能の設定
@@ -19,7 +19,7 @@ function SummerFeatureClass.setSummerFeature(value)
 	for _, modelPart in ipairs(HiddenPartList) do
 		modelPart:setVisible(not value)
 	end
-	models.models.main.Avatar.Body.Skirt:setPos(0, value and -2 or 0, 0)
+	models.models.main.Avatar.Body.BodyBottom.Skirt:setPos(0, value and -2 or 0, 0)
 	if value then
 		BikineSkirtList[1]:setUVPixels(84, 0)
 		BikineSkirtList[2]:setUVPixels(72, 0)

@@ -21,8 +21,19 @@ events.TICK:register(function()
 				FacePartsClass.setEmotion("SLEEPY", "SLEEPY", "CLOSED", 40, true)
 			end
 		end
+		head:setParentType("None")
 		if renderer:isFirstPerson() then
 			head:setVisible(false)
+		elseif not CinematicModeClass.CinematicMode then
+			local sleepBlock = world.getBlockState(player:getPos())
+			if string.find(sleepBlock.id, "^minecraft:.+bed$") then
+				local facingValue = {north = 180, east = -90, south = 0, west = 90}
+				if renderer:isCameraBackwards() then
+					renderer:setCameraRot(-30, 80 + facingValue[sleepBlock.properties["facing"]], 0)
+				else
+					renderer:setCameraRot(30, 100 + facingValue[sleepBlock.properties["facing"]], 0)
+				end
+			end
 		end
 		if rightHandItemType ~= "none" then
 			rightArm:setRot(-15, 0, 0)
@@ -34,7 +45,9 @@ events.TICK:register(function()
 		else
 			leftArm:setRot(0, 0, 0)
 		end
-		FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
+		if not WardenClass.WardenNearby then
+			FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 1, false)
+		end
 		if SleepCount >= 40 and not WardenClass.WardenNearby then
 			if (SleepCount - 40) % 65 == 0 then
 				MeowClass.playMeow("PURR", 1)
@@ -47,6 +60,7 @@ events.TICK:register(function()
 			General.setAnimations("PLAY", "wave_tail")
 		end
 		head:setVisible(true)
+		head:setParentType("Head")
 		if not WardenClass.WardenNearby then
 			if rightHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then

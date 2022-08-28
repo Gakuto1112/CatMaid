@@ -33,7 +33,9 @@ end
 events.WORLD_RENDER:register(function()
 	if CinematicModeClass.CinematicMode and not renderer:isFirstPerson() then
 		renderer:setCameraRot(renderer:isCameraBackwards() and -CinematicModeClass.CameraRot[1] or CinematicModeClass.CameraRot[1], CinematicModeClass.CameraRot[3], CinematicModeClass.CameraRot[2])
-	else
+	elseif not player then
+		renderer:setCameraRot()
+	elseif player:getPose() ~= "SLEEPING" then
 		renderer:setCameraRot()
 	end
 end)
