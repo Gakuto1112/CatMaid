@@ -2,7 +2,7 @@
 ---@field ConfigClass.CatType CatType 耳と尻尾のテクスチャの名前 The name of texture of ears and tails.
 ---@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
 ---@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか Whether or not meow regularly.
----@field ConfigClass.BellSound boolean 鈴の音を鳴らすかどうか Whether or not play bell sound.
+---@field ConfigClass.BellVolume number 鈴の音量 Bell sound volume.
 ---@field ConfigClass.WaveTail boolean 尻尾を振るかどうか Whether or not wave tail.
 ---@field ConfigClass.HideArmor boolean 防具を隠すかどうか Whether or not hide armors.
 ---@field ConfigClass.AutoShake boolean 水から上がった際に自動でブルブルアクションを実行するかどうか Whether or not run body shake action automately after out of the water.
@@ -39,7 +39,7 @@ ConfigClass = {}
 ConfigClass.CatType = "ORIGINAL"
 ConfigClass.SkinName = "Vinny"
 ConfigClass.MeowSound = true
-ConfigClass.BellSound = true
+ConfigClass.BellVolume = 0.25
 ConfigClass.WaveTail = true
 ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
