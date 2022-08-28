@@ -6,6 +6,7 @@
 ---@field VelocityData table 速度データ：1. 横, 2. 縦, 3. 角速度
 ---@field VelocityAverage table 速度の平均値：1. 横, 2. 縦, 3. 角速度
 ---@field LookRotPrevRender number 前レンダーチックのlookRot
+---@field LookRotDeltaPrevRender number 前レンダーチックのlookRotDelta
 
 HairPhysicsClass = {}
 
@@ -17,6 +18,7 @@ HairRenderLimit = math.ceil(8192 / avatar:getMaxWorldRenderCount())
 VelocityData = {{}, {}, {}}
 VelocityAverage = {0, 0, 0}
 LookRotPrevRender = 0
+LookRotDeltaPrevRender = 0
 
 events.TICK:register(function()
 	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ConfigClass.HideArmor then
@@ -48,8 +50,13 @@ events.RENDER:register(function()
 		local lookRotDelta = math.abs(lookRot - LookRotPrevRender)
 		lookRotDelta = lookRotDelta >= 180 and 360 - lookRotDelta or lookRotDelta
 		local lookRotDeltaData = lookRotDelta * FPS
-		VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3] + lookRotDeltaData) / (#VelocityData[3] + 1)
-		table.insert(VelocityData[3], lookRotDeltaData)
+		if lookRotDelta < 20 and lookRotDelta ~= LookRotDeltaPrevRender then
+			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3] + lookRotDeltaData) / (#VelocityData[3] + 1)
+			table.insert(VelocityData[3], lookRotDeltaData)
+		else
+			VelocityAverage[3] = (#VelocityData[3] * VelocityAverage[3]) / (#VelocityData[3] + 1)
+			table.insert(VelocityData[3], 0)
+		end
 		--古いデータの切り捨て
 		for index, velocityTable in ipairs(VelocityData) do
 			while #velocityTable > FPS * 0.25 / HairRenderLimit do
@@ -95,6 +102,7 @@ events.RENDER:register(function()
 			end
 		end
 		HairRenderCount = 0
+		LookRotDeltaPrevRender = lookRotDelta
 	elseif not client.isPaused() then
 		HairRenderCount = HairRenderCount + 1
 	end
