@@ -27,6 +27,9 @@ SitDownWhenSleepy = false
 
 --ping関数
 function pings.touchBell()
+	local leftHanded = player:isLeftHanded()
+	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
+	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
 	if (rightHandItemType == "none") ~= (leftHandItemType == "none") then
 		if rightHandItemType == "none" then
 			General.setAnimations("PLAY", "afk_right_bell")
@@ -170,10 +173,11 @@ events.TICK:register(function()
 	LookRotPrevTick = lookRot
 	RightItemTypePrevTick = rightHandItemType
 	LeftItemTypePrevTick = leftHandItemType
-	AFKClass.TouchBellCount = not client:isPaused() and AFKClass.TouchBellCount or (AFKClass.TouchBellCount ~= 0 and (AFKClass.TouchBellCount > 0 and AFKClass.TouchBellCount - 1 or AFKClass.TouchBellCount + 1) or 0)
+	AFKClass.TouchBellCount = client:isPaused() and AFKClass.TouchBellCount or (AFKClass.TouchBellCount ~= 0 and (AFKClass.TouchBellCount > 0 and AFKClass.TouchBellCount - 1 or AFKClass.TouchBellCount + 1) or 0)
 	if AFKClass.TouchBellCount == 0 and AFKClass.AFKCount < 5400 then
 		AFKActionState = "NONE"
 	end
+	print(AFKClass.TouchBellCount)
 end)
 
 if ConfigClass.AFKAction then
