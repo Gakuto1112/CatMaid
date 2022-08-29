@@ -69,15 +69,22 @@ events.RENDER:register(function()
 		--求めた平均から髪の角度を決定する。
 		local hairLimit
 		local chestItemType = General.hasItem(player:getItem(5))
+		local playerVehicle = player:getVehicle()
 		if chestItemType == "minecraft:elytra" then
 			hairLimit = {{16, 80}, {0, 0}, {0, 0}}
 		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
 			hairLimit = {{0, 80}, {-80, 0}, {0, 0}}
 		elseif SummerFeatureClass.SummerFeature then
-			hairLimit = {{11, 80}, {-80, -11}, {0, 0}}
+			if playerVehicle then
+				hairLimit = {{15, 80}, {-80, -6}, {0, 0}}
+			else
+				hairLimit = {{11, 80}, {-80, -11}, {0, 0}}
+			end
 			if chestItemType == "minecraft:elytra" then
 				hairLimit[2] = {0, 0}
 			end
+		elseif playerVehicle then
+			hairLimit = {{24, 80}, {-80, -13}, {-75, 0}}
 		else
 			hairLimit = {{16, 80}, {-80, -17}, {-75, 0}}
 		end
