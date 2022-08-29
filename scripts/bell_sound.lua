@@ -18,7 +18,6 @@ function BellSoundClass.playBellSound()
 	local volume = WardenClass.WardenNearby and (bellVolume / 10) or ((player:isSneaking() or player:isUnderwater()) and (bellVolume / 5) or bellVolume)
 	if avatar:canUseCustomSounds() then
 		sounds:playSound("bell", playerPos, volume, 1 + (math.random() * 0.05 - 0.025))
-		print(1 + (math.random() * 0.1 - 0.05))
 	else
 		sounds:playSound("minecraft:entity.experience_orb.pickup", playerPos, volume, 1.5)
 	end

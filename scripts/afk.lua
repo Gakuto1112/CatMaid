@@ -177,7 +177,6 @@ events.TICK:register(function()
 	if AFKClass.TouchBellCount == 0 and AFKClass.AFKCount < 5400 then
 		AFKActionState = "NONE"
 	end
-	print(AFKClass.TouchBellCount)
 end)
 
 if ConfigClass.AFKAction then
