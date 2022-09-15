@@ -1,5 +1,4 @@
 ---@class General 他の複数のクラスが参照するフィールドや関数を定義するクラス
----@field SneakData table 前チックにスニークしていたかどうかを調べる為にスニーク情報を格納するテーブル
 ---@field General.isTired boolean 疲れている（低HP、低満腹度）かどうか
 
 ---@alias AnimationState
@@ -12,7 +11,6 @@
 
 General = {}
 
-SneakData = {}
 General.isTired = false;
 
 ---渡されたlistの中にkeyが存在するかどうか返す
@@ -54,12 +52,6 @@ function General.getStatusEffect(name)
 	return nil
 end
 
----前チックにスニークしていたかどうかを返す。
----@return boolean
-function General.getSneakPrevTick()
-	return SneakData[1]
-end
-
 --防具モデルと同時に描画タイプを変更する。
 ---@param armType ArmType 右腕か左腕か
 ---@param parentType ParentTypes 描画タイプ
@@ -93,12 +85,8 @@ function General.setAnimations(animationState, animationName)
 end
 
 events.TICK:register(function()
-	table.insert(SneakData, player:isSneaking())
 	local gamemode = player:getGamemode()
 	General.isTired = (player:getHealth() / player:getMaxHealth() <= 0.2 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
-	if #SneakData == 3 then
-		table.remove(SneakData, 1)
-	end
 end)
 
 return General

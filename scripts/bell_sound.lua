@@ -15,7 +15,7 @@ OnGroundData = {}
 function BellSoundClass.playBellSound()
 	local playerPos = player:getPos()
 	local bellVolume = math.min(math.max(ConfigClass.BellVolume, 0), 1)
-	local volume = WardenClass.WardenNearby and (bellVolume / 10) or ((player:isSneaking() or player:isUnderwater()) and (bellVolume / 5) or bellVolume)
+	local volume = WardenClass.WardenNearby and (bellVolume / 10) or ((player:getPose() == "CROUCHING" or player:isUnderwater()) and (bellVolume / 5) or bellVolume)
 	if avatar:canUseCustomSounds() then
 		sounds:playSound("bell", playerPos, volume, 1 + (math.random() * 0.05 - 0.025))
 	else

@@ -42,7 +42,7 @@ events.RENDER:register(function()
 		velocityRot = velocityRot < 0 and 360 + velocityRot or velocityRot
 		local bodyYaw = (player:getBodyYaw() - 270) % 360
 		local directionAbs = math.abs(velocityRot - bodyYaw)
-		local playerSpeedData = (math.min(directionAbs, 360 - directionAbs) >= 90 and -math.sqrt(velocity.x ^ 2 + velocity.z ^ 2) or math.sqrt(velocity.x ^ 2 + velocity.z ^ 2)) + (General.getSneakPrevTick() and -0.19 or 0)
+		local playerSpeedData = (math.min(directionAbs, 360 - directionAbs) >= 90 and -math.sqrt(velocity.x ^ 2 + velocity.z ^ 2) or math.sqrt(velocity.x ^ 2 + velocity.z ^ 2)) + (player:getPose() == "CROUCHING" and -0.19 or 0)
 		VelocityAverage[1] = (#VelocityData[1] * VelocityAverage[1] + playerSpeedData) / (#VelocityData[1] + 1)
 		table.insert(VelocityData[1], playerSpeedData)
 		VelocityAverage[2] = (#VelocityData[2] * VelocityAverage[2] + velocity.y) / (#VelocityData[2] + 1)

@@ -6,7 +6,7 @@ ArmsClass = {}
 ArmsClass.isSneaking = false
 
 events.TICK:register(function()
-	ArmsClass.isSneaking = player:isSneaking() and not player:isFlying() and player:getPose() == "CROUCHING" and not renderer:isFirstPerson()
+	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not player:isFlying() and not renderer:isFirstPerson()
 	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
 	if ArmsClass.isSneaking then
