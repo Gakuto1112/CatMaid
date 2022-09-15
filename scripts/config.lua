@@ -44,7 +44,6 @@ ConfigClass.WaveTail = true
 ConfigClass.HideArmor = true
 ConfigClass.AutoShake = true
 ConfigClass.AFKAction = true
-ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
 ConfigClass.CinematicModeCamera = {
 	PitchInit = 30,

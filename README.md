@@ -79,11 +79,6 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![ずぶ濡れ](README_Images/ずぶ濡れ.gif)
 
-- 溶岩や火に入って燃えてしまうと、黒焦げになってしまいます（[アバター設定](#アバター設定について)で無効に出来ます）。
-  - 雨や水に当たるとより早く冷めます。
-
-  ![黒焦げ](README_Images/黒焦げ.jpg)
-
 - ウォーデンが近くにいる（暗闇デバフを受ける）と、怯えて震えます。
   - この状態では、鈴を押さえて音が出ないようにしたり（首を絞めている訳ではないよ！）、エモートを拒否するようになります。
 
@@ -277,7 +272,6 @@ ConfigClass.CinematicModeCamera = {
 | ```ConfigClass.HideArmor``` | 防具を隠すかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AFKAction``` | 放置している時に[専用アクション](#特徴)を再生するかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.BurnEffect``` | 黒焦げになる視覚効果を有効にするかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
 | ```ConfigClass.CinematicModeCamera.PitchInit``` | シネマティックモードのカメラのピッチの初期値です。 | ```integer``` -90 - 90 | 30 |
 | ```ConfigClass.CinematicModeCamera.RollInit``` | シネマティックモードのカメラのロールの初期値です。 | ```integer``` -180 - 180 | 0 |
