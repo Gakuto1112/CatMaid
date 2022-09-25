@@ -267,7 +267,7 @@ ConfigClass.CinematicModeCamera = {
 | ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | ORIGINAL |
 | ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
 | ``` ConfigClass.MeowSound ``` | 定期的に猫の鳴き声を発するかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.BellVolume``` | 鈴の音の音量です。**カスタムサウンドを再生する権限が無い場合は代替の音が使用されます。** | ```number``` 0 - 1 | 0.25 |
+| ```ConfigClass.BellVolume``` | 鈴の音の音量です。**カスタムサウンドを再生する権限が無い場合は代替の音が使用されます。** | ```number``` 0 - 1 | 0.1 |
 | ```ConfigClass.WaveTail``` | 尻尾を揺らすかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.HideArmor``` | 防具を隠すかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
