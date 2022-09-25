@@ -67,7 +67,7 @@ events.RENDER:register(function()
 			end
 		end
 		--求めた平均から髪の角度を決定する。
-		local hairLimit
+		local hairLimit = {{16, 80}, {-80, -17}, {-75, 0}}
 		local chestItemType = General.hasItem(player:getItem(5))
 		local playerVehicle = player:getVehicle()
 		if chestItemType == "minecraft:elytra" then
@@ -85,28 +85,20 @@ events.RENDER:register(function()
 			end
 		elseif playerVehicle then
 			hairLimit = {{24, 80}, {-80, -13}, {-75, 0}}
-		else
-			hairLimit = {{16, 80}, {-80, -17}, {-75, 0}}
 		end
 		local playerPose = player:getPose()
 		if playerPose == "FALL_FLYING" then
-			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
+			FrontHair:setRot(math.clamp(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 80, hairLimit[1][1], hairLimit[1][2]), 0, 0)
 			BackHair:setRot(hairLimit[2][2], 0, 0)
 			RibbonLine:setRot(hairLimit[3][2], 0, 0)
 		elseif playerPose == "SWIMMING" then
-			FrontHair:setRot(math.min(math.max(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 320, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
+			FrontHair:setRot(math.clamp(hairLimit[1][2] - math.sqrt(VelocityAverage[1] ^ 2 + VelocityAverage[2] ^ 2) * 320, hairLimit[1][1], hairLimit[1][2]), 0, 0)
 			BackHair:setRot(hairLimit[2][2], 0, 0)
 			RibbonLine:setRot(hairLimit[3][2], 0, 0)
 		else
-			if math.floor(VelocityAverage[2] * 100 + 0.5) / 100 < 0 then
-				FrontHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[2] * 80, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
-				BackHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80, hairLimit[2][1]), hairLimit[2][2]), 0, 0)
-				RibbonLine:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80, hairLimit[3][1]), hairLimit[3][2]), 0, 0)
-			else
-				FrontHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 + VelocityAverage[3] * 0.05, hairLimit[1][1]), hairLimit[1][2]), 0, 0)
-				BackHair:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[3] * 0.05, hairLimit[2][1]), hairLimit[2][2]), 0, 0)
-				RibbonLine:setRot(math.min(math.max(-VelocityAverage[1] * 160 - VelocityAverage[3] * 0.05, hairLimit[3][1]), hairLimit[3][2]), 0, 0)
-			end
+			FrontHair:setRot(math.clamp(-VelocityAverage[1] * 160 - VelocityAverage[2] * 80 + VelocityAverage[3] * 0.05, hairLimit[1][1], hairLimit[1][2]), 0, 0)
+			BackHair:setRot(math.clamp(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80 - VelocityAverage[3] * 0.05, hairLimit[2][1], hairLimit[2][2]), 0, 0)
+			RibbonLine:setRot(math.clamp(-VelocityAverage[1] * 160 + VelocityAverage[2] * 80 - VelocityAverage[3] * 0.05, hairLimit[3][1], hairLimit[3][2]), 0, 0)
 		end
 		HairRenderCount = 0
 		LookRotDeltaPrevRender = lookRotDelta
