@@ -29,7 +29,6 @@ events.ENTITY_INIT:register(function ()
 	SleepClass = require("scripts/sleep")
 	WardenClass = require("scripts/warden")
 	CakeClass = require("scripts/cake")
-	CinematicModeClass = require("scripts/cinematic_mode")
 	GoatHornClass = require("scripts/goat_horn")
 	SummerFeatureClass = require("scripts/summer_feature")
 

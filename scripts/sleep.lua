@@ -24,7 +24,7 @@ events.TICK:register(function()
 		head:setParentType("None")
 		if renderer:isFirstPerson() then
 			head:setVisible(false)
-		elseif not CinematicModeClass.CinematicMode then
+		else
 			local sleepBlock = world.getBlockState(player:getPos())
 			if string.find(sleepBlock.id, "^minecraft:.+bed$") then
 				local facingValue = {north = 180, east = -90, south = 0, west = 90}
@@ -61,6 +61,7 @@ events.TICK:register(function()
 		end
 		head:setVisible(true)
 		head:setParentType("Head")
+		renderer:setCameraRot()
 		if not WardenClass.WardenNearby then
 			if rightHandItemType ~= "minecraft:cake" and animations["models.main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then

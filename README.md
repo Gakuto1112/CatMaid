@@ -6,32 +6,6 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![メイン画像](README_Images/メイン.jpg)
 
-🌊 **It's summer time!** 🌊
-
-![夏機能1](README_Images/夏機能1.jpg)
-
-![夏機能2](README_Images/夏機能2.jpg)
-
-詳しくは[こちら](#アクション7夏機能のオンオフ)
-
-## このブランチについて
-このブランチのアバター、[Figura-0.1.0-rc6](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)向けのアバターです。[Figura-0.1.0-rc6](https://github.com/Moonlight-MC/Figura)では使用出来ません。[Figura-0.0.8](https://github.com/Moonlight-MC/Figura)のアバターを使用したい場合は、[こちら](https://github.com/Gakuto1112/CatMaid)からダウンロードして下さい。
-
-[Figura-0.1.0-rc6]((https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite))は[こちら](https://discord.com/channels/805969743466332191/959863825581101116/1012161422106574878)からダウンロード出来ます。
-
-また、[Figura-0.1.0-rc6](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)の機能不足により、一部の機能は現時点（2022/7/18）では実装できませんでした。
-
-### 実装不可能なもの
-- 設定画面（詳しくは[こちら](#アバター設定について)）
-- ~~プレイヤーの頭（被り物）の消去~~
-  - [Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
-- アクションホイールでの、顔アニメーションによるエモートのプレビュー
-  - 代替のアイコンを使用しています。
-- エリトラや~~手持ちアイテム~~の移動
-  - 代替処理として、移動が必要な場合は非表示にしています。
-  - ~~オウムと望遠鏡はどうにもなりませんでした。~~
-  - 一部は[Figura-0.1.0-rc1](https://github.com/Kingdom-of-The-Moon/FiguraRewriteRewrite)で実装されました。本アバターへの実装作業中です。
-
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
   - 耳はたまにアニメーションします。
@@ -206,39 +180,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
 ![夏機能1](README_Images/夏機能1.jpg)
 
-### アクション2-6：シネマティックモード
-[シネマティックモード](#シネマティックモードについて)を開始します。
-
-![シネマティックモード1](README_Images/シネマティックモード1.jpg)
-![シネマティックモード2](README_Images/シネマティックモード2.jpg)
-
-（シェーダーパックはご自身でご用意下さい）
-
 ### アクション2-7：設定画面を開く
 ~~クリックして設定画面を開きます。~~　**2022/7/18現在、機能していません！！**
 
 ### アクション8（共通）：ページ切り替え
 ボタン上でスクロールするとページが切り替わります。
-
-## シネマティックモードについて
-シネマティックモードはプレイヤーの頭の向きに関わらずカメラを自由に回転させることが出来るモードです。スクリーンショットの撮影に向いているかもしれません。シネマティックモードは三人称視点のみ有効です。
-
-![シネマティックモード操作画面](README_Images/シネマティックモード操作画面.jpg)
-
-### アクション1：カメラピッチ調整
-ボタン上でスクロールするとカメラのピッチを動かせます。
-
-### アクション2：カメラロール調整
-ボタン上でスクロールするとカメラのロールを動かせます。
-
-### アクション3：カメラヨー調整
-ボタン上でスクロールするとカメラのヨーを動かせます。
-
-### アクション4：カメラの向きリセット
-カメラの向きをリセットして初期値に戻します。
-
-### アクション5：シネマティックモード終了
-シネマティックモードを終了して通常モードに戻します。
 
 ## アバター設定について
 2022/7/18現在、ゲーム内での設定画面が実装出来ないので、代わりに[設定画面ファイル（./scripts/config.lua）](./scripts/config.lua)を直接編集して下さい。
@@ -257,11 +203,6 @@ ConfigClass.AutoShake = true
 ConfigClass.AFKAction = true
 ConfigClass.BurnEffect = true
 ConfigClass.UseSkinName = true
-ConfigClass.CinematicModeCamera = {
-	PitchInit = 30,
-	RollInit = 0,
-	YawInit = 45
-}
 ```
 
 | 項目 | 説明 | 有効な値 | 初期値 |
@@ -275,9 +216,6 @@ ConfigClass.CinematicModeCamera = {
 | ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.AFKAction``` | 放置している時に[専用アクション](#特徴)を再生するかどうかです。 | ```boolean``` | ```true``` |
 | ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
-| ```ConfigClass.CinematicModeCamera.PitchInit``` | シネマティックモードのカメラのピッチの初期値です。 | ```integer``` -90 - 90 | 30 |
-| ```ConfigClass.CinematicModeCamera.RollInit``` | シネマティックモードのカメラのロールの初期値です。 | ```integer``` -180 - 180 | 0 |
-| ```ConfigClass.CinematicModeCamera.YawInit``` | シネマティックモードのカメラのヨーの初期値です。 | ```integer``` 0 - 360 | 45 |
 
 ## テクスチャ
 このアバターのテクスチャは以下の通りです。バニラのスキンをベースに作られているので、テクスチャを書き換えてスキンを変更出来ます。なお、バニラスキンと直接かかわりがあるもののみ説明します。

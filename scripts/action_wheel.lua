@@ -1,6 +1,5 @@
 ---@class ActionWheelClass アクションホイールを制御するクラス
 ---@field MainPages table アクションホイールのメインページのテーブル
----@field CinematicPage Page シネマティックモードモードの操作ページ
 ---@field CurrentMainPage integer 現在のメインページのページ数
 ---@field ActionCancelFunction function 現在再生中のアクションをキャンセルする処理
 ---@field ActionWheelClass.ActionCount integer アクション再生中は0より大きくなるカウンター
@@ -11,7 +10,6 @@
 ActionWheelClass = {}
 
 MainPages = {action_wheel:createPage("main_page_1"), action_wheel:createPage("main_page_2")}
-CinematicPage = action_wheel:createPage("cinematic_mode_page")
 CurrentMainPage = 1
 ActionWheelClass.ActionCount = 0
 ActionCancelFunction = nil
@@ -427,16 +425,10 @@ end)
 
 events.WORLD_TICK:register(function ()
 	MainPages[2]:getAction(5):title(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__enable")):toggleTitle(LanguageClass.getTranslate("action_wheel__main_2__action_5__title")..LanguageClass.getTranslate("action_wheel__disable"))
-	MainPages[2]:getAction(6):title(LanguageClass.getTranslate("action_wheel__main_2__action_6__title"))
 	MainPages[2]:getAction(7):title("§7"..LanguageClass.getTranslate("action_wheel__main_2__action_7__title"))
 	for index, mainPage in ipairs(MainPages) do
 		mainPage:getAction(8):title(LanguageClass.getTranslate("action_wheel__main__page_switch__title")..index.."/"..#MainPages)
 	end
-	CinematicPage:getAction(1):title(LanguageClass.getTranslate("action_wheel__cinematic__action_1__title").." "..CinematicModeClass.CameraRot[1])
-	CinematicPage:getAction(2):title(LanguageClass.getTranslate("action_wheel__cinematic__action_2__title").." "..CinematicModeClass.CameraRot[2])
-	CinematicPage:getAction(3):title(LanguageClass.getTranslate("action_wheel__cinematic__action_3__title").." "..CinematicModeClass.CameraRot[3])
-	CinematicPage:getAction(4):title(LanguageClass.getTranslate("action_wheel__cinematic__action_4__title"))
-	CinematicPage:getAction(5):title(LanguageClass.getTranslate("action_wheel__cinematic__action_5__title"))
 end)
 
 events.WORLD_RENDER:register(function()
@@ -523,12 +515,6 @@ end):onUntoggle(function()
 	pings.main2_action5_untoggle()
 end)
 
---アクション2-6. シネマティックモード
-MainPages[2]:newAction(6):color(85 / 255, 1, 1):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
-	CinematicModeClass.CinematicMode = true
-	action_wheel:setPage(CinematicPage)
-end)
-
 --アクション2-7. 設定を開く
 MainPages[2]:newAction(7):color(42 / 255, 42 / 255, 42 / 255):hoverColor(1, 85 / 255, 85 / 255):item("comparator"):onLeftClick(function()
 	print(LanguageClass.getTranslate("message__config_unavailable"))
@@ -542,33 +528,6 @@ for _, mainPage in ipairs(MainPages) do
 		action_wheel:setPage(MainPages[CurrentMainPage])
 	end)
 end
-
---シネマティックモードのページのアクションの設定
---アクション1. ピッチ調整
-CinematicPage:newScroll(1):color(1, 85 / 255, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
-	CinematicModeClass.addCameraPitch(direction == 1 and 5 or -5)
-end)
-
---アクション2. ロール調整
-CinematicPage:newScroll(2):color(85 / 255, 1, 85 / 255):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
-	CinematicModeClass.addCameraRoll(direction == 1 and 5 or -5)
-end)
-
---アクション3. ヨー調整
-CinematicPage:newScroll(3):color(85 / 255, 85 / 255, 1):hoverColor(1, 1, 1):item("painting"):onScroll(function(direction)
-	CinematicModeClass.addCameraYaw(direction == 1 and 5 or -5)
-end)
-
---アクション4. カメラリセット
-CinematicPage:newAction(4):color(170 / 255, 0, 170 / 255):hoverColor(1, 1, 1):item("painting"):onLeftClick(function()
-	CinematicModeClass.resetCamera()
-end)
-
---アクション5. シネマティックモード終了
-CinematicPage:newAction(5):color(200 / 255, 200 / 255, 200 /255):hoverColor(1, 1, 1):item("barrier"):onLeftClick(function()
-	CinematicModeClass.CinematicMode = false
-	action_wheel:setPage(MainPages[2])
-end)
 
 action_wheel:setPage(MainPages[1])
 
