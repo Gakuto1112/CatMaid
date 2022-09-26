@@ -19,6 +19,7 @@ events.ENTITY_INIT:register(function ()
 
 	--機能別クラス
 	ActionWheelClass = require("scripts/action_wheel")
+	SitDownClass = require("scripts/sit_down")
 	MeowClass = require("scripts/meow")
 	HurtClass = require("scripts/hurt")
 	EffectClass = require("scripts/effect")

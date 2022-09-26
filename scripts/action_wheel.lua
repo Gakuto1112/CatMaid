@@ -53,34 +53,6 @@ function runAction(action, actionCancelFunction, ignoreCooldown)
 	end
 end
 
----現在座れる状況かを返す。
----@return boolean
-function canSitDown()
-	if player then
-		local velocity = player:getVelocity()
-		return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE" and not WardenClass.WardenNearby
-	else
-		return false
-	end
-end
-
----座る
-function ActionWheelClass.sitDown()
-	General.setAnimations("PLAY", "sit_down")
-	General.setAnimations("STOP", "stand_up")
-	General.setAnimations("STOP", "wave_tail")
-end
-
---座っている状態から立ち上がる
-function ActionWheelClass.standUp()
-	General.setAnimations("PLAY", "stand_up")
-	General.setAnimations("STOP", "sit_down")
-	if ConfigClass.WaveTail then
-		General.setAnimations("PLAY", "wave_tail")
-	end
-	models.models.main.Avatar.Head:setRot(0, 0, 0)
-end
-
 --ブルブル
 function ActionWheelClass.bodyShake()
 	ActionCancelFunction = function()
@@ -327,16 +299,16 @@ end
 
 function pings.main2_action3_toggle()
 	runAction(function()
-		if canSitDown() then
+		if SitDownClass.canSitDown() then
 			BellSoundClass.playBellSound()
-			ActionWheelClass.sitDown()
+			SitDownClass.sitDown()
 		end
 	end, nil, not WardenClass.WardenNearby)
 end
 
 function pings.main2_action3_untoggle()
 	BellSoundClass.playBellSound()
-	ActionWheelClass.standUp()
+	SitDownClass.standUp()
 end
 
 function pings.main2_action4()
@@ -373,13 +345,13 @@ events.TICK:register(function()
 		end
 		setActionEnabled(2, 4, true)
 	end
-	setActionEnabled(2, 3, not WardenClass.WardenNearby and canSitDown())
+	setActionEnabled(2, 3, not WardenClass.WardenNearby and SitDownClass.canSitDown())
 	if (WardenClass.WardenNearby or HurtClass.Damaged ~= "NONE") and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
 	end
-	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
-		ActionWheelClass.standUp()
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and not SitDownClass.canSitDown() then
+		SitDownClass.standUp()
 		animations["models.main"]["sit_down_first_person_fix"]:stop()
 	end
 	if ShakeSplashCount > 0 then
@@ -467,22 +439,8 @@ events.WORLD_TICK:register(function ()
 	CinematicPage:getAction(5):title(LanguageClass.getTranslate("action_wheel__cinematic__action_5__title"))
 end)
 
-events.RENDER:register(function()
-	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head, models.models.player_hands.Avatar.Head}
-	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
-		local headRot = 10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1)
-		for _, modelPart in ipairs(headRotationList) do
-			modelPart:setRot(headRot, 0, 0)
-		end
-	else
-		for _, modelPart in ipairs(headRotationList) do
-			modelPart:setRot(0, 0, 0)
-		end
-	end
-end)
-
 events.WORLD_RENDER:register(function()
-	MainPages[2]:getAction(3):toggled(canSitDown() and MainPages[2]:getAction(3):isToggled())
+	MainPages[2]:getAction(3):toggled(SitDownClass.canSitDown() and MainPages[2]:getAction(3):isToggled())
 	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
 		animations["models.main"]["sit_down_first_person_fix"]:play()
 	else

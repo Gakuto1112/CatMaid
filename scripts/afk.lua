@@ -66,7 +66,7 @@ function pings.sleepy()
 		if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
 			SitDownWhenSleepy = true
 		else
-			ActionWheelClass.sitDown()
+			SitDownClass.sitDown()
 			SitDownWhenSleepy = false
 		end
 	end
@@ -83,7 +83,7 @@ function pings.resetAFKCount()
 		General.setAnimations("STOP", "afk_sleep")
 		General.setAnimations("STOP", "afk_sleepy")
 		if not SitDownWhenSleepy and player:isOnGround() then
-			ActionWheelClass.standUp()
+			SitDownClass.standUp()
 		end
 		if General.isTired then
 			FacePartsClass.setEmotion("SURPLISED_TIRED", "SURPLISED_TIRED", "CLOSED", 10, true)
