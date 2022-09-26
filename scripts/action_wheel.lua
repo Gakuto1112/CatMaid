@@ -378,9 +378,9 @@ events.TICK:register(function()
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
 	end
-	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and not canSitDown() then
 		ActionWheelClass.standUp()
-		animations["main"]["sit_down_first_person_fix"]:stop()
+		animations["models.main"]["sit_down_first_person_fix"]:stop()
 	end
 	if ShakeSplashCount > 0 then
 		if ShakeSplashCount % 5 == 0 then
@@ -469,7 +469,7 @@ end)
 
 events.RENDER:register(function()
 	local headRotationList = {models.models.main.Avatar.Head, models.models.armor.Avatar.Head, models.models.summer_features.Head, models.models.player_hands.Avatar.Head}
-	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
 		local headRot = 10 * (1 - math.abs(player:getLookDir().y)) * (renderer:isCameraBackwards() and 1 or -1)
 		for _, modelPart in ipairs(headRotationList) do
 			modelPart:setRot(headRot, 0, 0)
@@ -483,10 +483,10 @@ end)
 
 events.WORLD_RENDER:register(function()
 	MainPages[2]:getAction(3):toggled(canSitDown() and MainPages[2]:getAction(3):isToggled())
-	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
-		animations["main"]["sit_down_first_person_fix"]:play()
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and renderer:isFirstPerson() then
+		animations["models.main"]["sit_down_first_person_fix"]:play()
 	else
-		animations["main"]["sit_down_first_person_fix"]:stop()
+		animations["models.main"]["sit_down_first_person_fix"]:stop()
 	end
 end)
 

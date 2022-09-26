@@ -69,14 +69,14 @@ function General.setAnimations(animationState, animationName)
 	local modelFiles = models.models:getChildren()
 	if animationState == "PLAY" then
 		for _, modelPart in ipairs(modelFiles) do
-			local targetAnimation = animations[modelPart:getName()][animationName]
+			local targetAnimation = animations["models."..modelPart:getName()][animationName]
 			if targetAnimation ~= nil then
 				targetAnimation:play()
 			end
 		end
 	else
 		for _, modelPart in ipairs(modelFiles) do
-			local targetAnimation = animations[modelPart:getName()][animationName]
+			local targetAnimation = animations["models."..modelPart:getName()][animationName]
 			if targetAnimation ~= nil then
 				targetAnimation:stop()
 			end

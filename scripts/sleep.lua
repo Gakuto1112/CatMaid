@@ -62,12 +62,12 @@ events.TICK:register(function()
 		head:setVisible(true)
 		head:setParentType("Head")
 		if not WardenClass.WardenNearby then
-			if rightHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+			if rightHandItemType ~= "minecraft:cake" and animations["models.main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then
 					rightArm:setRot(0, 0, 0)
 				end
 			end
-			if leftHandItemType ~= "minecraft:cake" and animations["main"]["sit_down"]:getPlayState() ~= "PLAYING" then
+			if leftHandItemType ~= "minecraft:cake" and animations["models.main"]["sit_down"]:getPlayState() ~= "PLAYING" then
 				if not ArmsClass.isSneaking then
 					leftArm:setRot(0, 0, 0)
 				end

@@ -23,7 +23,7 @@ events.TICK:register(function()
 end)
 
 events.RENDER:register(function ()
-	if animations["main"]["sit_down"]:getPlayState() == "PLAYING" and player:isUsingItem() then
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and player:isUsingItem() then
 		local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 		local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
 		local activeHand = player:getActiveHand()

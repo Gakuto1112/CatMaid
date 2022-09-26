@@ -63,7 +63,7 @@ end
 function pings.sleepy()
 	General.setAnimations("PLAY", "afk_sleepy")
 	if player:isOnGround() then
-		if animations["main"]["sit_down"]:getPlayState() == "PLAYING" then
+		if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
 			SitDownWhenSleepy = true
 		else
 			ActionWheelClass.sitDown()

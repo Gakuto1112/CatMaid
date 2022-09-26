@@ -37,15 +37,15 @@ events.TICK:register(function()
 	end
 	--尻尾
 	local gamemode = player:getGamemode()
-	if condition == 2 or player:getPose() == "SLEEPING" or animations["main"]["sit_down"]:getPlayState() == "PLAYING" or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
+	if condition == 2 or player:getPose() == "SLEEPING" or animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
 		for _, modelPart in ipairs(Tail1) do
 			modelPart:setRot(0, 0, 0)
 		end
 		for _, modelPart in ipairs(Tail2) do
 			modelPart:setRot(0, 0, 0)
 		end
-		animations["main"]["wave_tail"]:speed(1)
-		animations["player_hands"]["wave_tail"]:speed(1)
+		animations["models.main"]["wave_tail"]:speed(1)
+		animations["models.player_hands"]["wave_tail"]:speed(1)
 	elseif condition == 1 then
 		for _, modelPart in ipairs(Tail1) do
 			modelPart:setRot(40, 0, 0)
@@ -53,8 +53,8 @@ events.TICK:register(function()
 		for _, modelPart in ipairs(Tail2) do
 			modelPart:setRot(-15, 0, 0)
 		end
-		animations["main"]["wave_tail"]:speed(0.75)
-		animations["player_hands"]["wave_tail"]:speed(0.75)
+		animations["models.main"]["wave_tail"]:speed(0.75)
+		animations["models.player_hands"]["wave_tail"]:speed(0.75)
 	else
 		for _, modelPart in ipairs(Tail1) do
 			modelPart:setRot(90, 0, 0)
@@ -62,13 +62,13 @@ events.TICK:register(function()
 		for _, modelPart in ipairs(Tail2) do
 			modelPart:setRot(0, 0, 0)
 		end
-		animations["main"]["wave_tail"]:speed(0.5)
-		animations["player_hands"]["wave_tail"]:speed(0.75)
+		animations["models.main"]["wave_tail"]:speed(0.5)
+		animations["models.player_hands"]["wave_tail"]:speed(0.75)
 	end
 
 	--耳曲げ
 	if EarBendCount == 300 then
-		animations["main"][player:isLeftHanded() and "left_ear_bend" or "right_ear_bend"]:play()
+		animations["models.main"][player:isLeftHanded() and "left_ear_bend" or "right_ear_bend"]:play()
 		EarBendCount = 0
 	elseif not client.isPaused() then
 		EarBendCount = EarBendCount + 1
