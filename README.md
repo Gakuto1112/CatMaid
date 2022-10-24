@@ -2,7 +2,7 @@
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
-対応Figuraバージョン：[**0.1.0-rc9**](https://www.curseforge.com/minecraft/mc-mods/figura/files/4007916)
+対応Figuraバージョン：[**0.1.0-rc.9**](https://www.curseforge.com/minecraft/mc-mods/figura/files/4007916)
 
 ![メイン画像](README_Images/メイン.jpg)
 
@@ -178,13 +178,28 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 ### アクション2-5：夏機能のオン/オフ
 夏機能のオン/オフを切り替えます。
 
-![夏機能1](README_Images/夏機能1.jpg)
-
 ### アクション2-7：設定画面を開く
 ~~クリックして設定画面を開きます。~~　**2022/7/18現在、機能していません！！**
 
 ### アクション8（共通）：ページ切り替え
 ボタン上でスクロールするとページが切り替わります。
+
+## 使用方法
+1. マインクラフト1.19.2に[Fabric](https://fabricmc.net/)をインストールし、[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)と[Figura 0.1.0-rc.9+1.19.2]((https://www.curseforge.com/minecraft/mc-mods/figura/files/4007916))を追加します。各Modの依存関係にご注意ください。
+2. ページ上部の緑色のボタン「**Code**」から「**Download ZIP**」からこのレポジトリのファイルをダウンロードします。（または、このレポジトリをクローンします。）
+3. 圧縮ファイルの場合は展開します。
+   - 以下のファイル、フォルダはアバターの動作には不要なので削除しても構いません。
+     - [README_Images](README_Images/)
+     - [sample_skins](sample_skins/)
+     - [.gitignore](.gitignore)
+     - [BBmodelBeautifier.py](BBmodelBeautifier.py)
+     - [README.md](README.md)
+     - [TextureInjector.py](TextureInjector.py)
+4. ``<マインクラフトのゲームフォルダ>/figura/avatars/``にアバターのデータを配置します。
+   - フォルダはFiguraを追加したマインクラフトを一度起動すると自動的に生成されます。ない場合は手動で作成しても構いません。
+5. ゲームメニューからFiguraメニュー（Δマーク）を開き、画面左のアバターリストから「Cat Maid」を選択します。
+6. 必要に応じて[権限](#アバター設定について)をして下さい。
+7. アバターをサーバーにアップロードすると、他のFiguraプレイヤーもあなたのアバターを見ることができます。
 
 ## アバター設定について
 2022/7/18現在、ゲーム内での設定画面が実装出来ないので、代わりに[設定画面ファイル（./scripts/config.lua）](./scripts/config.lua)を直接編集して下さい。
