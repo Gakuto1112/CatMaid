@@ -497,7 +497,7 @@ MainPages[2]:newAction(2):item("feather"):onLeftClick(function()
 end)
 
 --アクション2-3. おすわり
-MainPages[2]:newToggle(3):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
+MainPages[2]:newAction(3):toggleColor(1, 85 / 255, 1):item("oak_stairs"):onToggle(function()
 	pings.main2_action3_toggle()
 end):onUntoggle(function()
 	pings.main2_action3_untoggle()
@@ -509,7 +509,7 @@ MainPages[2]:newAction(4):item("water_bucket"):onLeftClick(function()
 end)
 
 --アクション2-5. 夏機能
-MainPages[2]:newToggle(5):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
+MainPages[2]:newAction(5):item("bucket"):toggleItem("tropical_fish_bucket"):color(170 / 255, 0, 0):toggleColor(0, 170 / 255, 0):hoverColor(1, 1, 1):onToggle(function()
 	pings.main2_action5_toggle()
 end):onUntoggle(function()
 	pings.main2_action5_untoggle()
@@ -522,7 +522,7 @@ end)
 
 --アクション8（共通）. ページ切り替え
 for _, mainPage in ipairs(MainPages) do
-	mainPage:newScroll(8):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
+	mainPage:newAction(8):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
 		CurrentMainPage = CurrentMainPage - direction
 		CurrentMainPage = CurrentMainPage < 1 and CurrentMainPage + #MainPages or (CurrentMainPage > #MainPages and CurrentMainPage - #MainPages or CurrentMainPage)
 		action_wheel:setPage(MainPages[CurrentMainPage])
