@@ -2,7 +2,7 @@
 
 MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」向けスキン「CatMaid（猫メイド）」です。
 
-対応Figuraバージョン：[**0.1.0-rc.10**](https://www.curseforge.com/minecraft/mc-mods/figura/files/4007916)
+対応Figuraバージョン：[**0.1.0-rc.10**](https://www.curseforge.com/minecraft/mc-mods/figura/files/4073363)
 
 ![メイン画像](README_Images/メイン.jpg)
 
