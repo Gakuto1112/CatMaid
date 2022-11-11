@@ -6,7 +6,7 @@
 WetClass = {}
 
 WetClass.WetCount = 0
-WetClass.AutoShake = ConfigClass.AutoShake
+WetClass.AutoShake = ConfigClass.loadConfig("autoShake", true)
 AutoShakeCount = 0
 
 events.TICK:register(function()

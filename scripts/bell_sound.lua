@@ -8,7 +8,7 @@
 BellSoundClass = {}
 
 JumpKey = keybind:create(LanguageClass.getTranslate("key__jump"), keybind:getVanillaKey("key.jump"))
-BellSoundClass.BellVolume = 0.1
+BellSoundClass.BellVolume = ConfigClass.loadConfig("bellVolume", 0.1)
 WalkDistance = 0
 VelocityYData = {}
 OnGroundData = {}

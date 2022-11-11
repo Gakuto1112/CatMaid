@@ -1,35 +1,55 @@
 ---@class ConfigClass アバター設定を管理するクラス
----@field ConfigClass.CatType CatType 耳と尻尾のテクスチャの名前 The name of texture of ears and tails.
----@field ConfigClass.SkinName string このスキンの名前 This avatar's skin name
----@field ConfigClass.MeowSound boolean 定期的にニャーニャー鳴くかどうか Whether or not meow regularly.
----@field ConfigClass.BellVolume number 鈴の音量 Bell sound volume.
----@field ConfigClass.WaveTail boolean 尻尾を振るかどうか Whether or not wave tail.
----@field ConfigClass.HideArmor boolean 防具を隠すかどうか Whether or not hide armors.
----@field ConfigClass.AutoShake boolean 水から上がった際に自動でブルブルアクションを実行するかどうか Whether or not run body shake action automately after out of the water.
----@field ConfigClass.AFKAction boolean 放置している時に専用アニメーションを再生するかどうか Whether or not play dedicated animations when you are AFK.
----@field ConfigClass.BurnEffect boolean 黒焦げの視覚効果を有効にするかどうか Whether or not enable burn effect.
----@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか Whether or not use skin name.
+---@field DefaultValues table 読み込んだ値のデフォルト値を保持するテーブル
+---@field IsSynced boolean アバターの設定がホストと同期されたかどうか
+---@field NextSyncCount integer 次の同期pingまでのカウンター
 
 ConfigClass = {}
+DefaultValues = {}
+IsSynced = host:isHost()
+NextSyncCount = 0
 
---[[
-	*** NOTE ***
-	2022/7/16現在、Rewrite版には、データを保存して後で読み出せるようにする機能が搭載されていません。
-	つまり、Prewrite版のような設定ページが現在は作成できません！
-	代わりに、下の設定値を直接変更して下さい。
-	何が何を表しているのか、有効か値は何かは、上の"@field"を参照して下さい。
-]]
+---設定を読み出す
+---@param keyName string 読み出す設定の名前
+---@param defaultValue any 該当の設定が無い場合や、ホスト外での実行の場合はこの値が返される。
+---@return any data 読み出した値
+function ConfigClass.loadConfig(keyName, defaultValue)
+	if host:isHost() then
+		local data = config:load(keyName)
+		DefaultValues[keyName] = defaultValue
+		if data ~= nil then
+			return data
+		else
+			return defaultValue
+		end
+	else
+		return defaultValue
+	end
+end
 
-ConfigClass.CatType = "ORIGINAL"
-ConfigClass.SkinName = "Vinny"
-ConfigClass.MeowSound = true
-ConfigClass.BellVolume = 0.1
-ConfigClass.WaveTail = true
-ConfigClass.HideArmor = true
-ConfigClass.AutoShake = true
-ConfigClass.AFKAction = true
-ConfigClass.UseSkinName = true
+---設定を保存する
+---@param keyName string 保存する設定の名前
+---@param value any 保存する値
+function ConfigClass.saveConfig(keyName, value)
+	if host:isHost() then
+		if DefaultValues[keyName] == value then
+			config:save(keyName, nil)
+		else
+			config:save(keyName, value)
+		end
+	end
+end
 
---- *** 設定フィールド終了 ***
+events.TICK:register(function ()
+	if NextSyncCount == 0 then
+		--pings.syncAvatarConfig(ActionWheelClass.CurrentPlayerNameState, ActionWheelClass.CurrentCostumeState, WetClass.AutoShake, ArmorClass.ShowArmor, UmbrellaClass.UmbrellaSound)
+		NextSyncCount = 300
+	else
+		NextSyncCount = NextSyncCount - 1
+	end
+end)
+
+if host:isHost() then
+	config:name("Cat_maid")
+end
 
 return ConfigClass

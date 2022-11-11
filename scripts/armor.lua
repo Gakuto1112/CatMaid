@@ -10,8 +10,8 @@
 
 ArmorClass = {}
 
-ArmorClass.HideArmor = ConfigClass.HideArmor
-HideArmorPrev = ConfigClass.HideArmor
+ArmorClass.HideArmor = ConfigClass.loadConfig("hideArmor", true)
+HideArmorPrev = ArmorClass.HideArmor
 
 ---防具の設定。有効な防具であれば、trueを返す。
 ---@param armorItem ItemStack 対象の防具のアイテムスタック

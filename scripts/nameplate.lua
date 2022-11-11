@@ -1,6 +1,8 @@
 ---@class NameplateClass ネームプレート（プレイヤーの名前）を制御するクラス
+---@field SkinName string プレイヤーの表示名
 
 NameplateClass = {}
+SkinName = ""
 
 events.TICK:register(function()
 	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
@@ -10,10 +12,8 @@ events.TICK:register(function()
 	end
 end)
 
-if ConfigClass.UseSkinName and ConfigClass.SkinName ~= "" then
-	for _, nameplatePart in ipairs({nameplate.CHAT, nameplate.ENTITY, nameplate.LIST}) do
-		nameplatePart:setText(ConfigClass.SkinName)
-	end
+if SkinName ~= "" then
+	nameplate.ALL:setText(SkinName)
 end
 
 return NameplateClass

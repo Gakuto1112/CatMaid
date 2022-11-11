@@ -25,9 +25,9 @@ ShakeSplashCount = 0
 SweatCount = 0
 HeadPatAnimationCount = -1
 TailPatAnimationCount = -1
-ActionWheelClass.CurrentCatType = 1
+ActionWheelClass.CurrentCatType = ConfigClass.loadConfig("catType", 1)
 CatType = ActionWheelClass.CurrentCatType
-ActionWheelClass.CurrentBellVolume = 0.1
+ActionWheelClass.CurrentBellVolume = ConfigClass.loadConfig("bellVolume", 0.1)
 BellVolume = ActionWheelClass.CurrentBellVolume
 
 ---アクションの色の有効色/無効色の切り替え
@@ -456,13 +456,15 @@ events.TICK:register(function()
 		SweatCount = SweatCount - 1
 	end
 	local isOpenActionWheel = action_wheel:isEnabled()
-	if not isOpenActionWheel and IsOpenActionWheelPrev then
+	if host:isHost() and not isOpenActionWheel and IsOpenActionWheelPrev then
 		if CatType ~= ActionWheelClass.CurrentCatType then
 			pings.config_action1(CatType)
+			ConfigClass.saveConfig("catType", CatType)
 			print(LanguageClass.getTranslate("action_wheel__config__action_1__done_first")..LanguageClass.getTranslate("cat_type__"..TailAndEarsClass.CatTypeID[CatType])..LanguageClass.getTranslate("action_wheel__config__action_1__done_last"))
 		end
 		if BellVolume ~= ActionWheelClass.CurrentBellVolume then
 			pings.config_action2(BellVolume)
+			ConfigClass.saveConfig("bellVolume", BellVolume)
 			print(LanguageClass.getTranslate("action_wheel__config__action_2__done_first")..math.round(BellVolume * 100)..LanguageClass.getTranslate("unit__percent")..LanguageClass.getTranslate("action_wheel__config__action_2__done_last"))
 		end
 		action_wheel:setPage(MainPages[CurrentMainPage])
@@ -648,11 +650,13 @@ end)
 ConfigPage:newAction(3):title(LanguageClass.getTranslate("action_wheel__config__action_3__title")..LanguageClass.getTranslate("action_wheel__toggle_off")):toggleTitle(LanguageClass.getTranslate("action_wheel__config__action_3__title")..LanguageClass.getTranslate("action_wheel__toggle_on")):item("note_block"):color(170 / 255, 0, 0):hoverColor(1, 85 / 255, 85 / 255):toggleColor(0, 170 / 255, 0):onToggle(function ()
 	pings.config_action3_toggle()
 	ConfigPage:getAction(3):hoverColor(85 / 255, 1, 85 / 255)
+	ConfigClass.saveConfig("meowSound", true)
 end):onUntoggle(function ()
 	pings.config_action3_untoggle()
 	ConfigPage:getAction(3):hoverColor(1, 85 / 255, 85 / 255)
+	ConfigClass.saveConfig("meowSound", false)
 end)
-if ConfigClass.MeowSound then
+if ConfigClass.loadConfig("meowSound", true) then
 	local action = ConfigPage:getAction(3)
 	action:toggled(true)
 	action:hoverColor(85 / 255, 1, 85 / 255)
@@ -662,11 +666,13 @@ end
 ConfigPage:newAction(4):title(LanguageClass.getTranslate("action_wheel__config__action_4__title")..LanguageClass.getTranslate("action_wheel__toggle_off")):toggleTitle(LanguageClass.getTranslate("action_wheel__config__action_4__title")..LanguageClass.getTranslate("action_wheel__toggle_on")):item("feather"):color(170 / 255, 0, 0):hoverColor(1, 85 / 255, 85 / 255):toggleColor(0, 170 / 255, 0):onToggle(function ()
 	pings.config_action4_toggle()
 	ConfigPage:getAction(4):hoverColor(85 / 255, 1, 85 / 255)
+	ConfigClass.saveConfig("waveTail", true)
 end):onUntoggle(function ()
 	pings.config_action4_untoggle()
 	ConfigPage:getAction(4):hoverColor(1, 85 / 255, 85 / 255)
+	ConfigClass.saveConfig("waveTail", false)
 end)
-if ConfigClass.WaveTail then
+if ConfigClass.loadConfig("waveTail", true) then
 	local action = ConfigPage:getAction(4)
 	action:toggled(true)
 	action:hoverColor(85 / 255, 1, 85 / 255)
@@ -676,11 +682,13 @@ end
 ConfigPage:newAction(5):title(LanguageClass.getTranslate("action_wheel__config__action_5__title")..LanguageClass.getTranslate("action_wheel__toggle_off")):toggleTitle(LanguageClass.getTranslate("action_wheel__config__action_5__title")..LanguageClass.getTranslate("action_wheel__toggle_on")):item("iron_chestplate"):color(170 / 255, 0, 0):hoverColor(1, 85 / 255, 85 / 255):toggleColor(0, 170 / 255, 0):onToggle(function ()
 	pings.config_action5_toggle()
 	ConfigPage:getAction(5):hoverColor(85 / 255, 1, 85 / 255)
+	ConfigClass.saveConfig("hideArmor", true)
 end):onUntoggle(function ()
 	pings.config_action5_untoggle()
 	ConfigPage:getAction(5):hoverColor(1, 85 / 255, 85 / 255)
+	ConfigClass.saveConfig("hideArmor", false)
 end)
-if ConfigClass.HideArmor then
+if ConfigClass.loadConfig("hideArmor", true) then
 	local action = ConfigPage:getAction(5)
 	action:toggled(true)
 	action:hoverColor(85 / 255, 1, 85 / 255)
@@ -690,11 +698,13 @@ end
 ConfigPage:newAction(6):title(LanguageClass.getTranslate("action_wheel__config__action_6__title")..LanguageClass.getTranslate("action_wheel__toggle_off")):toggleTitle(LanguageClass.getTranslate("action_wheel__config__action_6__title")..LanguageClass.getTranslate("action_wheel__toggle_on")):item("water_bucket"):color(170 / 255, 0, 0):hoverColor(1, 85 / 255, 85 / 255):toggleColor(0, 170 / 255, 0):onToggle(function ()
 	pings.config_action6_toggle()
 	ConfigPage:getAction(6):hoverColor(85 / 255, 1, 85 / 255)
+	ConfigClass.saveConfig("autoShake", true)
 end):onUntoggle(function ()
 	pings.config_action6_untoggle()
 	ConfigPage:getAction(6):hoverColor(1, 85 / 255, 85 / 255)
+	ConfigClass.saveConfig("autoShake", false)
 end)
-if ConfigClass.AutoShake then
+if ConfigClass.loadConfig("autoShake", true) then
 	local action = ConfigPage:getAction(6)
 	action:toggled(true)
 	action:hoverColor(85 / 255, 1, 85 / 255)
@@ -704,11 +714,13 @@ end
 ConfigPage:newAction(7):title(LanguageClass.getTranslate("action_wheel__config__action_7__title")..LanguageClass.getTranslate("action_wheel__toggle_off")):toggleTitle(LanguageClass.getTranslate("action_wheel__config__action_7__title")..LanguageClass.getTranslate("action_wheel__toggle_on")):item("red_bed"):color(170 / 255, 0, 0):hoverColor(1, 85 / 255, 85 / 255):toggleColor(0, 170 / 255, 0):onToggle(function ()
 	pings.config_action7_toggle()
 	ConfigPage:getAction(7):hoverColor(85 / 255, 1, 85 / 255)
+	ConfigClass.saveConfig("AFKAction", true)
 end):onUntoggle(function ()
 	pings.config_action7_untoggle()
 	ConfigPage:getAction(7):hoverColor(1, 85 / 255, 85 / 255)
+	ConfigClass.saveConfig("AFKAction", false)
 end)
-if ConfigClass.AFKAction then
+if ConfigClass.loadConfig("AFKAction", true) then
 	local action = ConfigPage:getAction(7)
 	action:toggled(true)
 	action:hoverColor(85 / 255, 1, 85 / 255)
