@@ -5,5 +5,28 @@
 	"color": "ff9494",
 	"autoScripts": [
 		"scripts/main.lua"
-	]
+	],
+	"customizations": {
+		"models.armor.Avatar.Body.BodyBottom": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.Arms.RightArm.RightArmBottom": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.Arms.LeftArm.LeftArmBottom": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.BodyBottom.Legs.RightLeg.RightLeggings": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.BodyBottom.Legs.RightLeg.RightLegBottom": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.BodyBottom.Legs.LeftLeg.LeftLeggings": {
+			"parentType": "None"
+		},
+		"models.armor.Avatar.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom": {
+			"parentType": "None"
+		}
+	}
 }
