@@ -2,7 +2,7 @@
 ---@field SkinName string プレイヤーの表示名
 
 NameplateClass = {}
-SkinName = ""
+SkinName = ConfigClass.loadConfig("skinName", "")
 
 events.TICK:register(function()
 	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
