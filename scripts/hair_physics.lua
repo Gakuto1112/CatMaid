@@ -21,7 +21,7 @@ LookRotPrevRender = 0
 LookRotDeltaPrevRender = 0
 
 events.TICK:register(function()
-	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ConfigClass.HideArmor then
+	if string.find(General.hasItem(player:getItem(5)), "chestplate$") and not ArmorClass.HideArmor then
 		FrontHair:setPos(0, 0, -1.1)
 		BackHair:setPos(0, 0, 1.1)
 	else
@@ -72,7 +72,7 @@ events.RENDER:register(function()
 		local playerVehicle = player:getVehicle()
 		if chestItemType == "minecraft:elytra" then
 			hairLimit = {{16, 80}, {0, 0}, {0, 0}}
-		elseif string.find(chestItemType, "chestplate$") and not ConfigClass.HideArmor then
+		elseif string.find(chestItemType, "chestplate$") and not ArmorClass.HideArmor then
 			hairLimit = {{0, 80}, {-80, 0}, {0, 0}}
 		elseif SummerFeatureClass.SummerFeature then
 			if playerVehicle then

@@ -1,5 +1,6 @@
 ---@class BellSoundClass 鈴の音を制御するクラス
 ---@field JumpKey Keybind ジャンプボタン（ジャンプ時に鈴を鳴らす用）
+---@field BellSoundClass.BellSoundClass number 鈴の音量
 ---@field WalkDistance number 鈴を鳴らす用の歩いた距離
 ---@field VelocityYData table ジャンプしたかどうかを判定する為にy方向の速度を格納するテーブル
 ---@field OnGroundData table 前チックに着地していたかを判定する為に着地情報を格納するテーブル
@@ -7,6 +8,7 @@
 BellSoundClass = {}
 
 JumpKey = keybind:create(LanguageClass.getTranslate("key__jump"), keybind:getVanillaKey("key.jump"))
+BellSoundClass.BellVolume = 0.1
 WalkDistance = 0
 VelocityYData = {}
 OnGroundData = {}
@@ -14,8 +16,7 @@ OnGroundData = {}
 ---プレイヤーの位置で鈴の音を再生する。
 function BellSoundClass.playBellSound()
 	local playerPos = player:getPos()
-	local bellVolume = math.min(math.max(ConfigClass.BellVolume, 0), 1)
-	local volume = WardenClass.WardenNearby and (bellVolume / 10) or ((player:getPose() == "CROUCHING" or player:isUnderwater()) and (bellVolume / 5) or bellVolume)
+	local volume = WardenClass.WardenNearby and (BellSoundClass.BellVolume / 10) or ((player:getPose() == "CROUCHING" or player:isUnderwater()) and (BellSoundClass.BellVolume / 5) or BellSoundClass.BellVolume)
 	if avatar:canUseCustomSounds() then
 		sounds:playSound("sounds.bell", playerPos, volume, 1 + (math.random() * 0.05 - 0.025))
 	else

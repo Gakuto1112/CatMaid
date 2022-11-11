@@ -3,6 +3,7 @@
 ---@field LookRotPrevRender number 前チックのlookRot
 ---@field RightItemTypePrevTick string 前チックの右手のアイテムの種類
 ---@field LeftItemTypePrevTick string 前チックの左手のアイテムの種類
+---@field AFKClass.AFKAction integer AFKアクションが有効かどうか
 ---@field AFKClass.AFKCount integer 放置するとインクリメントされるカウンター
 ---@field AFKClass.TouchBellCount integer 鈴を弄っている時間を計るカウンター
 ---@field AFKActionState AFKActionStateEnum 放置時の専用アクションの状態
@@ -20,6 +21,7 @@ keyList = {}
 LookRotPrevTick = 0
 RightItemTypePrevTick = "none"
 LeftItemTypePrevTick = "none"
+AFKClass.AFKAction = ConfigClass.AFKAction
 AFKClass.AFKCount = 0
 AFKClass.TouchBellCount = 0
 AFKActionState = "NONE"
@@ -113,7 +115,7 @@ events.TICK:register(function()
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
-	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and ConfigClass.AFKAction then
+	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and AFKClass.AFKAction then
 		if not client.isPaused() then
 			if AFKClass.AFKCount == 6000 then
 				pings.sleep()
@@ -179,7 +181,7 @@ events.TICK:register(function()
 	end
 end)
 
-if ConfigClass.AFKAction then
+if AFKClass.AFKAction then
 	for index, keyName in ipairs({"key.playerlist", "figura.config.action_wheel_button", "key.sneak", "key.hotbar.1", "key.hotbar.2", "key.hotbar.3", "key.hotbar.4", "key.hotbar.5", "key.hotbar.6", "key.hotbar.7", "key.hotbar.8", "key.hotbar.9", "key.sprint", "key.togglePerspective", "key.spectatorOutlines", "key.left", "key.chat", "key.pickItem", "key.socialInteractions", "key.fullscreen", "key.attack", "key.smoothCamera", "key.advancements", "key.use", "key.loadToolbarActivator", "key.forward", "key.right", "key.screenshot", "key.back", "key.swapOffhand", "key.command", "key.saveToolbarActivator", "key.inventory", "key.jump", "key.drop"}) do
 		table.insert(keyList, keybind:create(LanguageClass.getTranslate("key__afk_check").."_"..index, keybind:getVanillaKey(keyName)))
 	end

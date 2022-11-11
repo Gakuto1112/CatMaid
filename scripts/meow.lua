@@ -1,5 +1,6 @@
 ---@class MeowClass 猫の鳴き声を制御するクラス
 ---@field MeowNameID table MeowNameとサウンド名を紐付けるテーブル
+---@field MeowClass.MeowSound boolean 猫の鳴き声を有効にするかどうか
 ---@field MeowCount integer 時々ニャーニャー鳴くタイミングを計るカウンター
 
 ---@alias MeowName
@@ -14,6 +15,7 @@
 MeowClass = {}
 
 MeowNameID = {NORMAL = {name = "minecraft:entity.cat.ambient", pitch = 1.5}, PURREOW = {name = "minecraft:entity.cat.purreow", pitch = 1.5}, PURR = {name = "minecraft:entity.cat.purr", pitch = 1}, WEAK = {name = "minecraft:entity.cat.stray_ambient", pitch = 1.5}, HISS = {name = "minecraft:entity.cat.hiss", pitch = 1}, HURT = {name = "minecraft:entity.cat.hurt", pitch = 1.5}, DEATH = {name = "minecraft:entity.ocelot.death", pitch = 1.5}}
+MeowClass.MeowSound = ConfigClass.MeowSound
 MeowCount = 0
 
 ---猫の鳴き声を再生する。
@@ -35,7 +37,7 @@ function MeowClass.playMeow(soundName, volume)
 end
 
 events.TICK:register(function()
-	if ConfigClass.MeowSound then
+	if MeowSound then
 		if MeowCount == 300 then
 			if player:getPose() ~= "SLEEPING" and FacePartsClass.EmotionCount == 0 and not player:isUnderwater() and FoodClass.FoodEatCount == 0 and FoodClass.SatisfyCount == 0 and not WardenClass.WardenNearby and not GoatHornClass.Horn and AFKClass.AFKCount < 5400 then
 				if General.isTired then

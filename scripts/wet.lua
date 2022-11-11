@@ -1,11 +1,13 @@
 ---@class WetClass 濡れ機能を制御するクラス
 ---@field WetCount integer 濡れの度合いを計るカウンター
+---@field WetClass.AutoShake 自動ブルブルが有効かどうか
 ---@field AutoShakeCount integer 自動ブルブルまでの時間を計るカウンター
 
 WetClass = {}
 
-AutoShakeCount = 0
 WetClass.WetCount = 0
+WetClass.AutoShake = ConfigClass.AutoShake
+AutoShakeCount = 0
 
 events.TICK:register(function()
 	if player:isWet() then
@@ -19,7 +21,7 @@ events.TICK:register(function()
 			end
 		end
 		local paused = client:isPaused()
-		if ConfigClass.AutoShake and not WardenClass.WardenNearby and animations["models.main"]["shake"]:getPlayState() ~= "PLAYING" then
+		if WetClass.AutoShake and not WardenClass.WardenNearby and animations["models.main"]["shake"]:getPlayState() ~= "PLAYING" then
 			if AutoShakeCount == 20 then
 				ActionWheelClass.bodyShake()
 				AutoShakeCount = 0

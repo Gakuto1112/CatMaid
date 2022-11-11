@@ -3,7 +3,7 @@
 ---@field LeftEar CustomModelPart 左耳
 ---@field Tail1 table 尻尾（付け根の方）
 ---@field Tail2 table 尻尾（先っぽの方）
----@field CatTypeID table CatTypeとIDを紐づけるテーブル
+---@field TailAndEarsClass.CatTypeID table CatTypeとIDを紐づけるテーブル
 ---@field EarBendCount integer 耳を曲げるアニメーションを再生するタイミングを計るカウンター
 
 TailAndEarsClass = {}
@@ -12,8 +12,16 @@ RightEar = models.models.main.Avatar.Head.Ears.RightEar
 LeftEar = models.models.main.Avatar.Head.Ears.LeftEar
 Tail1 = {models.models.main.Avatar.Body.BodyBottom.Tail, models.models.player_hands.Avatar.Body.Tail}
 Tail2 = {models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
-CatTypeID = {ORIGINAL = 0, ALL_BLACK = 1, BLACK = 2, BRITISH_SHORTHAIR = 3, CALICO = 4, GLEY_TABBY = 5, JELLIE = 6, OCELOT = 7, PERSIAN = 8, RAGDOLL = 9, RED = 10, SIAMESE = 11, TABBY = 12, WHITE = 13}
+TailAndEarsClass.CatTypeID = {"original", "all_black", "black", "british_shorthair", "calico", "gley_tabby", "jellie", "ocelot", "persian", "ragdoll", "red", "siamese", "tabby", "white"}
 EarBendCount = 0
+
+---ネコの種類を設定する。
+---@param newCat number 新しい猫の種類
+function TailAndEarsClass.setCatType(newCat)
+	for _, modelPart in ipairs({RightEar, LeftEar, Tail1[1].Tail1.Tail1, Tail2[1].Tail2, Tail1[1].Tail1.TailSection1, Tail1[1].Tail1.TailSection2, Tail2[1].TailSection3, Tail2[1].TailSection4}) do
+		modelPart:setUVPixels((newCat - 1) * 8, 0)
+	end
+end
 
 events.TICK:register(function()
 	local condition --0. 低HP、低満腹度, 1. 中HP、中満腹度, 2. 高HP、高満腹度
@@ -74,10 +82,6 @@ events.TICK:register(function()
 		EarBendCount = EarBendCount + 1
 	end
 end)
-
-for _, modelPart in ipairs({RightEar, LeftEar, Tail1[1].Tail1.Tail1, Tail2[1].Tail2, Tail1[1].Tail1.TailSection1, Tail1[1].Tail1.TailSection2, Tail2[1].TailSection3, Tail2[1].TailSection4}) do
-	modelPart:setUVPixels(CatTypeID[ConfigClass.CatType] * 8, 0)
-end
 
 if ConfigClass.WaveTail then
 	General.setAnimations("PLAY", "wave_tail")

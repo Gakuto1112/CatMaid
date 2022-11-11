@@ -10,22 +10,6 @@
 ---@field ConfigClass.BurnEffect boolean 黒焦げの視覚効果を有効にするかどうか Whether or not enable burn effect.
 ---@field ConfigClass.UseSkinName boolean スキン名を使用するかどうか Whether or not use skin name.
 
----@alias CatType
----| "ORIGINAL"
----| "ALL_BLACK"
----| "BLACK"
----| "BRITISH_SHORTHAIR"
----| "CALICO"
----| "GLEY_TABBY"
----| "JELLIE"
----| "OCELOT"
----| "PERSIAN"
----| "RAGDOLL"
----| "RED"
----| "SIAMESE"
----| "TABBY"
----| "WHITE"
-
 ConfigClass = {}
 
 --[[

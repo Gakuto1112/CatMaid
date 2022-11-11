@@ -38,7 +38,7 @@ events.TICK:register(function()
 	local snorkel = models.models.summer_features.Head.Snorkel
 	if not SummerFeatureClass.SummerFeature then
 		for _, modelPart in ipairs(HiddenPartList) do
-			modelPart:setVisible(not string.find(General.hasItem(player:getItem(5)), "chestplate$") or ConfigClass.HideArmor)
+			modelPart:setVisible(not string.find(General.hasItem(player:getItem(5)), "chestplate$") or ArmorClass.HideArmor)
 		end
 		whiteHat:setVisible(false)
 		snorkel:setVisible(false)
