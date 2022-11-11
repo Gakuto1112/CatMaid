@@ -9,7 +9,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
   - 耳はたまにアニメーションします。
-  - 尻尾は左右に振れます（[アバター設定](#アバター設定について)で無効に出来ます）。
+  - 尻尾は左右に振れます（[アバター設定](#アバター設定)で無効に出来ます）。
 
 	![尻尾を振る](README_Images/尻尾を振る.gif)
 
@@ -24,11 +24,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   - プレイヤーの利き手に応じてどちらが動くかが変化します。
 - 時々瞬きします。
 - ダメージを受けた時、低HP時、低満腹度時に目が変化します。
-- [アバター設定](#アバター設定について)でニッコリしたり、ウィンクしたりします。
+- [アクションホイール](#アクションホイール12)でニッコリしたり、ウィンクしたりします。
   ![ニッコリ](README_Images/「ニャー」と鳴く（スマイル）.gif)
   ![スマイル](README_Images/「ニャー」と鳴く（ウィンク）.gif)
 
-- 歩いたり、跳んだりすると鈴の音がなります（[アバター設定](#アバター設定について)で無効に出来ます）。
+- 歩いたり、跳んだりすると鈴の音がなります（[アバター設定](#アバター設定)で無効に出来ます）。
   - スニーク時は音量が1/5になります。
 - ダメージを受けると「ネコがダメージを受ける」サウンドが再生されます。
 - お気に入りの食べ物を手に持つと目がキラキラ光り、食べると満足して「ニャー」と鳴きます。
@@ -62,7 +62,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![エモートを拒否する](README_Images/エモート拒否.gif)
 
-- 放置すると専用アクションを起こします（[アバター設定](#アバター設定について)で無効に出来ます）。
+- 放置すると専用アクションを起こします（[アバター設定](#アバター設定)で無効に出来ます）。
   - 30秒おきに鈴をいじります。
 
   ![鈴をいじる](README_Images/鈴をいじる.gif)
@@ -83,7 +83,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 
   ![髪がたなびく](README_Images/髪がたなびく.gif)
 
-- バニラのネコのテクスチャを基にした、複数種類の耳と尻尾のテクスチャを用意しています。[アバター設定](#アバター設定について)でお好みのテクスチャに変更出来ます。
+- バニラのネコのテクスチャを基にした、複数種類の耳と尻尾のテクスチャを用意しています。[アバター設定](#アバター設定)でお好みのテクスチャに変更出来ます。
 
   ![色々な尻尾](/README_Images/色々な尻尾.jpg)
 
@@ -95,7 +95,7 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
   ![夏機能1](README_Images/夏機能1.jpg)
 
 ## アクションホイール（1/2）
-このスキンにはいくつかのアクションが用意されています。
+Figuraには、アクションホイールキー（デフォルトは「B」キー）を押すことで、エモートなどを実行できるリングメニューが実装されています。このアバターにもいくつかのアクションが用意されています。
 
 ![アクションホイール1](README_Images/アクションホイール1.jpg)
 
@@ -179,10 +179,39 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 夏機能のオン/オフを切り替えます。
 
 ### アクション2-7：設定画面を開く
-~~クリックして設定画面を開きます。~~　**2022/7/18現在、機能していません！！**
-
+クリックして[設定画面](#アバター設定)を開きます。
 ### アクション8（共通）：ページ切り替え
 ボタン上でスクロールするとページが切り替わります。
+
+## アバター設定
+[アクション2-7](#アクション2-7設定画面を開く)を実行するとこの画面が表示されます。一度アクションホイールを閉じると、設定画面を閉じることができます。
+
+![設定画面](README_Images/設定画面.jpg)
+
+### アクション1. 猫の種類
+猫耳と尻尾の種類を変更します。スクロールで猫の種類を変更し、アクションホイールを閉じると確定します。
+
+![猫の種類](README_Images/色々な尻尾.jpg)
+
+### アクション2. 鈴の音量
+鈴の音量を変更します。スクロールで5%刻みに増減し、アクションホイールを閉じると確定します。
+
+### アクション3. 猫の鳴き声の切り替え
+通常時の猫の鳴き声を有効にするかどうかを設定できます。
+
+### アクション4. 尻尾振りの切り替え
+尻尾を振るかどうかを設定できます。
+
+### アクション5. 防具の非表示の切り替え
+防具を表示するかどうかを設定できます。
+
+### アクション6. 自動ブルブルの切り替え
+濡れている際に自動的に[ブルブル](#アクション2-4ブルブル)を実行するかどうかを設定できます。
+
+### アクション7. AFKアクションの切り替え
+放置時に特別なアクションを実行するかどうかを設定できます。
+
+![居眠り](README_Images/居眠り.gif)
 
 ## 使用方法
 1. マインクラフト1.19.2に[Fabric](https://fabricmc.net/)をインストールし、[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)と[Figura 0.1.0-rc.9+1.19.2]((https://www.curseforge.com/minecraft/mc-mods/figura/files/4007916))を追加します。各Modの依存関係にご注意ください。
@@ -198,44 +227,11 @@ MinecraftのスキンMod「[Figura](https://github.com/Moonlight-MC/Figura)」�
 4. ``<マインクラフトのゲームフォルダ>/figura/avatars/``にアバターのデータを配置します。
    - フォルダはFiguraを追加したマインクラフトを一度起動すると自動的に生成されます。ない場合は手動で作成しても構いません。
 5. ゲームメニューからFiguraメニュー（Δマーク）を開き、画面左のアバターリストから「Cat Maid」を選択します。
-6. 必要に応じて[権限設定](#アバター設定について)をして下さい。
+6. 必要に応じて権限設定をして下さい。
 7. アバターをサーバーにアップロードすると、他のFiguraプレイヤーもあなたのアバターを見ることができます。
-
-## アバター設定について
-2022/7/18現在、ゲーム内での設定画面が実装出来ないので、代わりに[設定画面ファイル（./scripts/config.lua）](./scripts/config.lua)を直接編集して下さい。
-
-- 設定値以外の所は編集しないで下さい。正常に動作しなくなるもとになります。
-
-```lua
-ConfigClass.Language = "jp"
-ConfigClass.CatType = "ORIGINAL"
-ConfigClass.SkinName = "Vinny"
-ConfigClass.MeowSound = true
-ConfigClass.BellSound = true
-ConfigClass.WaveTail = true
-ConfigClass.HideArmor = true
-ConfigClass.AutoShake = true
-ConfigClass.AFKAction = true
-ConfigClass.BurnEffect = true
-ConfigClass.UseSkinName = true
-```
-
-| 項目 | 説明 | 有効な値 | 初期値 |
-| - | - | - | - |
-| ```ConfigClass.CatType``` | 猫耳と尻尾に使用するテクスチャの種類です。 | ```string``` "ORIGINAL", "ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "GLEY_TABBY", "JELLIE", "OCELOT", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE" | ORIGINAL |
-| ```ConfigClass.SkinName``` | ```ConfigClass.UseSkinName```が```true```の時に使用される名前です。 | ```string``` | Vinny |
-| ``` ConfigClass.MeowSound ``` | 定期的に猫の鳴き声を発するかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.BellVolume``` | 鈴の音の音量です。**カスタムサウンドを再生する権限が無い場合は代替の音が使用されます。** | ```number``` 0 - 1 | 0.1 |
-| ```ConfigClass.WaveTail``` | 尻尾を揺らすかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.HideArmor``` | 防具を隠すかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.AutoShake``` | 水から上がった時に自動でブルブルアクションを実行するかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.AFKAction``` | 放置している時に[専用アクション](#特徴)を再生するかどうかです。 | ```boolean``` | ```true``` |
-| ```ConfigClass.UseSkinName``` | ```ConfigClass.SkinName```をプレイヤー名として使用すかどうかです。**スキン名はFiguraを導入しているかつ、あなたの信用度をTrustedに設定しているプレイヤーにのみに表示されます。それ以外のプレイヤーには通常のプレイヤー名が表示されます。また、サーバー側にはスキン名は反映されません。** | ```boolean``` | ```true``` |
 
 ## テクスチャ
 このアバターのテクスチャは以下の通りです。バニラのスキンをベースに作られているので、テクスチャを書き換えてスキンを変更出来ます。なお、バニラスキンと直接かかわりがあるもののみ説明します。
-
-<**追記**> 現在、Figuraは、モデルファイル内にあるテクスチャを参照しているようであり、単純にテクスチャを編集したり、置き換えたりするだけではテクスチャが反映されません。取り急ぎ、**[BlockBench](https://www.blockbench.net/)で、一度開いて保存すれば反映されるようです**。あるいは、[TextureInjector.py](TextureInjector.py)を実行すると、[BlockBench](https://www.blockbench.net/)を使用せずにテクスチャを適用できます（実行には[Python](https://www.python.org/)が必要です）。
 
 ### [main.png](./textures/main.png)
 アバターのメイン部分となるテクスチャです。
