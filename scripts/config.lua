@@ -39,9 +39,30 @@ function ConfigClass.saveConfig(keyName, value)
 	end
 end
 
+--ping関数
+---アバター設定を他Figuraクライアントと同期する。
+---@param catType integer 猫の種類
+---@param bellVolume number 鈴の音量
+---@param meowSound boolean 猫の鳴き声
+---@param waveTail boolean 尻尾を振るかどうか
+---@param hideArmor boolean 防具を隠すかどうか
+---@param autoShake boolean 自動ブルブル
+---@param AFKAction boolean AFKアクション
+function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideArmor, autoShake, AFKAction)
+	if not IsSynced then
+		TailAndEarsClass.setCatType(catType)
+		BellSoundClass.BellVolume = bellVolume
+		MeowClass.MeowSound = meowSound
+		General.setAnimations(waveTail and "PLAY" or "STOP", "wave_tail")
+		ArmorClass.HideArmor = hideArmor
+		WetClass.AutoShake = autoShake
+		AFKClass.AFKAction = AFKAction
+	end
+end
+
 events.TICK:register(function ()
 	if NextSyncCount == 0 then
-		--pings.syncAvatarConfig(ActionWheelClass.CurrentPlayerNameState, ActionWheelClass.CurrentCostumeState, WetClass.AutoShake, ArmorClass.ShowArmor, UmbrellaClass.UmbrellaSound)
+		pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.HideArmor, WetClass.AutoShake, AFKClass.AFKAction)
 		NextSyncCount = 300
 	else
 		NextSyncCount = NextSyncCount - 1
