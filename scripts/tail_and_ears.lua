@@ -12,7 +12,7 @@ EarBendCount = 0
 ---ネコの種類を設定する。
 ---@param newCat number 新しい猫の種類
 function TailAndEarsClass.setCatType(newCat)
-	for _, modelPart in ipairs({models.models.main.Avatar.Head.Ears.RightEar, models.models.main.Avatar.Head.Ears.LeftEar, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail1, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2.Tail2, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.TailSection1, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.TailSection2, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2.TailSection3, models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2.TailSection4}) do
+	for _, modelPart in ipairs({models.models.main.Avatar.Head.Ears, models.models.skull.Skull.Ears}) do
 		modelPart:setUVPixels((newCat - 1) * 8, 0)
 	end
 end
