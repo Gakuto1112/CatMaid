@@ -15,9 +15,9 @@
 
 ActionWheelClass = {}
 
-MainPages = {action_wheel:createPage("main_page_1"), action_wheel:createPage("main_page_2")}
+MainPages = {action_wheel:newPage("main_page_1"), action_wheel:newPage("main_page_2")}
 CurrentMainPage = 1
-ConfigPage = action_wheel:createPage()
+ConfigPage = action_wheel:newPage()
 IsOpenActionWheelPrev = false
 ActionWheelClass.ActionCount = 0
 ActionCancelFunction = nil
@@ -102,7 +102,7 @@ function pings.main1_action1_left()
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
 		end
@@ -117,7 +117,7 @@ function pings.main1_action1_right()
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
 			FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
 		end
@@ -131,7 +131,7 @@ function pings.main1_action2_left()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			FacePartsClass.setEmotion("NONE", "CLOSED", "OPENED", 20, true)
 			General.setAnimations("PLAY", "left_meow")
 			ActionWheelClass.ActionCount = 20
@@ -146,7 +146,7 @@ function pings.main1_action2_right()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
 			MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			FacePartsClass.setEmotion("CLOSED", "NONE", "OPENED", 20, true)
 			General.setAnimations("PLAY", "right_meow")
 			ActionWheelClass.ActionCount = 20
@@ -160,7 +160,7 @@ function pings.main1_action3()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
 				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
@@ -177,7 +177,7 @@ function pings.main1_action4()
 	runAction(function()
 		if not GoatHornClass.Horn then
 			local playerPos = player:getPos()
-			particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+			particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 			if General.isTired then
 				MeowClass.playMeow("WEAK", 1)
 				FacePartsClass.setEmotion("TIRED", "TIRED", "OPENED", 20, true)
@@ -225,7 +225,7 @@ function pings.main1_action6_left()
 	runAction(function()
 		local playerPos = player:getPos()
 		for _ = 1, math.min(avatar:getMaxParticles(), 8) do
-			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+			particles:newParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 		end
 		MeowClass.playMeow("HISS", 0.5)
 		if General.isTired then
@@ -244,7 +244,7 @@ function pings.main1_action6_right()
 	runAction(function()
 		local playerPos = player:getPos()
 		for _ = 1, math.min(avatar:getMaxParticles(), 16) do
-			particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+			particles:newParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 		end
 		MeowClass.playMeow("HISS", 1)
 		if General.isTired then
@@ -440,7 +440,7 @@ events.TICK:register(function()
 		if ShakeSplashCount % 5 == 0 then
 			local playerPos = player:getPos()
 			for _ = 1, math.min(avatar:getMaxParticles() / 4, 4) do
-				particles:addParticle("minecraft:splash", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+				particles:newParticle("minecraft:splash", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 			end
 		end
 		ShakeSplashCount = ShakeSplashCount - 1
@@ -450,7 +450,7 @@ events.TICK:register(function()
 		if SweatCount % 5 == 0 then
 			local playerPos = player:getPos()
 			for _ = 1, math.min(avatar:getMaxParticles() / 4, 4) do
-				particles:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
+				particles:newParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
 			end
 		end
 		SweatCount = SweatCount - 1
@@ -481,7 +481,7 @@ events.TICK:register(function()
 				elseif HeadPatAnimationCount == 95 then
 					local playerPos = player:getPos()
 					MeowClass.playMeow(General.isTired and "WEAK" or "NORMAL", 1)
-					particles:addParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
+					particles:newParticle("minecraft:heart", playerPos.x, playerPos.y + 2, playerPos.z)
 					FacePartsClass.setEmotion("CLOSED", "CLOSED", "OPENED", 20, true)
 				elseif HeadPatAnimationCount == 115 then
 					FacePartsClass.setEmotion("CLOSED", "CLOSED", "CLOSED", 22, true)
@@ -506,7 +506,7 @@ events.TICK:register(function()
 					local playerPos = player:getPos()
 					MeowClass.playMeow("HISS", 1)
 					for _ = 1, math.min(avatar:getMaxParticles(), 8) do
-						particles:addParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
+						particles:newParticle("minecraft:angry_villager", playerPos.x + math.random() - 0.5, playerPos.y + math.random() + 0.5, playerPos.z + math.random() - 0.5)
 					end
 					if General.isTired then
 						FacePartsClass.setEmotion("INTIMIDATE_TIRED", "INTIMIDATE_TIRED", "TOOTH", 40, true)

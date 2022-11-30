@@ -28,7 +28,7 @@ function MeowClass.playMeow(soundName, volume)
 			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
 			sounds:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
 			for _ = 1, 4 do
-				particles:addParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
+				particles:newParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
 			end
 		else
 			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])

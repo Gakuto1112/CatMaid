@@ -160,7 +160,7 @@ events.TICK:register(function()
 		if AFKClass.AFKCount % 5 == 0 then
 			local playerPos = player:getPos()
 			for _ = 1, math.min(avatar:getMaxParticles() / 4, 4) do
-				particles:addParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
+				particles:newParticle("minecraft:splash", playerPos.x, playerPos.y + 2, playerPos.z)
 			end
 		end
 	end
@@ -183,7 +183,7 @@ end)
 
 if AFKClass.AFKAction then
 	for index, keyName in ipairs({"key.playerlist", "figura.config.action_wheel_button", "key.sneak", "key.hotbar.1", "key.hotbar.2", "key.hotbar.3", "key.hotbar.4", "key.hotbar.5", "key.hotbar.6", "key.hotbar.7", "key.hotbar.8", "key.hotbar.9", "key.sprint", "key.togglePerspective", "key.spectatorOutlines", "key.left", "key.chat", "key.pickItem", "key.socialInteractions", "key.fullscreen", "key.attack", "key.smoothCamera", "key.advancements", "key.use", "key.loadToolbarActivator", "key.forward", "key.right", "key.screenshot", "key.back", "key.swapOffhand", "key.command", "key.saveToolbarActivator", "key.inventory", "key.jump", "key.drop"}) do
-		table.insert(keyList, keybind:create(LanguageClass.getTranslate("key__afk_check").."_"..index, keybind:getVanillaKey(keyName)))
+		table.insert(keyList, keybinds:newKeybind(LanguageClass.getTranslate("key__afk_check").."_"..index, keybinds:getVanillaKey(keyName)))
 	end
 end
 
