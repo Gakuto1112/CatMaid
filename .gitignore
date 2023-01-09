@@ -3,3 +3,5 @@ README_Images/テクスチャ枠線.pbx
 README_Images/テクスチャ説明.xlsx
 ApplyDataToAllAvatars.py
 __pycache__
+avatar.code-workspace
+.luarc.json

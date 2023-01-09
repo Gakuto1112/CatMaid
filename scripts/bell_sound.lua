@@ -1,5 +1,4 @@
 ---@class BellSoundClass 鈴の音を制御するクラス
----@field JumpKey Keybind ジャンプボタン（ジャンプ時に鈴を鳴らす用）
 ---@field BellSoundClass.BellSoundClass number 鈴の音量
 ---@field WalkDistance number 鈴を鳴らす用の歩いた距離
 ---@field VelocityYData table ジャンプしたかどうかを判定する為にy方向の速度を格納するテーブル
@@ -7,11 +6,15 @@
 
 BellSoundClass = {}
 
-JumpKey = keybinds:newKeybind(LanguageClass.getTranslate("key__jump"), keybinds:getVanillaKey("key.jump"))
 BellSoundClass.BellVolume = ConfigClass.loadConfig("bellVolume", 0.1)
 WalkDistance = 0
 VelocityYData = {}
 OnGroundData = {}
+
+--ping関数
+function pings.jumpBellSound()
+	BellSoundClass.playBellSound()
+end
 
 ---プレイヤーの位置で鈴の音を再生する。
 function BellSoundClass.playBellSound()
@@ -46,8 +49,8 @@ events.TICK:register(function()
 			table.remove(dataTable, 1)
 		end
 	end
-	if JumpKey:isPressed() and OnGroundData[1] and velocity.y > 0 and VelocityYData[1] <= 0 then
-		BellSoundClass.playBellSound()
+	if host:isJumping() and OnGroundData[1] and velocity.y > 0 and VelocityYData[1] <= 0 then
+		pings.jumpBellSound()
 	end
 end)
 

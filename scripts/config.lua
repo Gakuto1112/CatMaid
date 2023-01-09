@@ -48,7 +48,7 @@ end
 ---@param hideArmor boolean 防具を隠すかどうか
 ---@param autoShake boolean 自動ブルブル
 ---@param AFKAction boolean AFKアクション
-function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideArmor, autoShake, AFKAction)
+function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideArmor, autoShake, AFKAction, wardenNearby)
 	if not IsSynced then
 		TailAndEarsClass.setCatType(catType)
 		BellSoundClass.BellVolume = bellVolume
@@ -57,12 +57,13 @@ function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideAr
 		ArmorClass.HideArmor = hideArmor
 		WetClass.AutoShake = autoShake
 		AFKClass.AFKAction = AFKAction
+		WardenClass.WardenNearby = wardenNearby
 	end
 end
 
 events.TICK:register(function ()
 	if NextSyncCount == 0 then
-		pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.HideArmor, WetClass.AutoShake, AFKClass.AFKAction)
+		pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.HideArmor, WetClass.AutoShake, AFKClass.AFKAction, WardenClass.WardenNearby)
 		NextSyncCount = 300
 	else
 		NextSyncCount = NextSyncCount - 1

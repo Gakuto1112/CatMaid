@@ -17,26 +17,33 @@ FirstPersonData = {}
 AttackCount = 0
 WardenClass.WardenNearby = false
 
-AttackKey.onPress = function()
+AttackKey:onPress(function()
 	local leftHanded = player:isLeftHanded()
 	if not action_wheel:isEnabled() and WardenClass.WardenNearby and ((General.hasItem(player:getHeldItem(leftHanded)) == "none" and not leftHanded) or (General.hasItem(player:getHeldItem(not leftHanded)) == "none" and leftHanded)) then
 		pings.attack()
 	end
-end
+end)
 
 --ping関数
+function pings.setWardenNearby(newValue)
+	WardenClass.WardenNearby = newValue
+end
+
 function pings.attack()
 	AttackCount = 6
 end
 
 events.TICK:register(function()
-	WardenClass.WardenNearby = General.getStatusEffect("darkness") and true or false
+	if host:isHost() then
+		WardenClass.WardenNearby = General.getStatusEffect("darkness") and true or false
+	end
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
 	local firstPerson = renderer:isFirstPerson()
 	if WardenClass.WardenNearby then
 		if not WardenNearbyData[1] then
+			pings.setWardenNearby(true)
 			General.setAnimations("PLAY", "afraid")
 		end
 		if General.isTired then
@@ -64,6 +71,9 @@ events.TICK:register(function()
 			General.setParentTypeWithArmor("LEFT", "LeftArm")
 		end
 	else
+		if WardenNearbyData[1] then
+			pings.setWardenNearby(false)
+		end
 		General.setAnimations("STOP", "afraid")
 		General.setAnimations("STOP", "right_hide_bell")
 		General.setAnimations("STOP", "left_hide_bell")

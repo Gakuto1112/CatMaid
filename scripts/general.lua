@@ -44,7 +44,7 @@ end
 ---@param name string ステータス効果
 ---@return table|nil
 function General.getStatusEffect(name)
-	for _, effect in ipairs(player:getStatusEffects()) do
+	for _, effect in ipairs(host:getStatusEffects()) do
 		if effect.name == "effect.minecraft."..name then
 			return effect
 		end

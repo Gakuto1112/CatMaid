@@ -50,7 +50,6 @@ LanguageData = {
 		action_wheel__config__action_5__title = "Hide armor: ",
 		action_wheel__config__action_6__title = "Auto shake: ",
 		action_wheel__config__action_7__title = "AFK action: ",
-		key__jump = "Jump",
 		key__attack = "Attack",
 		key__afk_check = "for AFK check"
 	},
@@ -99,7 +98,6 @@ LanguageData = {
 		action_wheel__config__action_5__title = "防具を隠す：",
 		action_wheel__config__action_6__title = "自動ブルブル：",
 		action_wheel__config__action_7__title = "AFKアクション：",
-		key__jump = "ジャンプ",
 		key__attack = "攻撃",
 		key__afk_check = "AFK復帰判定用"
 	}

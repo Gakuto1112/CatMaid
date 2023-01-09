@@ -3,7 +3,7 @@
 EffectClass = {}
 
 events.TICK:register(function()
-	for _, effect in ipairs(player:getStatusEffects()) do
+	for _, effect in ipairs(host:getStatusEffects()) do
 		local splitTable = {}
 		for matchString in string.gmatch(effect.name, "([^\\.]+)") do
 			table.insert(splitTable, matchString)
