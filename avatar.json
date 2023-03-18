@@ -1,7 +1,8 @@
 {
 	"name": "Cat Maid",
+	"description": "A cat that looks like a human maid. Can only speak meow.",
 	"author": "Gakuto1112",
-	"version": "0.1.0-rc.13",
+	"version": "0.1.0-rc.14",
 	"color": "ff9494",
 	"autoScripts": [
 		"scripts/main.lua"

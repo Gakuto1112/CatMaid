@@ -45,7 +45,7 @@ end
 ---アクションを実行する。ウォーデンが近くにいる時は拒否アクションを実行する。
 ---@param action function 実行するアクションの関数
 ---@param actionCancelFunction function アクションのキャンセル処理の関数
----@param ignoreCooldown boolean アニメーションのクールダウンを無視するかどうか
+---@param ignoreCooldown boolean? アニメーションのクールダウンを無視するかどうか
 function runAction(action, actionCancelFunction, ignoreCooldown)
 	if ActionWheelClass.ActionCount == 0 or ignoreCooldown then
 		if WardenClass.WardenNearby then
@@ -619,7 +619,7 @@ end)
 --アクション8（共通）. ページ切り替え
 for _, mainPage in ipairs(MainPages) do
 	mainPage:newAction(8):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("arrow"):onScroll(function(direction)
-		CurrentMainPage = CurrentMainPage - direction
+		CurrentMainPage = CurrentMainPage - (direction > 0 and 1 or (direction < 0 and -1 or 0))
 		CurrentMainPage = CurrentMainPage < 1 and CurrentMainPage + #MainPages or (CurrentMainPage > #MainPages and CurrentMainPage - #MainPages or CurrentMainPage)
 		action_wheel:setPage(MainPages[CurrentMainPage])
 	end)
@@ -628,7 +628,7 @@ end
 --アバターの設定のアクション設定
 --アクション1. ネコの種類の設定
 ConfigPage:newAction(1):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("ocelot_spawn_egg"):onScroll(function(direction)
-	if direction == -1 then
+	if direction < 0 then
 		CatType = CatType == #TailAndEarsClass.CatTypeID and 1 or CatType + 1
 	else
 		CatType = CatType == 1 and #TailAndEarsClass.CatTypeID or CatType - 1
@@ -638,7 +638,7 @@ end)
 
 --アクション2. 鈴の音量
 ConfigPage:newAction(2):color(200 / 255, 200 / 255, 200 / 255):hoverColor(1, 1, 1):item("bell"):onScroll(function(direction)
-	if direction == -1 then
+	if direction < 0 then
 		BellVolume = BellVolume > 0.95 and 1 or BellVolume + 0.05
 	else
 		BellVolume = BellVolume < 0.05 and 0 or BellVolume - 0.05

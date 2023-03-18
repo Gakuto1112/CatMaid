@@ -22,17 +22,22 @@ MeowCount = 0
 ---@param soundName MeowName 再生する音声名
 ---@param volume number 音量。0から1。
 function MeowClass.playMeow(soundName, volume)
+	if host:getAir() > 0 or General.getStatusEffect("water_breathing") then
+		pings.meow(soundName, volume)
+	end
+end
+
+--ping関数
+function pings.meow(soundName, volume)
 	local playerPos = player:getPos()
-	if player:getAir() > 0 or General.getStatusEffect("water_breathing") then
-		if player:isUnderwater() then
-			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
-			sounds:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
-			for _ = 1, 4 do
-				particles:newParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
-			end
-		else
-			sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])
+	if player:isUnderwater() then
+		sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume * 0.2, MeowNameID[soundName]["pitch"])
+		sounds:playSound("block.bubble_column.upwards_ambient", playerPos, 1, 1)
+		for _ = 1, 4 do
+			particles:newParticle("minecraft:bubble_column_up", playerPos.x, playerPos.y + 1.5, playerPos.z)
 		end
+	else
+		sounds:playSound(MeowNameID[soundName]["name"], playerPos, volume, MeowNameID[soundName]["pitch"])
 	end
 end
 
