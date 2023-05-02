@@ -54,7 +54,7 @@ end
 
 --防具モデルと同時に描画タイプを変更する。
 ---@param armType ArmType 右腕か左腕か
----@param parentType ParentTypes 描画タイプ
+---@param parentType ModelPart.parentType 描画タイプ
 function General.setParentTypeWithArmor(armType, parentType)
 	local arm = armType == "LEFT" and "LeftArm" or "RightArm"
 	for _, modelPart in ipairs({models.models.main.Avatar.Body.Arms[arm], models.models.armor.Avatar.Body.Arms[arm]}) do

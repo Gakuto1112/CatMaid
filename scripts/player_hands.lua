@@ -1,5 +1,5 @@
 ---@class PlayerHandsClass アクション用のプレイヤーの腕を制御するクラス
----@field PlayerHandsRoot CustomModelPart プレイヤーの手のモデルのルート
+---@field PlayerHandsRoot ModelPart プレイヤーの手のモデルのルート
 
 PlayerHandsClass = {}
 
@@ -32,7 +32,7 @@ events.TICK:register(function()
 	end
 end)
 
-PlayerHandsRoot:setPrimaryTexture("skin")
+PlayerHandsRoot:setPrimaryTexture("SKIN")
 for _, modelPart in ipairs({PlayerHandsRoot.Avatar.Head.PlayerHand1, PlayerHandsRoot.Avatar.Body.Tail.Tail1.Tail2.PlayerHand2}) do
 	modelPart:setVisible(false)
 end

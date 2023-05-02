@@ -1,6 +1,6 @@
 ---@class WetClass 濡れ機能を制御するクラス
 ---@field WetCount integer 濡れの度合いを計るカウンター
----@field WetClass.AutoShake 自動ブルブルが有効かどうか
+---@field AutoShake boolean 自動ブルブルが有効かどうか
 ---@field AutoShakeCount integer 自動ブルブルまでの時間を計るカウンター
 
 WetClass = {}

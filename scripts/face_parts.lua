@@ -1,6 +1,6 @@
 ---@class FacePartsClass 目と口を制御するクラス
----@field RightEyeLight CustomModelPart 右目の光る部分
----@field LeftEyeLight CustomModelPart 左目の光る部分
+---@field RightEyeLight ModelPart 右目の光る部分
+---@field LeftEyeLight ModelPart 左目の光る部分
 ---@field EyeTypeID table EyeTypeとIDを紐付けるテーブル
 ---@field MouthTypeID table MouthTypeとIDを紐付けるテーブル
 ---@field ComplexionTypeID table ComplexionTypeとIDを紐付けるテーブル

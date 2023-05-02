@@ -1,6 +1,6 @@
 ---@class HairPhysicsClass 髪を制御するクラス
----@field FrontHair CustomModelPart 前髪
----@field BackHair CustomModelPart 後ろ髪
+---@field FrontHair ModelPart 前髪
+---@field BackHair ModelPart 後ろ髪
 ---@field HairRenderCount integer 髪の物理演算を計算した回数、上限計算に用いる。
 ---@field HairRenderLimit integer Renderの命令数上限に対する、髪の物理演算の頻度の係数
 ---@field VelocityData table 速度データ：1. 横, 2. 縦, 3. 角速度
