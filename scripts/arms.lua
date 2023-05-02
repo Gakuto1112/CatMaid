@@ -1,12 +1,13 @@
 ---@class 腕を制御するクラス
----@field ArmsClass.isSneaking boolean スニークしていて、腕の補正が必要かどうかを返す。
+---@field isSneaking boolean スニークしていて、腕の補正が必要かどうかを返す。
+---@field Flying boolean クリエイティブ飛行のフラグ
 
 ArmsClass = {}
 
 ArmsClass.isSneaking = false
 
 events.TICK:register(function()
-	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not player:isFlying() and not renderer:isFirstPerson()
+	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not General.Flying and not renderer:isFirstPerson()
 	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
 	if ArmsClass.isSneaking then

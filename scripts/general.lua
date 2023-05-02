@@ -11,7 +11,9 @@
 
 General = {}
 
-General.isTired = false;
+General.isTired = false
+General.Flying = false
+
 
 ---渡されたlistの中にkeyが存在するかどうか返す
 ---@param list table keyを探すリスト
@@ -90,7 +92,22 @@ function General.setAnimations(animationState, animationName)
 	end
 end
 
+--ping関数
+--ping関数
+---クリエイティブ飛行のフラグを設定する。
+---@param flying boolean 新たに設定する値
+function pings.setFlying(flying)
+	General.Flying = flying
+end
+
 events.TICK:register(function()
+	if host:isHost() then
+		---@diagnostic disable-next-line: undefined-field
+		local flying = host:isFlying()
+		if flying ~= General.Flying then
+			pings.setFlying(flying)
+		end
+	end
 	local gamemode = player:getGamemode()
 	General.isTired = (player:getHealth() / player:getMaxHealth() <= 0.2 or player:getFood() <= 6 or player:getFrozenTicks() == 140) and (gamemode == "SURVIVAL" or gamemode == "ADVENTURE")
 end)
