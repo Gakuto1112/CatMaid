@@ -59,7 +59,7 @@ end
 ---@param parentType ModelPart.parentType 描画タイプ
 function General.setParentTypeWithArmor(armType, parentType)
 	local arm = armType == "LEFT" and "LeftArm" or "RightArm"
-	for _, modelPart in ipairs({models.models.main.Avatar.Body.Arms[arm], models.models.armor.Avatar.Body.Arms[arm]}) do
+	for _, modelPart in ipairs({models.models.main.Avatar.Torso.Arms[arm], models.models.armor.Avatar.Body.Arms[arm]}) do
 		modelPart:setParentType(parentType)
 	end
 end

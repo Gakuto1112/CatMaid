@@ -3,8 +3,8 @@
 LegsClass = {}
 
 events.TICK:register(function ()
-	local rightLeg = models.models.main.Avatar.Body.BodyBottom.Legs.RightLeg
-	local leftLeg = models.models.main.Avatar.Body.BodyBottom.Legs.LeftLeg
+	local rightLeg = models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg
+	local leftLeg = models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg
 	if ArmsClass.isSneaking then
 		for _, armPart in ipairs({rightLeg, leftLeg}) do
 			armPart:setPos(0, 4, -4)

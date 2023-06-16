@@ -68,16 +68,16 @@ end
 ---腕の防具を設定する。腕が表示されているかどうかも考慮される。
 ---@param armorEnabled  boolean 防具を表示するかどうか
 function setArmArmor(armorEnabled)
-	models.models.armor.Avatar.Body.Arms.RightArm:setVisible(models.models.main.Avatar.Body.Arms.RightArm:getVisible() and armorEnabled)
-	models.models.armor.Avatar.Body.Arms.LeftArm:setVisible(models.models.main.Avatar.Body.Arms.LeftArm:getVisible() and armorEnabled)
-	if models.models.main.Avatar.Body.Arms.RightArm:getVisible() and armorEnabled then
+	models.models.armor.Avatar.Body.Arms.RightArm:setVisible(models.models.main.Avatar.Torso.Arms.RightArm:getVisible() and armorEnabled)
+	models.models.armor.Avatar.Body.Arms.LeftArm:setVisible(models.models.main.Avatar.Torso.Arms.LeftArm:getVisible() and armorEnabled)
+	if models.models.main.Avatar.Torso.Arms.RightArm:getVisible() and armorEnabled then
 		models.models.armor.Avatar.Body.Arms.RightArm.RightChestplate:setVisible(true)
 		models.models.armor.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(true)
 	else
 		models.models.armor.Avatar.Body.Arms.RightArm.RightChestplate:setVisible(false)
 		models.models.armor.Avatar.Body.Arms.RightArm.RightArmBottom.RightChestplateBottom:setVisible(false)
 	end
-	if models.models.main.Avatar.Body.Arms.LeftArm:getVisible() and armorEnabled then
+	if models.models.main.Avatar.Torso.Arms.LeftArm:getVisible() and armorEnabled then
 		models.models.armor.Avatar.Body.Arms.LeftArm.LeftChestplate:setVisible(true)
 		models.models.armor.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftChestplateBottom:setVisible(true)
 	else

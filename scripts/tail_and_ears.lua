@@ -41,8 +41,8 @@ events.TICK:register(function()
 	end
 	--尻尾
 	local gamemode = player:getGamemode()
-	local tail1 = {models.models.main.Avatar.Body.BodyBottom.Tail, models.models.player_hands.Avatar.Body.Tail}
-	local tail2 = {models.models.main.Avatar.Body.BodyBottom.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
+	local tail1 = {models.models.main.Avatar.Torso.Body.BodyBottom.Tail, models.models.player_hands.Avatar.Body.Tail}
+	local tail2 = {models.models.main.Avatar.Torso.Body.BodyBottom.Tail.Tail1.Tail2, models.models.player_hands.Avatar.Body.Tail.Tail1.Tail2}
 	if condition == 2 or player:getPose() == "SLEEPING" or animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" or gamemode == "CREATIVE" or gamemode == "SPECTATOR" then
 		for _, modelPart in ipairs(tail1) do
 			modelPart:setRot(0, 0, 0)

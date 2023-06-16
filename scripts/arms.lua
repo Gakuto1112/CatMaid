@@ -8,8 +8,8 @@ ArmsClass.isSneaking = false
 
 events.TICK:register(function()
 	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not General.Flying and not renderer:isFirstPerson()
-	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
-	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
+	local rightArm = models.models.main.Avatar.Torso.Arms.RightArm
+	local leftArm = models.models.main.Avatar.Torso.Arms.LeftArm
 	if ArmsClass.isSneaking then
 		for _, armPart in ipairs({rightArm, leftArm}) do
 			armPart:setPos(0, 3, 0)
@@ -25,8 +25,8 @@ end)
 
 events.RENDER:register(function ()
 	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and player:isUsingItem() then
-		local rightArm = models.models.main.Avatar.Body.Arms.RightArm
-		local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
+		local rightArm = models.models.main.Avatar.Torso.Arms.RightArm
+		local leftArm = models.models.main.Avatar.Torso.Arms.LeftArm
 		local activeHand = player:getActiveHand()
 		local leftHanded = player:isLeftHanded()
 		local adjustArmItemList = {"minecraft:bow", "minecraft:crossbow", "minecraft:trident", "minecraft:shield", "minecraft:spyglass"}

@@ -5,9 +5,9 @@
 
 SummerFeatureClass = {}
 
-ChangeUVList = {models.models.main.Avatar.Body.Body, models.models.main.Avatar.Body.BodyLayer, models.models.main.Avatar.Body.BodyBottom.BodyBottom, models.models.main.Avatar.Body.BodyBottom.BodyBottomLayer, models.models.main.Avatar.Body.Arms.RightArm.RightArm, models.models.main.Avatar.Body.Arms.RightArm.RightArmLayer, models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom.RightArmBottom, models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom.RightArmBottomLayer, models.models.main.Avatar.Body.Arms.LeftArm.LeftArm, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmLayer, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottom, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom.LeftArmBottomLayer, models.models.main.Avatar.Body.BodyBottom.Legs.RightLeg, models.models.main.Avatar.Body.BodyBottom.Legs.LeftLeg}
-HiddenPartList = {models.models.main.Avatar.Body.BodyBottom.Skirt.Apron, models.models.main.Avatar.Body.BodyBottom.Skirt.BackRibbon, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt3, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt3Layer}
-BikineSkirtList = {models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt1, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt1Layer, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt2, models.models.main.Avatar.Body.BodyBottom.Skirt.Skirt2Layer}
+ChangeUVList = {models.models.main.Avatar.Torso.Body.Body, models.models.main.Avatar.Torso.Body.BodyLayer, models.models.main.Avatar.Torso.Body.BodyBottom.BodyBottom, models.models.main.Avatar.Torso.Body.BodyBottom.BodyBottomLayer, models.models.main.Avatar.Torso.Arms.RightArm.RightArm, models.models.main.Avatar.Torso.Arms.RightArm.RightArmLayer, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.RightArmBottom, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.RightArmBottomLayer, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArm, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmLayer, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.LeftArmBottom, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.LeftArmBottomLayer, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg}
+HiddenPartList = {models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Apron, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.BackRibbon, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt3, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt3Layer}
+BikineSkirtList = {models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt1, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt1Layer, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt2, models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.Skirt2Layer}
 SummerFeatureClass.SummerFeature = false
 
 ---夏機能の設定
@@ -19,7 +19,7 @@ function SummerFeatureClass.setSummerFeature(value)
 	for _, modelPart in ipairs(HiddenPartList) do
 		modelPart:setVisible(not value)
 	end
-	models.models.main.Avatar.Body.BodyBottom.Skirt:setPos(0, value and -2 or 0, 0)
+	models.models.main.Avatar.Torso.Body.BodyBottom.Skirt:setPos(0, value and -2 or 0, 0)
 	if value then
 		BikineSkirtList[1]:setUVPixels(84, 0)
 		BikineSkirtList[2]:setUVPixels(72, 0)

@@ -10,9 +10,9 @@
 
 HairPhysicsClass = {}
 
-FrontHair = models.models.main.Avatar.Body.Hairs.FrontHair
-BackHair = models.models.main.Avatar.Body.Hairs.BackHair
-RibbonLine = models.models.main.Avatar.Body.BodyBottom.Skirt.BackRibbon.RibbonLine
+FrontHair = models.models.main.Avatar.Torso.Body.Hairs.FrontHair
+BackHair = models.models.main.Avatar.Torso.Body.Hairs.BackHair
+RibbonLine = models.models.main.Avatar.Torso.Body.BodyBottom.Skirt.BackRibbon.RibbonLine
 HairRenderCount = 0
 HairRenderLimit = math.ceil(8192 / avatar:getMaxWorldRenderCount())
 VelocityData = {{}, {}, {}}

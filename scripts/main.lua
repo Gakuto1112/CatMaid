@@ -36,7 +36,7 @@ events.ENTITY_INIT:register(function ()
 	for _, vanillaModel in ipairs({vanilla_model.PLAYER, vanilla_model.ARMOR}) do
 		vanillaModel:setVisible(false)
 	end
-	for _, modelPart in ipairs({models.models.main.Avatar.Body.BodyBottom, models.models.main.Avatar.Body.Arms.RightArm.RightArmBottom, models.models.main.Avatar.Body.Arms.LeftArm.LeftArmBottom, models.models.main.Avatar.Body.BodyBottom.Legs.RightLeg.RightLegBottom, models.models.main.Avatar.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom}) do
+	for _, modelPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom}) do
 		modelPart:setParentType("None")
 	end
 end)

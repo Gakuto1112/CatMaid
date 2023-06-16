@@ -9,8 +9,8 @@ SleepCount = 0
 
 events.TICK:register(function()
 	local head = models.models.main.Avatar.Head
-	local rightArm = models.models.main.Avatar.Body.Arms.RightArm
-	local leftArm = models.models.main.Avatar.Body.Arms.LeftArm
+	local rightArm = models.models.main.Avatar.Torso.Arms.RightArm
+	local leftArm = models.models.main.Avatar.Torso.Arms.LeftArm
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(leftHanded))
