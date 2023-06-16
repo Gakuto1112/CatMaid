@@ -58,10 +58,7 @@ end
 ---@param armType ArmType 右腕か左腕か
 ---@param parentType ModelPart.parentType 描画タイプ
 function General.setParentTypeWithArmor(armType, parentType)
-	local arm = armType == "LEFT" and "LeftArm" or "RightArm"
-	for _, modelPart in ipairs({models.models.main.Avatar.Torso.Arms[arm], models.models.armor.Avatar.Body.Arms[arm]}) do
-		modelPart:setParentType(parentType)
-	end
+	models.models.main.Avatar.Torso.Arms[armType == "RIGHT" and "RightArm" or "LeftArm"]:setParentType(parentType)
 end
 
 --複数のモデルファイルのアニメーションを同時に制御する。
