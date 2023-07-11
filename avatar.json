@@ -2,7 +2,7 @@
 	"name": "Cat Maid",
 	"description": "A cat that looks like a human maid. Can only speak meow.",
 	"author": "Gakuto1112",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"color": "ff9494",
 	"ignoredTextures": [
 		"textures.for_modeling.leather_layer_1",
@@ -18,133 +18,133 @@
 		"scripts/main.lua"
 	],
 	"customizations": {
-		"models.armor.ArmorH": {
-			"moveTo": "models.main.Avatar.Head",
+		"models.models.armor.ArmorH": {
+			"moveTo": "models.models.main.Avatar.Head",
 			"visible": false
 		},
-		"models.armor.ArmorH.Helmet.HelmetTrim": {
+		"models.models.armor.ArmorH.Helmet.HelmetTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorB": {
-			"moveTo": "models.main.Avatar.Torso.Body"
+		"models.models.armor.ArmorB": {
+			"moveTo": "models.models.main.Avatar.Torso.Body"
 		},
-		"models.armor.ArmorB.Chestplate": {
+		"models.models.armor.ArmorB.Chestplate": {
 			"visible": false
 		},
-		"models.armor.ArmorB.Chestplate.ChestplateTrim": {
+		"models.models.armor.ArmorB.Chestplate.ChestplateTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorB.Leggings": {
+		"models.models.armor.ArmorB.Leggings": {
 			"visible": false
 		},
-		"models.armor.ArmorB.Leggings.LeggingsTrim": {
+		"models.models.armor.ArmorB.Leggings.LeggingsTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRA": {
-			"moveTo": "models.main.Avatar.Torso.Arms.RightArm",
+		"models.models.armor.ArmorRA": {
+			"moveTo": "models.models.main.Avatar.Torso.Arms.RightArm",
 			"visible": false
 		},
-		"models.armor.ArmorRA.RightChestplate.RightChestplateTrim": {
+		"models.models.armor.ArmorRA.RightChestplate.RightChestplateTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRAB": {
-			"moveTo": "models.main.Avatar.Torso.Arms.RightArm.RightArmBottom",
+		"models.models.armor.ArmorRAB": {
+			"moveTo": "models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom",
 			"visible": false
 		},
-		"models.armor.ArmorRAB.RightChestplateBottom.RightChestplateBottomTrim": {
+		"models.models.armor.ArmorRAB.RightChestplateBottom.RightChestplateBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLA": {
-			"moveTo": "models.main.Avatar.Torso.Arms.LeftArm",
+		"models.models.armor.ArmorLA": {
+			"moveTo": "models.models.main.Avatar.Torso.Arms.LeftArm",
 			"visible": false
 		},
-		"models.armor.ArmorLA.LeftChestplate.LeftChestplateTrim": {
+		"models.models.armor.ArmorLA.LeftChestplate.LeftChestplateTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLAB": {
-			"moveTo": "models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom",
+		"models.models.armor.ArmorLAB": {
+			"moveTo": "models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom",
 			"visible": false
 		},
-		"models.armor.ArmorLAB.LeftChestplateBottom.LeftChestplateBottomTrim": {
+		"models.models.armor.ArmorLAB.LeftChestplateBottom.LeftChestplateBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorBB": {
-			"moveTo": "models.main.Avatar.Torso.Body.BodyBottom"
+		"models.models.armor.ArmorBB": {
+			"moveTo": "models.models.main.Avatar.Torso.Body.BodyBottom"
 		},
-		"models.armor.ArmorBB.ChestplateBottom": {
+		"models.models.armor.ArmorBB.ChestplateBottom": {
 			"visible": false
 		},
-		"models.armor.ArmorBB.ChestplateBottom.ChestplateBottomTrim": {
+		"models.models.armor.ArmorBB.ChestplateBottom.ChestplateBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorBB.LeggingsBottom": {
+		"models.models.armor.ArmorBB.LeggingsBottom": {
 			"visible": false
 		},
-		"models.armor.ArmorBB.LeggingsBottom.LeggingsBottomTrim": {
+		"models.models.armor.ArmorBB.LeggingsBottom.LeggingsBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRL": {
-			"moveTo": "models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg"
+		"models.models.armor.ArmorRL": {
+			"moveTo": "models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg"
 		},
-		"models.armor.ArmorRL.RightLeggings": {
+		"models.models.armor.ArmorRL.RightLeggings": {
 			"visible": false,
 			"parentType": "None"
 		},
-		"models.armor.ArmorRL.RightLeggings.RightLeggingsTrim": {
+		"models.models.armor.ArmorRL.RightLeggings.RightLeggingsTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRL.RightBoots": {
+		"models.models.armor.ArmorRL.RightBoots": {
 			"visible": false
 		},
-		"models.armor.ArmorRL.RightBoots.RightBootsTrim": {
+		"models.models.armor.ArmorRL.RightBoots.RightBootsTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRLB": {
-			"moveTo": "models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom"
+		"models.models.armor.ArmorRLB": {
+			"moveTo": "models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom"
 		},
-		"models.armor.ArmorRLB.RightLeggingsBottom": {
+		"models.models.armor.ArmorRLB.RightLeggingsBottom": {
 			"visible": false,
 			"parentType": "None"
 		},
-		"models.armor.ArmorRLB.RightLeggingsBottom.RightLeggingsBottomTrim": {
+		"models.models.armor.ArmorRLB.RightLeggingsBottom.RightLeggingsBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorRLB.RightBootsBottom": {
+		"models.models.armor.ArmorRLB.RightBootsBottom": {
 			"visible": false
 		},
-		"models.armor.ArmorRLB.RightBootsBottom.RightBootsBottomTrim": {
+		"models.models.armor.ArmorRLB.RightBootsBottom.RightBootsBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLL": {
-			"moveTo": "models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg"
+		"models.models.armor.ArmorLL": {
+			"moveTo": "models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg"
 		},
-		"models.armor.ArmorLL.LeftLeggings": {
+		"models.models.armor.ArmorLL.LeftLeggings": {
 			"visible": false,
 			"parentType": "None"
 		},
-		"models.armor.ArmorLL.LeftLeggings.LeftLeggingsTrim": {
+		"models.models.armor.ArmorLL.LeftLeggings.LeftLeggingsTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLL.LeftBoots": {
+		"models.models.armor.ArmorLL.LeftBoots": {
 			"visible": false
 		},
-		"models.armor.ArmorLL.LeftBoots.LeftBootsTrim": {
+		"models.models.armor.ArmorLL.LeftBoots.LeftBootsTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLLB": {
-			"moveTo": "models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom"
+		"models.models.armor.ArmorLLB": {
+			"moveTo": "models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom"
 		},
-		"models.armor.ArmorLLB.LeftLeggingsBottom": {
+		"models.models.armor.ArmorLLB.LeftLeggingsBottom": {
 			"visible": false,
 			"parentType": "None"
 		},
-		"models.armor.ArmorLLB.LeftLeggingsBottom.LeftLeggingsBottomTrim": {
+		"models.models.armor.ArmorLLB.LeftLeggingsBottom.LeftLeggingsBottomTrim": {
 			"visible": false
 		},
-		"models.armor.ArmorLLB.LeftBootsBottom": {
+		"models.models.armor.ArmorLLB.LeftBootsBottom": {
 			"visible": false
 		},
-		"models.armor.ArmorLLB.LeftBootsBottom.LeftBootsBottomTrim": {
+		"models.models.armor.ArmorLLB.LeftBootsBottom.LeftBootsBottomTrim": {
 			"visible": false
 		}
 	}
