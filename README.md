@@ -2,7 +2,7 @@
 
 MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けスキン「CatMaid（猫メイド）」です。
 
-対応Figuraバージョン：[**0.1.0**](https://modrinth.com/mod/figura/version/0.1.0+1.20)
+対応Figuraバージョン：[**0.1.1**](https://modrinth.com/mod/figura/version/0.1.1+1.20.1)
 
 ![メイン画像](README_Images/メイン.jpg)
 
@@ -215,7 +215,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ![居眠り](README_Images/居眠り.gif)
 
 ## 使用方法
-1. マインクラフトに[Fabric](https://fabricmc.net/)をインストールし、[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)と[Figura 0.1.0](https://modrinth.com/mod/figura/version/0.1.0+1.20)を追加します。各Modの依存関係にご注意ください。
+1. マインクラフトに[Fabric](https://fabricmc.net/)をインストールし、[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)と[Figura 0.1.1](https://modrinth.com/mod/figura/version/0.1.1+1.20.1)を追加します。各Modの依存関係にご注意ください。
 2. ページ上部の緑色のボタン「**Code**」から「**Download ZIP**」からこのレポジトリのファイルをダウンロードします。（または、このレポジトリをクローンします。）
 3. 圧縮ファイルの場合は展開します。
    - 以下のファイル、フォルダはアバターの動作には不要なので削除しても構いません。
