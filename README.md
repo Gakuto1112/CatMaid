@@ -227,13 +227,6 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 1. マインクラフトに[Fabric](https://fabricmc.net/)をインストールし、[Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)と[Figura 0.1.1](https://modrinth.com/mod/figura/version/0.1.1+1.20.1-0f8b7a9)を追加します。各Modの依存関係にご注意ください。
 2. ページ上部の緑色のボタン「**Code**」から「**Download ZIP**」からこのレポジトリのファイルをダウンロードします。（または、このレポジトリをクローンします。）
 3. 圧縮ファイルの場合は展開します。
-   - 以下のファイル、フォルダはアバターの動作には不要なので削除しても構いません。
-     - [README_Images](README_Images/)
-     - [sample_skins](sample_skins/)
-     - [.gitignore](.gitignore)
-     - [BBmodelBeautifier.py](BBmodelBeautifier.py)
-     - [README.md](README.md)
-     - [TextureInjector.py](TextureInjector.py)
 4. ``<マインクラフトのゲームフォルダ>/figura/avatars/``にアバターのデータを配置します。
    - フォルダはFiguraを追加したマインクラフトを一度起動すると自動的に生成されます。ない場合は手動で作成しても構いません。
 5. ゲームメニューからFiguraメニュー（Δマーク）を開き、画面左のアバターリストから「Cat Maid」を選択します。
