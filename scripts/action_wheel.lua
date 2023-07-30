@@ -387,11 +387,11 @@ function pings.config_action4_untoggle()
 end
 
 function pings.config_action5_toggle()
-	ArmorClass.HideArmor = true
+	ArmorClass.ShowArmor = true
 end
 
 function pings.config_action5_untoggle()
-	ArmorClass.HideArmor = false
+	ArmorClass.ShowArmor = false
 end
 
 function pings.config_action6_toggle()

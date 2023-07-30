@@ -55,7 +55,7 @@ function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideAr
 		BellSoundClass.BellVolume = bellVolume
 		MeowClass.MeowSound = meowSound
 		General.setAnimations(waveTail and "PLAY" or "STOP", "wave_tail")
-		ArmorClass.HideArmor = hideArmor
+		ArmorClass.ShowArmor = hideArmor
 		WetClass.AutoShake = autoShake
 		AFKClass.AFKAction = AFKAction
 		WardenClass.WardenNearby = wardenNearby
@@ -66,7 +66,7 @@ end
 events.TICK:register(function ()
 	if host:isHost() then
 		if NextSyncCount == 0 then
-			pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.HideArmor, WetClass.AutoShake, AFKClass.AFKAction, WardenClass.WardenNearby, General.Flying)
+			pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.ShowArmor, WetClass.AutoShake, AFKClass.AFKAction, WardenClass.WardenNearby, General.Flying)
 			NextSyncCount = 300
 		else
 			NextSyncCount = NextSyncCount - 1

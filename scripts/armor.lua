@@ -100,6 +100,7 @@ events.TICK:register(function ()
 	end
 
 	local armorSlotItems = not Armor.ShowArmor and {player:getItem(6), player:getItem(5), player:getItem(4), player:getItem(3)} or {world.newItem("minecraft:air"), world.newItem("minecraft:air"), world.newItem("minecraft:air"), world.newItem("minecraft:air")}
+	printTable(armorSlotItems)
 	for index, armorSlotItem in ipairs(armorSlotItems) do
 		if armorSlotItem.id ~= Armor.ArmorSlotItemsPrev[index].id then
 			--防具変更
