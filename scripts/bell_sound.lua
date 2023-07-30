@@ -19,7 +19,8 @@ end
 ---プレイヤーの位置で鈴の音を再生する。
 function BellSoundClass.playBellSound()
 	local playerPos = player:getPos()
-	local volume = WardenClass.WardenNearby and (BellSoundClass.BellVolume / 10) or ((player:getPose() == "CROUCHING" or player:isUnderwater()) and (BellSoundClass.BellVolume / 5) or BellSoundClass.BellVolume)
+	local distance = client:getViewer():getPos():sub(playerPos):length()
+	local volume = (WardenClass.WardenNearby and (BellSoundClass.BellVolume / 10) or ((player:getPose() == "CROUCHING" or player:isUnderwater()) and (BellSoundClass.BellVolume / 5) or BellSoundClass.BellVolume)) * math.max(-0.0625 * distance + 1, 0)
 	if avatar:canUseCustomSounds() then
 		sounds:playSound("sounds.bell", playerPos, volume, 1 + (math.random() * 0.05 - 0.025))
 	else
