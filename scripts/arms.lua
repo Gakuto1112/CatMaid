@@ -10,17 +10,6 @@ events.TICK:register(function()
 	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not General.Flying and not renderer:isFirstPerson()
 	local rightArm = models.models.main.Avatar.Torso.Arms.RightArm
 	local leftArm = models.models.main.Avatar.Torso.Arms.LeftArm
-	if ArmsClass.isSneaking then
-		for _, armPart in ipairs({rightArm, leftArm}) do
-			armPart:setPos(0, 3, 0)
-			armPart:setRot(30, 0, 0)
-		end
-	else
-		for _, armPart in ipairs({rightArm, leftArm}) do
-			armPart:setPos(0, 0, 0)
-			armPart:setRot(0, 0, 0)
-		end
-	end
 end)
 
 events.RENDER:register(function ()
