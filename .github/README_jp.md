@@ -12,11 +12,11 @@ MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けス
   - 耳はたまにアニメーションします。
   - 尻尾は左右に振れます（[アバター設定](#アバター設定)で無効に出来ます）。
 
-	![尻尾を振る](./README_Images/尻尾を振る.gif)
+	![尻尾を振る](./README_Images/wag_tail.gif)
 
   - 尻尾は現在のHP、満腹度に応じて上げ下げされます。
 
-	![尻尾が下がる](./README_Images/尻尾が下がる.jpg)
+	![尻尾が下がる](./README_Images/drop_tail.jpg)
 
 - 時々にゃーにゃー鳴きます。
   - 鳴く時は口が開きます。
@@ -25,68 +25,73 @@ MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けス
   - プレイヤーの利き手に応じてどちらが動くかが変化します。
 - 時々瞬きします。
 - ダメージを受けた時、低HP時、低満腹度時に目が変化します。
+
 - [アクションホイール](#アクションホイール12)でニッコリしたり、ウィンクしたりします。
-  ![ニッコリ](./README_Images/「ニャー」と鳴く（スマイル）.gif)
-  ![スマイル](./README_Images/「ニャー」と鳴く（ウィンク）.gif)
+  ![ニッコリ](./README_Images/smile.gif)
+  ![スマイル](./README_Images/wink.gif)
 
 - 歩いたり、跳んだりすると鈴の音がなります（[アバター設定](#アバター設定)で無効に出来ます）。
   - スニーク時は音量が1/5になります。
+
 - ダメージを受けると「ネコがダメージを受ける」サウンドが再生されます。
+
 - お気に入りの食べ物を手に持つと目がキラキラ光り、食べると満足して「ニャー」と鳴きます。
 
-  ![お気に入りの食べ物](./README_Images/お気に入りの食べ物.gif)
+  ![お気に入りの食べ物](./README_Images/favorite_food.gif)
 
 - 具合が悪かったり、とても食べられないような物を食べると顔を青ざめます。
 
-  ![具合が悪い](./README_Images/具合が悪い.gif)
+  ![具合が悪い](./README_Images/pale.gif)
 
 - 就寝時は猫っぽく寝ます。
   - 就寝時の視点もポーズに合わせて変更されています。
   - 就寝時はゴロゴロ言います。
 
-	![就寝](./README_Images/就寝.jpg)
+	![就寝](./README_Images/sleep.jpg)
 
 - ケーキの持ち方がメイドっぽくなっています。
   - たまにレアなデザインのケーキが出現します。
 
-  ![ケーキを持つ](./README_Images/ケーキを持つ.jpg)
+  ![ケーキを持つ](./README_Images/cake.jpg)
 
 - 水に触れると「ずぶ濡れ」状態になります。
   - 水から上がった時に「ブルブル」アクションをすると体に付いた水滴を飛ばせます。
 
-  ![ずぶ濡れ](./README_Images/ずぶ濡れ.gif)
+  ![ずぶ濡れ](./README_Images/wet.gif)
 
 - ウォーデンが近くにいる（暗闇デバフを受ける）と、怯えて震えます。
   - この状態では、鈴を押さえて音が出ないようにしたり（首を絞めている訳ではないよ！）、エモートを拒否するようになります。
 
-  ![ウォーデンに怯える](./README_Images/ウォーデンに怯える.jpg)
+  ![ウォーデンに怯える](./README_Images/scared_of_warden.jpg)
 
-  ![エモートを拒否する](./README_Images/エモート拒否.gif)
+  ![エモートを拒否する](./README_Images/refuse_animation.gif)
 
 - 放置すると専用アクションを起こします（[アバター設定](#アバター設定)で無効に出来ます）。
   - 30秒おきに鈴をいじります。
 
-  ![鈴をいじる](./README_Images/鈴をいじる.gif)
+  ![鈴をいじる](./README_Images/touch_bell.gif)
 
   - 5分放置すると居眠りします。
 
-  ![うとうと](./README_Images/うとうと.gif)
-  ![居眠り](./README_Images/居眠り.gif)
-  ![AFK復帰](./README_Images/AFK復帰.gif)
+  ![うとうと](./README_Images/doze.gif)
+
+  ![居眠り](./README_Images/doze2.gif)
+
+  ![AFK復帰](./README_Images/afk.gif)
 
 - 暗視が付与されている時は、猫のように目が光ります。
   - 暗視の仕様上、自分自身では目が光るのを確認できません。
   - どうしても確認したい方は、シェーダーパックを使用すると確認出来ます。
 
-  ![目が光る](./README_Images/夜目.jpg)
+  ![目が光る](./README_Images/glow_eyes.jpg)
 
 - プレイヤーが動くと髪がたなびきます。
 
-  ![髪がたなびく](./README_Images/髪がたなびく.gif)
+  ![髪がたなびく](./README_Images/flutter_hair.gif)
 
 - バニラのネコのテクスチャを基にした、複数種類の耳と尻尾のテクスチャを用意しています。[アバター設定](#アバター設定)でお好みのテクスチャに変更出来ます。
 
-  ![色々な尻尾](./README_Images/色々な尻尾.jpg)
+  ![色々な尻尾](./README_Images/various_tails.jpg)
 
 - 夏機能搭載！有効にすると水着姿になります。
   - 夏機能が有効な場合は革の帽子がサマーハットに変化します。
