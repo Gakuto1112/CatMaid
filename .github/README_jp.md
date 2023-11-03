@@ -1,12 +1,11 @@
 言語: 　[English](./README.md)　|　**日本語**
 
-# CatMaid（猫メイド）
-
+# CatMaid (猫メイド)
 MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けスキン「CatMaid（猫メイド）」です。
 
-対応Figuraバージョン：[**0.1.1**](https://modrinth.com/mod/figura/version/0.1.1+1.20.1-0f8b7a9)
+対応Figuraバージョン：[**0.1.1**](https://modrinth.com/mod/figura/version/0.1.1+1.20.1-0f8b7a9)~
 
-![メイン画像](./README_Images/メイン.jpg)
+![メイン画像](./README_Images/main.jpg)
 
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
