@@ -30,9 +30,9 @@ Target Figura versions: [0.1.1](https://modrinth.com/mod/figura/version/0.1.1+1.
 
 - Smiles or winks in [the action wheel](#the-action-wheel).
 
-  ![Smile](./README_Images/smile.gif)
+  ![Smile](./README_Images/action_smile.gif)
 
-  ![Wink](./README_Images/wink.gif)
+  ![Wink](./README_Images/action_wink.gif)
 
 - Players bell sounds when walking and jumping (can be disabled in [avatar settings](#avatar-settings)).
   - The volume of the bell sounds will be reduced to 1/5 when sneaking.
@@ -105,5 +105,75 @@ Target Figura versions: [0.1.1](https://modrinth.com/mod/figura/version/0.1.1+1.
     - Raises the snorkel when out of water.
 
 ## The action wheel
+Figura provides the action wheel with which players can play some actions (emotes, animations, configs, and etc.). It will be shown when holding the action wheel key (default is B key). This avatar also has some actions.
+
+### Page 1
+
+![Action wheel 1](./README_Images/action_wheel_1.jpg)
+
+#### Action 1-1. Smile
+Meows and smiles.
+
+![Smile](./README_Images/action_smile.gif)
+
+#### Action 1-2. Wink
+Meows and winks.
+
+![Wink](./README_Images/action_wink.gif)
+
+#### Action 1-3. Shining eyes
+Meows and shines her eyes.
+
+![Shining eyes](./README_Images/action_shine_eyes.gif)
+
+#### Action 1-4. Unequaled eyes
+Meows and shows unequaled eyes with full of joy.
+
+![Unequaled eyes](./README_Images/action_unequal_eyes.gif)
+
+#### Action 1-5. Surprised
+Surprised and sweats. Right-click to pale.
+
+![Surprised](./README_Images/action_surprised.gif)
+
+#### Action 1-6. Intimidate
+Intimidates against enemies. The hairs on the tail stand on the end. Left-click to intimidate softly, Right-click to intimidate hard.
+
+![Intimidate](./README_Images/action_intimidate.gif)
+
+#### Action 1-7. Downhearted
+Downhearted. Right-click to pale.
+
+![Downhearted](./README_Images/action_downhearted.gif)
+
+### Page 2
+
+![Action wheel 2](./README_Images/action_wheel_2.jpg)
+
+#### Action 2-1. Pat (head)
+You will pat her head (The displayed arm will be your skin).
+
+![Pats head](./README_Images/action_pat_head.gif)
+
+#### Action 2-2. Pat (tails)
+You will pat her tail (The displayed arm will be your skin). This makes her angry because cats hate being touched their tails.
+
+![Pats tail](./README_Images/action_pat_tail.gif)
+
+#### Action 2-3. Sitting down
+Sits down there. She will stand up when playing this action again. She will also stand up when moving, jumping, or sneaking while setting down.
+
+![Shitting down](./README_Images/action_sit_down.jpg)
+
+#### Action 2-4. Body shaking
+Shakes her body. This action can flick water droplets off the body when getting out of water/rain.
+
+![Shaking body](./README_Images/action_body_shaking.gif)
+
+#### Action 2-5. Toggle summer feature
+Toggles summer feature.
+
+#### Action 2-6. Open avatar settings
+Opens [avatar settings](#avatar-settings).
 
 ## Avatar settings
