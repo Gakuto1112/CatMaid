@@ -221,6 +221,62 @@ Figura is available in [Forge](https://files.minecraftforge.net/net/minecraftfor
 9. Sets your permission if you need.
 10. Other Figura players can see your avatar after uploading your avatar to the Figura server.
 
+## Textures
+In this section, I will explain structures of the textures. The skin texture are created based on the vanilla skin, so you can change the skin of the avatar by replacing the texture. Only those directly related to the vanilla skin are explained here.
+
+### main.png
+This is the main texture.
+
+![Main texture](./README_Images/texture_main.jpg)
+
+1. Vanilla skin
+   - Only supports the slim model.
+   - The eyes (and mouth) should be drawn in [eyes.png](#eyespng) and [mouth.png](#mouthspng) separately.
+2. The ribbon to be attached to the tail
+   - It's the same as the ribbon to be attached to the bell.
+3. Bell
+4. Front hair
+5. Back hair
+6. The ribbon on the back
+7. Maid skirt
+8. Over layer of the maid skirt
+9. Swim suit skin for summer feature
+
+### eyes.png
+This texture is for the eyes.
+
+![Eyes texture](./README_Images/texture_eyes.jpg)
+
+- Textures of the eyes and mouth have doubled resolution compared to other textures.
+- It is easier to understand if you divide this texture into 6x6 pixels.
+- The parts are arranged in the following order from top to bottom.
+  - Non-glowing areas of the right eye (eyebrows, etc.)
+  - Glowing areas of the right eye
+  - Non-glowing areas of the left eye (eyebrows, etc.)
+  - Glowing areas of the left eye
+- The eyes are arranged in the following order from left to right.
+  - Normal eyes
+  - Shining eyes
+  - Surprised eyes
+  - Surprised eyes while being weak (low health, saturation)
+  - Intimidated eyes
+  - Intimidated eyes while being weak (low health, saturation)
+  - Downhearted eyes
+  - Downhearted eyes while being weak (low health, saturation)
+  - Weak (low health, saturation) eyes
+  - Sleeping eyes
+  - Closed eyes
+
+### mouths.png
+This texture is for the mouth.
+
+![Mouth texture](./README_Images/texture_mouth.jpg)
+
+- The mouths are arranged in the following order from left to right.
+  - Closed mouth
+  - Opened mouth
+  - Intimidated mouth
+
 ## Notes
 - I'm not responsible for any damages caused by using this avatar.
 - This avatar is designed for work with no resource pack and no other mods are installed. An unexpected issue may occurs when you use it with any resource packs and mods (texture and armor inconsistencies, etc.). However, I won't support in these cases.

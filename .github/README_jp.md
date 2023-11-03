@@ -220,14 +220,14 @@ Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[
 ## テクスチャ
 このアバターのテクスチャは以下の通りです。バニラのスキンをベースに作られているので、テクスチャを書き換えてスキンを変更出来ます。なお、バニラスキンと直接かかわりがあるもののみ説明します。
 
-### [main.png](../textures/main.png)
+### main.png
 アバターのメイン部分となるテクスチャです。
 
-![テクスチャ（メイン）](./README_Images/テクスチャ（メイン）.jpg)
+![テクスチャ（メイン）](./README_Images/texture_main.jpg)
 
 1. バニラスキン
    - スリムモデルのみ対応です。
-   - 目（と口）は分離して[mouths.png](../textures/mouths.png)に描いて下さい。
+   - 目（と口）は分離して[eyes.png](#eyespng)や[mouths.png](#mouthspng)に描いて下さい。
 2. 尻尾に付けるリボン
    - 鈴に付けるリボンと共用です。
 3. 鈴
@@ -238,10 +238,10 @@ Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[
 8. メイドスカートのオーバーレイ
 9. 夏機能用の水着スキン
 
-### [eyes.png](../textures/eyes.png)
+### eyes.png
 アバターの目のテクスチャです。
 
-![テクスチャ（目）](./README_Images/テクスチャ（目）.jpg)
+![テクスチャ（目）](./README_Images/texture_eyes.jpg)
 
 - 目と口だけは他の部位と比べて2倍の解像度になっています。
 - それぞれ6×6ピクセルに区切ると分かりやすいです。
@@ -263,10 +263,10 @@ Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[
   - 眠い時の目
   - 閉じている目
 
-### [mouths.png](../textures/mouths.png)
+### mouths.png
 アバターの口のテクスチャです。
 
-![テクスチャ（口）](./README_Images/テクスチャ（口）.jpg)
+![テクスチャ（口）](./README_Images/texture_mouth.jpg)
 
 - それぞれ2×4ピクセルに区切ると分かりやすいです。
 - 口は左から以下の順で配置されています。
