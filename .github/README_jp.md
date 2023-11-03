@@ -1,3 +1,5 @@
+言語: 　[English](./README.md)　|　**日本語**
+
 # CatMaid（猫メイド）
 
 MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けスキン「CatMaid（猫メイド）」です。
