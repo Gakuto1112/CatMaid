@@ -280,4 +280,4 @@ Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[
 - 不具合がありましたら、[Issues](https://github.com/Gakuto1112/CatMaid/issues)までご連絡下さい。
 
 ## クレジット
-- 鈴の音：音人「鈴の音04」（ https://on-jin.com/sound/sei.php?bunr=%E3%83%99%E3%83%AB%E3%83%BB%E9%90%98%E3%83%BB%E9%88%B4&kate=%E9%81%93%E5%85%B7 ）
+- 鈴の音：音人「鈴の音04」（ https://on-jin.com/sound/sei.php?bunr=ベル・鐘・鈴&kate=道具 ）
