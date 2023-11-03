@@ -35,7 +35,7 @@ Target Figura versions: [0.1.1](https://modrinth.com/mod/figura/version/0.1.1+1.
   ![Wink](./README_Images/action_wink.gif)
 
 - Players bell sounds when walking and jumping (can be disabled in [avatar settings](#avatar-settings)).
-  - The volume of the bell sounds will be reduced to 1/5 when sneaking.
+  - The volume of bell sounds will be reduced to 1/5 when sneaking.
 
 - Plays cat hurts sounds when taking a damage.
 
@@ -173,7 +173,35 @@ Shakes her body. This action can flick water droplets off the body when getting 
 #### Action 2-5. Toggle summer feature
 Toggles summer feature.
 
-#### Action 2-6. Open avatar settings
+#### Action 2-7. Open avatar settings
 Opens [avatar settings](#avatar-settings).
 
 ## Avatar settings
+You can open this avatar settings by clicking [action 2-7](#action-2-7-open-avatar-settings). You can close it by closing the action wheel once.
+
+![Avatar settings](./README_Images/avatar_settings.jpg)
+
+### Action 1. Ears and tail type
+Changes type of the ears and tail. Scroll to select the option and close the action wheel to confirm.
+
+![Cat types](./README_Images/various_tails.jpg)
+
+### Action 2. Change volume of bell sounds
+Changes the volume of bell sounds. Scroll to increase or decrease in 5% increments and close the action wheel to confirm.
+
+### Action 3. Toggle cat's meow
+Toggles whether periodic cat's meows are played or not.
+
+### Action 4. Toggle tail wagging
+Toggles if the avatar wags its tail or not.
+
+### Action 5. Toggle armors visible
+Toggles whether equipped armors are visible or not. The maid skirt will be hidden not to interfere with the armors while equips them. This setting will only affects to vanilla armors.
+
+### Action 6. Toggle auto body shaking
+Toggles whether [the avatar shakes its body](#action-2-4-body-shaking) or not when getting wet.
+
+### Action 7. Toggle afk actions
+Toggles if afk actions are played or not.
+
+![Fall asleep](./README_Images/doze2.gif)
