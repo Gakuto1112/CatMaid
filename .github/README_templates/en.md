@@ -1,4 +1,4 @@
-Language: 　**English**　|　[日本語](./README_jp.md)
+<!-- $inject(locale_link) -->
 
 # CatMaid (猫メイド)
 This is "Cat maid (猫メイド)", the avatar for [Figura](https://modrinth.com/mod/figura), the skin mod for [Minecraft](https://www.minecraft.net/en-us).
@@ -206,20 +206,7 @@ Toggles if afk actions are played or not.
 
 ![Fall asleep](./README_Images/doze2.gif)
 
-## How to use
-Figura is available in [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/), [Fabric](https://fabricmc.net/), and [Quilt](https://quiltmc.org/).
-
-1. Install the mod loader which you want to use and make the mods available.
-2. Install [Figura](https://modrinth.com/mod/figura). Note the mod dependencies.
-3. Go to the download page for the character which you want to download.
-4. Click green "**<>Code**" button at the top of the page and "**Download ZIP**" to download the repository files (or clone this repository).
-5. Extract the file if it is a zipped file.
-6. Put avatar files at `<minecraft_instance_directory>/figura/avatars/`.
-   - The directory will automatically generated after launching the game with Figura installed. You can also create it manually if it doesn't exist.
-7. Open the Figura menu (Δ mark) from the game menu.
-8. Select the avatar from the avatar list at the left of the Figura menu.
-9. Sets your permission if you need.
-10. Other Figura players can see your avatar after uploading your avatar to the Figura server.
+<!-- $inject(how_to_use) -->
 
 ## Textures
 In this section, I will explain structures of the textures. The skin texture are created based on the vanilla skin, so you can change the skin of the avatar by replacing the texture. Only those directly related to the vanilla skin are explained here.
@@ -277,10 +264,7 @@ This texture is for the mouth.
   - Opened mouth
   - Intimidated mouth
 
-## Notes
-- I'm not responsible for any damages caused by using this avatar.
-- This avatar is designed for work with no resource pack and no other mods are installed. An unexpected issue may occurs when you use it with any resource packs and mods (texture and armor inconsistencies, etc.). However, I won't support in these cases.
-- Please [report an issue](https://github.com/Gakuto1112/CatMaid/issues) if you find it.
+<!-- $inject(notes) -->
 
 ## Credits
 - Bell sound: Otojin "Bell sound 04" (音人「鈴の音04」) ( https://on-jin.com/sound/sei.php?bunr=ベル・鐘・鈴&kate=道具 )
