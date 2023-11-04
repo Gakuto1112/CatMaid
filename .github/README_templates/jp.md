@@ -5,18 +5,18 @@ MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けス
 
 対応Figuraバージョン：[**0.1.1**](https://modrinth.com/mod/figura/version/0.1.1+1.20.1-0f8b7a9)~
 
-![メイン画像](./README_Images/main.jpg)
+![メイン画像](../README_Images/main.jpg)
 
 ## 特徴
 - 猫耳と尻尾とメイドスカートが追加されています。
   - 耳はたまにアニメーションします。
   - 尻尾は左右に振れます（[アバター設定](#アバター設定)で無効に出来ます）。
 
-	![尻尾を振る](./README_Images/wag_tail.gif)
+	![尻尾を振る](../README_Images/wag_tail.gif)
 
   - 尻尾は現在のHP、満腹度に応じて上げ下げされます。
 
-	![尻尾が下がる](./README_Images/drop_tail.jpg)
+	![尻尾が下がる](../README_Images/drop_tail.jpg)
 
 - 時々にゃーにゃー鳴きます。
   - 鳴く時は口が開きます。
@@ -28,9 +28,9 @@ MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けス
 
 - [アクションホイール](#アクションホイール12)でニッコリしたり、ウィンクしたりします。
 
-  ![ニッコリ](./README_Images/action_smile.gif)
+  ![ニッコリ](../README_Images/action_smile.gif)
 
-  ![スマイル](./README_Images/action_wink.gif)
+  ![スマイル](../README_Images/action_wink.gif)
 
 - 歩いたり、跳んだりすると鈴の音がなります（[アバター設定](#アバター設定)で無効に出来ます）。
   - スニーク時は音量が1/5になります。
@@ -39,61 +39,61 @@ MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けス
 
 - お気に入りの食べ物を手に持つと目がキラキラ光り、食べると満足して「ニャー」と鳴きます。
 
-  ![お気に入りの食べ物](./README_Images/favorite_food.gif)
+  ![お気に入りの食べ物](../README_Images/favorite_food.gif)
 
 - 具合が悪かったり、とても食べられないような物を食べると顔を青ざめます。
 
-  ![具合が悪い](./README_Images/pale.gif)
+  ![具合が悪い](../README_Images/pale.gif)
 
 - 就寝時は猫っぽく寝ます。
   - 就寝時の視点もポーズに合わせて変更されています。
   - 就寝時はゴロゴロ言います。
 
-	![就寝](./README_Images/sleep.jpg)
+	![就寝](../README_Images/sleep.jpg)
 
 - ケーキの持ち方がメイドっぽくなっています。
   - たまにレアなデザインのケーキが出現します。
 
-  ![ケーキを持つ](./README_Images/cake.jpg)
+  ![ケーキを持つ](../README_Images/cake.jpg)
 
 - 水に触れると「ずぶ濡れ」状態になります。
   - 水から上がった時に「ブルブル」アクションをすると体に付いた水滴を飛ばせます。
 
-  ![ずぶ濡れ](./README_Images/wet.gif)
+  ![ずぶ濡れ](../README_Images/wet.gif)
 
 - ウォーデンが近くにいる（暗闇デバフを受ける）と、怯えて震えます。
   - この状態では、鈴を押さえて音が出ないようにしたり（首を絞めている訳ではないよ！）、エモートを拒否するようになります。
 
-  ![ウォーデンに怯える](./README_Images/scared_of_warden.jpg)
+  ![ウォーデンに怯える](../README_Images/scared_of_warden.jpg)
 
-  ![エモートを拒否する](./README_Images/refuse_animation.gif)
+  ![エモートを拒否する](../README_Images/refuse_animation.gif)
 
 - 放置すると専用アクションを起こします（[アバター設定](#アバター設定)で無効に出来ます）。
   - 30秒おきに鈴をいじります。
 
-  ![鈴をいじる](./README_Images/touch_bell.gif)
+  ![鈴をいじる](../README_Images/touch_bell.gif)
 
   - 5分放置すると居眠りします。
 
-  ![うとうと](./README_Images/doze.gif)
+  ![うとうと](../README_Images/doze.gif)
 
-  ![居眠り](./README_Images/doze2.gif)
+  ![居眠り](../README_Images/doze2.gif)
 
-  ![AFK復帰](./README_Images/afk.gif)
+  ![AFK復帰](../README_Images/afk.gif)
 
 - 暗視が付与されている時は、猫のように目が光ります。
   - 暗視の仕様上、自分自身では目が光るのを確認できません。
   - どうしても確認したい方は、シェーダーパックを使用すると確認出来ます。
 
-  ![目が光る](./README_Images/glow_eyes.jpg)
+  ![目が光る](../README_Images/glow_eyes.jpg)
 
 - プレイヤーが動くと髪がたなびきます。
 
-  ![髪がたなびく](./README_Images/flutter_hair.gif)
+  ![髪がたなびく](../README_Images/flutter_hair.gif)
 
 - バニラのネコのテクスチャを基にした、複数種類の耳と尻尾のテクスチャを用意しています。[アバター設定](#アバター設定)でお好みのテクスチャに変更出来ます。
 
-  ![色々な尻尾](./README_Images/various_tails.jpg)
+  ![色々な尻尾](../README_Images/various_tails.jpg)
 
 - 夏機能搭載！有効にすると水着姿になります。
   - 夏機能が有効な場合は革の帽子がサマーハットに変化します。
@@ -105,66 +105,66 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 
 ### ページ1
 
-![アクションホイール1](./README_Images/action_wheel_1.jpg)
+![アクションホイール1](../README_Images/action_wheel_1.jpg)
 
 #### アクション1-1. スマイル
 ネコの鳴き声が再生されると同時に笑顔になります。
 
-![スマイル](./README_Images/action_smile.gif)
+![スマイル](../README_Images/action_smile.gif)
 
 #### アクション1-2. ウィンク
 ネコの鳴き声が再生されると同時にウィンクします。
 
-![ウィンク](./README_Images/action_wink.gif)
+![ウィンク](../README_Images/action_wink.gif)
 
 #### アクション1-3. キラキラ
 ネコの鳴き声が再生されると同時に目を輝かせます。
 
-![キラキラ](./README_Images/action_shine_eyes.gif)
+![キラキラ](../README_Images/action_shine_eyes.gif)
 
 #### アクション1-4. > <（不等号目）
 ネコの鳴き声が再生されると同時に元気いっぱいの（> <）目になります。
 
-![不等号目](./README_Images/action_unequal_eyes.gif)
+![不等号目](../README_Images/action_unequal_eyes.gif)
 
 #### アクション1-5. ビックリ
 ビックリして、汗をかきます。右クリックで青ざめます。
 
-![ビックリ](./README_Images/action_surprised.gif)
+![ビックリ](../README_Images/action_surprised.gif)
 
 #### アクション1-6. 威嚇
 敵に対して威嚇します。尻尾の毛が逆立ちます。左クリックで弱い威嚇、右クリックで強い威嚇になります（下の画像は強い威嚇です）。
 
-![威嚇](./README_Images/action_intimidate.gif)
+![威嚇](../README_Images/action_intimidate.gif)
 
 #### アクション1-7. しょんぼり
 しょんぼりします。右クリックで青ざめます。
 
-![しょんぼり](./README_Images/action_downhearted.gif)
+![しょんぼり](../README_Images/action_downhearted.gif)
 
 ### ページ2
 
-![アクションホイール2](./README_Images/action_wheel_2.jpg)
+![アクションホイール2](../README_Images/action_wheel_2.jpg)
 
 #### アクション2-1. ナデナデ（頭）
 プレイヤー自身がアバターの頭を撫でます（表示される腕はプレイヤーのスキンになります）。
 
-![ナデナデ](./README_Images/action_pat_head.gif)
+![ナデナデ](../README_Images/action_pat_head.gif)
 
 #### アクション2-2. ナデナデ（尻尾）
 プレイヤー自身がアバターの尻尾を撫でます（表示される腕はプレイヤーのスキンになります）。猫は尻尾を触られるのがいやらしいので、尻尾を触ると起こります。
 
-![ナデナデ](./README_Images/action_pat_tail.gif)
+![ナデナデ](../README_Images/action_pat_tail.gif)
 
 #### アクション2-3. おすわり
 その場に座ります。もう一度アクション実行で立ち上がります。座っている時に動いたり、ジャンプしたり、スニークしたりすると自動で立ち上がります。
 
-![おすわり](./README_Images/action_sit_down.jpg)
+![おすわり](../README_Images/action_sit_down.jpg)
 
 #### アクション2-4. ブルブル
 体をブルブル震わせます。体が濡れている場合は、水から上がった時にこのアクションを行うことで体に付いた水分を飛ばせます。
 
-![ブルブル](./README_Images/action_body_shaking.gif)
+![ブルブル](../README_Images/action_body_shaking.gif)
 
 #### アクション2-5. 夏機能のオン/オフ
 夏機能のオン/オフを切り替えます。
@@ -175,12 +175,12 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ## アバター設定
 [アクション2-7](#アクション2-7設定画面を開く)を実行するとこの画面が表示されます。一度アクションホイールを閉じると、設定画面を閉じることができます。
 
-![設定画面](./README_Images/avatar_settings.jpg)
+![設定画面](../README_Images/avatar_settings.jpg)
 
 ### アクション1. 猫の種類
 猫耳と尻尾の種類を変更します。スクロールで猫の種類を変更し、アクションホイールを閉じると確定します。
 
-![猫の種類](./README_Images/various_tails.jpg)
+![猫の種類](../README_Images/various_tails.jpg)
 
 ### アクション2. 鈴の音量
 鈴の音量を変更します。スクロールで5%刻みに増減し、アクションホイールを閉じると確定します。
@@ -200,7 +200,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ### アクション7. AFKアクションの切り替え
 放置時に特別なアクションを実行するかどうかを設定できます。
 
-![居眠り](./README_Images/doze2.gif)
+![居眠り](../README_Images/doze2.gif)
 
 <!-- $inject(how_to_use) -->
 
@@ -210,7 +210,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ### main.png
 アバターのメイン部分となるテクスチャです。
 
-![テクスチャ（メイン）](./README_Images/texture_main.jpg)
+![テクスチャ（メイン）](../README_Images/texture_main.jpg)
 
 1. バニラスキン
    - スリムモデルのみ対応です。
@@ -228,7 +228,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ### eyes.png
 アバターの目のテクスチャです。
 
-![テクスチャ（目）](./README_Images/texture_eyes.jpg)
+![テクスチャ（目）](../README_Images/texture_eyes.jpg)
 
 - 目と口だけは他の部位と比べて2倍の解像度になっています。
 - それぞれ6×6ピクセルに区切ると分かりやすいです。
@@ -253,7 +253,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ### mouths.png
 アバターの口のテクスチャです。
 
-![テクスチャ（口）](./README_Images/texture_mouth.jpg)
+![テクスチャ（口）](../README_Images/texture_mouth.jpg)
 
 - それぞれ2×4ピクセルに区切ると分かりやすいです。
 - 口は左から以下の順で配置されています。
