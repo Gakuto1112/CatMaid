@@ -45,4 +45,16 @@ events.TICK:register(function()
 	end
 end)
 
+events.ON_PLAY_SOUND:register(function (id, pos, _, _, _, _, path)
+    if path ~= nil and math.abs(pos:copy():sub(player:getPos()):length() - player:getVelocity():length()) < 0.2 then
+        if id == "minecraft:entity.generic.eat" and player:getActiveItem():isFood() then
+			sounds:playSound("minecraft:entity.cat.eat", pos, 1, 1)
+			return true
+		elseif id == "minecraft:entity.player.burp" then
+			sounds:playSound("minecraft:entity.player.burp", pos, 1, 2)
+			return true
+        end
+    end
+end)
+
 return FoodClass
