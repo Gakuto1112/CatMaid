@@ -48,8 +48,7 @@ end
 ---@param hideArmor boolean 防具を隠すかどうか
 ---@param autoShake boolean 自動ブルブル
 ---@param AFKAction boolean AFKアクション
----@param flying boolean クリエイティブ飛行のフラグ
-function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideArmor, autoShake, AFKAction, wardenNearby, flying)
+function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideArmor, autoShake, AFKAction, wardenNearby)
 	if not IsSynced then
 		TailAndEarsClass.setCatType(catType)
 		BellSoundClass.BellVolume = bellVolume
@@ -59,14 +58,13 @@ function pings.syncAvatarConfig(catType, bellVolume, meowSound, waveTail, hideAr
 		WetClass.AutoShake = autoShake
 		AFKClass.AFKAction = AFKAction
 		WardenClass.WardenNearby = wardenNearby
-		General.Flying = flying
 	end
 end
 
 events.TICK:register(function ()
 	if host:isHost() then
 		if NextSyncCount == 0 then
-			pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.ShowArmor, WetClass.AutoShake, AFKClass.AFKAction, WardenClass.WardenNearby, General.Flying)
+			pings.syncAvatarConfig(ActionWheelClass.CurrentCatType, ActionWheelClass.CurrentBellVolume, MeowClass.MeowSound, animations["models.main"]["wave_tail"]:getPlayState() == "PLAYING", ArmorClass.ShowArmor, WetClass.AutoShake, AFKClass.AFKAction, WardenClass.WardenNearby)
 			NextSyncCount = 300
 		else
 			NextSyncCount = NextSyncCount - 1

@@ -1,13 +1,12 @@
 ---@class 腕を制御するクラス
 ---@field isSneaking boolean スニークしていて、腕の補正が必要かどうかを返す。
----@field Flying boolean クリエイティブ飛行のフラグ
 
 ArmsClass = {}
 
 ArmsClass.isSneaking = false
 
 events.TICK:register(function()
-	ArmsClass.isSneaking = player:isCrouching() and not General.Flying and not renderer:isFirstPerson()
+	ArmsClass.isSneaking = player:isCrouching() and not renderer:isFirstPerson()
 end)
 
 events.RENDER:register(function ()
