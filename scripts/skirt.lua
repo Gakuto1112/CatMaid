@@ -8,7 +8,7 @@ events.TICK:register(function()
 		skirt:setVisible(false)
 	else
 		skirt:setVisible(true)
-		skirt:setRot(((player:getPose() == "CROUCHING" and not not General.Flying) or player:getVehicle()) and 15 or 0, 0, 0)
+		skirt:setRot(((player:isCrouching() and not not General.Flying) or player:getVehicle()) and 15 or 0, 0, 0)
 	end
 end)
 

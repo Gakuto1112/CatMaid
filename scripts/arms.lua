@@ -7,7 +7,7 @@ ArmsClass = {}
 ArmsClass.isSneaking = false
 
 events.TICK:register(function()
-	ArmsClass.isSneaking = player:getPose() == "CROUCHING" and not General.Flying and not renderer:isFirstPerson()
+	ArmsClass.isSneaking = player:isCrouching() and not General.Flying and not renderer:isFirstPerson()
 end)
 
 events.RENDER:register(function ()
