@@ -205,7 +205,7 @@ Figuraには、アクションホイールキー（デフォルトは「B」キ�
 ![居眠り](../README_Images/doze2.gif)
 
 ## 使用方法
-Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[Fabric](https://fabricmc.net/)、[Quilt](https://quiltmc.org/)に対応しています。
+Figuraは[Forge](https://files.minecraftforge.net/net/minecraftforge/forge/)、[Fabric](https://fabricmc.net/)、[NeoForge](https://neoforged.net/)に対応しています。
 
 1. 使用したいModローダーをインストールし、Modを使用できる状態にします。
 2. [Figura](https://modrinth.com/mod/figura)を追加します。Modの依存関係にご注意ください。
