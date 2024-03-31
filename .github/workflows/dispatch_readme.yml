@@ -13,6 +13,6 @@ jobs:
     strategy:
       matrix:
         target-branch: ${{ fromJSON(vars.TARGET_BRANCHES) }}
-    uses: Gakuto1112/FiguraAvatarsReadmeTemplate/.github/workflows/generate_my_figura_avatar_readme.yaml@main
+    uses: Gakuto1112/FiguraAvatarsReadmeTemplate/.github/workflows/generate_my_figura_avatar_readme.yml@main
     with:
       branch-name: ${{ matrix.target-branch }}
