@@ -40,3 +40,6 @@ events.ENTITY_INIT:register(function ()
 		modelPart:setParentType("None")
 	end
 end)
+
+--ENTITY_INITを待たず読み込むクラス
+DynamicHeadModels = require("scripts.dynamic_head_models")
