@@ -3,7 +3,7 @@ name: Generate README
 on:
   push:
     branches:
-      - Rewrite
+      - main
     paths:
       - .github/README_templates/**
       - .github/workflows/generate_readme.yml
