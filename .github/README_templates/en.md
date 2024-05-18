@@ -210,6 +210,9 @@ Toggles if afk actions are played or not.
 
 <!-- $inject(how_to_use) -->
 
+#### Additional note
+In addition to the avatar download method described here, you can also download avatar files from the "Releases" section on the right side of the repository's top page. A zip file of each avatar is attached to the "Assets" section of each release note.
+
 ## Textures
 In this section, I will explain structures of the textures. The skin texture are created based on the vanilla skin, so you can change the skin of the avatar by replacing the texture. Only those directly related to the vanilla skin are explained here.
 
