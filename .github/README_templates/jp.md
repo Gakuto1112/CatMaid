@@ -1,11 +1,13 @@
 <!-- $inject(locale_link) -->
 
 # CatMaid (猫メイド)
+<!-- DESCRIPTION_START -->
 MinecraftのスキンMod「[Figura](https://modrinth.com/mod/figura)」向けスキン「CatMaid（猫メイド）」です。
 
 ターゲットFiguraバージョン：[0.1.4](https://modrinth.com/mod/figura/version/0.1.4+1.20.1)
 
 （Minecraft 1.20.4では[Figuraの不具合](https://github.com/FiguraMC/Figura/issues/197)により一部機能が正しく動作しません。Minecraft 1.20.1での利用をお勧めします。）
+<!-- DESCRIPTION_END -->
 
 ![メイン画像](../README_images/main.jpg)
 
