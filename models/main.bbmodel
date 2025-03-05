@@ -3306,7 +3306,7 @@
 							"uuid": "b716c264-06c5-d04d-50f0-8e6cd1cd1f80",
 							"export": true,
 							"mirror_uv": false,
-							"isOpen": true,
+							"isOpen": false,
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
@@ -3385,7 +3385,7 @@
 							"uuid": "0a2a747e-1e8b-f4c4-f93c-088776de0dcd",
 							"export": true,
 							"mirror_uv": false,
-							"isOpen": true,
+							"isOpen": false,
 							"locked": false,
 							"visibility": true,
 							"autouv": 0,
@@ -3430,6 +3430,34 @@
 									]
 								}
 							]
+						},
+						{
+							"name": "HelmetItemPivot",
+							"origin": [0, 24, 0],
+							"color": 0,
+							"uuid": "7799f3a3-08cc-3f1e-b402-0b25b083baa9",
+							"export": true,
+							"mirror_uv": false,
+							"isOpen": false,
+							"locked": false,
+							"visibility": true,
+							"autouv": 0,
+							"selected": false,
+							"children": []
+						},
+						{
+							"name": "HelmetPivot",
+							"origin": [0, 24, 0],
+							"color": 0,
+							"uuid": "a1e34eef-b349-6b90-a19c-c463b59e15ad",
+							"export": true,
+							"mirror_uv": false,
+							"isOpen": false,
+							"locked": false,
+							"visibility": true,
+							"autouv": 0,
+							"selected": false,
+							"children": []
 						}
 					]
 				},
@@ -3468,7 +3496,7 @@
 									"uuid": "52242d8f-839d-c451-c3cd-56177f50b0f0",
 									"export": true,
 									"mirror_uv": false,
-									"isOpen": true,
+									"isOpen": false,
 									"locked": false,
 									"visibility": true,
 									"autouv": 0,
@@ -4055,6 +4083,34 @@
 											"children": []
 										}
 									]
+								},
+								{
+									"name": "RightElytraPivot",
+									"origin": [0, 24, 0],
+									"color": 0,
+									"uuid": "b4be836e-76cc-1ea2-28bd-dc12aa9c8ecb",
+									"export": true,
+									"mirror_uv": false,
+									"isOpen": false,
+									"locked": false,
+									"visibility": true,
+									"autouv": 0,
+									"selected": false,
+									"children": []
+								},
+								{
+									"name": "LeftElytraPivot",
+									"origin": [0, 24, 0],
+									"color": 0,
+									"uuid": "66dd62fc-0088-0ef7-7553-6d8147558545",
+									"export": true,
+									"mirror_uv": false,
+									"isOpen": false,
+									"locked": false,
+									"visibility": true,
+									"autouv": 0,
+									"selected": false,
+									"children": []
 								}
 							]
 						},
@@ -4329,7 +4385,7 @@
 			"override": false,
 			"length": 4,
 			"snapping": 24,
-			"selected": false,
+			"selected": true,
 			"anim_time_update": "",
 			"blend_weight": "",
 			"start_delay": "",

@@ -32,9 +32,10 @@ function SitDownClass.standUp()
 end
 
 events.WORLD_RENDER:register(function ()
-	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and CameraYOffset > -0.5 then
+	local playState = animations["models.main"]["sit_down"]:getPlayState()
+	if (playState == "PLAYING" or playState == "HOLDING") and CameraYOffset > -0.5 then
 		CameraYOffset = math.max(CameraYOffset - 0.5 / client:getFPS() * 6, -0.5)
-	elseif animations["models.main"]["sit_down"]:getPlayState() ~= "PLAYING" and CameraYOffset < 0 then
+	elseif playState ~= "PLAYING" and playState ~= "HOLDING" and CameraYOffset < 0 then
 		CameraYOffset = math.min(CameraYOffset + 0.5 / client:getFPS() * 6, 0)
 	end
 	renderer:offsetCameraPivot(0, CameraYOffset, 0)
@@ -42,7 +43,8 @@ end)
 
 ---@diagnostic disable-next-line: undefined-field
 events.DAMAGE:register(function ()
-	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
+	local playState = animations["models.main"]["sit_down"]:getPlayState()
+	if playState == "PLAYING" or playState == "HOLDING" then
 		SitDownClass.standUp()
 	end
 end)

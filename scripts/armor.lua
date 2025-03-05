@@ -104,14 +104,9 @@ events.TICK:register(function ()
 		if armorSlotItem.id ~= Armor.ArmorSlotItemsPrev[index].id then
 			--防具変更
 			if index == 1 then
-				local helmetFound = armorSlotItems[1].id:find("^minecraft:.+_helmet$") ~= nil
-				models.models.main.Avatar.Head.ArmorH:setVisible(helmetFound)
+				local helmetFound = armorSlotItems[1].id ~= "minecraft:air"
+				vanilla_model.HELMET:setVisible(helmetFound)
 				Armor.ArmorVisible[1] = helmetFound
-				if helmetFound then
-					local material = armorSlotItems[1].id:match("^minecraft:(%a+)_helmet$")
-					models.models.main.Avatar.Head.ArmorH.Helmet.Helmet:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_1.png")
-				end
-				models.models.main.Avatar.Head.ArmorH.Helmet.HelmetOverlay:setVisible(armorSlotItems[1].id == "minecraft:leather_helmet")
 			elseif index == 2 then
 				local chestplateFound = armorSlotItems[2].id:find("^minecraft:.+_chestplate$") ~= nil
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.ChestplateBottom, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB}) do
@@ -121,7 +116,7 @@ events.TICK:register(function ()
 				if chestplateFound then
 					local material = armorSlotItems[2].id:match("^minecraft:(%a+)_chestplate$")
 					for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate.Chestplate, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.ChestplateBottom.ChestplateBottom, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplate, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom.RightChestplateBottom, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplate, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom.LeftChestplateBottom}) do
-						armorPart:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_1.png")
+						armorPart:setPrimaryTexture("RESOURCE", client:getVersion() >= "1.21.2" and "minecraft:textures/entity/equipment/humanoid/"..(material == "golden" and "gold" or material)..".png" or "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_1.png")
 					end
 				end
 				local overlayVisible = armorSlotItems[2].id == "minecraft:leather_chestplate"
@@ -137,7 +132,7 @@ events.TICK:register(function ()
 				if leggingsFound then
 					local material = armorSlotItems[3].id:match("^minecraft:(%a+)_leggings$")
 					for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Leggings.Leggings, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.LeggingsBottom.LeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightLeggings.RightLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightLeggingsBottom.RightLeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftLeggings.LeftLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftLeggingsBottom.LeftLeggingsBottom}) do
-						armorPart:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_2.png")
+						armorPart:setPrimaryTexture("RESOURCE", client:getVersion() >= "1.21.2" and "minecraft:textures/entity/equipment/humanoid_leggings/"..(material == "golden" and "gold" or material)..".png" or "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_2.png")
 					end
 				end
 				local overlayVisible = armorSlotItems[3].id == "minecraft:leather_leggings"
@@ -153,7 +148,7 @@ events.TICK:register(function ()
 				if bootsFound then
 					local material = armorSlotItems[4].id:match("^minecraft:(%a+)_boots$")
 					for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots.RightBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom.RightBootsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots.LeftBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom.LeftBootsBottom}) do
-						armorPart:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_1.png")
+						armorPart:setPrimaryTexture("RESOURCE", client:getVersion() >= "1.21.2" and "minecraft:textures/entity/equipment/humanoid/"..(material == "golden" and "gold" or material)..".png" or "minecraft:textures/models/armor/"..(material == "golden" and "gold" or material).."_layer_1.png")
 					end
 				end
 				local overlayVisible = armorSlotItems[4].id == "minecraft:leather_boots"
@@ -166,9 +161,7 @@ events.TICK:register(function ()
 		if glint ~= Armor.ArmorSlotItemsPrev[index]:hasGlint() then
 			--エンチャント変更
 			local renderType = glint and (client:getVersion() == "1.21.4" and "GLINT2" or "GLINT") or "NONE"
-			if index == 1 then
-				models.models.main.Avatar.Head.ArmorH.Helmet:setSecondaryRenderType(renderType)
-			elseif index == 2 then
+			if index == 2 then
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.ChestplateBottom, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom}) do
 					armorPart:setSecondaryRenderType(renderType)
 				end
@@ -176,7 +169,7 @@ events.TICK:register(function ()
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Leggings, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.LeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightLeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftLeggingsBottom}) do
 					armorPart:setSecondaryRenderType(renderType)
 				end
-			else
+			elseif index == 4 then
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom}) do
 					armorPart:setSecondaryRenderType(renderType)
 				end
@@ -186,9 +179,7 @@ events.TICK:register(function ()
 		if armorColor ~= getArmorColor(Armor.ArmorSlotItemsPrev[index]) then
 			--色変更
 			local colorVector = vectors.intToRGB(armorColor)
-			if index == 1 then
-				models.models.main.Avatar.Head.ArmorH.Helmet.Helmet:setColor(colorVector)
-			elseif index == 2 then
+			if index == 2 then
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate.Chestplate, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.ChestplateBottom.ChestplateBottom, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplate, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom.RightChestplateBottom, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplate, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom.LeftChestplateBottom}) do
 					armorPart:setColor(colorVector)
 				end
@@ -196,7 +187,7 @@ events.TICK:register(function ()
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Leggings.Leggings, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.LeggingsBottom.LeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightLeggings.RightLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightLeggingsBottom.RightLeggingsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftLeggings.LeftLeggings, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftLeggingsBottom.LeftLeggingsBottom}) do
 					armorPart:setColor(colorVector)
 				end
-			else
+			elseif index == 4 then
 				for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots.RightBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom.RightBootsBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots.LeftBoots, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom.LeftBootsBottom}) do
 					armorPart:setColor(colorVector)
 				end
@@ -205,15 +196,7 @@ events.TICK:register(function ()
 		local trim = armorSlotItems[index].tag.Trim
 		if not compareTrims(trim, Armor.ArmorSlotItemsPrev[index].tag.Trim) then
 			--トリム変更
-			if index == 1 then
-				local trimTexture = getTrimTexture(trim, armorSlotItems[1].id, false)
-				if trimTexture then
-					models.models.main.Avatar.Head.ArmorH.Helmet.HelmetTrim:setVisible(true)
-					models.models.main.Avatar.Head.ArmorH.Helmet.HelmetTrim:setPrimaryTexture("CUSTOM", trimTexture)
-				else
-					models.models.main.Avatar.Head.ArmorH.Helmet.HelmetTrim:setVisible(false)
-				end
-			elseif index == 2 then
+			if index == 2 then
 				local trimTexture = getTrimTexture(trim, armorSlotItems[2].id, false)
 				if trimTexture then
 					for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate.ChestplateTrim, models.models.main.Avatar.Torso.Body.BodyBottom.ArmorBB.ChestplateBottom.ChestplateBottomTrim, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplateTrim, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom.RightChestplateBottomTrim, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplateTrim, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom.LeftChestplateBottomTrim}) do
@@ -237,7 +220,7 @@ events.TICK:register(function ()
 						armorPart:setVisible(false)
 					end
 				end
-			else
+			elseif index == 4 then
 				local trimTexture = getTrimTexture(trim, armorSlotItems[4].id, false)
 				if trimTexture then
 					for _, armorPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots.RightBootsTrim, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom.RightBootsBottomTrim, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots.LeftBootsTrim, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom.LeftBootsBottomTrim}) do
@@ -282,11 +265,13 @@ events.TICK:register(function ()
 	Armor.ArmorSlotItemsPrev = armorSlotItems
 end)
 
-for _, overlayPart in ipairs({models.models.main.Avatar.Head.ArmorH.Helmet.HelmetOverlay, models.models.main.Avatar.Torso.Body.ArmorB.Chestplate.ChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplateOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom.RightChestplateBottomOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplateOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom.LeftChestplateBottomOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots.RightBootsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom.RightBootsBottomOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots.LeftBootsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom.LeftBootsBottomOverlay}) do
-	overlayPart:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/leather_layer_1_overlay.png")
+vanilla_model.HELMET:setVisible(false)
+local gameVersion = client:getVersion()
+for _, overlayPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Chestplate.ChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplateOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.ArmorRA.RightChestplate.RightChestplateOverlay, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom.ArmorRAB.RightChestplateBottom.RightChestplateBottomOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.ArmorLA.LeftChestplate.LeftChestplateOverlay, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom.ArmorLAB.LeftChestplateBottom.LeftChestplateBottomOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightBoots.RightBootsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightBootsBottom.RightBootsBottomOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftBoots.LeftBootsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftBootsBottom.LeftBootsBottomOverlay}) do
+	overlayPart:setPrimaryTexture("RESOURCE", gameVersion >= "1.21.2" and "minecraft:textures/entity/equipment/humanoid/leather_overlay.png" or "minecraft:textures/models/armor/leather_layer_1_overlay.png")
 end
 for _, overlayPart in ipairs({models.models.main.Avatar.Torso.Body.ArmorB.Leggings.LeggingsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.ArmorRL.RightLeggings.RightLeggingsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom.ArmorRLB.RightLeggingsBottom.RightLeggingsBottomOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.ArmorLL.LeftLeggings.LeftLeggingsOverlay, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom.ArmorLLB.LeftLeggingsBottom.LeftLeggingsBottomOverlay}) do
-	overlayPart:setPrimaryTexture("RESOURCE", "minecraft:textures/models/armor/leather_layer_2_overlay.png")
+	overlayPart:setPrimaryTexture("RESOURCE", gameVersion >= "1.21.2" and "minecraft:textures/entity/equipment/humanoid_leggings/leather_overlay.png" or "minecraft:textures/models/armor/leather_layer_2_overlay.png")
 end
 
 return Armor

@@ -18,13 +18,6 @@
 		"scripts/main.lua"
 	],
 	"customizations": {
-		"models.models.armor.ArmorH": {
-			"moveTo": "models.models.main.Avatar.Head",
-			"visible": false
-		},
-		"models.models.armor.ArmorH.Helmet.HelmetTrim": {
-			"visible": false
-		},
 		"models.models.armor.ArmorB": {
 			"moveTo": "models.models.main.Avatar.Torso.Body"
 		},

@@ -7,7 +7,6 @@ events.ENTITY_INIT:register(function ()
 	--パーツ別クラス
 	ArmsClass = require("scripts/arms")
 	LegsClass = require("scripts/legs")
-	ElytraClass = require("scripts/elytra")
 	HairPhysicsClass = require("scripts/hair_physics")
 	TailAndEarsClass = require("scripts/tail_and_ears")
 	FacePartsClass = require("scripts/face_parts")
@@ -32,7 +31,7 @@ events.ENTITY_INIT:register(function ()
 	SummerFeatureClass = require("scripts/summer_feature")
 
 	--初期化処理
-	for _, vanillaModel in ipairs({vanilla_model.PLAYER, vanilla_model.ARMOR}) do
+	for _, vanillaModel in ipairs({vanilla_model.PLAYER, vanilla_model.CHESTPLATE, vanilla_model.LEGGINGS, vanilla_model.BOOTS}) do
 		vanillaModel:setVisible(false)
 	end
 	for _, modelPart in ipairs({models.models.main.Avatar.Torso.Body.BodyBottom, models.models.main.Avatar.Torso.Arms.RightArm.RightArmBottom, models.models.main.Avatar.Torso.Arms.LeftArm.LeftArmBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.RightLeg.RightLegBottom, models.models.main.Avatar.Torso.Body.BodyBottom.Legs.LeftLeg.LeftLegBottom}) do

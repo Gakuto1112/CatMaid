@@ -432,7 +432,8 @@ events.TICK:register(function()
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
 	end
-	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" and not SitDownClass.canSitDown() then
+	local playState = animations["models.main"]["sit_down"]:getPlayState()
+	if (playState == "PLAYING" or playState == "HOLDING") and not SitDownClass.canSitDown() then
 		SitDownClass.standUp()
 		animations["models.main"]["sit_down_first_person_fix"]:stop()
 	end
