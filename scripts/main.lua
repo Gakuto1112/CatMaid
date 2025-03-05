@@ -17,6 +17,7 @@ events.ENTITY_INIT:register(function ()
 	PlayerHandsClass = require("scripts/player_hands")
 
 	--機能別クラス
+	UpdateChecker = require("scripts.update_checker")
 	ActionWheelClass = require("scripts/action_wheel")
 	SitDownClass = require("scripts/sit_down")
 	MeowClass = require("scripts/meow")

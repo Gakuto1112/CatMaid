@@ -735,6 +735,9 @@ if ConfigClass.loadConfig("AFKAction", true) then
 	action:hoverColor(85 / 255, 1, 85 / 255)
 end
 
+--アクション8. 更新確認
+ConfigPage:setAction(8, UpdateChecker:getUpdateAction())
+
 setCatTypeActionTitle()
 setBellVolumeTitle()
 action_wheel:setPage(MainPages[1])
