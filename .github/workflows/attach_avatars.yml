@@ -16,3 +16,5 @@ jobs:
       target_branches: '["main"]'
       avatar_names: '{"main": "CatMaid"}'
       includes: '["sounds"]'
+      update_checker_script_included: true
+      path_to_update_checker: './scripts/update_checker.lua'
