@@ -57,12 +57,12 @@ events.TICK:register(function()
 			else
 				whiteHat.WhiteHatBelt:setColor(160 / 255, 101 / 255, 64 / 255)
 			end
-			whiteHat:setSecondaryRenderType(helmetItem:hasGlint() and "GLINT" or nil)
+			whiteHat:setSecondaryRenderType(helmetItem:hasGlint() and (client:getVersion() == "1.21.4" and "GLINT2" or "GLINT") or nil)
 		elseif helmetItemType == "minecraft:turtle_helmet" then
 			whiteHat:setVisible(false)
 			snorkel:setVisible(true)
 			snorkel:setPos(0, player:isUnderwater() and 0 or 4, 0)
-			snorkel:setSecondaryRenderType(helmetItem:hasGlint() and "GLINT" or nil)
+			snorkel:setSecondaryRenderType(helmetItem:hasGlint() and (client:getVersion() == "1.21.4" and "GLINT2" or "GLINT") or nil)
 		else
 			whiteHat:setVisible(false)
 			snorkel:setVisible(false)

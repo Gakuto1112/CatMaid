@@ -428,7 +428,7 @@ events.TICK:register(function()
 		setActionEnabled(2, 4, true)
 	end
 	setActionEnabled(2, 3, not WardenClass.WardenNearby and SitDownClass.canSitDown())
-	if (WardenClass.WardenNearby or HurtClass.Damaged ~= "NONE") and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
+	if WardenClass.WardenNearby and ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
 		ActionCancelFunction()
 		ActionWheelClass.ActionCount = 0
 	end
@@ -533,6 +533,14 @@ events.WORLD_RENDER:register(function()
 		animations["models.main"]["sit_down_first_person_fix"]:play()
 	else
 		animations["models.main"]["sit_down_first_person_fix"]:stop()
+	end
+end)
+
+---@diagnostic disable-next-line: undefined-field
+events.DAMAGE:register(function ()
+	if ActionWheelClass.ActionCount > 0 and ActionCancelFunction ~= nil then
+		ActionCancelFunction()
+		ActionWheelClass.ActionCount = 0
 	end
 end)
 

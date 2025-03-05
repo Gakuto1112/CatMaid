@@ -27,6 +27,18 @@ AFKClass.TouchBellCount = 0
 AFKActionState = "NONE"
 SitDownWhenSleepy = false
 
+---AFKの終了処理
+function stopAfk()
+	if AFKActionState ~= "NONE" then
+		pings.resetAFKCount()
+	end
+	if AFKClass.AFKCount >= 5400 then
+		AFKClass.AFKCount = -30
+	elseif AFKClass.AFKCount > 0 then
+		AFKClass.AFKCount = 0
+	end
+end
+
 --ping関数
 function pings.touchBell()
 	local leftHanded = player:isLeftHanded()
@@ -115,7 +127,7 @@ events.TICK:register(function()
 	local leftHanded = player:isLeftHanded()
 	local rightHandItemType = General.hasItem(player:getHeldItem(leftHanded))
 	local leftHandItemType = General.hasItem(player:getHeldItem(not leftHanded))
-	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and HurtClass.Damaged == "NONE" and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and AFKClass.AFKAction then
+	if not keyPressed and lookRotDelta == 0 and player:getPose() == "STANDING" and not WardenClass.WardenNearby and rightHandItemType == RightItemTypePrevTick and leftHandItemType == LeftItemTypePrevTick and AFKClass.AFKAction then
 		if not client.isPaused() then
 			if AFKClass.AFKCount == 6000 then
 				pings.sleep()
@@ -127,14 +139,7 @@ events.TICK:register(function()
 			AFKClass.AFKCount = AFKClass.AFKCount >= 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 		end
 	else
-		if AFKActionState ~= "NONE" then
-			pings.resetAFKCount()
-		end
-		if AFKClass.AFKCount >= 5400 then
-			AFKClass.AFKCount = -30
-		elseif AFKClass.AFKCount > 0 then
-			AFKClass.AFKCount = 0
-		end
+		stopAfk()
 	end
 	AFKClass.AFKCount = AFKClass.AFKCount < 0 and AFKClass.AFKCount + 1 or AFKClass.AFKCount
 	local firstPerson = renderer:isFirstPerson()
@@ -179,6 +184,11 @@ events.TICK:register(function()
 	if AFKClass.TouchBellCount == 0 and AFKClass.AFKCount < 5400 then
 		AFKActionState = "NONE"
 	end
+end)
+
+---@diagnostic disable-next-line: undefined-field
+events.DAMAGE:register(function ()
+	stopAfk()
 end)
 
 if AFKClass.AFKAction then

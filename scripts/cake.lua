@@ -24,7 +24,7 @@ events.TICK:register(function()
 		General.setParentTypeWithArmor("RIGHT", "Body")
 		rightItem:setVisible(false)
 		rightCake:setVisible(true)
-		rightCakeBody:setSecondaryRenderType(rightHeldItem:hasGlint() and "GLINT" or nil)
+		rightCakeBody:setSecondaryRenderType(rightHeldItem:hasGlint() and (client:getVersion() == "1.21.4" and "GLINT2" or "GLINT") or nil)
 		if RightHandItemTypeData[1] ~= "minecraft:cake" or SleepClass.SleepData[1] then
 			if RightHandItemTypeData[1] ~= "minecraft:cake" then
 				local randamCake = math.random()
@@ -57,7 +57,7 @@ events.TICK:register(function()
 		General.setParentTypeWithArmor("LEFT", "Body")
 		leftItem:setVisible(false)
 		leftCake:setVisible(true)
-		leftCakeBody:setSecondaryRenderType(leftHeldItem:hasGlint() and "GLINT" or nil)
+		leftCakeBody:setSecondaryRenderType(leftHeldItem:hasGlint() and (client:getVersion() == "1.21.4" and "GLINT2" or "GLINT") or nil)
 		if LeftHandItemTypeData[1] ~= "minecraft:cake" or SleepClass.SleepData[1] then
 			if LeftHandItemTypeData[1] ~= "minecraft:cake" then
 				local randamCake = math.random()

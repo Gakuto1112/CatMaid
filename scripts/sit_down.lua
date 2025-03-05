@@ -8,8 +8,8 @@ CameraYOffset = 0
 ---@return boolean
 function SitDownClass.canSitDown()
 	if player then
-		local velocity = player:getVelocity()
-		return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and math.sqrt(math.abs(velocity.x ^ 2 + velocity.z ^ 2)) == 0 and HurtClass.Damaged == "NONE" and not WardenClass.WardenNearby
+		---@diagnostic disable-next-line: undefined-field
+		return player:getPose() == "STANDING" and player:isOnGround() and not player:getVehicle() and not player:isMoving(true) and not WardenClass.WardenNearby
 	else
 		return false
 	end
@@ -38,6 +38,13 @@ events.WORLD_RENDER:register(function ()
 		CameraYOffset = math.min(CameraYOffset + 0.5 / client:getFPS() * 6, 0)
 	end
 	renderer:offsetCameraPivot(0, CameraYOffset, 0)
+end)
+
+---@diagnostic disable-next-line: undefined-field
+events.DAMAGE:register(function ()
+	if animations["models.main"]["sit_down"]:getPlayState() == "PLAYING" then
+		SitDownClass.standUp()
+	end
 end)
 
 return SitDownClass
