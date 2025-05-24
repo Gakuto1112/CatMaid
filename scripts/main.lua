@@ -1,6 +1,7 @@
 events.ENTITY_INIT:register(function ()
 	--クラスのインスタンス化
 	General = require("scripts/general")
+	StringUtils = require("scripts.string_utils")
 	ConfigClass = require("scripts/config")
 	LanguageClass = require("scripts/language")
 
